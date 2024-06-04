@@ -1,0 +1,16 @@
+@import 'reset';
+@import 'globals';
+@import './variables.module';
+@import 'fonts';
+
+html,
+body {
+	font-size: 18px;
+	font-family: sans-serif;
+	color: $white;
+}
+* {
+	box-sizing: border-box;
+	scrollbar-width: thin;
+	//scrollbar-color: $tech-bg $background-white;
+}
