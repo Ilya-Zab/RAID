@@ -6,7 +6,6 @@ import Link from "next/link";
 import Navigation from '../Navigation/Navigation';
 import AudioPlayer from "../../AudioPlayer/AudioPlayer";
 
-
 const Header: React.FC = () => {
     return (
         <AppBar position="static" className={styles.header}>

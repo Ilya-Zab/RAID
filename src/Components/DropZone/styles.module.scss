@@ -1,0 +1,39 @@
+@import '@/styles/variables.module.scss';
+
+.dropzone {
+
+}
+
+.icon {
+	margin: 0 auto;
+	padding: 191px 0 30px;
+	width: 42px;
+}
+
+.text {
+	text-align: center;
+	font-weight: 300;
+	font-size: 16px;
+	line-height: 100%;
+	color: $white1;
+	margin-bottom: 8px;
+	letter-spacing: 0;
+
+	&__gradient {
+		text-decoration: underline;
+		text-decoration-skip-ink: none;
+		background: linear-gradient(170deg, #08a232 19.5%, #2de6ff 37.5%, #533bed 58%, #ff3cbd 90%);
+		background-clip: text;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+
+	&__sub {
+		font-weight: 300;
+		font-size: 12px;
+		line-height: 100%;
+		text-align: center;
+		color: $grey1;
+		letter-spacing: 0;
+	}
+}

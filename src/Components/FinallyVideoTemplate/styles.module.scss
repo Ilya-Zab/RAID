@@ -1,0 +1,129 @@
+@import '@/styles/variables.module.scss';
+
+.bg {
+	background: url("../../../public/images/bg1.png"), $linearGradient4;
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 20px 0 82px;
+	position: relative;
+	min-height: calc(100vh - 66px);
+	overflow-X: hidden;
+
+	&:after {
+		content: '';
+		display: block;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 476px;
+		height: 627px;
+		background-image: url("../../../public/images/demon.png");
+	}
+}
+
+.container {
+	max-width: 362px;
+	width: 100%;
+	margin: 0 auto;
+	padding: 0 12px;
+	position: relative;
+	z-index: 10;
+}
+
+.photo {
+	border-radius: 4px;
+	object-fit: cover;
+}
+
+.title {
+	display: block;
+	margin: 0 auto 20px;
+	max-width: 250px;
+	width: 100%;
+}
+
+.section {
+	margin-top: 14px;
+	height: 605px;
+	background: $bg1;
+	border: 1px solid transparent;
+	border-image: linear-gradient(100deg, #08A232 19%, #2DE6FF 38%, #533BED 58%, #FF3CBD 90%);
+	border-image-slice: 1;
+	padding: 33px 12px 30px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	&__photo {
+		display: flex;
+		justify-content: center;
+		margin-bottom: 26px;
+		position: relative;
+		& h1 {
+			position: absolute;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+			font-weight: 800;
+			font-size: 18px;
+			line-height: 244%;
+			letter-spacing: -0.02em;
+			text-align: center;
+			background: linear-gradient(135deg, #08a232 19.5%, #2de6ff 37.5%, #533bed 58%, #ff3cbd 90%);
+			background-clip: text;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+		}
+	}
+
+	&__text {
+		& p {
+			font-weight: 300;
+			font-size: 16px;
+			line-height: 100%;
+			text-align: center;
+			color: $white;
+			margin-top: 5px;
+			letter-spacing: 0;
+			&:nth-of-type(2) {
+				font-size: 18px;
+				& span {
+					font-weight: 500;
+					background: linear-gradient(90deg, #08a232 19%, #2de6ff 38%, #533bed 58%, #ff3cbd 90%);
+					background-clip: text;
+					-webkit-background-clip: text;
+					-webkit-text-fill-color: transparent;
+				}
+			}
+			&:last-of-type {
+				margin-top: 20px;
+				font-size: 12px;
+			}
+		}
+		& .list {
+			margin-top: 17px;
+			list-style-type: none;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			grid-gap: 20px;
+		}
+	}
+
+	&__btn {
+		flex: 1 1 auto;
+		display: flex;
+		align-items: flex-end;
+		justify-content: center;
+		width: 100%;
+
+		& button {
+			font-weight: 400;
+			font-size: 18px;
+			line-height: 22px;
+			text-align: center;
+			letter-spacing: 0;
+			color: $white;
+		}
+	}
+}
