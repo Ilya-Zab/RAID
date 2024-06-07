@@ -8,19 +8,19 @@ import AudioPlayer from "../../AudioPlayer/AudioPlayer";
 const data = [
     {
         title: 'Prizes',
-        url: 'link1111',
+        url: '/prizes',
     }, {
         title: 'Rules',
-        url: 'link1111',
+        url: '/rules',
     }, {
         title: 'Privacy Notice',
-        url: 'link1111',
+        url: '/privacy-notice',
     }, {
         title: 'Find ID',
-        url: 'link1111',
+        url: '/find-id',
     }, {
         title: 'Email us',
-        url: 'link1111',
+        url: '/email-ul',
     }
 ];
 const Header: React.FC = () => {

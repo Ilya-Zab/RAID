@@ -1,7 +1,7 @@
 @import '@/styles/variables.module.scss';
 
 .header {
-	padding: 12px 0 12px;
+	padding: 20px 0 20px;
 	background-color: $graphite;
 	box-shadow: none;
 	border-bottom: 1px solid transparent;
@@ -19,7 +19,7 @@
 .container {
 	max-width: 1088px;
 	width: 100%;
-	padding: 0 12px;
+	padding: 0 16px;
 	margin: 0 auto;
 }
 

@@ -13,8 +13,6 @@ const Layout: FC<LayoutProps> = ({ children }) => {
     return (
         <>
             {!isMobile ? <Header /> : <MobileHeader />}
-            {/*{<Header />}*/}
-
             { children }
             {<Footer />}
         </>
