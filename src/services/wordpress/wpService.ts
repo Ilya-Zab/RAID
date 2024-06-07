@@ -36,7 +36,7 @@ export class WPRestAPI
         return `Basic ${encodedAuth}`;
     }
 
-    private async sendRequest(url: string, method: Method, params?: Record<string, string[] | string | number | undefined>, body?: any): Promise<AxiosResponse<unknown>>
+    private async sendRequest(url: string, method: Method, params?: Record<string, string[] | string | number | undefined>, body?: any, headers?: Record<string, string>): Promise<AxiosResponse<unknown>>
     {
         const response = await axios({
             url: `${this._apiBase}${url}`,
@@ -60,9 +60,9 @@ export class WPRestAPI
         return this.sendRequest(url, 'GET', params);
     }
 
-    async post(url: string, body?: any)
+    async post(url: string, body?: any, headers?: Record<string, string>)
     {
-        return this.sendRequest(url, 'POST', undefined, body);
+        return this.sendRequest(url, 'POST', undefined, body, headers);
     }
 }
 
