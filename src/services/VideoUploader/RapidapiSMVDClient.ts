@@ -1,22 +1,26 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { z } from "zod";
 
 export interface RapidapiConfig {
     rapidapiKey: string
 }
 
-export interface SMVDResponse {
-    success: boolean,
-    message: any, // I doesn't find information about response type schemas
-    src_url: string,
-    image: string,
-    title: string,
-    links: VideoLink[]
-}
+const VideoLinkSchema = z.object({
+    quality: z.string(),
+    link:z.string().url()
+});
 
-export interface VideoLink {
-    quality: string,
-    link:string
-}
+const SMVDResponseSchema = z.object({
+    success: z.boolean(),
+    message: z.string().nullable(), // I doesn't find information about response type schemas
+    src_url: z.string().optional(),
+    image: z.string().optional(),
+    title: z.string().optional(),
+    links: z.array(VideoLinkSchema).optional()
+});
+
+export type SMVDResponse = z.infer<typeof SMVDResponseSchema>;
+export type VideoLink = z.infer<typeof VideoLinkSchema>;
 
 // this class is a wrapper around the Rapidapi API for downloading social media videos
 // docs: https://rapidapi.com/ugoBoy/api/social-media-video-downloader/
@@ -30,12 +34,22 @@ export class RapidapiSMVDClient {
     public async extractVideo(videoUrl: string): Promise<SMVDResponse> {
         const options = this.getOptions(videoUrl);
 
-        return await axios.request(options)
+        const response = await axios.request<SMVDResponse>(options)
             .then(response => response.data)
             .catch(err => {
                 console.error("Error occured while downloading video.")
                 throw err;
             });
+
+        const { success, data, error } = SMVDResponseSchema.safeParse(response);
+
+        console.error("ZODERROR:", error);
+        if (!success)
+            throw new Error("Invalid response was received by Social Media Video Downloader API.");
+        if (!data.success)
+            throw new Error(response.message ?? "Not succeded response was received from Social Media Video Downloader API.");
+
+        return data;
     }
 
     private getOptions(videoUrl: string): AxiosRequestConfig {
