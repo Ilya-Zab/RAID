@@ -69,6 +69,19 @@ export class RapidapiSMVDClient {
     }
 }
 
+// returns link of the object with minimal quality of the given in the SMVD API response
+export function getLinkWithMinQuality(response: SMVDResponse): VideoLink {
+    const qualities: string[] = ["1080", "720", "540", "480", "360", "240", "144"];
+
+    for (const quality of qualities.reverse()) {
+        const link = response.links.find(l => l.quality.includes(quality));
+        if (link)
+            return link;
+    }
+
+    throw new Error("Error while defining video with min quality.");
+}
+
 const config: RapidapiConfig = {
     rapidapiKey: process.env.RAPIDAPI_KEY || ""
 };
