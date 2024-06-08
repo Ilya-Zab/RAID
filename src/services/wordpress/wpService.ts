@@ -45,7 +45,8 @@ export class WPRestAPI
             data: body,
             headers: {
                 'Authorization': this.getBasicAuth(),
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
+                ...headers
             }
         });
         if (response.status !== 200 && response.status !== 201)
@@ -55,14 +56,14 @@ export class WPRestAPI
         return response;
     }
 
-    async get(url: string, params?: Record<string, string[] | string | number | undefined>)
+    async get(url: string, params?: Record<string, string[] | string | number | undefined>, headers?: Record<string, string>)
     {
-        return this.sendRequest(url, 'GET', params);
+        return this.sendRequest(url, 'GET', params, null, headers);
     }
 
-    async post(url: string, body?: any, headers?: Record<string, string>)
+    async post(url: string, body?: any, params?: Record<string, string[] | string | number | undefined>, headers?: Record<string, string>)
     {
-        return this.sendRequest(url, 'POST', undefined, body, headers);
+        return this.sendRequest(url, 'POST', params, body, headers);
     }
 }
 
