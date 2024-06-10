@@ -1,6 +1,6 @@
 import Head from "next/head";
-// import CreateVideoTemplate from "@/Components/CreateVideoTemplate/CreateVideoTemplate";
-import FinallyVideoTemplate from "@/Components/FinallyVideoTemplate/FinallyVideoTemplate";
+import CreateVideoTemplate from "@/Components/CreateVideoTemplate/CreateVideoTemplate";
+// import FinallyVideoTemplate from "@/Components/FinallyVideoTemplate/FinallyVideoTemplate";
 
 const CreateVideo = () => {
     const pageTitle = 'Create video';
@@ -11,8 +11,8 @@ const CreateVideo = () => {
                 <meta name="description" content={`This is ${pageTitle}`} />
             </Head>
             <main>
-                {/*<CreateVideoTemplate/>*/}
-                <FinallyVideoTemplate/>
+                <CreateVideoTemplate/>
+                {/*<FinallyVideoTemplate/>*/}
             </main>
         </>
     );

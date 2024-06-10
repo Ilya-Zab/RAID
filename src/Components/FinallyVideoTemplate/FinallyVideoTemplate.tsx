@@ -7,6 +7,13 @@ const FinallyVideoTemplate = () => {
     return (
         <Box className={styles.bg}>
             <Box className={styles.container}>
+                <Image
+                    src='/images/wefinallyplayed.svg'
+                    alt='We Finally Played'
+                    width={280}
+                    height={47}
+                    className={styles.title}
+                />
                 <Box className={styles.section}>
                     <Box className={styles.section__photo}>
                         <Image

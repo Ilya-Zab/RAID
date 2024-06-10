@@ -59,14 +59,8 @@
 			margin-top: 8px;
 			letter-spacing: 0;
 		}
-
-		& .list {
-			margin-top: 17px;
-			list-style-type: none;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			grid-gap: 20px;
+		&_input {
+			margin-top: 22px;
 		}
 	}
 
@@ -84,6 +78,54 @@
 			text-align: center;
 			letter-spacing: 0;
 			color: $white;
+		}
+	}
+}
+
+.svg {
+	display: flex;
+	align-items: baseline;
+	grid-gap: 10px;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 100%;
+	text-align: center;
+	color: #648CB6E5;
+}
+
+.input {
+	border-radius: 8px;
+}
+
+.wrapper {
+	& p {
+		font-weight: 300;
+		font-size: 16px;
+		line-height: 100%;
+		text-align: center;
+		color: $white;
+		margin-top: 8px;
+		letter-spacing: 0;
+		& span {
+			font-weight: 500;
+			background: linear-gradient(to right, #1FFFFF 0%, #23FF5F 37%, #FFB82D 100%);
+			background-clip: text;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+		}
+	}
+}
+
+.list {
+	margin-top: 28px;
+	list-style-type: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	grid-gap: 14px;
+	&__iconBtn {
+		&:hover {
+			opacity: .7;
 		}
 	}
 }
