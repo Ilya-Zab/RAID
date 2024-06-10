@@ -1,7 +1,10 @@
 import * as React from 'react';
+import styles from './styles.module.scss';
+import Image from 'next/image';
 import Link from 'next/link';
-import { Box, List, ListItem, ListItemButton, ListItemText, Divider } from '@mui/material';
-
+import { Box, Divider,Button } from '@mui/material';
+import Navigation from "@/Components/Layouts/Navigation/Navigation";
+import AudioPlayer from "@/Components/AudioPlayer/AudioPlayer";
 
 const data = [
     {
@@ -22,24 +25,32 @@ const data = [
     }
 ];
 
-const MobileHeaderDrawer = ({ toggleDrawer, open }) => {
+const MobileHeaderDrawer = ({ toggleDrawer }) => {
     return (
         <Box
-            sx={{ width: 250 }}
             role="presentation"
-            onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}
+            className={styles.wrapper}
         >
-            <List>
-                {data.map((item, index) => (
-                    <ListItem key={index} disablePadding>
-                        <ListItemButton component={Link} href={item.url}>
-                            <ListItemText primary={item.title} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List>
+            <Box className={styles.logo__wrapper}>
+                <Link href="/" passHref className={styles.logo}>
+                    <Image
+                        src="/images/logo.png"
+                        alt="Logo"
+                        width={49}
+                        height={25}
+                        className={styles.logo_img}
+                    />
+                </Link>
+            </Box>
+            <Navigation data={data} correctStyle={styles.navMob}/>
             <Divider />
+            <Box className={styles.buttons}>
+                <Box className='btnWrapper'>
+                    <Button variant="contained" className={`btn-primary ${styles.btn}`}>Enter ID</Button>
+                </Box>
+                <AudioPlayer />
+            </Box>
         </Box>
     );
 };

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from "next/link";
 import Navigation from '../Navigation/Navigation';
 import AudioPlayer from "../../AudioPlayer/AudioPlayer";
+
 const data = [
     {
         title: 'Prizes',
@@ -23,6 +24,7 @@ const data = [
         url: '/email-ul',
     }
 ];
+
 const Header: React.FC = () => {
     return (
         <AppBar position="static" className={styles.header}>
@@ -34,7 +36,7 @@ const Header: React.FC = () => {
                             alt='Logo'
                             width={75}
                             height={41}
-                            className={styles.logo}
+                            className={styles.logo_img}
                         />
                     </Link>
                     <Navigation data={data}/>

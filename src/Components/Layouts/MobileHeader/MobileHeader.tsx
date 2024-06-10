@@ -5,6 +5,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Box, AppBar, Toolbar, IconButton, SwipeableDrawer } from '@mui/material';
 import MobileHeaderDrawer from '@/Components/Layouts/MobileHeader/MobileHeaderDrawer/MobileHeaderDrawer';
+import { styled } from '@mui/material/styles';
+
+const CustomSwipeableDrawer = styled(SwipeableDrawer)`
+    .MuiDrawer-paper {
+      background-color: #1D1F22;
+    }
+`;
 
 const MobileHeader = () => {
     const [openMenu, setOpenMenu] = useState(false);
@@ -26,7 +33,7 @@ const MobileHeader = () => {
                             alt="Logo"
                             width={49}
                             height={25}
-                            className={styles.logo}
+                            className={styles.logo_img}
                         />
                     </Link>
                     <IconButton className='iconBtn' onClick={toggleDrawer(true)}>
@@ -38,14 +45,15 @@ const MobileHeader = () => {
                             className={styles.burger}
                         />
                     </IconButton>
-                    <SwipeableDrawer
+                    <CustomSwipeableDrawer
                         anchor="left"
                         open={openMenu}
                         onClose={toggleDrawer(false)}
                         onOpen={toggleDrawer(true)}
+
                     >
-                        <MobileHeaderDrawer toggleDrawer={toggleDrawer} open={openMenu} />
-                    </SwipeableDrawer>
+                        <MobileHeaderDrawer toggleDrawer={toggleDrawer} />
+                    </CustomSwipeableDrawer>
                 </Toolbar>
             </Box>
         </AppBar>

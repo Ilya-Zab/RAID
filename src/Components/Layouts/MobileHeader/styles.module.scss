@@ -25,7 +25,10 @@
 
 .logo {
 	display: block;
+	&_img {
+		display: block;
+	}
 }
-.burger {
-
+.drawer {
+	background-color: $graphite;
 }
