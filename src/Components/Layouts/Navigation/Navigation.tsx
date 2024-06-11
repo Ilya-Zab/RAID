@@ -1,9 +1,10 @@
 import Box from '@mui/material/Box';
-import {FC} from 'react';
+import { FC } from 'react';
 import styles from './styles.module.scss';
 import Link from 'next/link';
 // import {useFetchMenuItemsQuery} from '@/store/wordpress';
-import {wpMenuProps} from '@/types';
+import { wpMenuProps } from '@/types';
+import { z } from 'zod';
 // import { MenuSkeleton } from "../MenuSkeleton";
 const data = [
     {
@@ -23,7 +24,9 @@ const data = [
         url: 'link1111',
     }
 ];
-const Navigation: FC<wpMenuProps> = ({menuId, className = "", skeleton}) => {
+
+const Navigation: FC<wpMenuProps> = ({ menuId, className = "", skeleton }) =>
+{
     // const { isError, error, isLoading, data } = useFetchMenuItemsQuery({ menus: `${menuId}` });
 
     // isError && console.error(error)

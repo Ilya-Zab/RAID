@@ -6,22 +6,28 @@ import styles from './styles.module.scss';
 import { IconButton } from '@mui/material';
 import Image from 'next/image';
 
-const AudioPlayer: React.FC = () => {
+const AudioPlayer: React.FC = () =>
+{
     const audioRef = useRef<HTMLAudioElement>(null);
     const isPlaying = useSelector((state: RootState) => state.audio.isPlaying);
     const dispatch = useDispatch<AppDispatch>();
 
-    useEffect(() => {
-        if (audioRef.current) {
-            if (isPlaying) {
+    useEffect(() =>
+    {
+        if (audioRef.current)
+        {
+            if (isPlaying)
+            {
                 audioRef.current.play();
-            } else {
+            } else
+            {
                 audioRef.current.pause();
             }
         }
     }, [isPlaying]);
 
-    const handleTogglePlay = () => {
+    const handleTogglePlay = () =>
+    {
         dispatch(togglePlay());
     };
 
@@ -37,7 +43,7 @@ const AudioPlayer: React.FC = () => {
                 className='iconBtn'
             >
                 <Image
-                    src={`/images/icon/${isPlaying ?'sound_on.svg':'sound_off.svg'}`}
+                    src={`/images/icon/${isPlaying ? 'sound_on.svg' : 'sound_off.svg'}`}
                     alt='Audio'
                     width={40}
                     height={40}

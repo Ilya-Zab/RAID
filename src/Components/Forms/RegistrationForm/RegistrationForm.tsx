@@ -102,7 +102,7 @@ export const RegistrationForm: FC = () =>
                 {errors.terms && <p>{errors.terms?.message}</p>}
                 <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
                 {data && <p>{data.message}</p>}
-                {isError && <p>{error.data.message}</p>}
+                {isError && <p>{error.data?.message}</p>}
             </form>
         </div>
     );
