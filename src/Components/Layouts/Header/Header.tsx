@@ -6,6 +6,24 @@ import Link from "next/link";
 import Navigation from '../Navigation/Navigation';
 import AudioPlayer from "../../AudioPlayer/AudioPlayer";
 
+const data = [
+    {
+        title: 'Prizes',
+        url: '/prizes',
+    }, {
+        title: 'Rules',
+        url: '/rules',
+    }, {
+        title: 'Privacy Notice',
+        url: '/privacy-notice',
+    }, {
+        title: 'Find ID',
+        url: '/find-id',
+    }, {
+        title: 'Email us',
+        url: '/email-ul',
+    }
+];
 
 const Header: React.FC = () => {
     return (
@@ -18,10 +36,10 @@ const Header: React.FC = () => {
                             alt='Logo'
                             width={75}
                             height={41}
-                            className={styles.logo}
+                            className={styles.logo_img}
                         />
                     </Link>
-                    <Navigation className='nav'/>
+                    <Navigation data={data}/>
                     <Box className={styles.buttons}>
                         <Box className='btnWrapper'>
                             <Button variant="contained" className={`btn-primary ${styles.btn}`}>Enter ID</Button>

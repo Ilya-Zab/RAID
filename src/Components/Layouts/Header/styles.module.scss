@@ -22,6 +22,9 @@
 
 .logo {
 	display: block;
+	&_img {
+		display: block;
+	}
 }
 .buttons {
 	display: flex;

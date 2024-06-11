@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import { FC } from 'react';
 import styles from './styles.module.scss';
 import Link from 'next/link';
+<<<<<<< HEAD
 // import {useFetchMenuItemsQuery} from '@/store/wordpress';
 import { wpMenuProps } from '@/types';
 import { z } from 'zod';
@@ -28,23 +29,14 @@ const data = [
 const Navigation: FC<wpMenuProps> = ({ menuId, className = "", skeleton }) =>
 {
     // const { isError, error, isLoading, data } = useFetchMenuItemsQuery({ menus: `${menuId}` });
+=======
+import {wpMenuProps} from '@/types';
+>>>>>>> 19de771ae8b7954bfdb4aad476f1c7bddf8a994d
 
-    // isError && console.error(error)
-
-    // if (isLoading && skeleton) {
-    //     return (
-    //         <MenuSkeleton
-    //             elements={skeleton.elements}
-    //             isColumn={skeleton.isColumn}
-    //             width={skeleton.width}
-    //             height={skeleton.height}
-    //             gap={skeleton.gap}
-    //         />
-    //     )
-    // }
+const Navigation: FC<wpMenuProps> = ({correctStyle, data}) => {
 
     return (
-        <Box className={styles.nav}>
+        <Box className={`${styles.nav} ${correctStyle}`}>
             <nav>
                 <ul className={`list-reset ${styles.nav__list}`}>
                     {data && data.map((link, index) => (
@@ -57,9 +49,7 @@ const Navigation: FC<wpMenuProps> = ({ menuId, className = "", skeleton }) =>
                 </ul>
             </nav>
         </Box>
-
     );
-
 };
 
 export default Navigation;

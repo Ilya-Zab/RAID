@@ -1,0 +1,35 @@
+@import '@/styles/variables.module.scss';
+
+.wrapper {
+	width: 250px;
+}
+.logo {
+	display: block;
+	&_img {
+		display: block;
+	}
+	&__wrapper {
+		padding: 18px 12px 0;
+	}
+}
+.navMob {
+	& ul {
+		flex-direction: column;
+		gap: 18px;
+		padding: 18px 0;
+		color: #fff;
+	}
+}
+.buttons {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	grid-gap: 17px;
+	padding: 18px 12px;
+}
+.btn {
+	font-size: inherit;
+	line-height: 25px;
+	letter-spacing: 0;
+	text-transform: none;
+}
