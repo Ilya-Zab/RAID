@@ -1,5 +1,4 @@
 import axios, { AxiosResponse, Method } from "axios";
-require('dotenv').config({ path: '.env.local' });
 
 interface AuthConfig
 {
@@ -39,7 +38,28 @@ export class WPRestAPI
     private async sendRequest(url: string, method: Method, params?: Record<string, string[] | string | number | undefined>, body?: any, headers?: Record<string, string>): Promise<AxiosResponse<unknown>>
     {
         const response = await axios({
-            url: `${this._apiBase}${url}`,
+            url: `${this._apiBase}/wp-json/wp/v2/${url}`,
+            method: method,
+            params: params,
+            data: body,
+            headers: {
+                'Authorization': this.getBasicAuth(),
+                'Content-Type': 'application/x-www-form-urlencoded',
+                ...headers
+            }
+        });
+        if (response.status !== 200 && response.status !== 201)
+        {
+            throw new Error(`Could not fetch ${url}, received ${response.status}`);
+        }
+        return response;
+    }
+
+    private async sendCustomRequest(url: string, method: Method, params?: Record<string, string[] | string | number | undefined>, body?: any, headers?: Record<string, string>): Promise<AxiosResponse<unknown>>
+    {
+        console.log('URLL:', `${this._apiBase}${url}`)
+        const response = await axios({
+            url: `${this._apiBase}/wp-json/${url}`,
             method: method,
             params: params,
             data: body,
@@ -64,6 +84,16 @@ export class WPRestAPI
     async post(url: string, body?: any, params?: Record<string, string[] | string | number | undefined>, headers?: Record<string, string>)
     {
         return this.sendRequest(url, 'POST', params, body, headers);
+    }
+
+    async getCustom(url: string, params?: Record<string, string[] | string | number | undefined>, headers?: Record<string, string>)
+    {
+        return this.sendCustomRequest(url, 'GET', params, null, headers);
+    }
+
+    async postCustom(url: string, body?: any, params?: Record<string, string[] | string | number | undefined>, headers?: Record<string, string>)
+    {
+        return this.sendCustomRequest(url, 'POST', params, body, headers);
     }
 }
 
