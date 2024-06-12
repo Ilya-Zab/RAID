@@ -19,7 +19,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (req.method !== 'GET')
     {
-        wpRestApi.post(slug, req.body)
+        wpRestApi.postCustom(slug, req.body)
             .then((response) => res.status(response.status).json(response.data))
             .catch((error) =>
             {
@@ -27,7 +27,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse)
             })
     } else
     {
-        wpRestApi.get(slug, params)
+        wpRestApi.getCustom(slug, params)
             .then((response) => res.status(response.status).json(response.data))
             .catch((error) =>
             {
