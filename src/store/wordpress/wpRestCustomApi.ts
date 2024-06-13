@@ -1,13 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const wpAPI = createApi({
-    reducerPath: 'wpAPI',
-    baseQuery: fetchBaseQuery({ baseUrl: '/api/wpCustom' }),
+export const wpCustomAPI = createApi({
+    reducerPath: 'wpCustomAPI',
+    baseQuery: fetchBaseQuery({ baseUrl: 'https://raid.digiway-dev.online/wp-json' }),
 
     endpoints: (build) => ({
-        fetchAllCreatives: build.query({
+        fetchAllCreativesByVotes: build.query({
             query: (params) => ({
-                url: '/creative',
+                url: '/creative/votes',
                 params,
             }),
         }),
@@ -16,9 +16,6 @@ export const wpAPI = createApi({
                 url: '/creative/vote',
                 method: 'POST',
                 params,
-                header: {
-                    'Content-Type': 'application/json',
-                }
             }),
         }),
     }),
@@ -26,6 +23,6 @@ export const wpAPI = createApi({
 
 export const
     {
-        useFetchAllCreativesQuery,
+        useFetchAllCreativesByVotesQuery,
         useFetchUpdateVoteVideoMutation
-    } = wpAPI;
+    } = wpCustomAPI;
