@@ -4,6 +4,7 @@
 	font-weight: 400;
 	font-size: 18px;
 	color: $white1;
+
 	@media screen and (max-width: 768px) {
 		font-size: 16px;
 	}
@@ -81,7 +82,8 @@
 		height: calc(100% + 2px);
 		width: calc(100% + 2px);
 		border-radius: 40px;
-		background: linear-gradient(to left, #1FFFFF 0%, #23FF5F 37%, #FFB82D 100%);;
+		background: linear-gradient(to left, #1FFFFF 0%, #23FF5F 37%, #FFB82D 100%);
+		;
 		position: absolute;
 		z-index: 5;
 		top: -1px;
@@ -103,4 +105,20 @@
 	&:hover {
 		background: linear-gradient(176deg, #00ded4 0%, #0292bf 100%);
 	}
+}
+
+.container {
+	box-sizing: border-box;
+	padding: 40px;
+	max-width: 1150px;
+
+	&_creatives {
+		max-width: 1215px;
+	}
+}
+
+.creatives-list-grid {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 20px;
 }
