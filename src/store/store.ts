@@ -3,12 +3,14 @@ import audioReducer from './slice/audioSlice';
 import { jwtApi } from './wordpress/jwtApi';
 import { wpAPI } from './wordpress/wpRestApi';
 import { wpUser } from './wordpress/wpUser';
+import { wpCustomAPI } from './wordpress/wpRestCustomApi';
 
 const rootReducer = combineReducers({
 
     [jwtApi.reducerPath]: jwtApi.reducer,
     [wpAPI.reducerPath]: wpAPI.reducer,
     [wpUser.reducerPath]: wpUser.reducer,
+    [wpCustomAPI.reducerPath]: wpCustomAPI.reducer,
     audio: audioReducer,
 });
 
@@ -20,7 +22,8 @@ export const setupStore = () =>
             getDefaultMiddleware()
                 .concat(jwtApi.middleware)
                 .concat(wpAPI.middleware)
-                .concat(wpUser.middleware),
+                .concat(wpUser.middleware)
+                .concat(wpCustomAPI.middleware),
     });
 };
 

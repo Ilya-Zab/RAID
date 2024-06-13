@@ -1,6 +1,6 @@
 import { useFetchCheckLoggedInMutation } from "@/store/wordpress/jwtApi";
-import { useFetchAllCreativesQuery } from "@/store/wordpress/wpRestApi";
-import { useFetchUpdateVoteVideoMutation } from "@/store/wordpress/wpRestCustomApi";
+import { useFetchAllCreativesByDataQuery } from "@/store/wordpress/wpRestApi";
+import { useFetchAllCreativesByVotesQuery, useFetchUpdateVoteVideoMutation } from "@/store/wordpress/wpRestCustomApi";
 import { useLazyFetchUserDataQuery } from "@/store/wordpress/wpUser";
 import { FormEvent, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
@@ -9,9 +9,9 @@ export default function TestPage()
 {
     const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
     const [fetchUserData, { data: user, error: userError, isLoading }] = useLazyFetchUserDataQuery();
-    const { data: creatives } = useFetchAllCreativesQuery({ order: 'asc' });
-
-    const [updateVoteVideo, { data: updatedCreative }] = useFetchUpdateVoteVideoMutation();
+    const { data: creatives } = useFetchAllCreativesByDataQuery({ order: 'asc', per_page: 100 });
+    const { data: votesCreatives } = useFetchAllCreativesByVotesQuery({ order: 'asc', per_page: 100 });
+    const [updateVoteVideo, { data: updatedCreative, error: updatedError }] = useFetchUpdateVoteVideoMutation();
 
     useEffect(() =>
     {
@@ -24,9 +24,9 @@ export default function TestPage()
         }
     }, [cookies, fetchUserData]);
 
-    // if (userInfo)
+    // if (user)
     // {
-    //     console.log(userInfo);
+    //     console.log(user);
     // }
 
     // if (userError)
@@ -39,17 +39,27 @@ export default function TestPage()
     //     console.log(creatives);
     // }
 
-    if (user)
+    // if (user)
+    // {
+    //     console.log(user)
+    // }
+
+    if (votesCreatives)
     {
-        console.log(user)
+        console.log(votesCreatives);
     }
 
-    const onCreativeClick = (userid, creativeId) =>
+    const onCreativeClick = (userId, creativeId) =>
     {
-        updateVoteVideo({ user_id: userid, creative_id: creativeId });
+        updateVoteVideo({ user_id: userId, creative_id: creativeId });
         if (updatedCreative)
         {
-            console.log(updatedCreative)
+            console.log(updatedCreative.message);
+        }
+
+        if (updatedError)
+        {
+            console.log(updatedError.data.message);
         }
     };
 
@@ -79,7 +89,6 @@ export default function TestPage()
                 ))}
             </div>
 
-            <h2>API response</h2>
             <pre>
                 {/* {JSON.stringify(result, null, 4)} */}
             </pre>
