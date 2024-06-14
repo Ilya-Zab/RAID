@@ -4,6 +4,7 @@
 	font-weight: 400;
 	font-size: 18px;
 	color: $white1;
+
 	@media screen and (max-width: 768px) {
 		font-size: 16px;
 	}
@@ -29,6 +30,21 @@
 .nav-link:focus-visible {
 	//outline: 2px solid $accent;
 	outline-offset: 10px;
+}
+
+body {
+	background-color: $bg3;
+}
+
+.subtract-box {
+	margin: 0 auto;
+	width: fit-content;
+	padding: 70px 27px;
+	backdrop-filter: blur(10px);
+	background-image: url('../../public/images/subtract-box.png');
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-position: 0 0;
 }
 
 .btnWrapper {
@@ -81,7 +97,8 @@
 		height: calc(100% + 2px);
 		width: calc(100% + 2px);
 		border-radius: 40px;
-		background: linear-gradient(to left, #1FFFFF 0%, #23FF5F 37%, #FFB82D 100%);;
+		background: linear-gradient(to left, #1FFFFF 0%, #23FF5F 37%, #FFB82D 100%);
+		;
 		position: absolute;
 		z-index: 5;
 		top: -1px;

@@ -1,0 +1,14 @@
+@import '@/styles/variables.module.scss';
+
+.form {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+
+    &__title {
+        font-size: 22px;
+        font-weight: 700;
+        color: $white1;
+    }
+}
