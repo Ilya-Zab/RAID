@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const wpResponseErrorSchema = z.object({
+export const wpResponseErrorSchema = z.object({
     data: z.object({
         message: z.string(),
         status: z.string()
@@ -8,4 +8,6 @@ const wpResponseErrorSchema = z.object({
     status: z.string()
 });
 
-type wpResponseError = z.infer<typeof wpResponseErrorSchema>;
+export const wpResponseErrorType = z.union([wpResponseErrorSchema, z.boolean()]);
+
+export type wpResponseError = z.infer<typeof wpResponseErrorType>;

@@ -33,6 +33,21 @@
 	outline-offset: 10px;
 }
 
+body {
+	background-color: $bg3;
+}
+
+.subtract-box {
+	margin: 0 auto;
+	width: fit-content;
+	padding: 70px 27px;
+	backdrop-filter: blur(10px);
+	background-image: url('../../public/images/subtract-box.png');
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-position: 0 0;
+}
+
 .btnWrapper {
 	position: relative;
 	z-index: 10;

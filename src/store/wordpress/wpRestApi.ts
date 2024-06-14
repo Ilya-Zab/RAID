@@ -22,10 +22,6 @@ export const wpAPI = createApi({
                 url: '/users',
                 method: 'POST',
                 body: credentials,
-                // headers: {
-                //     'Content-Type': 'application/json',
-                //     'Authorization': 'Basic YWRtaW46NjlIQSA2c2ZHIGJ2WWYgODdxcyA2ZkJhIHZFajg=',
-                // }
             })
         }),
         postVideo: build.mutation({
