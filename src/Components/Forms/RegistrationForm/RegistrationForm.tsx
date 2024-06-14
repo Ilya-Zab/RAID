@@ -5,6 +5,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRegisterUserMutation } from "@/store/wordpress/wpRestApi";
 import { useFetchUserTokenMutation } from "@/store/wordpress/jwtApi";
 import { useCookies } from 'react-cookie';
+import { useLazyFetchUserCountryQuery } from "@/store/ipapi/ipapi";
+import { CustomInput } from "../CustomInput";
+import styles from './styles.module.scss';
 
 const RegistrationFormSchema = z.object({
     raidId: z.string(),
@@ -22,8 +25,10 @@ type RegistrationForm = z.infer<typeof RegistrationFormSchema>;
 export const RegistrationForm: FC = () =>
 {
     const [registerForm, { data, isError, error }] = useRegisterUserMutation();
-    const [fetchUserToken, { data: userToken }] = useFetchUserTokenMutation();
+    const [fetchUserToken] = useFetchUserTokenMutation();
     const [cookies, setCookie] = useCookies(['userToken']);
+    const [checkUserCountry] = useLazyFetchUserCountryQuery();
+    const allowedCountries = ['GB', 'US', 'PL'];
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm<RegistrationForm>({
@@ -42,16 +47,28 @@ export const RegistrationForm: FC = () =>
 
         try
         {
+            const userCountry = await checkUserCountry({});
+
+            if (userCountry)
+            {
+                console.log(userCountry && 'data' in userCountry);
+                if (!allowedCountries.includes(userCountry.data.country_code))
+                {
+                    alert('Sorry, but your country is not available :(');
+                    reset();
+                    return;
+                }
+            }
+
             const response = await registerForm(body);
 
             if (response && 'data' in response)
             {
                 const userToken = await fetchUserToken({ username: raidId, password: raidId }).unwrap();
                 console.log('Token:', userToken);
-                const tomorrow = new Date();
-                tomorrow.setDate(tomorrow.getDate() + 1);
-                setCookie('userToken', userToken.token, { path: '/', expires: tomorrow });
-                reset();
+                const expiresDate = new Date();
+                expiresDate.setTime(expiresDate.getTime() + (7 * 24 * 60 * 60 * 1000));
+                setCookie('userToken', userToken.token, { path: '/', expires: expiresDate });
             }
         } catch (error)
         {
@@ -59,29 +76,26 @@ export const RegistrationForm: FC = () =>
         } finally
         {
             setIsSubmitting(false);
+            reset();
         }
     };
 
     return (
-        <div>
+        <div className="subtract-box">
+            <h2 className={styles.form__title}>Enter your ID, and make a video</h2>
             <form
-                style={{
-                    margin: '50px auto',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    maxWidth: '300px'
-                }}
+                className={styles.form}
                 onSubmit={handleSubmit(onSubmit)}>
-                <input
-                    placeholder="Your Raid ID here"
-                    {...register("raidId")}
-                    style={{ color: 'black' }}
-                />
                 {errors.raidId && <p>{errors.raidId?.message}</p>}
-                <input
-                    placeholder="Your Email"
-                    {...register("email")}
-                    style={{ color: 'black' }}
+                <CustomInput
+                    placeholder={'Enter Raid ID here'}
+                    name={'raidId'}
+                    register={register}
+                />
+                <CustomInput
+                    placeholder={'Enter Email'}
+                    name={'email'}
+                    register={register}
                 />
                 {errors.email && <p>{errors.email?.message}</p>}
                 <label>
@@ -102,7 +116,7 @@ export const RegistrationForm: FC = () =>
                 {errors.terms && <p>{errors.terms?.message}</p>}
                 <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
                 {data && <p>{data.message}</p>}
-                {isError && <p>{error.data?.message}</p>}
+                {isError && <p>{error?.data?.message}</p>}
             </form>
         </div>
     );
