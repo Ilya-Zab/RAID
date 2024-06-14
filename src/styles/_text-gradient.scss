@@ -1,0 +1,16 @@
+@mixin text-gradient {
+    background: rgb(8, 162, 50);
+    background: linear-gradient(0deg,
+            rgba(8, 162, 50, 1) 0%,
+            rgba(45, 230, 255, 1) 33%,
+            rgba(59, 87, 237, 1) 66%,
+            rgba(145, 106, 255, 1));
+    background: -webkit-linear-gradient(0deg,
+            rgba(8, 162, 50, 1) 0%,
+            rgba(45, 230, 255, 1) 33%,
+            rgba(59, 87, 237, 1) 66%,
+            rgba(145, 106, 255, 1));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

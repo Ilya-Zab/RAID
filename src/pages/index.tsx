@@ -6,37 +6,32 @@ import { useRegisterUserMutation } from "@/store/wordpress/wpRestApi";
 import wpRestApi from "@/services/wordpress/wpService";
 import { LoginForm } from "@/Components/Forms/Login";
 import { useEffect } from "react";
+import CreativesList from "@/Components/Creatives/CreativesList";
+
 import axios from "axios";
 import { useLazyFetchUserCountryQuery } from "@/store/ipapi/ipapi";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home()
-{
+export default function Home() {
     const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
 
-    const unsetCookies = () =>
-    {
+    const unsetCookies = () => {
         removeCookie('userToken');
     };
 
-    useEffect(() =>
-    {
-        if (cookies.userToken)
-        {
-        } else
-        {
+    useEffect(() => {
+        if (cookies.userToken) {
+        } else {
             console.log('No cookies!')
         }
     }, [cookies]);
 
     const [checkUserCountry, { data, error }] = useLazyFetchUserCountryQuery()
 
-    const checkUserIp = () =>
-    {
+    const checkUserIp = () => {
         checkUserCountry({});
-        if (data)
-        {
+        if (data) {
             console.log(data);
         }
     }
@@ -46,7 +41,9 @@ export default function Home()
             <RegistrationForm />
             <LoginForm />
             <button onClick={() => unsetCookies()}>unsetCookies</button>
+            {/* <button onClick={ }></button> */}
+            <CreativesList />
             <button onClick={() => checkUserIp()}>Check your IP</button>
-        </main>
+        </main >
     )
 }
