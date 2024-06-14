@@ -1,0 +1,77 @@
+@import "@/styles/variables.module";
+@import "@/styles/text-gradient";
+
+.creatives-list-item {
+    position: relative;
+    padding-top: 164.5%;
+    background: $bg2;
+    border-radius: 10px;
+    overflow: hidden;
+    border: none;
+    color: $white;
+    transition: .1s ease;
+    outline: 4px solid transparent;
+    cursor: pointer;
+    font-size: 0.7em;
+    font-weight: 800;
+    text-shadow: rgba(0, 0, 0, .2) 0 0 10px;
+
+    &:hover {
+        outline: 4px solid rgba(255, 255, 255, .2);
+
+        .creatives-list-item__content {
+            background-color: transparent;
+        }
+    }
+
+    &:focus-visible {
+        outline: 4px solid $white;
+        box-shadow: rgba(255, 255, 255, 0.4) 0 0 20px;
+
+        .creatives-list-item__content {
+            background-color: transparent;
+        }
+    }
+
+    &__media {
+        position: absolute;
+        inset: 0;
+
+        &-video {
+            position: absolute;
+            inset: 0;
+            object-fit: cover;
+        }
+    }
+
+    &__content {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 15px 10px 10px;
+        background-color: rgba(0, 0, 0, .15);
+        transition: 0.1s ease;
+    }
+
+    &__title {
+        @include text-gradient;
+    }
+
+    &__votes {
+        font-size: 0.7em;
+    }
+
+    &__top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}

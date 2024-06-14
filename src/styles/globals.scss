@@ -1,4 +1,5 @@
 @import './variables.module';
+@import "./text-gradient";
 
 .desc {
 	font-weight: 400;
@@ -111,6 +112,7 @@
 	box-sizing: border-box;
 	padding: 40px;
 	max-width: 1150px;
+	margin: 0 auto;
 
 	&_creatives {
 		max-width: 1215px;
@@ -121,4 +123,8 @@
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
 	gap: 20px;
+}
+
+.text-gradient {
+	@include text-gradient;
 }
