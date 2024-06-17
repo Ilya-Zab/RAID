@@ -1,0 +1,54 @@
+@import '@/styles/variables.module.scss';
+
+
+.SocialShare {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__text {
+        margin-bottom: 15px;
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+
+        h3 {
+            &:first-child {
+                font-size: 16px;
+            }
+
+            font-size: 18px;
+        }
+
+        span {
+            font-weight: bold;
+        }
+    }
+
+    &__socials {
+        display: flex;
+        gap: 20px;
+    }
+
+    &__shareBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+        outline: 1px solid $white;
+        background: $linearGradient3;
+        transition: .2s filter ease-in-out, .2s opacity ease-in-out, .1s outline ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            filter: brightness(1.2);
+        }
+
+        &:active {
+            outline: 0 solid $white;
+            opacity: 0.8;
+        }
+    }
+}
