@@ -10,7 +10,7 @@ import { CustomInput } from "../CustomInput";
 import styles from './styles.module.scss';
 
 const RegistrationFormSchema = z.object({
-    raidId: z.string(),
+    raidId: z.string().min(1, 'Please, type your ID'),
     email: z.string().email('Please, type valid email'),
     country: z.boolean().refine(value => value === true, {
         message: "You must agree to the terms",
@@ -86,37 +86,41 @@ export const RegistrationForm: FC = () =>
             <form
                 className={styles.form}
                 onSubmit={handleSubmit(onSubmit)}>
-                {errors.raidId && <p>{errors.raidId?.message}</p>}
                 <CustomInput
                     placeholder={'Enter Raid ID here'}
                     name={'raidId'}
                     register={register}
+                    errors={errors}
                 />
                 <CustomInput
                     placeholder={'Enter Email'}
                     name={'email'}
                     register={register}
+                    errors={errors}
                 />
-                {errors.email && <p>{errors.email?.message}</p>}
-                <label>
-                    <input
-                        type="checkbox"
-                        {...register("country")}
-                    />
-                    I confirm that I am a US citizen (outside New York and Florida)
-                </label>
-                {errors.country && <p>{errors.country?.message}</p>}
-                <label>
-                    <input
-                        type="checkbox"
-                        {...register("terms")}
-                    />
-                    I agree to this event&apos;s Official Rules and Privacy notice
-                </label>
-                {errors.terms && <p>{errors.terms?.message}</p>}
-                <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
-                {data && <p>{data.message}</p>}
-                {isError && <p>{error?.data?.message}</p>}
+                <CustomInput
+                    fieldName={'I confirm that I am a US citizen (outside New York and Florida)'}
+                    name={'country'}
+                    register={register}
+                    isCheckbox={true}
+                    errors={errors}
+                />
+                <CustomInput
+                    fieldName={"I agree to this event's Official Rules and Privacy notice"}
+                    name={'terms'}
+                    register={register}
+                    isCheckbox={true}
+                    errors={errors}
+                />
+                <button
+                    type="submit"
+                    className={`hexagon-button ${styles.form__button}`}
+                    disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Join event'}
+                </button>
+                <div className={styles.form__res}>
+                    {data && <p className={styles.form__success}>Account has been created!</p>}
+                    {isError && <p className={styles.form__error}>{error?.data?.message}</p>}
+                </div>
             </form>
         </div>
     );

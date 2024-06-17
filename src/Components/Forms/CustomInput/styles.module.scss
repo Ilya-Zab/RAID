@@ -13,11 +13,22 @@
     }
 
     &__checkbox {
-        width: fit-content;
-        margin-right: 10px;
-        display: inline-block;
-        width: 25px;
-        height: 25px;
+        appearance: none;
+        -webkit-appearance: none;
+        width: 30px;
+        height: 30px;
+        border-radius: 5px;
+        border: 2px solid #17E8F5;
+        transition: background-color 0.2s;
+        cursor: pointer;
+
+        &:checked {
+            background-color: #17E8F5;
+            background-image: url('../../../../public/images/checkbox-checked.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 15px;
+        }
     }
 
     &_checkbox {
@@ -25,7 +36,8 @@
         width: fit-content;
         align-items: center;
         flex-direction: row;
-        // color: $cornflower-blue;
+        gap: 15px;
+        font-size: 13px;
 
         div {
             order: -1;
@@ -41,11 +53,12 @@
     }
 
     &__input {
-        padding: 15px 70px;
+        padding: 20px 40px;
         width: 100%;
         border: 1px solid $border-color;
         border-radius: 5px;
         outline: none;
+        text-align: center;
         color: $white !Important;
         background-color: $bg1;
         transition: outline-width .2s ease-in-out;
@@ -60,14 +73,14 @@
         }
 
         &_error {
-            // outline-color: $error !important;
+            outline-color: $error !important;
         }
     }
 
     &__error {
         margin-top: 10px;
         font-size: 14px;
-        // color: $error;
+        color: $error;
     }
 }
 
