@@ -9,9 +9,23 @@
 }
 
 .popular {
+	margin-top: 310px;
 	&__title {
-		&_wrapper {
-
+		font-weight: 800;
+		font-size: 38px;
+		line-height: 140%;
+		letter-spacing: -0.02em;
+		&__wrapper {
+			margin-bottom: 40px;
+		}
+		&_sub {
+			font-size: 24px;
+			margin-bottom: 30px;
+		}
+	}
+	&__list {
+		&__wrapper {
+			margin-top: 30px;
 		}
 	}
 }
