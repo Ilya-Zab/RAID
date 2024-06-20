@@ -10,20 +10,32 @@
 
 .second {
 	position: relative;
-	&:after {
+
+	@media screen and (max-width: 768px) {
+		overflow: hidden;
+		padding-bottom: 50px;
+	}
+	&:before {
 		content: '';
 		display: block;
 		background-image: url("../../../../public/images/brakus_the_Shifter.png");
 		background-repeat: no-repeat;
+		//background-attachment: fixed;
 		position: absolute;
 		left: 0;
 		top: -410px;
 		width: 100%;
 		max-width: 816px;
 		height: 1120px;
+		@media screen and (max-width: 768px) {
+			background-image: url("../../../../public/images/brakus_the_Shifter_mob.png");
+			top: 10px;
+			width: 452px;
+			height: 595px;
+		}
 	}
 	&__title {
-		font-size: clamp(16px, 9vw, 94px);
+		font-size: clamp(30px, 9vw, 94px);
 		font-weight: 800;
 		line-height: 100%;
 		color: $white;

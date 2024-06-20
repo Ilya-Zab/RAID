@@ -42,6 +42,9 @@
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	background-position: 0 0;
+	&_big {
+		background-image: url('../../public/images/subtract-big-box.png');
+	}
 }
 
 .btn-reset {
@@ -63,7 +66,7 @@
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	background-position: 0 0;
-	transition: background-image .1s ease-in-out, filter .2 ease-in-out;
+	transition: background-image .1s ease-in-out, filter .2s ease-in-out;
 	cursor: pointer;
 
 	&:hover {
@@ -73,31 +76,13 @@
 	&:active {
 		background-image: url('../../public/images/hex_hov.png');
 	}
-	&__second {
-		padding: 8px 18px;
-		color: $graphite;
-		-webkit-text-stroke: 0.1px #A4FAFF;
-		font-size: 16px;
-		font-weight: 700;
-		text-align: center;
-		background-image: url('../../public/images/hex_second.png');
-		&:hover {
-			filter: brightness(1.1);
-		}
-		&:active {
-			background-image: url('../../public/images/hex_second_hov.png');
-		}
-		&-xl {
-			padding: 12px 24px;
-			font-size: 20px;
-		}
-	}
 }
 
 body {
 	background-image: url('../../public/images/landing_page_1280px.png');
 	background-repeat: no-repeat;
 	background-size: cover;
+	overflow-x: hidden;
 }
 
 .btnWrapper {
