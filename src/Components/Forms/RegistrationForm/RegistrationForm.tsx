@@ -9,6 +9,13 @@ import { useLazyFetchUserCountryQuery } from "@/store/ipapi/ipapi";
 import { CustomInput } from "../CustomInput";
 import styles from './styles.module.scss';
 
+// UM143785687 | 138407071 
+
+function validateRaidId(id)
+{
+    const regex = /^[A-Z]{2}\d{9} \| \d{9}$/;
+}
+
 const RegistrationFormSchema = z.object({
     raidId: z.string().min(1, 'Please, type your ID'),
     email: z.string().email('Please, type valid email'),
@@ -114,7 +121,7 @@ export const RegistrationForm: FC = () =>
                 />
                 <button
                     type="submit"
-                    className={`hexagon-button ${styles.form__button}`}
+                    className={`hexagon-button hexagon-button_gradient ${styles.form__button}`}
                     disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Join event'}
                 </button>
                 <div className={styles.form__res}>
