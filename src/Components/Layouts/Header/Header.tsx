@@ -41,9 +41,12 @@ const Header: React.FC = () => {
                     </Link>
                     <Navigation data={data}/>
                     <Box className={styles.buttons}>
-                        <Box className='btnWrapper'>
-                            <Button variant="contained" className={`btn-primary ${styles.btn}`}>Enter ID</Button>
-                        </Box>
+                        <Link
+                            href={'#'}
+                            download
+                            className={`hexagon-button hexagon-button__second ${styles.btn}`}>
+                            Download RAID
+                        </Link>
                         <AudioPlayer />
                     </Box>
                 </Toolbar>

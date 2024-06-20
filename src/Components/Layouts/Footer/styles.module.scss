@@ -2,12 +2,12 @@
 
 .footer {
 	display: flex;
-	align-items: flex-start;
+	align-items: center;
 	justify-content: space-between;
 	@media screen and (max-width: 768px) {
 		flex-direction: column;
 		align-items: center;
-		grid-gap: 50px;
+		grid-gap: 82px;
 	}
 	&__bg {
 		border-top: 1px solid transparent;
@@ -20,6 +20,7 @@
 		background-position: top center;
 		position: relative;
 		@media screen and (max-width: 768px) {
+			padding: 43px 0 71px;
 			background-image: url("../../../../public/images/bg-footer-mob.png");
 		}
 
@@ -45,6 +46,8 @@
 	&_left {
 		max-width: 550px;
 		width: 100%;
+		position: relative;
+		z-index: 10;
 		@media screen and (max-width: 768px) {
 			display: flex;
 			justify-content: center;
@@ -54,7 +57,15 @@
 		}
 	}
 	&_right {
-
+		position: relative;
+		bottom: -50px;
+		right: -80px;
+		@media screen and (max-width: 1250px) {
+			right: 0;
+		}
+		@media screen and (max-width: 768px) {
+			top: 0;
+		}
 	}
 }
 
@@ -139,17 +150,9 @@
 	list-style-type: none;
 	position: relative;
 	z-index: 10;
+	display: flex;
+	align-items: center;
 	&__item {
-		margin-bottom: 19px;
-		&:last-of-type {
-			margin-bottom: 0;
-		}
-		& a {
-			transition: opacity .05s linear;
-		}
-		& a:hover {
-			opacity: 0.7;
-		}
 	}
 }
 
@@ -158,4 +161,8 @@
 	max-width: 161px;
 	width: 100%;
 	height: auto;
+}
+.btn {
+	display: block;
+	text-decoration: none;
 }

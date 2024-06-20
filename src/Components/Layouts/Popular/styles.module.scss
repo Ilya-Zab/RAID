@@ -1,0 +1,17 @@
+@import "@/styles/variables.module";
+@import "@/styles/text-gradient";
+
+.container {
+	max-width: 1088px;
+	width: 100%;
+	padding: 0 12px;
+	margin: 0 auto;
+}
+
+.popular {
+	&__title {
+		&_wrapper {
+
+		}
+	}
+}
