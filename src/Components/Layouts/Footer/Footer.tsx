@@ -26,20 +26,6 @@ const data = [
         url: 'link1111',
     },
 ];
-const linksMarket = [
-    {
-        icon: 'app_store',
-        link: '',
-    },
-    {
-        icon: 'google_play',
-        link: '',
-    },
-    {
-        icon: 'plarium_play',
-        link: '',
-    },
-]
 const Footer = () => {
     return (
         <Box className={styles.footer__bg_wrapper}>
@@ -62,19 +48,14 @@ const Footer = () => {
                         </Box>
                         <Box className={styles.footer_right}>
                             <ul className={styles.list}>
-                                {linksMarket && linksMarket.map((item) => (
-                                    <li key={item.icon} className={styles.list__item}>
-                                        <Link href={item.link} passHref>
-                                            <Image
-                                                src={`/images/icon/${item.icon}.svg`}
-                                                alt={item.icon}
-                                                width={161}
-                                                height={54}
-                                                className={styles.markets}
-                                            />
-                                        </Link>
-                                    </li>
-                                ))}
+                                <li className={styles.list__item}>
+                                    <Link
+                                        href={'#'}
+                                        download
+                                        className={`hexagon-button hexagon-button__second hexagon-button__second-xl ${styles.btn}`}>
+                                        Download RAID
+                                    </Link>
+                                </li>
                             </ul>
                         </Box>
                     </Box>
