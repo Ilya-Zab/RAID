@@ -1,16 +1,34 @@
 "use client"
 
-import useDeepAR from "@/hooks/useDeepAR"
+import CreativeRecorder from "@/Components/CreativeRecorder/CreativeRecorder"
+
+// used to test recorded videos
+function downloadVideo(video: Blob, videoName: string) {
+    const url = URL.createObjectURL(video);
+    const a: any = document.createElement("a");
+
+    a.href = url;
+    a.download = videoName;
+
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
 
 export default function TestCreativeRecording() {
-    const deepAR = useDeepAR("#ar-screen");
+    function handleContinueClick(video: Blob) {
+        if (video)
+            downloadVideo(video, "test-video.mp4");
+    }
 
-    // div element to display video from DeepAR library should has specified size 
     return (
         <div>
             <h1>Try to record creative now!</h1>
 
-            <div id="ar-screen" style={{ width: "640px", height: "480px" }}></div>
+            <CreativeRecorder
+                onContinueClick={handleContinueClick}
+            />
         </div>
     )
 }
