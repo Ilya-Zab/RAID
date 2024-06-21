@@ -5,13 +5,38 @@
 	padding: 50px 0 0;
 }
 
-.hero {
-	&:before {
-		content: '';
-		display: block;
-		background-image: url("../../../../public/images/king.png");
-		background-repeat: no-repeat;
+.container {
+	max-width: 1088px;
+	width: 100%;
+	padding: 0 12px;
+	margin: 0 auto;
+	@media screen and (max-width: 768px) {
+		padding: 0 28px;
+	}
+}
 
+.hero {
+	margin-top: 50px;
+	position: relative;
+	@media screen and (max-width: 768px) {
+		margin-top: 37px;
+	}
+	&__img {
+		position: absolute;
+		bottom: -106px;
+		right: 0;
+		width: 100%;
+		max-width: 733px;
+		@media screen and (max-width: 1024px) {
+			max-width: 533px;
+			height: 545px;
+		}
+		@media screen and (max-width: 768px) {
+			max-width: 359px;
+			height: auto;
+		}
+		&__wrapper {
+		}
 	}
 	&__title {
 		font-weight: 800;
@@ -19,8 +44,14 @@
 		line-height: 99%;
 		text-transform: uppercase;
 		color: $white;
+		margin: 0;
 		&_wrapper {
-			margin-bottom: 57px;
+			margin-bottom: 20px;
+			position: relative;
+			z-index: 10;
+			@media screen and (max-width: 768px) {
+				margin-bottom: 30px;
+			}
 		}
 	}
 	&__steps {
@@ -28,10 +59,18 @@
 		font-size: 16px;
 		line-height: 160%;
 		color: $white1;
+		@media screen and (max-width: 768px) {
+			font-size: 12px;
+		}
 		&_wrapper {
 			padding: 27px 30px 12px;
 			margin-bottom: 40px;
 			position: relative;
+			z-index: 10;
+			@media screen and (max-width: 768px) {
+				padding: 14px 12px 16px;
+				margin-bottom: 250px;
+			}
 			&:before {
 				content: '';
 				position: absolute;
@@ -67,6 +106,13 @@
 	}
 	&__btn {
 		text-decoration: none;
+		padding: 15px 43px;
+		line-height: 33px;
+		@media screen and (max-width: 768px) {
+			padding: 9px 27px;
+			font-size: 16px;
+			line-height: 22px;
+		}
 		&__wrapper {
 			position: relative;
 			z-index: 10;
@@ -74,21 +120,21 @@
 	}
 	&__title2 {
 		font-weight: 800;
-		font-size: clamp(16px, 9vw, 100px);
+		font-size: clamp(24px, 9vw, 100px);
 		max-width: 1074px;
-		line-height: 150%;
+		line-height: 125%;
 		letter-spacing: -0.02em;
 		text-align: center;
+		@media screen and (max-width: 768px) {
+			font-size: clamp(24px, 5.3vw, 100px);
+		}
 		&_wrapper {
+			margin-top: 40px;
 			position: relative;
 			z-index: 10;
+			@media screen and (max-width: 768px) {
+				margin-top: 240px;
+			}
 		}
 	}
-}
-
-.container {
-	max-width: 1088px;
-	width: 100%;
-	padding: 0 12px;
-	margin: 0 auto;
 }
