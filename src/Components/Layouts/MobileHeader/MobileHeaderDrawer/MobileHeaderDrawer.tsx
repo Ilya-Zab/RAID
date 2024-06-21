@@ -51,9 +51,12 @@ const MobileHeaderDrawer: React.FC<MobileHeaderDrawerProps> = ({ toggleDrawer })
             <Navigation data={data} correctStyle={styles.navMob} />
             <Divider />
             <Box className={styles.buttons}>
-                <Box className='btnWrapper'>
-                    <Button variant="contained" className={`btn-primary ${styles.btn}`}>Enter ID</Button>
-                </Box>
+                <Link
+                    href={'#'}
+                    download
+                    className={`hexagon-button hexagon-button__second ${styles.btn}`}>
+                    Download RAID
+                </Link>
                 <AudioPlayer />
             </Box>
         </Box>
