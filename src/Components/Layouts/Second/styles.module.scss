@@ -20,7 +20,7 @@
 		display: block;
 		background-image: url("../../../../public/images/brakus_the_Shifter.png");
 		background-repeat: no-repeat;
-		background-attachment: fixed;
+		background-attachment: scroll;
 		position: absolute;
 		left: 0;
 		top: -410px;
@@ -33,6 +33,9 @@
 			width: 452px;
 			height: 595px;
 		}
+	}
+	&.fixed::before {
+		background-attachment: fixed;
 	}
 	&__title {
 		font-size: clamp(30px, 9vw, 94px);
