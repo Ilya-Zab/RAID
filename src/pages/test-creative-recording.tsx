@@ -1,6 +1,9 @@
 "use client"
 
 import CreativeRecorder from "@/Components/CreativeRecorder/CreativeRecorder"
+import useVideoProcessor from "@/hooks/useVideoProcessor";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 // used to test recorded videos
 function downloadVideo(video: Blob, videoName: string) {
@@ -17,9 +20,25 @@ function downloadVideo(video: Blob, videoName: string) {
 }
 
 export default function TestCreativeRecording() {
+    const { mergeVideoAndAudio, isLoaded, output } = useVideoProcessor();
+    const [video, setVideo] = useState<Blob | null>(null);
+    const [audio, setAudio] = useState<Blob | null>(null);
+
+    useEffect(() => {
+        axios.get("/audio/AR_CONTRAST.mp3", {
+            responseType: "blob"
+        })
+        .then(response => setAudio(response.data));
+    }, []);
+
+    useEffect(() => {
+        if (output) downloadVideo(output, "merged-video.mp4");
+    }, [output])
+
     function handleContinueClick(video: Blob) {
-        if (video)
-            downloadVideo(video, "test-video.mp4");
+        if (!video || !audio || !isLoaded) return;
+
+        mergeVideoAndAudio(video, audio);
     }
 
     return (
