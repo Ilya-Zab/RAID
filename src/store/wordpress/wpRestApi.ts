@@ -11,12 +11,10 @@ export const wpAPI = createApi({
                 params,
             }),
         }),
-        fetchUserData: build.query({
-            query: (accessToken) => ({
-                url: '/users/me',
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`
-                },
+        fetchAllCreativesByData: build.query({
+            query: (params) => ({
+                url: '/creative',
+                params,
             }),
         }),
         registerUser: build.mutation({
@@ -24,13 +22,26 @@ export const wpAPI = createApi({
                 url: '/users',
                 method: 'POST',
                 body: credentials,
+            })
+        }),
+        postVideo: build.mutation({
+            query: (params: { video: Buffer, videoFileName: string }) => ({
+                url: '/media',
+                method: 'POST',
+                body: params.video,
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Basic YWRtaW46NjlIQSA2c2ZHIGJ2WWYgODdxcyA2ZkJhIHZFajg=',
+                    "Content-Type": "video/mp4",
+                    "Content-Disposition": `    attachment; filename="${params.videoFileName}"`
                 }
             })
         })
     }),
 })
 
-export const { useLazyFetchUserQuery, useRegisterUserMutation, useLazyFetchUserDataQuery } = wpAPI;
+export const
+    {
+        useLazyFetchUserQuery,
+        useRegisterUserMutation,
+        usePostVideoMutation,
+        useFetchAllCreativesByDataQuery,
+    } = wpAPI;

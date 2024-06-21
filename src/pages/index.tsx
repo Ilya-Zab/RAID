@@ -1,51 +1,56 @@
 import { Inter } from "next/font/google";
-// import { useFetchCheckLoggedInMutation, useFetchUserTokenMutation } from "@/store/wordpress/jwtApi";
 import { useCookies } from 'react-cookie';
-import { useLazyFetchUserDataQuery, useLazyFetchUserQuery } from "@/store/wordpress/wpRestApi";
-// import wpRestApi from "@/services/wordpress/authentication";
+import { useLazyFetchUserQuery } from "@/store/wordpress/wpRestApi";
 import { RegistrationForm } from "@/Components/Forms/RegistrationForm";
 import { useRegisterUserMutation } from "@/store/wordpress/wpRestApi";
 import wpRestApi from "@/services/wordpress/wpService";
 import { LoginForm } from "@/Components/Forms/Login";
 import { useEffect } from "react";
+import CreativesList from "@/Components/Creatives/CreativesList";
 
+import axios from "axios";
+import { useLazyFetchUserCountryQuery } from "@/store/ipapi/ipapi";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home()
 {
-  const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
-  const [fetchUserData, { data, error, isLoading }] = useLazyFetchUserDataQuery();
+    const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
 
-
-  const unsetCookies = () =>
-  {
-    removeCookie('userToken');
-  };
-
-  useEffect(() =>
-  {
-    if (cookies.userToken)
+    const unsetCookies = () =>
     {
-      console.log("Cookies:", cookies.userToken);
-      fetchUserData(cookies.userToken);
-    } else
+        removeCookie('userToken');
+    };
+
+    useEffect(() =>
     {
-      console.log('No cookies!')
+        if (cookies.userToken)
+        {
+        } else
+        {
+            console.log('No cookies!')
+        }
+    }, [cookies]);
+
+    const [checkUserCountry, { data, error }] = useLazyFetchUserCountryQuery()
+
+    const checkUserIp = () =>
+    {
+        checkUserCountry({});
+        if (data)
+        {
+            console.log(data);
+        }
     }
-  }, [cookies, fetchUserData]);
 
-  if (data)
-  {
-    console.log(data);
-  }
-
-  return (
-    <main>
-      <RegistrationForm />
-      <LoginForm />
-      <button onClick={() => unsetCookies()}>unsetCookies</button>
-      {/* <button onClick={ }></button> */}
-    </main>
-  )
+    return (
+        <main>
+            <RegistrationForm />
+            {/* <LoginForm /> */}
+            <button onClick={() => unsetCookies()}>unsetCookies</button>
+            {/* <button onClick={ }></button> */}
+            <CreativesList />
+            <button onClick={() => checkUserIp()}>Check your IP</button>
+        </main >
+    )
 }

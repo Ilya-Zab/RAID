@@ -1,4 +1,5 @@
 import wpRestApi from '@/services/wordpress/wpService';
+import { validateApiError } from '@/utils';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse)
@@ -16,40 +17,21 @@ export default function handler(req: NextApiRequest, res: NextApiResponse)
         slug = slug.join('/');
     }
 
-    if (req.body)
+    if (req.method !== 'GET')
     {
         wpRestApi.post(slug, req.body)
-            .then((response) =>
-            {
-                if (response.status === 200 || response.status === 201)
-                {
-                    return res.status(response.status).json(response.data);
-                } else
-                {
-                    throw new Error(`WordPress API returned status ${response.status}`);
-                }
-            })
+            .then((response) => res.status(response.status).json(response.data))
             .catch((error) =>
             {
-                console.log(error.response.data.message);
-                return res.status(500).json(error);
+                validateApiError(error, res);
             })
     } else
     {
         wpRestApi.get(slug, params)
-            .then((response) =>
-            {
-                if (response.status === 200 || response.status === 201)
-                {
-                    return res.status(response.status).json(response.data);
-                } else
-                {
-                    throw new Error(`WordPress API returned status ${response.status}`);
-                }
-            })
+            .then((response) => res.status(response.status).json(response.data))
             .catch((error) =>
             {
-                return res.status(500).json(error);
+                validateApiError(error, res);
             })
     }
 }

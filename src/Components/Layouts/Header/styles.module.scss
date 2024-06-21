@@ -1,0 +1,39 @@
+@import '@/styles/variables.module.scss';
+.header {
+	padding: 12px 0 12px;
+	background-color: $graphite;
+	box-shadow: none;
+	border-bottom: 1px solid transparent;
+	border-image: $linearGradient2;
+	border-image-slice: 1;
+	&__toolbar {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		min-height: 0;
+	}
+}
+.container {
+	max-width: 1088px;
+	width: 100%;
+	padding: 0 12px;
+	margin: 0 auto;
+}
+
+.logo {
+	display: block;
+	&_img {
+		display: block;
+	}
+}
+.buttons {
+	display: flex;
+	align-items: center;
+	grid-gap: 17px;
+}
+.btn {
+	font-size: inherit;
+	line-height: 25px;
+	letter-spacing: 0;
+	text-transform: none;
+}

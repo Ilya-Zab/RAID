@@ -1,0 +1,34 @@
+@import '@/styles/variables.module.scss';
+
+.header {
+	padding: 20px 0 20px;
+	background-color: $graphite;
+	box-shadow: none;
+	border-bottom: 1px solid transparent;
+	border-image: $linearGradient2;
+	border-image-slice: 1;
+
+	&__toolbar {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		min-height: 0;
+	}
+}
+
+.container {
+	max-width: 1088px;
+	width: 100%;
+	padding: 0 16px;
+	margin: 0 auto;
+}
+
+.logo {
+	display: block;
+	&_img {
+		display: block;
+	}
+}
+.drawer {
+	background-color: $graphite;
+}

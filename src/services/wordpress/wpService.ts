@@ -1,5 +1,4 @@
 import axios, { AxiosResponse, Method } from "axios";
-require('dotenv').config({ path: '.env.local' });
 
 interface AuthConfig
 {
@@ -36,16 +35,17 @@ export class WPRestAPI
         return `Basic ${encodedAuth}`;
     }
 
-    private async sendRequest(url: string, method: Method, params?: Record<string, string[] | string | number | undefined>, body?: any): Promise<AxiosResponse<unknown>>
+    private async sendRequest(url: string, method: Method, params?: Record<string, string[] | string | number | undefined>, body?: any, headers?: Record<string, string>): Promise<AxiosResponse<unknown>>
     {
         const response = await axios({
-            url: `${this._apiBase}${url}`,
+            url: `${this._apiBase}/wp-json/wp/v2/${url}`,
             method: method,
             params: params,
             data: body,
             headers: {
                 'Authorization': this.getBasicAuth(),
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
+                ...headers
             }
         });
         if (response.status !== 200 && response.status !== 201)
@@ -55,14 +55,14 @@ export class WPRestAPI
         return response;
     }
 
-    async get(url: string, params?: Record<string, string[] | string | number | undefined>)
+    async get(url: string, params?: Record<string, string[] | string | number | undefined>, headers?: Record<string, string>)
     {
-        return this.sendRequest(url, 'GET', params);
+        return this.sendRequest(url, 'GET', params, null, headers);
     }
 
-    async post(url: string, body?: any)
+    async post(url: string, body?: any, params?: Record<string, string[] | string | number | undefined>, headers?: Record<string, string>)
     {
-        return this.sendRequest(url, 'POST', undefined, body);
+        return this.sendRequest(url, 'POST', params, body, headers);
     }
 }
 

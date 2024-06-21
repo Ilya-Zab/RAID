@@ -5,9 +5,19 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRegisterUserMutation } from "@/store/wordpress/wpRestApi";
 import { useFetchUserTokenMutation } from "@/store/wordpress/jwtApi";
 import { useCookies } from 'react-cookie';
+import { useLazyFetchUserCountryQuery } from "@/store/ipapi/ipapi";
+import { CustomInput } from "../CustomInput";
+import styles from './styles.module.scss';
+
+// UM143785687 | 138407071 
+
+// function validateRaidId(id)
+// {
+//     const regex = /^[A-Z]{2}\d{9} \| \d{9}$/;
+// }
 
 const RegistrationFormSchema = z.object({
-    raidId: z.string(),
+    raidId: z.string().min(1, 'Please, type your ID'),
     email: z.string().email('Please, type valid email'),
     country: z.boolean().refine(value => value === true, {
         message: "You must agree to the terms",
@@ -22,8 +32,10 @@ type RegistrationForm = z.infer<typeof RegistrationFormSchema>;
 export const RegistrationForm: FC = () =>
 {
     const [registerForm, { data, isError, error }] = useRegisterUserMutation();
-    const [fetchUserToken, { data: userToken }] = useFetchUserTokenMutation();
+    const [fetchUserToken] = useFetchUserTokenMutation();
     const [cookies, setCookie] = useCookies(['userToken']);
+    const [checkUserCountry] = useLazyFetchUserCountryQuery();
+    const allowedCountries = ['GB', 'US', 'PL'];
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm<RegistrationForm>({
@@ -42,16 +54,28 @@ export const RegistrationForm: FC = () =>
 
         try
         {
+            const userCountry = await checkUserCountry({});
+
+            if (userCountry)
+            {
+                console.log(userCountry && 'data' in userCountry);
+                if (!allowedCountries.includes(userCountry.data.country_code))
+                {
+                    alert('Sorry, but your country is not available :(');
+                    reset();
+                    return;
+                }
+            }
+
             const response = await registerForm(body);
 
             if (response && 'data' in response)
             {
                 const userToken = await fetchUserToken({ username: raidId, password: raidId }).unwrap();
                 console.log('Token:', userToken);
-                const tomorrow = new Date();
-                tomorrow.setDate(tomorrow.getDate() + 1);
-                setCookie('userToken', userToken.token, { path: '/', expires: tomorrow });
-                reset();
+                const expiresDate = new Date();
+                expiresDate.setTime(expiresDate.getTime() + (7 * 24 * 60 * 60 * 1000));
+                setCookie('userToken', userToken.token, { path: '/', expires: expiresDate });
             }
         } catch (error)
         {
@@ -59,50 +83,51 @@ export const RegistrationForm: FC = () =>
         } finally
         {
             setIsSubmitting(false);
+            reset();
         }
     };
 
     return (
-        <div>
+        <div className="subtract-box">
+            <h2 className={styles.form__title}>Enter your ID, and make a video</h2>
             <form
-                style={{
-                    margin: '50px auto',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    maxWidth: '300px'
-                }}
+                className={styles.form}
                 onSubmit={handleSubmit(onSubmit)}>
-                <input
-                    placeholder="Your Raid ID here"
-                    {...register("raidId")}
-                    style={{ color: 'black' }}
+                <CustomInput
+                    placeholder={'Enter Raid ID here'}
+                    name={'raidId'}
+                    register={register}
+                    errors={errors}
                 />
-                {errors.raidId && <p>{errors.raidId?.message}</p>}
-                <input
-                    placeholder="Your Email"
-                    {...register("email")}
-                    style={{ color: 'black' }}
+                <CustomInput
+                    placeholder={'Enter Email'}
+                    name={'email'}
+                    register={register}
+                    errors={errors}
                 />
-                {errors.email && <p>{errors.email?.message}</p>}
-                <label>
-                    <input
-                        type="checkbox"
-                        {...register("country")}
-                    />
-                    I confirm that I am a US citizen (outside New York and Florida)
-                </label>
-                {errors.country && <p>{errors.country?.message}</p>}
-                <label>
-                    <input
-                        type="checkbox"
-                        {...register("terms")}
-                    />
-                    I agree to this event&apos;s Official Rules and Privacy notice
-                </label>
-                {errors.terms && <p>{errors.terms?.message}</p>}
-                <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
-                {data && <p>{data.message}</p>}
-                {isError && <p>{error.data.message}</p>}
+                <CustomInput
+                    fieldName={'I confirm that I am a US citizen (outside New York and Florida)'}
+                    name={'country'}
+                    register={register}
+                    isCheckbox={true}
+                    errors={errors}
+                />
+                <CustomInput
+                    fieldName={"I agree to this event's Official Rules and Privacy notice"}
+                    name={'terms'}
+                    register={register}
+                    isCheckbox={true}
+                    errors={errors}
+                />
+                <button
+                    type="submit"
+                    className={`hexagon-button hexagon-button_gradient ${styles.form__button}`}
+                    disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Join event'}
+                </button>
+                <div className={styles.form__res}>
+                    {data && <p className={styles.form__success}>Account has been created!</p>}
+                    {/* {isError && <p className={styles.form__error}>{error?.data?.message}</p>} */}
+                </div>
             </form>
         </div>
     );

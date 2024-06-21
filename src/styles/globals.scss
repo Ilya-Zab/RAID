@@ -1,0 +1,183 @@
+@import './variables.module';
+@import "./text-gradient";
+
+.desc {
+	font-weight: 400;
+	font-size: 18px;
+	color: $white1;
+
+	@media screen and (max-width: 768px) {
+		font-size: 16px;
+	}
+}
+
+.link {
+	text-decoration: none;
+	color: inherit;
+}
+
+.nav-link {
+	transition: .2s color ease-in-out;
+}
+
+.nav-link:hover {
+	//color: $accent;
+}
+
+.nav-link:active {
+	//color: $black-color;
+}
+
+.nav-link:focus-visible {
+	//outline: 2px solid $accent;
+	outline-offset: 10px;
+}
+
+.subtract-box {
+	margin: 0 auto;
+	width: fit-content;
+	padding: 70px 27px;
+	backdrop-filter: blur(10px);
+	background-image: url('../../public/images/subtract-box.png');
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-position: 0 0;
+}
+
+.btn-reset {
+	border: none;
+	background: transparent;
+}
+
+.hexagon-button {
+	padding: 20px 70px;
+	margin: 0 auto;
+	max-width: fit-content;
+	border: none;
+	font-size: 25px;
+	font-weight: bold;
+	color: $white1;
+	text-transform: capitalize;
+	background-color: transparent;
+	background-image: url('../../public/images/hex_reg.png');
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-position: 0 0;
+	transition: background-image .1s ease-in-out, filter .2 ease-in-out;
+	cursor: pointer;
+
+	&:hover {
+		filter: brightness(1.1);
+	}
+
+	&:active {
+		background-image: url('../../public/images/hex_hov.png');
+	}
+
+	&_gradient {
+		background-image: url('../../public/images/hex-gradient_reg.png');
+
+		&:active {
+			background-image: url('../../public/images/hex-gradient_hov.png');
+		}
+	}
+}
+
+
+
+
+.btnWrapper {
+	position: relative;
+	z-index: 10;
+
+	&:after {
+		content: '';
+		display: block;
+		height: calc(100% + 2px);
+		width: calc(100% + 2px);
+		border-radius: 40px;
+		background: $linearGradient2;
+		position: absolute;
+		z-index: 5;
+		top: -1px;
+		left: -1px;
+	}
+}
+
+.btn-primary {
+	background: linear-gradient(145deg, #145958 0%, #144151 100%);
+	padding: 8px 16px 7px 17px;
+	transition: background .2s ease-in-out;
+	min-width: 140px;
+	border-radius: 40px;
+	position: relative;
+	z-index: 30;
+	outline: none;
+
+	&:hover {
+		background: linear-gradient(145deg, #145958 0%, #144151 100%);
+	}
+}
+
+.iconBtn {
+	padding: 0;
+	margin-left: 0;
+}
+
+.btnGradient2 {
+	position: relative;
+	z-index: 10;
+	max-width: 210px;
+	width: 100%;
+
+	&:after {
+		content: '';
+		display: block;
+		height: calc(100% + 2px);
+		width: calc(100% + 2px);
+		border-radius: 40px;
+		background: linear-gradient(to left, #1FFFFF 0%, #23FF5F 37%, #FFB82D 100%);
+		;
+		position: absolute;
+		z-index: 5;
+		top: -1px;
+		left: -1px;
+	}
+}
+
+.btn-second {
+	width: 100%;
+	background: linear-gradient(176deg, #00ded4 0%, #0292bf 100%);
+	padding: 14px;
+	border-radius: 40px;
+	position: relative;
+	z-index: 30;
+	outline: none;
+	text-shadow: 0 2px 3px rgba(0, 0, 0, 0.27);
+	text-transform: capitalize;
+
+	&:hover {
+		background: linear-gradient(176deg, #00ded4 0%, #0292bf 100%);
+	}
+}
+
+.container {
+	box-sizing: border-box;
+	padding: 40px;
+	max-width: 1150px;
+	margin: 0 auto;
+
+	&_creatives {
+		max-width: 1215px;
+	}
+}
+
+.creatives-list-grid {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 20px;
+}
+
+.text-gradient {
+	@include text-gradient;
+}
