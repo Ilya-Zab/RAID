@@ -57,10 +57,10 @@ export default function TestPage()
             console.log(updatedCreative.message);
         }
 
-        if (updatedError)
-        {
-            console.log(updatedError.data.message);
-        }
+        // if (updatedError)
+        // {
+        //     console.log(updatedError.data.message);
+        // }
     };
 
     return (

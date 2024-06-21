@@ -11,10 +11,10 @@ import styles from './styles.module.scss';
 
 // UM143785687 | 138407071 
 
-function validateRaidId(id)
-{
-    const regex = /^[A-Z]{2}\d{9} \| \d{9}$/;
-}
+// function validateRaidId(id)
+// {
+//     const regex = /^[A-Z]{2}\d{9} \| \d{9}$/;
+// }
 
 const RegistrationFormSchema = z.object({
     raidId: z.string().min(1, 'Please, type your ID'),
@@ -126,7 +126,7 @@ export const RegistrationForm: FC = () =>
                 </button>
                 <div className={styles.form__res}>
                     {data && <p className={styles.form__success}>Account has been created!</p>}
-                    {isError && <p className={styles.form__error}>{error?.data?.message}</p>}
+                    {/* {isError && <p className={styles.form__error}>{error?.data?.message}</p>} */}
                 </div>
             </form>
         </div>

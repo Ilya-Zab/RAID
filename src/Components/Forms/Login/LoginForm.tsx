@@ -71,7 +71,7 @@ export const LoginForm: FC = () =>
                 {errors.raidId && <p>{errors.raidId?.message}</p>}
                 <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
                 {data && <p>{data.message}</p>}
-                {isError && <p>{error.data.message}</p>}
+                {/* {isError && <p>{error.data.message}</p>} */}
             </form>
         </div>
     );
