@@ -40,12 +40,13 @@ const Hero = () =>
                     to take part in the prize draw!
                 </p>
             </Box>
-            <Box className={styles.hero__btn_wrapper}>
-                <button
+            <Box className={styles.hero__btn__wrapper}>
+                <Link
+                    href='#ready'
                     type="button"
-                    className={`hexagon-button`}>
+                    className={`hexagon-button ${styles.hero__btn}`}>
                     Join event
-                </button>
+                </Link>
             </Box>
             <Box className={styles.hero__title2_wrapper}>
                 <h2 className={`text-gradient ${styles.hero__title2}`}>
