@@ -2,7 +2,17 @@ import Box from '@mui/material/Box';
 import { FC } from 'react';
 import styles from './styles.module.scss';
 import Link from 'next/link';
-import { wpMenuProps } from '@/types';
+import { z } from 'zod';
+
+const wpMenuPropsSchema = z.object({
+    correctStyle: z.string(),
+    data: z.array(z.object({
+        title: z.string(),
+        url: z.string(),
+    }))
+});
+
+type wpMenuProps = z.infer<typeof wpMenuPropsSchema>;
 
 const Navigation: FC<wpMenuProps> = ({ correctStyle, data }) =>
 {

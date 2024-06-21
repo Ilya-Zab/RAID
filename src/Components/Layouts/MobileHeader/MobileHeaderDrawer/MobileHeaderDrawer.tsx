@@ -2,7 +2,7 @@ import * as React from 'react';
 import styles from './styles.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Box, Divider,Button } from '@mui/material';
+import { Box, Divider, Button } from '@mui/material';
 import Navigation from "@/Components/Layouts/Navigation/Navigation";
 import AudioPlayer from "@/Components/AudioPlayer/AudioPlayer";
 
@@ -25,7 +25,12 @@ const data = [
     }
 ];
 
-const MobileHeaderDrawer = ({ toggleDrawer }) => {
+type MobileHeaderDrawerProps = {
+    toggleDrawer: (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => void;
+};
+
+const MobileHeaderDrawer: React.FC<MobileHeaderDrawerProps> = ({ toggleDrawer }) =>
+{
     return (
         <Box
             role="presentation"
@@ -43,7 +48,7 @@ const MobileHeaderDrawer = ({ toggleDrawer }) => {
                     />
                 </Link>
             </Box>
-            <Navigation data={data} correctStyle={styles.navMob}/>
+            <Navigation data={data} correctStyle={styles.navMob} />
             <Divider />
             <Box className={styles.buttons}>
                 <Box className='btnWrapper'>
