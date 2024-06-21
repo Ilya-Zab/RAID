@@ -5,6 +5,7 @@
 	margin-top: 88px;
 	position: relative;
 	padding-bottom: 150px;
+	margin-bottom: -68px;
 	@media screen and (max-width: 768px) {
 		padding-bottom: 400px;
 	}
@@ -17,7 +18,7 @@
 		position: absolute;
 		left: 0;
 		bottom: 0;
-		z-index: 20;
+		z-index: 0;
 		width: 100%;
 		max-width: 816px;
 		height: 1120px;
@@ -58,7 +59,7 @@
 			backdrop-filter: none;
 		}
 		& > div {
-			padding: 40px 0;
+			padding: 60px 0;
 			display: flex;
 			grid-gap: 60px;
 			position: relative;

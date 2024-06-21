@@ -22,8 +22,18 @@
 		line-height: 160%;
 		color: $white1;
 		&_wrapper {
-			padding: 27px 30px 0;
+			padding: 27px 30px 12px;
 			margin-bottom: 40px;
+			position: relative;
+			&:before {
+				content: '';
+				position: absolute;
+				left: 0;
+				top: 0;
+				height: 100%;
+				width: 1px;
+				background: linear-gradient(to bottom, #4271A1E6 11%,  #FFCC49 50%, #4271A1E6 87%);
+			}
 		}
 		& b {
 			font-weight: 600;

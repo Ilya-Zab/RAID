@@ -54,10 +54,10 @@ export default function Home()
             <Popular />
             <Ready />
             {/* <LoginForm /> */}
-            <button onClick={() => unsetCookies()}>unsetCookies</button>
+            {/*<button onClick={() => unsetCookies()}>unsetCookies</button>*/}
             {/* <button onClick={ }></button> */}
-            <CreativesList />
-            <button onClick={() => checkUserIp()}>Check your IP</button>
+            {/*<CreativesList />*/}
+            {/*<button onClick={() => checkUserIp()}>Check your IP</button>*/}
         </main >
     )
 }
