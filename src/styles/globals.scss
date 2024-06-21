@@ -76,12 +76,21 @@
 	&:active {
 		background-image: url('../../public/images/hex_hov.png');
 	}
+
+	&_gradient {
+		background-image: url('../../public/images/hex-gradient_reg.png');
+
+		&:active {
+			background-image: url('../../public/images/hex-gradient_hov.png');
+		}
+	}
 }
 html {
 	scroll-behavior: smooth;
 }
 body {
-	background-image: url('../../public/images/landing_page_1280px.png');
+	background-image: url('../../public/images/landing_page_1280.png');
+	background-blend-mode: normal;
 	background-repeat: no-repeat;
 	background-size: cover;
 	overflow-x: hidden;
@@ -183,4 +192,5 @@ body {
 
 .text-gradient {
 	@include text-gradient;
+	-webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.5);
 }
