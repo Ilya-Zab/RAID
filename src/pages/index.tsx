@@ -10,6 +10,8 @@ import CreativesList from "@/Components/Creatives/CreativesList";
 
 import axios from "axios";
 import { useLazyFetchUserCountryQuery } from "@/store/ipapi/ipapi";
+import Hero from "@/Components/Layouts/Hero/Hero";
+import Second from "@/Components/Layouts/Second/Second";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -45,6 +47,8 @@ export default function Home()
 
     return (
         <main>
+            <Hero />
+            <Second />
             <RegistrationForm />
             {/* <LoginForm /> */}
             <button onClick={() => unsetCookies()}>unsetCookies</button>

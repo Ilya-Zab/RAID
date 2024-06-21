@@ -74,15 +74,11 @@
 		background-image: url('../../public/images/hex_hov.png');
 	}
 
-	&_gradient {
-		background-image: url('../../public/images/hex-gradient_reg.png');
-
-		&:active {
-			background-image: url('../../public/images/hex-gradient_hov.png');
-		}
-	}
+body {
+	background-image: url('../../public/images/landing_page_1280px.png');
+	background-repeat: no-repeat;
+	background-size: cover;
 }
-
 
 
 
