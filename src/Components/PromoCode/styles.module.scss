@@ -1,0 +1,11 @@
+
+.promo {
+	&__link {
+
+	}
+	&__code {
+		display: flex;
+		align-items: flex-start;
+		grid-gap: 10px;
+	}
+}

@@ -77,7 +77,9 @@
 		background-image: url('../../public/images/hex_hov.png');
 	}
 }
-
+html {
+	scroll-behavior: smooth;
+}
 body {
 	background-image: url('../../public/images/landing_page_1280px.png');
 	background-repeat: no-repeat;
