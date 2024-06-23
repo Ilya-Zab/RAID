@@ -2,7 +2,6 @@
 
 import { DeepAR } from "deepar"
 import { useEffect, useState } from "react"
-import { CreativeRecorderService } from "../services/CreativeRecorder/CreativeRecorderService"
 
 interface CreativeRecorderOptions {
     deepAR: DeepAR | null,
@@ -10,34 +9,34 @@ interface CreativeRecorderOptions {
     secondPartTimeSeconds?: number,
 }
 
+export type CreativeRecorderResult = { startRecording: () => Promise<void>, finishRecording: () => Promise<void>, isRecording: boolean, video: Blob | null };
+
 export default function useCreativeRecorder({
     deepAR,
     firstPartTimeSeconds = 10,
     secondPartTimeSeconds = 10
-}: CreativeRecorderOptions): CreativeRecorderService | null
+}: CreativeRecorderOptions) : CreativeRecorderResult
 {
-    const[creativeRecorder, setCreativeRecorder] = useState<CreativeRecorderService | null>(null);
     const [isRecording, setIsRecording] = useState<boolean>(false);
+    const [video, setVideo] = useState<Blob | null>(null);
+    
+    async function startRecording() {
+        if (!deepAR)
+            throw new Error("DeepAR library is not initialized.");
+        
+        await deepAR.startVideoRecording();
+        setVideo(null);
+        setIsRecording(true);
+    }
 
-    useEffect(() => {
-        if (deepAR) {
-            const service = new CreativeRecorderService({
-                deepAR,
-                firstPartTimeSeconds,
-                secondPartTimeSeconds
-            });
+    async function finishRecording() {
+        if (!deepAR)
+            throw new Error("DeepAR library is not initialized.");
 
-            service.events.addEventListener("recordingStarted", () => setIsRecording(true));
-            service.events.addEventListener("recordingFinished", () => setIsRecording(false));
-
-            setCreativeRecorder(service);
-        }
-        else {
-            setCreativeRecorder(null);
-        }
-
+        const video = await deepAR.finishVideoRecording();
+        setVideo(video);
         setIsRecording(false);
-    }, [deepAR, firstPartTimeSeconds, secondPartTimeSeconds]);
+    }
 
-    return creativeRecorder;
+    return { startRecording, finishRecording, isRecording, video };
 }
