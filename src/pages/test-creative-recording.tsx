@@ -22,23 +22,23 @@ function downloadVideo(video: Blob, videoName: string) {
 export default function TestCreativeRecording() {
     const { mergeVideoAndAudio, isLoaded, output } = useVideoProcessor();
     const [video, setVideo] = useState<Blob | null>(null);
-    const [audio, setAudio] = useState<Blob | null>(null);
+    const [music, setMusic] = useState<Blob | null>(null);
 
     useEffect(() => {
         axios.get("/audio/AR_CONTRAST.mp3", {
             responseType: "blob"
         })
-        .then(response => setAudio(response.data));
+        .then(response => setMusic(response.data));
     }, []);
 
     useEffect(() => {
         if (output) downloadVideo(output, "merged-video.mp4");
     }, [output])
 
-    function handleContinueClick(video: Blob) {
-        if (!video || !audio || !isLoaded) return;
-
-        mergeVideoAndAudio(video, audio);
+    function handleContinueClick(video: Blob, audio: Blob) {
+        if (!video || !audio || !music || !isLoaded) return;
+        
+        mergeVideoAndAudio(video, audio, music);
     }
 
     return (
