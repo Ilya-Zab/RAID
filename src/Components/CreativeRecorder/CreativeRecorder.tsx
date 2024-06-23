@@ -5,6 +5,7 @@ import useCreativeRecorder from "../../hooks/useCreativeRecorder";
 import { useEffect, useRef } from "react";
 import StartStopButton from "./StartStopButton";
 import { EffectItem, EffectPicker } from "./EffectPicker";
+import useAudioRecorder from "@/hooks/useAudioRecorder";
 
 // div element for displaying video should has fixed size
 const ARScreenStyle = {
@@ -36,43 +37,25 @@ const effects: EffectItem[] = [
 ];
 
 export interface CreativeRecorderProps {
-    onContinueClick: (video: Blob) => void
+    onContinueClick: (video: Blob, audio: Blob) => void
 }
 
 export default function CreativeRecorder(props: CreativeRecorderProps) {
     const deepAR = useDeepAR("#deepar-screen");
     const creativeRecorder = useCreativeRecorder({ deepAR });
+    const audioRecorder = useAudioRecorder();
     const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
 
     useEffect(() => {
         audioPlayerRef.current = new Audio("/audio/AR_CONTRAST.mp3");
     }, []);
 
-    useEffect(() => {
-        if (!creativeRecorder) return;
-        creativeRecorder.events.addEventListener("recordingStarted", handleRecordingStarted);
-        creativeRecorder.events.addEventListener("recordingFinished", handleRecordingFinished);
-    }, [creativeRecorder]);
-    
-    function handleRecordingStarted() {
-        audioPlayerRef.current?.play()
-    }
-
-    function handleRecordingFinished() {
-        if (audioPlayerRef.current) {
-            audioPlayerRef.current.pause()
-            audioPlayerRef.current.currentTime = 0;
-        }
-    }
-
     async function handleVideoStateChange(isStarted: boolean) {
         try {
-            if (creativeRecorder?.getIsRecording()) {
-                await creativeRecorder.finishRecording();
-            }
-            else {
-                await creativeRecorder?.startRecording();
-            }
+            if (isStarted) 
+                startRecording();
+            else 
+                finishRecording();
         }
         catch (e) {
             console.error(e);
@@ -81,14 +64,13 @@ export default function CreativeRecorder(props: CreativeRecorderProps) {
     }
         
     function handleContinueClick() {
-        const video = creativeRecorder?.getVideo();
-        if (video)
-            props.onContinueClick(video);
+        if (creativeRecorder.video && audioRecorder.audio)
+            props.onContinueClick(creativeRecorder.video, audioRecorder.audio);
     }
 
 
     function handleEffectChange(effect: EffectItem) {
-        creativeRecorder?.changeEffect(effect.url);
+        deepAR?.switchEffect(effect.url);
     }
     
     return (
@@ -101,7 +83,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps) {
                 {" "}
                 <button
                     onClick={handleContinueClick}
-                    disabled={!creativeRecorder?.getVideo()}
+                    disabled={creativeRecorder.video == null}
                 >
                     Continue
                 </button>
@@ -116,5 +98,21 @@ export default function CreativeRecorder(props: CreativeRecorderProps) {
                 <div style={ARScreenStyle} id="deepar-screen"></div>
             </div>
         </div>
-    )
+    );
+
+    function startRecording() {
+        creativeRecorder.finishRecording(),
+        audioRecorder.finishRecording()
+                
+        if (audioPlayerRef.current) {
+            audioPlayerRef.current.pause()
+            audioPlayerRef.current.currentTime = 0;
+        }
+    }
+
+    function finishRecording() {
+        creativeRecorder?.startRecording(),
+        audioRecorder.startRecording()
+        audioPlayerRef.current?.play();
+    }
 }
