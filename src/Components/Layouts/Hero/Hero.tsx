@@ -2,7 +2,7 @@ import * as React from 'react';
 import styles from './styles.module.scss';
 import Link from "next/link";
 import { Box } from '@mui/material';
-import Image from 'next/image';
+import Image from 'next/image'
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "@mui/material";
 
