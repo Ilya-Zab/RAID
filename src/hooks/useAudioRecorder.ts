@@ -2,7 +2,13 @@
 
 import { useRef, useState } from "react";
 
-export type AudioRecorderResult = { startRecording: () => Promise<void>, finishRecording: () => void, isRecording: boolean, audio: Blob | null };
+export type AudioRecorderResult = {
+    startRecording: () => Promise<void>,
+    finishRecording: () => void,
+    getPermissions: () => Promise<boolean>,
+    isRecording: boolean,
+    audio: Blob | null
+};
 
 export default function useAudioRecorder() {
     const [isRecording, setIsRecording] = useState(false);
@@ -36,5 +42,16 @@ export default function useAudioRecorder() {
         setIsRecording(false);
     }
 
-    return { startRecording, finishRecording, recording: isRecording, audio };
+    async function getPermissions(): Promise<boolean> {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            stream.getTracks().forEach(track => track.stop());
+            return true;
+        }
+        catch {
+            return false;
+        }
+    }
+
+    return { startRecording, finishRecording, getPermissions, recording: isRecording, audio };
 }

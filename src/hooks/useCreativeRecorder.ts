@@ -9,7 +9,13 @@ interface CreativeRecorderOptions {
     secondPartTimeSeconds?: number,
 }
 
-export type CreativeRecorderResult = { startRecording: () => Promise<void>, finishRecording: () => Promise<void>, isRecording: boolean, video: Blob | null };
+export type CreativeRecorderResult = { 
+    startRecording: () => Promise<void>, 
+    finishRecording: () => Promise<void>, 
+    getPermissions: () => Promise<boolean>,
+    isRecording: boolean, 
+    video: Blob | null 
+};
 
 export default function useCreativeRecorder({
     deepAR,
@@ -38,5 +44,16 @@ export default function useCreativeRecorder({
         setIsRecording(false);
     }
 
-    return { startRecording, finishRecording, isRecording, video };
+    async function getPermissions(): Promise<boolean> {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            stream.getTracks().forEach(track => track.stop());
+            return true;
+        }
+        catch {
+            return false;
+        }
+    }
+
+    return { startRecording, finishRecording, getPermissions, isRecording, video };
 }

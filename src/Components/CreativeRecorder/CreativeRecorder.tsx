@@ -2,7 +2,7 @@
 
 import useDeepAR from "../../hooks/useDeepAR";
 import useCreativeRecorder from "../../hooks/useCreativeRecorder";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import StartStopButton from "./StartStopButton";
 import { EffectItem, EffectPicker } from "./EffectPicker";
 import useAudioRecorder from "@/hooks/useAudioRecorder";
@@ -45,9 +45,10 @@ export default function CreativeRecorder(props: CreativeRecorderProps) {
     const creativeRecorder = useCreativeRecorder({ deepAR });
     const audioRecorder = useAudioRecorder();
     const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
+    const [isInited, setIsInited] = useState<boolean>(false);
 
     useEffect(() => {
-        audioPlayerRef.current = new Audio("/audio/AR_CONTRAST.mp3");
+        initializeCreativeRecorder();
     }, []);
 
     async function handleVideoStateChange(isStarted: boolean) {
@@ -78,7 +79,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps) {
             <div>
                 <StartStopButton
                     onChange={handleVideoStateChange}
-                    disabled={!deepAR}
+                    disabled={!deepAR || !isInited}
                 />
                 {" "}
                 <button
@@ -114,5 +115,11 @@ export default function CreativeRecorder(props: CreativeRecorderProps) {
         creativeRecorder?.startRecording(),
         audioRecorder.startRecording()
         audioPlayerRef.current?.play();
+    }
+
+    async function initializeCreativeRecorder() {
+        audioPlayerRef.current = new Audio("/audio/AR_CONTRAST.mp3");
+
+        setIsInited(true);
     }
 }
