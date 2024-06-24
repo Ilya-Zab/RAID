@@ -49,12 +49,9 @@ export default function Home()
 
     return (
         <main>
-            <Hero />
-            <Second />
-            <Popular />
-            <Ready />
-            {/* <LoginForm /> */}
-            {/*<button onClick={() => unsetCookies()}>unsetCookies</button>*/}
+            {/* <RegistrationForm /> */}
+            { <LoginForm /> }
+            <button onClick={() => unsetCookies()}>unsetCookies</button>
             {/* <button onClick={ }></button> */}
             {/*<CreativesList />*/}
             {/*<button onClick={() => checkUserIp()}>Check your IP</button>*/}

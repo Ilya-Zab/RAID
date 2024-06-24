@@ -4,7 +4,7 @@ import * as deepar from 'deepar';
 import { useEffect, useRef, useState } from 'react';
 
 const deepARParams: deepar.DeepARParams = {
-    licenseKey: "c8b5cabd68e60dd7ad809852edc3fb926ffa9cad71d835568904e548a0b1bb882b8100a094448f51",
+    licenseKey: "2b2190038ca39de0aaa12ec0bbef70fe53b8949545e02df538472e5215a7e3eab9ae15c5f544ca8e",
     effect: 'https://cdn.jsdelivr.net/npm/deepar/effects/aviators',
     additionalOptions: {
         cameraConfig: {
@@ -33,6 +33,7 @@ export default function useDeepAR(previewElementId: string): deepar.DeepAR | nul
             ...deepARParams,
             previewElement
         });
+        
         setDeepAR(deepAR);
     }
 
