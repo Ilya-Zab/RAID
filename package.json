@@ -8,7 +8,6 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "node ./src/utils/postInstall.js",
-    "deepar": "command-for-deepar"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
