@@ -52,7 +52,7 @@ const Footer = () => {
                                     <Link
                                         href={'#'}
                                         download
-                                        className={`hexagon-button hexagon-button__second hexagon-button__second-xl ${styles.btn}`}>
+                                        className={`hexagon-button hexagon-button_gradient ${styles.btn}`}>
                                         Download RAID
                                     </Link>
                                 </li>

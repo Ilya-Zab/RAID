@@ -44,7 +44,7 @@ const Header: React.FC = () => {
                         <Link
                             href={'#'}
                             download
-                            className={`hexagon-button hexagon-button__second ${styles.btn}`}>
+                            className={`hexagon-button hexagon-button_gradient ${styles.btn}`}>
                             Download RAID
                         </Link>
                         <AudioPlayer />

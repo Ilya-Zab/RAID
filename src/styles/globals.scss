@@ -36,12 +36,15 @@
 .subtract-box {
 	margin: 0 auto;
 	width: fit-content;
-	padding: 70px 27px;
+	padding: 50px 27px;
 	backdrop-filter: blur(10px);
 	background-image: url('../../public/images/subtract-box.png');
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	background-position: 0 0;
+	&_big {
+		background-image: url('../../public/images/subtract-big-box.png');
+	}
 }
 
 .btn-reset {
@@ -63,7 +66,7 @@
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	background-position: 0 0;
-	transition: background-image .1s ease-in-out, filter .2 ease-in-out;
+	transition: background-image .1s ease-in-out, filter .2s ease-in-out;
 	cursor: pointer;
 
 	&:hover {
@@ -73,12 +76,24 @@
 	&:active {
 		background-image: url('../../public/images/hex_hov.png');
 	}
-}
 
+	&_gradient {
+		background-image: url('../../public/images/hex-gradient_reg.png');
+
+		&:active {
+			background-image: url('../../public/images/hex-gradient_hov.png');
+		}
+	}
+}
+html {
+	scroll-behavior: smooth;
+}
 body {
-	background-image: url('../../public/images/landing_page_1280px.png');
+	background-image: url('../../public/images/landing_page_1280.png');
+	background-blend-mode: normal;
 	background-repeat: no-repeat;
 	background-size: cover;
+	overflow-x: hidden;
 }
 
 
@@ -177,4 +192,5 @@ body {
 
 .text-gradient {
 	@include text-gradient;
+	-webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.5);
 }

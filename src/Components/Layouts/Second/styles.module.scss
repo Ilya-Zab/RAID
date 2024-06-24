@@ -6,24 +6,33 @@
 	width: 100%;
 	padding: 0 12px;
 	margin: 0 auto;
+	@media screen and (max-width: 768px) {
+		padding: 0 28px;
+	}
 }
 
 .second {
 	position: relative;
-	&:after {
-		content: '';
-		display: block;
-		background-image: url("../../../../public/images/brakus_the_Shifter.png");
-		background-repeat: no-repeat;
+	@media screen and (max-width: 768px) {
+		padding-bottom: 50px;
+	}
+	&__img {
 		position: absolute;
 		left: 0;
-		top: -410px;
 		width: 100%;
 		max-width: 816px;
 		height: 1120px;
+		@media screen and (max-width: 1024px) {
+			max-width: 616px;
+			height: 920px;
+		}
+		@media screen and (max-width: 768px) {
+			max-width: 452px;
+			height: auto;
+		}
 	}
 	&__title {
-		font-size: clamp(16px, 9vw, 94px);
+		font-size: clamp(30px, 9vw, 94px);
 		font-weight: 800;
 		line-height: 100%;
 		color: $white;
