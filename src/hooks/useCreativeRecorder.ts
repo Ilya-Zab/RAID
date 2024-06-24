@@ -19,8 +19,8 @@ export type CreativeRecorderResult = {
 
 export default function useCreativeRecorder({
     deepAR,
-    firstPartTimeSeconds = 10,
-    secondPartTimeSeconds = 10
+    firstPartTimeSeconds = 6.5,
+    secondPartTimeSeconds = 37.5
 }: CreativeRecorderOptions) : CreativeRecorderResult
 {
     const [isRecording, setIsRecording] = useState<boolean>(false);

@@ -6,6 +6,8 @@ import { useEffect, useRef, useState } from "react";
 import StartStopButton from "./StartStopButton";
 import { EffectItem, EffectPicker } from "./EffectPicker";
 import useAudioRecorder from "@/hooks/useAudioRecorder";
+import useVideoProcessor from "@/hooks/useVideoProcessor";
+import axios from "axios";
 
 // div element for displaying video should has fixed size
 const ARScreenStyle = {
@@ -13,6 +15,7 @@ const ARScreenStyle = {
     height: "480px"
 }
 
+const musicPath = "/audio/AR_CONTRAST.mp3";
 const effects: EffectItem[] = [
     {
         name: "Aviators",
@@ -37,26 +40,35 @@ const effects: EffectItem[] = [
 ];
 
 export interface CreativeRecorderProps {
-    onContinueClick: (video: Blob, audio: Blob) => void
+    onContinueClick: (video: Blob) => void
 }
 
 export default function CreativeRecorder(props: CreativeRecorderProps) {
     const deepAR = useDeepAR("#deepar-screen");
+    const [isInited, setIsInited] = useState<boolean>(false);
     const creativeRecorder = useCreativeRecorder({ deepAR });
     const audioRecorder = useAudioRecorder();
+    const videoProcessor = useVideoProcessor();
+    const [music, setMusic] = useState<Blob | null>(null);
     const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
-    const [isInited, setIsInited] = useState<boolean>(false);
 
     useEffect(() => {
         initializeCreativeRecorder();
     }, []);
 
+    useEffect(() => {
+        if (!creativeRecorder.video || !audioRecorder.audio || !music)
+            return
+
+        videoProcessor.mergeVideoAndAudio(creativeRecorder.video, audioRecorder.audio, music);
+    }, [creativeRecorder.isRecording, audioRecorder.finishRecording, music]);
+
     async function handleVideoStateChange(isStarted: boolean) {
         try {
             if (isStarted) 
-                startRecording();
-            else 
                 finishRecording();
+            else 
+                startRecording();
         }
         catch (e) {
             console.error(e);
@@ -65,8 +77,8 @@ export default function CreativeRecorder(props: CreativeRecorderProps) {
     }
         
     function handleContinueClick() {
-        if (creativeRecorder.video && audioRecorder.audio)
-            props.onContinueClick(creativeRecorder.video, audioRecorder.audio);
+        if (videoProcessor.output)
+            props.onContinueClick(videoProcessor.output);
     }
 
 
@@ -84,7 +96,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps) {
                 {" "}
                 <button
                     onClick={handleContinueClick}
-                    disabled={creativeRecorder.video == null}
+                    disabled={!videoProcessor.output}
                 >
                     Continue
                 </button>
@@ -100,10 +112,16 @@ export default function CreativeRecorder(props: CreativeRecorderProps) {
             </div>
         </div>
     );
-
+    
     function startRecording() {
-        creativeRecorder.finishRecording(),
-        audioRecorder.finishRecording()
+        creativeRecorder?.startRecording(),
+        audioRecorder.startRecording()
+        audioPlayerRef.current?.play();
+    }
+
+    function finishRecording() {
+        audioRecorder.finishRecording();
+        creativeRecorder.finishRecording();
                 
         if (audioPlayerRef.current) {
             audioPlayerRef.current.pause()
@@ -111,15 +129,37 @@ export default function CreativeRecorder(props: CreativeRecorderProps) {
         }
     }
 
-    function finishRecording() {
-        creativeRecorder?.startRecording(),
-        audioRecorder.startRecording()
-        audioPlayerRef.current?.play();
-    }
-
     async function initializeCreativeRecorder() {
-        audioPlayerRef.current = new Audio("/audio/AR_CONTRAST.mp3");
+        const music = await axios.get(musicPath, { responseType: "blob" })
+            .then(response => response.data);
 
-        setIsInited(true);
+        audioPlayerRef.current = new Audio(musicPath);
+        setMusic(music);
+
+        const videoGrants = await creativeRecorder.getPermissions();
+        const audioGrants = await audioRecorder.getPermissions();
+
+        setIsInited(videoGrants && audioGrants);
     }
 }
+
+
+
+
+
+
+
+// used to test recorded videos
+function downloadVideo(video: Blob, videoName: string) {
+    const url = URL.createObjectURL(video);
+    const a: any = document.createElement("a");
+
+    a.href = url;
+    a.download = videoName;
+
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
