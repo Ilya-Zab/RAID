@@ -56,7 +56,7 @@ export default function Home()
             <LoginForm />
             {/*<button onClick={() => unsetCookies()}>unsetCookies</button>*/}
             {/* <button onClick={ }></button> */}
-            {/* <CreativesList /> */}
+            <CreativesList />
             {/*<button onClick={() => checkUserIp()}>Check your IP</button>*/}
         </main >
     )
