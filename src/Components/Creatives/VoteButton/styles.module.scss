@@ -1,0 +1,15 @@
+@import "@/styles/variables.module";
+
+.vote-button {
+    background-color: transparent;
+    color: $white;
+    display: flex;
+    flex-direction: column;
+    border: none;
+    align-items: center;
+
+    &__text {
+        display: block;
+        text-align: center;
+    }
+}
