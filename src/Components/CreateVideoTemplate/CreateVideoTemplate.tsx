@@ -107,13 +107,11 @@ const CreateVideoTemplate = () =>
                     </Box>
                     <Box className={styles.section__btn}>
                         <Box className='btnGradient2'>
-                            <Button variant="contained" className='btn-second'>
-                                <Link className="link" href={"/test-creative-recording"}>
-
+                            <Link className="link" href={"/test-creative-recording"}>
+                                <Button variant="contained" className='btn-second'>
                                     Make a Video
-                                </Link>
-                            </Button>
-
+                                </Button>
+                            </Link>
                         </Box>
                     </Box>
                     {/* цей бляок для випадашкипо натисканню  */}
