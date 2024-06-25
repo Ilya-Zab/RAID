@@ -16,7 +16,7 @@ const CreativesListItem: FC<CreativesListItemProps> = ({
             <div className={styles["creatives-list-item__media"]}>
                 {meta.featured_media_type === 'video' ?
                     <video
-                        autoPlay
+                        // autoPlay={false}
                         loop
                         muted
                         width="100%"
