@@ -7,14 +7,7 @@ import { useFetchUserTokenMutation } from "@/store/wordpress/jwtApi";
 import { useCookies } from 'react-cookie';
 import { useLazyFetchUserCountryQuery } from "@/store/ipapi/ipapi";
 import { CustomInput } from "../CustomInput";
-import styles from './styles.module.scss';
-
-// UM143785687 | 138407071 
-
-// function validateRaidId(id)
-// {
-//     const regex = /^[A-Z]{2}\d{9} \| \d{9}$/;
-// }
+import styles from '../Formstyles/styles.module.scss';
 
 const RegistrationFormSchema = z.object({
     raidId: z.string().min(1, 'Please, type your ID'),

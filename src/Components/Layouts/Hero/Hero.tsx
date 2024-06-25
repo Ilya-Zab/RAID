@@ -19,11 +19,14 @@ const Hero = () =>
 
     let defaultBottom;
 
-    if (isMobile) {
+    if (isMobile)
+    {
         defaultBottom = 100;
-    } else if (isTablet) {
+    } else if (isTablet)
+    {
         defaultBottom = 50;
-    } else {
+    } else
+    {
         defaultBottom = -106;
     }
 
@@ -37,7 +40,8 @@ const Hero = () =>
         setTopDistance(distanceFromHeader);
         setComputedBottom(`${defaultBottom - distanceFromHeader}px`);
     };
-    useEffect(() =>  {
+    useEffect(() =>
+    {
         handleScroll();
         window.addEventListener('scroll', handleScroll);
 
@@ -45,7 +49,7 @@ const Hero = () =>
         {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, [isMobile,isTablet]);
+    }, [isMobile, isTablet]);
 
     return (
         <Box className={styles.hero}>
