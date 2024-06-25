@@ -59,10 +59,8 @@
 	&_right {
 		position: relative;
 		bottom: -50px;
-		right: -80px;
-		@media screen and (max-width: 1250px) {
-			right: 0;
-		}
+		right: 0;
+		min-width: 218px;
 		@media screen and (max-width: 768px) {
 			top: 0;
 		}
@@ -70,7 +68,7 @@
 }
 
 .container {
-	max-width: 1088px;
+	max-width: 1134px;
 	width: 100%;
 	padding: 0 12px;
 	margin: 0 auto;
@@ -101,7 +99,7 @@
 		background-image: url("../../../../public/images/women.png");
 		background-repeat: no-repeat;
 		position: absolute;
-		right: -417px;
+		right: -367px;
 		bottom: -83px;
 		@media screen and (max-width: 768px) {
 			display: none;
@@ -125,21 +123,25 @@
 			max-height: 150px;
 			align-items: center;
 			justify-content: center;
-			grid-gap: 29px 34px;
+			grid-gap: 29px 0;
 		}
 		& li {
 			width: calc(100% - 117px);
 			min-width: 140px;
+			@media screen and (max-width: 850px) {
+				width: calc(60% - 117px);
+			}
 			@media screen and (max-width: 768px) {
 				width: 110px;
 				min-width: auto;
+				text-align: left;
 			}
 		}
 
 		& li:nth-of-type(1n+4) {
 			width: 100px;
 			@media screen and (max-width: 768px) {
-				width: 110px;
+				width: fit-content;
 				min-width: auto;
 			}
 		}

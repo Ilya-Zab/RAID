@@ -15,7 +15,6 @@
 		display: block;
 		background-image: url("../../../../public/images/png_char.png");
 		background-repeat: no-repeat;
-		//background-attachment: fixed;
 		position: absolute;
 		left: 0;
 		bottom: 0;
@@ -45,7 +44,7 @@
 	}
 	&__title {
 		font-weight: 800;
-		font-size: clamp(16px, 5.3vw, 94px);
+		font-size: clamp(36px, 5.3vw, 94px);
 		line-height: 140%;
 		letter-spacing: -0.02em;
 		text-align: right;
@@ -55,9 +54,6 @@
 		}
 		&__wrapper {
 			margin-bottom: 53px;
-			@media screen and (max-width: 768px) {
-				margin-bottom: 103px;
-			}
 		}
 	}
 	&__forms {

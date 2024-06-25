@@ -13,57 +13,50 @@ const Hero = () =>
     const [computedBottom, setComputedBottom] = useState('');
     const headerHeight = 0;
     const coefficient = 0.2;
+
     const isMobile = useMediaQuery('(max-width: 768px)');
 
-    useEffect(() =>
+    if (isMobile) {
+        defaultBottom = 100;
+    } else if (isTablet) {
+        defaultBottom = 50;
+    } else {
+        defaultBottom = -106;
+    }
+
+    const handleScroll = () =>
     {
-        const isTablet = window.innerWidth >= 1024;
-        const isMobile = window.innerWidth >= 768;
-        const defaultBottom = isMobile ? (isTablet ? -106 : 50) : 100;
-        const handleScroll = () =>
-        {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-            let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
-            distanceFromHeader *= coefficient;
+        let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
+        distanceFromHeader *= coefficient;
 
-            setTopDistance(distanceFromHeader);
-            setComputedBottom(`${defaultBottom - distanceFromHeader}px`);
-        };
-
-        window.addEventListener('scroll', handleScroll);
+        setTopDistance(distanceFromHeader);
+        setComputedBottom(`${defaultBottom - distanceFromHeader}px`);
+    };
+    useEffect(() =>  {
         handleScroll();
+        window.addEventListener('scroll', handleScroll);
 
         return () =>
         {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, []);
-
-    const img = !isMobile ? <Image
-        ref={beforeRef}
-        style={{ bottom: computedBottom }} // Transition ?
-        // src='/images/king.png'
-        src={!isMobile ? '/images/king.png' : '/images/king_mob.png'}
-        alt='king'
-        width={733}
-        height={745}
-        className={styles.hero__img}
-    /> : <Image
-        ref={beforeRef}
-        style={{ bottom: computedBottom }}
-        src='/images/king_mob.png'
-        alt='king'
-        width={359}
-        height={559}
-        className={styles.hero__img}
-    />
+    }, [isMobile,isTablet]);
 
     return (
         <Box className={styles.hero}>
             <Box className={styles.container}>
                 <Box className={styles.hero__img__wrapper}>
-                    {img}
+                    <Image
+                        ref={beforeRef}
+                        style={{ bottom: computedBottom }}
+                        src={!isMobile ? '/images/king.png' : '/images/king_mob.png'}
+                        alt='king'
+                        width={!isMobile ? 733 : 359}
+                        height={!isMobile ? 745 : 559}
+                        className={styles.hero__img}
+                    />
                 </Box>
                 <Box className={styles.hero__title_wrapper}>
                     <h1 className={styles.hero__title}>
@@ -72,7 +65,7 @@ const Hero = () =>
                         <br />
                         Start Now and
                         <br />
-                        <span className='text-gradient'>win</span>
+                        <span className='text-gradient'>win </span>
                         a huge
                         <span className='text-gradient'>prize.</span>
                     </h1>
