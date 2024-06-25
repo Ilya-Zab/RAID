@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useLazyFetchUserQuery, useRegisterUserMutation } from "@/store/wordpress/wpRestApi";
+import { useLazyFetchUserQuery } from "@/store/wordpress/wpRestApi";
 import { useFetchUserTokenMutation } from "@/store/wordpress/jwtApi";
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
@@ -31,9 +31,7 @@ type CheckUserId = z.infer<typeof CheckUserIdSchema>;
 
 export const CheckUserId: FC = () =>
 {
-    const [fetchUserToken, { data, isError, error }] = useFetchUserTokenMutation();
-    const [getUserInfo, { data: user }] = useLazyFetchUserQuery();
-    const [cookies, setCookie] = useCookies(['userToken']);
+    const [fetchUserToken] = useFetchUserTokenMutation();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const dispatch = useAppDispatch();
     const router = useRouter();
