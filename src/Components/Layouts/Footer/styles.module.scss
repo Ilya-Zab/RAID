@@ -121,9 +121,9 @@
 		width: 100%;
 		@media screen and (max-width: 768px) {
 			max-height: 150px;
-			align-items: flex-start;
+			align-items: center;
 			justify-content: center;
-			grid-gap: 29px 60px;
+			grid-gap: 29px 0;
 		}
 		& li {
 			width: calc(100% - 117px);
@@ -132,7 +132,7 @@
 				width: calc(60% - 117px);
 			}
 			@media screen and (max-width: 768px) {
-				width: fit-content;
+				width: 110px;
 				min-width: auto;
 				text-align: left;
 			}
