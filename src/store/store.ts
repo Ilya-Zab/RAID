@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import audioReducer from './slice/audioSlice';
+import raidIdSlice from './slice/raidIdSlice';
 import { jwtApi } from './wordpress/jwtApi';
 import { wpAPI } from './wordpress/wpRestApi';
 import { wpUser } from './wordpress/wpUser';
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     [wpCustomAPI.reducerPath]: wpCustomAPI.reducer,
     [ipApi.reducerPath]: ipApi.reducer,
     audio: audioReducer,
+    raidId: raidIdSlice,
 });
 
 export const setupStore = () =>
