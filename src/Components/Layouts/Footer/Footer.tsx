@@ -28,7 +28,7 @@ const data = [
 ];
 const Footer = () => {
     return (
-        <Box className={styles.footer__bg_wrapper}>
+        <footer className={styles.footer__bg_wrapper}>
             <Box className={styles.footer__bg}>
                 <Box className={styles.container}>
                     <Box className={styles.footer}>
@@ -61,7 +61,7 @@ const Footer = () => {
                     </Box>
                 </Box>
             </Box>
-        </Box>
+        </footer>
     )
 }
 

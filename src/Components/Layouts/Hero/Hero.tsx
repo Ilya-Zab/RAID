@@ -1,75 +1,78 @@
 import * as React from 'react';
 import styles from './styles.module.scss';
 import Link from "next/link";
-import {Box} from '@mui/material';
-import Image from 'next/image';
-import {useEffect, useRef, useState} from "react";
-import {useMediaQuery} from "@mui/material";
+import { Box } from '@mui/material';
+import Image from 'next/image'
+import { useEffect, useRef, useState } from "react";
+import { useMediaQuery } from "@mui/material";
 
-const Hero = () => {
+const Hero = () =>
+{
     const beforeRef = useRef(null);
     const [topDistance, setTopDistance] = useState(0);
     const [computedBottom, setComputedBottom] = useState('');
     const headerHeight = 0;
     const coefficient = 0.2;
+
     const isMobile = useMediaQuery('(max-width: 768px)');
+    const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1024px)');
 
+    let defaultBottom;
 
-    useEffect(() => {
-        const isTablet = window.innerWidth >= 1024;
-        const isMobile = window.innerWidth >= 768;
-        const defaultBottom = isMobile ? (isTablet ? -106 : 50) : 100;
-        const handleScroll = () => {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    if (isMobile)
+    {
+        defaultBottom = 100;
+    } else if (isTablet)
+    {
+        defaultBottom = 50;
+    } else
+    {
+        defaultBottom = -106;
+    }
 
-            let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
-            distanceFromHeader *= coefficient;
+    const handleScroll = () =>
+    {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-            setTopDistance(distanceFromHeader);
-            setComputedBottom(`${defaultBottom - distanceFromHeader}px`);
-        };
+        let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
+        distanceFromHeader *= coefficient;
 
-        window.addEventListener('scroll', handleScroll);
+        setTopDistance(distanceFromHeader);
+        setComputedBottom(`${defaultBottom - distanceFromHeader}px`);
+    };
+    useEffect(() =>
+    {
         handleScroll();
+        window.addEventListener('scroll', handleScroll);
 
-        return () => {
+        return () =>
+        {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, []);
-
-    const img = !isMobile ? <Image
-        ref={beforeRef}
-        style={{bottom: computedBottom}}
-        src='/images/king.png'
-        alt='king'
-        width={733}
-        height={745}
-        className={styles.hero__img}
-    /> : <Image
-        ref={beforeRef}
-        style={{bottom: computedBottom}}
-        src='/images/king_mob.png'
-        alt='king'
-        width={359}
-        height={559}
-        className={styles.hero__img}
-    />
+    }, [isMobile, isTablet]);
 
     return (
         <Box className={styles.hero}>
             <Box className={styles.container}>
                 <Box className={styles.hero__img__wrapper}>
-                    {img}
+                    <Image
+                        ref={beforeRef}
+                        style={{ bottom: computedBottom }}
+                        src={!isMobile ? '/images/king.png' : '/images/king_mob.png'}
+                        alt='king'
+                        width={!isMobile ? 733 : 359}
+                        height={!isMobile ? 745 : 559}
+                        className={styles.hero__img}
+                    />
                 </Box>
                 <Box className={styles.hero__title_wrapper}>
                     <h1 className={styles.hero__title}>
-                        Everyone&apos;s <br/>
-                        <span className='text-gradient'>Playing Raid</span>
-                        .
-                        <br/>
+                        Everyone&apos;s <br />
+                        <span className='text-gradient'>Playing Raid</span>.
+                        <br />
                         Start Now and
-                        <br/>
-                        <span className='text-gradient'>win</span>
+                        <br />
+                        <span className='text-gradient'>win </span>
                         a huge
                         <span className='text-gradient'>prize.</span>
                     </h1>
@@ -90,7 +93,7 @@ const Hero = () => {
                     </p>
                     <p className={styles.hero__steps}>
                         <b>Step 3: </b> create or upload your content
-                        <br/>
+                        <br />
                         to take part in the prize draw!
                     </p>
                 </Box>
