@@ -23,15 +23,17 @@
 	}
 	&__img {
 		position: absolute;
+		bottom: -106px;
 		right: 0;
 		width: 100%;
 		max-width: 733px;
 		@media screen and (max-width: 1024px) {
+			bottom: 50px;
 			max-width: 533px;
 			height: 545px;
 		}
 		@media screen and (max-width: 768px) {
-			max-width: 359px;
+			bottom: 100px;
 			height: auto;
 		}
 		&__wrapper {

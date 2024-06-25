@@ -15,7 +15,7 @@ const Hero = () =>
     const coefficient = 0.2;
 
     const isMobile = useMediaQuery('(max-width: 768px)');
-    const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1024px)')
+    const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1024px)');
 
     let defaultBottom;
 
@@ -64,7 +64,7 @@ const Hero = () =>
         {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, []);
+    }, [isMobile,isTablet]);
 
     return (
         <Box className={styles.hero}>

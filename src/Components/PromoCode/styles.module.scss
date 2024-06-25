@@ -7,7 +7,6 @@
 	padding-left: 42px;
 	padding-right: 42px;
 	&__title {
-		font-family: var(--font-family);
 		font-weight: 500;
 		font-size: 22px;
 		line-height: 115%;
@@ -34,7 +33,7 @@
 	}
 	&__text {
 		font-weight: 400;
-		font-size: 12px;
+		font-size: 16px;
 		line-height: 115%;
 		text-align: center;
 		color: $white1;
@@ -53,7 +52,7 @@
 			right: -80px;
 			color: $white1;
 			font-weight: 400;
-			font-size: 14px;
+			font-size: 16px;
 			line-height: 115%;
 			background-color: $graphite;
 			border: 1px solid black;
@@ -72,13 +71,10 @@
 			-webkit-background-clip: text;
 			-webkit-text-fill-color: transparent;
 		}
-		& svg {
-
-		}
 	}
 	&__data {
 		font-weight: 400;
-		font-size: 12px;
+		font-size: 14px;
 		line-height: 115%;
 		text-align: center;
 		color: $grey2;
