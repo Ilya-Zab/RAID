@@ -51,7 +51,7 @@ export const CheckUserId: FC = () =>
         };
 
         dispatch(setRaidId(raidId));
-        router.push('/success-page');
+        router.push('/create-video');
 
         try
         {
