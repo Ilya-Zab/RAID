@@ -7,7 +7,6 @@
 	padding-left: 42px;
 	padding-right: 42px;
 	&__title {
-		font-family: var(--font-family);
 		font-weight: 500;
 		font-size: 22px;
 		line-height: 115%;
@@ -33,9 +32,8 @@
 		color: $graphite;
 	}
 	&__text {
-		font-family: var(--font-family);
 		font-weight: 400;
-		font-size: 12px;
+		font-size: 16px;
 		line-height: 115%;
 		text-align: center;
 		color: $white1;
@@ -54,7 +52,7 @@
 			right: -80px;
 			color: $white1;
 			font-weight: 400;
-			font-size: 14px;
+			font-size: 16px;
 			line-height: 115%;
 			background-color: $graphite;
 			border: 1px solid black;
@@ -63,7 +61,6 @@
 			border-radius: 4px;
 		}
 		& p {
-			font-family: var(--second-family);
 			font-weight: 800;
 			font-size: 22px;
 			line-height: 100%;
@@ -74,14 +71,10 @@
 			-webkit-background-clip: text;
 			-webkit-text-fill-color: transparent;
 		}
-		& svg {
-
-		}
 	}
 	&__data {
-		font-family: var(--font-family);
 		font-weight: 400;
-		font-size: 9px;
+		font-size: 14px;
 		line-height: 115%;
 		text-align: center;
 		color: $grey2;

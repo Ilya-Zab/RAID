@@ -28,11 +28,12 @@
 		width: 100%;
 		max-width: 733px;
 		@media screen and (max-width: 1024px) {
+			bottom: 50px;
 			max-width: 533px;
 			height: 545px;
 		}
 		@media screen and (max-width: 768px) {
-			max-width: 359px;
+			bottom: 100px;
 			height: auto;
 		}
 		&__wrapper {
@@ -60,7 +61,7 @@
 		line-height: 160%;
 		color: $white1;
 		@media screen and (max-width: 768px) {
-			font-size: 12px;
+			font-size: 14px;
 		}
 		&_wrapper {
 			padding: 27px 30px 12px;
