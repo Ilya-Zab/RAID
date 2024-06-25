@@ -3,10 +3,11 @@ import React, { FC } from "react";
 import styles from "./styles.module.scss";
 import Image from "next/image";
 import { trimString } from "@/utils/trimString";
+import VoteButton from "../VoteButton";
 
 const CreativesListItem: FC<CreativesListItemProps> = ({
     creative: { meta, title, author_name }
-}, hasLiked) => {
+}, hasVoted) => {
 
     if (meta.featured_media_url === false) return;
 
@@ -38,18 +39,15 @@ const CreativesListItem: FC<CreativesListItemProps> = ({
             </div>
             <div className={styles["creatives-list-item__content"]}>
                 <div className={styles["creatives-list-item__top"]}>
-                    <div className={styles["creatives-list-item__username"]}>
-                        {author_name}
-                    </div>
                     <div className={styles["creatives-list-item__share-button"]}>
                     </div>
                 </div>
                 <div className={styles["creatives-list-item__bottom"]}>
                     <div className={styles["creatives-list-item__title"]}>
-                        {trimString(title.rendered, 20)}
+                        {trimString(author_name, 20)}
                     </div>
                     <div className={styles["creatives-list-item__votes"]}>
-                        {meta.votes}
+                        <VoteButton votes={+meta.votes} onVote={() => { }} hasVoted={hasVoted} />
                     </div>
                 </div>
             </div>

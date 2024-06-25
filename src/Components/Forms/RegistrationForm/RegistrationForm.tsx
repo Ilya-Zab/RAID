@@ -7,7 +7,7 @@ import { useFetchUserTokenMutation } from "@/store/wordpress/jwtApi";
 import { useCookies } from 'react-cookie';
 import { useLazyFetchUserCountryQuery } from "@/store/ipapi/ipapi";
 import { CustomInput } from "../CustomInput";
-import styles from './styles.module.scss';
+import styles from '../Formstyles/styles.module.scss';
 
 // UM143785687 | 138407071 
 

@@ -1,0 +1,102 @@
+@import "@/styles/variables.module";
+@import "@/styles/text-gradient";
+
+.container {
+	max-width: 1088px;
+	width: 100%;
+	margin: 0 auto;
+	padding: 0 12px;
+	position: relative;
+	z-index: 30;
+	@media screen and (max-width: 768px) {
+		padding: 0;
+	}
+}
+
+.popular {
+	margin-top: 310px;
+	position: relative;
+	background-image: linear-gradient(to bottom, #FFFFFF00 0%, #000F22 10%, #000F22 67%, #FFFFFF00 100%);
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 1400px;
+
+	&__img {
+		position: absolute;
+		right: 0;
+		width: 100%;
+		z-index: 10;
+		max-width: 635px;
+		@media screen and (max-width: 1024px) {
+			max-width: 535px;
+			height: 654px;
+		}
+		@media screen and (max-width: 768px) {
+			max-width: 342px;
+			height: auto;
+		}
+		&__wrapper {
+			&:before {
+				content: '';
+				position: absolute;
+				right: 0;
+				top: inherit;
+				background: linear-gradient(to bottom, #FFFFFF00 57%, #000F22 100%);
+				width: 635px;
+				height: 804px;
+				z-index: 20;
+				box-shadow: -300px 330px 79px -280px #000F22,
+				310px 330px 79px -280px #000F22,
+				210px 330px 79px -280px #000F22,
+				120px 330px 79px -280px #000F22,
+				30px 330px 79px -280px #000F22,
+				-50px 330px 79px -280px #000F22,
+				-150px 330px 79px -280px #000F22,
+				-230px 330px 79px -280px #000F22;
+				@media screen and (max-width: 1024px) {
+					max-width: 535px;
+					height: 654px;
+				}
+				@media screen and (max-width: 768px) {
+					background: linear-gradient(to bottom, #FFFFFF00 37%, #000F22 100%);
+					width: 342px;
+					height: 435px;
+				}
+			}
+		}
+	}
+
+	&__title {
+		font-weight: 800;
+		font-size: clamp(22px, 5.3vw, 38px);
+		line-height: 140%;
+		letter-spacing: -0.02em;
+
+		&__wrapper {
+			margin-bottom: 40px;
+			padding: 0 12px;
+			@media screen and (max-width: 768px) {
+				padding: 0 28px;
+			}
+		}
+
+		&_sub {
+			font-size: clamp(16px, 5.3vw, 24px);
+			margin-bottom: 30px;
+			padding: 0 12px;
+			@media screen and (max-width: 768px) {
+				padding: 0 28px;
+			}
+		}
+	}
+
+	&__list {
+
+		@media screen and (max-width: 768px) {
+			padding: 0 12px;
+		}
+		&__wrapper {
+			margin-top: 30px;
+		}
+	}
+}
