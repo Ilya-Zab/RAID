@@ -33,7 +33,6 @@
 		color: $graphite;
 	}
 	&__text {
-		font-family: var(--font-family);
 		font-weight: 400;
 		font-size: 12px;
 		line-height: 115%;
@@ -63,7 +62,6 @@
 			border-radius: 4px;
 		}
 		& p {
-			font-family: var(--second-family);
 			font-weight: 800;
 			font-size: 22px;
 			line-height: 100%;
@@ -79,9 +77,8 @@
 		}
 	}
 	&__data {
-		font-family: var(--font-family);
 		font-weight: 400;
-		font-size: 9px;
+		font-size: 12px;
 		line-height: 115%;
 		text-align: center;
 		color: $grey2;

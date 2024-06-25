@@ -12,7 +12,7 @@ const PromoCode = () => {
             setCopied(true);
             setTimeout(() => setCopied(false), 2000);
         }).catch(err => {
-            console.error('Помилка при копіюванні тексту: ', err);
+            console.error('Error copying text:', err);
         });
     };
     return (
