@@ -13,6 +13,10 @@ export default function TestCreativeRecording() {
     useEffect(() => {
         if (!video) return;
 
+        // functionality of the posting video into WordPress was temporary blocked for correct test deployment purposes
+        downloadVideo(video, "video.mp4");
+        return;
+
         axios.post("/api/video-uploader", { video })
             .then(response => {
                 setResult(response.data);
