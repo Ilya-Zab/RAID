@@ -51,7 +51,7 @@ export const CheckUserId: FC = () =>
         };
 
         dispatch(setRaidId(raidId));
-        router.push('/success-page');
+        router.push('/create-video');
 
         try
         {
@@ -113,7 +113,7 @@ export const CheckUserId: FC = () =>
                     disabled={isSubmitting}
                     className={`hexagon-button hexagon-button_gradient ${styles.form__button}`}
                 >
-                    {isSubmitting ? 'Checking...' : 'Go!'}
+                    {isSubmitting ? 'Wait...' : 'Go!'}
                 </button>
             </form>
         </Box>
