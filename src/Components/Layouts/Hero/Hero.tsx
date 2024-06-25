@@ -26,28 +26,9 @@ const Hero = () =>
     } else {
         defaultBottom = -106;
     }
-    // const defaultBottom = !isTablet ? 0 : (!isMobile ? 100 : -106);
-    console.log(isMobile,isTablet,'isMobile,isTablet');
-
-    // const getDefaultBottom = () => {
-    //     if (isMobile) {
-    //         return 100;
-    //     } else if (isTablet) {
-    //         return 50;
-    //     } else {
-    //         return -106;
-    //     }
-    // };
 
     const handleScroll = () =>
     {
-
-        // const defaultBottom = isMobile ? 100 : (isTablet ? 50 : -106);
-        // const defaultBottom = isTablet ? 50 : (isMobile ? 100 : -106);
-        // const defaultBottom = getDefaultBottom();
-
-        console.log(defaultBottom,isTablet,'isTablet');
-        console.log(defaultBottom,isMobile,'isMobile');
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
         let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
