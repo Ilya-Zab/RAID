@@ -67,7 +67,6 @@ const CreateVideoTemplate = () => {
     // const handleToggle = () => {
     //     setTogglePopover(!togglePopover);
     // }
-
     return (
         <Box className={styles.bg}>
             <Box className={styles.container}>
