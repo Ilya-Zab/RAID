@@ -42,6 +42,7 @@
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	background-position: 0 0;
+
 	&_big {
 		background-image: url('../../public/images/subtract-big-box.png');
 	}
@@ -85,9 +86,11 @@
 		}
 	}
 }
+
 html {
 	scroll-behavior: smooth;
 }
+
 body {
 	background-image: url('../../public/images/landing_page_1280.png');
 	background-blend-mode: normal;
@@ -175,7 +178,7 @@ body {
 
 .container {
 	box-sizing: border-box;
-	padding: 40px;
+	padding: 0 40px;
 	max-width: 1150px;
 	margin: 0 auto;
 
