@@ -113,7 +113,7 @@ export const CheckUserId: FC = () =>
                     disabled={isSubmitting}
                     className={`hexagon-button hexagon-button_gradient ${styles.form__button}`}
                 >
-                    {isSubmitting ? 'Checking...' : 'Go!'}
+                    {isSubmitting ? 'Wait...' : 'Go!'}
                 </button>
             </form>
         </Box>

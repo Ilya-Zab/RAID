@@ -1,0 +1,26 @@
+.creatives-section {
+    padding-top: 60px;
+    position: relative;
+    z-index: 2;
+
+    &__line {
+        width: 1px;
+        height: 140px;
+        background: linear-gradient(to bottom, #4271A1E6 11%, #FFCC49 50%, #4271A1E6 87%);
+    }
+
+    &__tag {
+        margin-top: 60px;
+        font-size: 2rem;
+        margin-bottom: 40px;
+    }
+
+    &__title {
+        font-size: 1.3rem;
+        margin-bottom: 1em;
+    }
+
+    &__block {
+        margin-bottom: 40px;
+    }
+}

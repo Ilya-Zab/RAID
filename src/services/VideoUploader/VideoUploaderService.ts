@@ -13,6 +13,15 @@ export interface WPUserInfo {
     slug: string
 }
 
+async function uploadVideoAsBlob(video: Blob, userToken: string): Promise<WPVideoItem> {
+    const userInfo = await getUserInfo(userToken);
+    const videoBuffer = Buffer.from(await video.arrayBuffer());
+    const videoFileName = generateFileName("mp4");
+    
+    const videoItem = await postVideo(videoBuffer, videoFileName, userInfo.id);
+    return videoItem;
+}
+
 async function uploadVideo(url: string, userToken: string): Promise<WPVideoItem> {
     const userInfo = await getUserInfo(userToken);
     const extractedVideo = await smvdClient.extractVideo(url);
@@ -77,4 +86,4 @@ async function postVideo(videoBuffer: Buffer, videoFileName: string, authorId: n
     return data as WPVideoItem;
 }
 
-export { uploadVideo };
+export { uploadVideo, uploadVideoAsBlob };

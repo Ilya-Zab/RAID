@@ -37,6 +37,7 @@ export default function useDeepAR(previewElementId: string): deepar.DeepAR | nul
             ...deepARParams,
             previewElement
         });
+
         setDeepAR(deepAR);
     }
 
