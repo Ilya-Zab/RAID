@@ -195,5 +195,5 @@ body {
 
 .text-gradient {
 	@include text-gradient;
-	-webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.5);
+	// -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.5);
 }
