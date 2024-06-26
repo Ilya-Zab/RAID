@@ -21,7 +21,7 @@ const Ready = () =>
                 height={isMobile ? 388 : 3114}
                 className={styles.ready__img}
             />
-            <Box className={'container'}>
+            <Box className={'container container_ready'}>
                 <Box className={styles.ready__title__wrapper}>
                     <h2 className={styles.ready__title}>
                         Ready to go?

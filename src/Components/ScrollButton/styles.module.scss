@@ -1,0 +1,22 @@
+.btn {
+	&__wrapper {
+		position: fixed;
+		left: 50%;
+		bottom: 30%;
+		z-index: 100;
+	}
+	&__btn {
+		background-color: transparent;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		border: none;
+		outline: none;
+		cursor: pointer;
+		border-radius: 50%;
+	}
+	&__img {
+		border-radius: 50%;
+	}
+}

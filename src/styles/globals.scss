@@ -2,6 +2,7 @@
 @import "./text-gradient";
 
 .desc {
+	font-family: 'Inter-Regular', sans-serif;
 	font-weight: 400;
 	font-size: 18px;
 	color: $white1;
@@ -88,24 +89,6 @@
 	}
 }
 
-html {
-	scroll-behavior: smooth;
-}
-
-body {
-	background-image: url('../../public/images/landing_page_1280.png');
-	background-blend-mode: normal;
-	background-repeat: no-repeat;
-	background-size: cover;
-	overflow-x: hidden;
-
-	@media screen and (max-width: 580px) {
-		background-image: url('../../public/images/bg_mob.png');
-	}
-}
-
-
-
 .btnWrapper {
 	position: relative;
 	z-index: 10;
@@ -189,9 +172,8 @@ body {
 	&_creatives {
 		max-width: 1215px;
 	}
-	&_header,
-	&_hero {
-		max-width: 1165px;
+	&_ready {
+		max-width: 1134px;
 	}
 }
 

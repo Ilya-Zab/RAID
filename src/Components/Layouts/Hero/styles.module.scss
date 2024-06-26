@@ -18,14 +18,13 @@
 		position: absolute;
 		bottom: -86px;
 		right: -127px;
-		width: 100%;
-		max-width: 733px;
+		width: clamp(533px,57vw, 733px);
 		height: auto;
 		@media screen and (max-width: 768px) {
 			bottom: 0;
 			right: 0;
 			height: auto;
-			max-width: 433px;
+			width: clamp(293px,57vw, 433px);
 		}
 	}
 
@@ -49,6 +48,7 @@
 	}
 
 	&__steps {
+		font-family: 'Inter-Light', sans-serif;
 		font-weight: 300;
 		font-size: 16px;
 		line-height: 160%;
@@ -66,7 +66,7 @@
 
 			@media screen and (max-width: 768px) {
 				padding: 14px 12px 16px;
-				// margin-bottom: 250px;
+				 margin-bottom: 250px;
 			}
 
 			&:before {
@@ -81,10 +81,12 @@
 		}
 
 		& b {
+			font-family: 'Inter-SemiBold', sans-serif;
 			font-weight: 600;
 		}
 
 		& a {
+			font-family: 'Inter-Light', sans-serif;
 			font-weight: 300;
 			position: relative;
 
@@ -129,8 +131,6 @@
 		line-height: 125%;
 		text-align: left;
 		letter-spacing: -0.02em;
-
-
 
 		&_wrapper {
 			margin-top: 40px;

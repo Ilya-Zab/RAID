@@ -47,7 +47,7 @@ const Hero = () =>
 
     return (
         <Box className={styles.hero}>
-            <Box className={`container container_hero ${styles.wrapper}`}>
+            <Box className={`container ${styles.wrapper}`}>
                 <Image
                     ref={beforeRef}
                     style={{ bottom: computedBottom }}

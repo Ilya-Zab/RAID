@@ -28,7 +28,7 @@ const data = [
 const Header: React.FC = () => {
     return (
         <AppBar position="static" className={styles.header}>
-            <Box className={'container container_header'}>
+            <Box className={'container'}>
                 <Toolbar disableGutters className={styles.header__toolbar}>
                     <Link href={'/'} passHref className={styles.logo}>
                         <Image

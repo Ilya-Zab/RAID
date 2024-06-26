@@ -10,8 +10,12 @@ const Second = () => {
     const headerHeight = 0;
     const coefficient = 0.2;
     const isMobile = useMediaQuery('(max-width: 768px)');
-    const defaultTop = isMobile ? -300 : -410;
-
+    let defaultTop;
+    if (isMobile) {
+        defaultTop = -300;
+    } else  {
+        defaultTop = -410;
+    }
 
     const handleScroll = () => {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -24,15 +28,13 @@ const Second = () => {
 
     useEffect(() => {
 
-
-
         window.addEventListener('scroll', handleScroll);
         handleScroll();
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, []);
+    }, [isMobile]);
 
     return (
         <Box className={`${styles.second}`}>
