@@ -65,45 +65,47 @@ const Hero = () =>
                         className={styles.hero__img}
                     />
                 </Box>
-                <Box className={styles.hero__title_wrapper}>
-                    <h1 className={styles.hero__title}>
-                        Everyone&apos;s <br />
-                        <span className='text-gradient'>Playing Raid</span>.
-                        <br />
-                        Start Now and
-                        <br />
-                        <span className='text-gradient'>win </span>
-                        a huge
-                        <span className='text-gradient'>prize.</span>
-                    </h1>
-                </Box>
-                <Box className={styles.hero__steps_wrapper}>
-                    <p className={styles.hero__steps}>
-                        <b>Step 1: </b>
-                        <Link href={'/'} download className='text-gradient'>
-                            download RAID
+                <Box className={styles.hero__wrapper}>
+                    <Box className={styles.hero__title_wrapper}>
+                        <h1 className={styles.hero__title}>
+                            Everyone&apos;s <br />
+                            <span className='text-gradient'>Playing Raid</span>.
+                            <br />
+                            Start Now and
+                            <br />
+                            <span className='text-gradient'>win </span>
+                            a huge
+                            <span className='text-gradient'>prize.</span>
+                        </h1>
+                    </Box>
+                    <Box className={styles.hero__steps_wrapper}>
+                        <p className={styles.hero__steps}>
+                            <b>Step 1: </b>
+                            <Link href={'/'} download className='text-gradient'>
+                                download RAID
+                            </Link>
+                        </p>
+                        <p className={styles.hero__steps}>
+                            <b>Step 2: </b>
+                            enter your&nbsp;
+                            <Link href='#ready' className='text-gradient'>
+                                RAID ID
+                            </Link>
+                        </p>
+                        <p className={styles.hero__steps}>
+                            <b>Step 3: </b> create or upload your content
+                            <br />
+                            to take part in the prize draw!
+                        </p>
+                    </Box>
+                    <Box className={styles.hero__btn__wrapper}>
+                        <Link
+                            href='#ready'
+                            type="button"
+                            className={`hexagon-button ${styles.hero__btn}`}>
+                            Join event
                         </Link>
-                    </p>
-                    <p className={styles.hero__steps}>
-                        <b>Step 2: </b>
-                        enter your&nbsp;
-                        <Link href='#ready' className='text-gradient'>
-                            RAID ID
-                        </Link>
-                    </p>
-                    <p className={styles.hero__steps}>
-                        <b>Step 3: </b> create or upload your content
-                        <br />
-                        to take part in the prize draw!
-                    </p>
-                </Box>
-                <Box className={styles.hero__btn__wrapper}>
-                    <Link
-                        href='#ready'
-                        type="button"
-                        className={`hexagon-button ${styles.hero__btn}`}>
-                        Join event
-                    </Link>
+                    </Box>
                 </Box>
                 <Box className={styles.hero__title2_wrapper}>
                     <h2 className={`text-gradient ${styles.hero__title2}`}>

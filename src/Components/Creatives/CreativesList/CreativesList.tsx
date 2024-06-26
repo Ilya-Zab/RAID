@@ -1,11 +1,15 @@
-import React from "react";
+import React, { FC } from "react";
 import { useFetchAllCreativesByDataQuery } from "@/store/wordpress/wpRestApi";
 import CreativesListItem from "../CreativesListItem";
 import { CreativeDataType } from "@/types/components/Creative";
 
-const CreativesList = () => {
+interface CreativesListPropsType {
+    perPage: number
+}
 
-    const { data: creatives = [], isLoading, isError, error } = useFetchAllCreativesByDataQuery({ per_page: 10, offset: 0 });
+const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10 }) => {
+
+    const { data: creatives = [], isLoading, isError, error } = useFetchAllCreativesByDataQuery({ per_page: perPage, offset: 0 });
 
     const renderListItems = () => {
         return Boolean(creatives.length) && creatives.map((creative: CreativeDataType) => (

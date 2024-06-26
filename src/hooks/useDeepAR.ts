@@ -4,7 +4,7 @@ import * as deepar from 'deepar';
 import { useEffect, useRef, useState } from 'react';
 
 const deepARParams: deepar.DeepARParams = {
-    licenseKey: "c8b5cabd68e60dd7ad809852edc3fb926ffa9cad71d835568904e548a0b1bb882b8100a094448f51",
+    licenseKey: "45d769d1bc352bf7d39d52553264ce6af81fd9f862e7eb25e279e59407414f2bc6fc72b884a6f5f0",
     effect: 'https://cdn.jsdelivr.net/npm/deepar/effects/aviators',
     additionalOptions: {
         cameraConfig: {
@@ -14,12 +14,15 @@ const deepARParams: deepar.DeepARParams = {
     }
 };
 
-export default function useDeepAR(previewElementId: string): deepar.DeepAR | null {
+export default function useDeepAR(previewElementId: string): deepar.DeepAR | null
+{
     const [deepAR, setDeepAR] = useState<deepar.DeepAR | null>(null);
     const initState = useRef<boolean>(false);
 
-    useEffect(() => {
-        if (!initState.current) {
+    useEffect(() =>
+    {
+        if (!initState.current)
+        {
             const previewElement = getDeepARScreen(previewElementId);
             initializeDeepAR(previewElement);
             initState.current = true;
@@ -28,18 +31,21 @@ export default function useDeepAR(previewElementId: string): deepar.DeepAR | nul
 
     return deepAR;
 
-    async function initializeDeepAR(previewElement: HTMLElement): Promise<void> {
+    async function initializeDeepAR(previewElement: HTMLElement): Promise<void>
+    {
         const deepAR = await deepar.initialize({
             ...deepARParams,
             previewElement
         });
+
         setDeepAR(deepAR);
     }
 
-    function getDeepARScreen(elementId: string): HTMLElement {
+    function getDeepARScreen(elementId: string): HTMLElement
+    {
         const deepARScreen: HTMLElement | null = document.querySelector<HTMLElement>(elementId) ?? null;
 
-        if (!deepARScreen) 
+        if (!deepARScreen)
             throw new Error("DIV element with id 'deepar-screen' does not found.");
 
         return deepARScreen;
