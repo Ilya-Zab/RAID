@@ -6,7 +6,6 @@ import { useMediaQuery } from "@mui/material";
 
 const Creatives = () => {
     const beforeRef = useRef(null);
-    const [topDistance, setTopDistance] = useState(0);
     const [computedTop, setComputedTop] = useState('');
     const headerHeight = 0;
     const coefficient = 0.2;
@@ -31,7 +30,6 @@ const Creatives = () => {
         let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
         distanceFromHeader *= coefficient;
 
-        setTopDistance(distanceFromHeader);
         setComputedTop(`${defaultTop + distanceFromHeader}px`);
     };
 
@@ -49,7 +47,6 @@ const Creatives = () => {
             <div className={styles['creatives-section__imgWrapper']} style={{ top: computedTop}}>
                 <Image
                     ref={beforeRef}
-                    style={{ top: computedTop}}
                     src='/images/vlad.png'
                     alt='vlad'
                     width={635}

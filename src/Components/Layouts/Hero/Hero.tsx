@@ -9,7 +9,6 @@ import { useMediaQuery } from "@mui/material";
 const Hero = () =>
 {
     const beforeRef = useRef(null);
-    const [topDistance, setTopDistance] = useState(0);
     const [computedBottom, setComputedBottom] = useState('');
     const headerHeight = 0;
     const coefficient = 0.2;
@@ -37,7 +36,6 @@ const Hero = () =>
         let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
         distanceFromHeader *= coefficient;
 
-        setTopDistance(distanceFromHeader);
         setComputedBottom(`${defaultBottom - distanceFromHeader}px`);
     };
     useEffect(() =>
@@ -54,7 +52,7 @@ const Hero = () =>
     return (
         <Box className={styles.hero}>
             <Box className={'container'}>
-                <Box className={styles.hero__img__wrapper}>
+
                     <Image
                         ref={beforeRef}
                         style={{ bottom: computedBottom }}
@@ -64,7 +62,7 @@ const Hero = () =>
                         height={!isMobile ? 745 : 559}
                         className={styles.hero__img}
                     />
-                </Box>
+
                 <Box className={styles.hero__wrapper}>
                     <Box className={styles.hero__title_wrapper}>
                         <h1 className={styles.hero__title}>

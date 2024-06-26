@@ -6,7 +6,6 @@ import { useMediaQuery } from "@mui/material";
 
 const Second = () => {
     const beforeRef = useRef(null);
-    const [topDistance, setTopDistance] = useState(0);
     const [computedTop, setComputedTop] = useState('');
     const headerHeight = 0;
     const coefficient = 0.2;
@@ -20,7 +19,6 @@ const Second = () => {
         let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
         distanceFromHeader *= coefficient;
 
-        setTopDistance(distanceFromHeader);
         setComputedTop(`${defaultTop + distanceFromHeader}px`);
     };
 

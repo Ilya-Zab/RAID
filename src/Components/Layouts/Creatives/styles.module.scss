@@ -33,6 +33,7 @@
     }
     &__img {
         position: absolute;
+        top: inherit;
         right: 0;
         width: 100%;
         z-index: 10;
@@ -67,5 +68,7 @@
 
     &__block {
         margin-bottom: 40px;
+        position: relative;
+        z-index: 10;
     }
 }
