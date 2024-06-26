@@ -14,16 +14,16 @@ const data = [
         url: 'link1111',
     }, {
         title: 'Privacy Notice',
-        url: 'link1111',
+        url: '/privacy-notice',
     }, {
         title: 'Find ID',
-        url: 'link1111',
+        url: '/find-id',
     }, {
         title: 'Prizes',
-        url: 'link1111',
+        url: '/prizes',
     }, {
         title: 'Rules',
-        url: 'link1111',
+        url: '/rules',
     },
 ];
 const Footer = () => {

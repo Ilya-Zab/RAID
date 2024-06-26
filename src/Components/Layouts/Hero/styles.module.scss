@@ -24,7 +24,11 @@
 			bottom: 0;
 			right: 0;
 			height: auto;
-			width: clamp(293px,57vw, 433px);
+			width: clamp(433px, 74vw, 533px);
+		}
+		@media screen and (max-width: 450px) {
+			width: 100%;
+			max-width: 433px;
 		}
 	}
 
