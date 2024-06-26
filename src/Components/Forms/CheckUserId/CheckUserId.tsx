@@ -17,7 +17,6 @@ const CheckUserIdSchema = z.object({
     raidId: z.string().refine(value => validateRaidId(value), {
         message: "Invalid raid ID",
     }),
-    // raidId: z.string(),
     country: z.boolean().refine(value => value === true, {
         message: "You must agree to the terms",
     }),
@@ -27,6 +26,12 @@ const CheckUserIdSchema = z.object({
 });
 
 type CheckUserId = z.infer<typeof CheckUserIdSchema>;
+
+export const transformRaidId = (raidId) =>
+{
+    let newStr = raidId.replace(" | ", " ");
+    return newStr;
+}
 
 export const CheckUserId: FC = () =>
 {
@@ -56,8 +61,8 @@ export const CheckUserId: FC = () =>
             }
         } catch (error)
         {
-            dispatch(setRaidId(raidId));
-            router.push('/create-video');
+            dispatch(setRaidId(transformRaidId(raidId)));
+            // router.push('/create-video');
         } finally
         {
             reset();

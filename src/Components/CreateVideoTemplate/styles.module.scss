@@ -59,6 +59,7 @@
 			margin-top: 8px;
 			letter-spacing: 0;
 		}
+
 		&_input {
 			margin-top: 22px;
 		}
@@ -72,9 +73,6 @@
 		width: 100%;
 
 		& button {
-			font-weight: 400;
-			font-size: 18px;
-			line-height: 22px;
 			text-align: center;
 			letter-spacing: 0;
 			color: $white;
@@ -106,6 +104,7 @@
 		color: $white;
 		margin-top: 8px;
 		letter-spacing: 0;
+
 		& span {
 			font-weight: 500;
 			background: linear-gradient(to right, #1FFFFF 0%, #23FF5F 37%, #FFB82D 100%);
@@ -123,6 +122,7 @@
 	align-items: center;
 	justify-content: center;
 	grid-gap: 14px;
+
 	&__iconBtn {
 		&:hover {
 			opacity: .7;
