@@ -182,13 +182,16 @@ body {
 }
 
 .container {
-	box-sizing: border-box;
-	padding: 0 40px;
-	max-width: 1440px;
+	padding: 0 15px;
+	width: 100%;
+	max-width: 1165px;
 	margin: 0 auto;
-
 	&_creatives {
 		max-width: 1215px;
+	}
+	&_header,
+	&_hero {
+		max-width: 1165px;
 	}
 }
 

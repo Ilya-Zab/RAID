@@ -30,7 +30,7 @@ const Footer = () => {
     return (
         <footer className={styles.footer__bg_wrapper}>
             <Box className={styles.footer__bg}>
-                <Box className={styles.container}>
+                <Box className={'container'}>
                     <Box className={styles.footer}>
                         <Box className={styles.footer_left}>
                             <Link href={'/'} passHref className={styles.logo}>
