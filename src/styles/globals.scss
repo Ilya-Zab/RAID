@@ -37,14 +37,15 @@
 	margin: 0 auto;
 	width: fit-content;
 	padding: 50px 27px;
-	backdrop-filter: blur(10px);
-	background-image: url('../../public/images/subtract-box.png');
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	background-position: 0 0;
-
+	&_small {
+		backdrop-filter: blur(10px);
+		background-image: url('../../public/images/subtract-box.png');
+	}
 	&_big {
-		background-image: url('../../public/images/subtract-big-box.png');
+		background-image: url('../../public/images/subtract-big-box_new.png');
 	}
 }
 

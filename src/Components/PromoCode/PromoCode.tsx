@@ -16,7 +16,7 @@ const PromoCode = () => {
         });
     };
     return (
-        <Box className={`subtract-box ${styles.promo}`}>
+        <Box className={`subtract-box subtract-box_small ${styles.promo}`}>
             <h2 className={styles.promo__title}>
                 Install the game to get your Raid ID and take part in the competition
             </h2>

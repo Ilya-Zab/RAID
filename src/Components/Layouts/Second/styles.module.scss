@@ -19,20 +19,15 @@
 	&__img {
 		position: absolute;
 		left: 0;
-		width: 100%;
-		max-width: 816px;
-		height: 1120px;
-		@media screen and (max-width: 1024px) {
-			max-width: 616px;
-			height: 920px;
-		}
+		width: 64vw;
+		max-width: 1920px;
+		height: auto;
 		@media screen and (max-width: 768px) {
-			max-width: 452px;
-			height: auto;
+			top: -300px;
 		}
 	}
 	&__title {
-		font-size: clamp(30px, 9vw, 94px);
+		font-size: clamp(39px, 9vw, 114px);
 		font-weight: 800;
 		line-height: 100%;
 		color: $white;
