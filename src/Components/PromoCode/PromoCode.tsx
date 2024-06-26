@@ -3,6 +3,7 @@ import styles from './styles.module.scss';
 import {Box} from '@mui/material';
 import Link from "next/link";
 
+
 const PromoCode = () => {
     const textToCopy = 'WEFINALLY2024';
     const [copied, setCopied] = useState(false);

@@ -49,7 +49,7 @@ const Second = () => {
                     className={styles.second__img}
                 />
             </Box>
-            <Box className={styles.container}>
+            <Box className={'container'}>
                 <Box className={styles.second__title_wrapper}>
                     <h2 className={styles.second__title}>
                         Many are <br />
