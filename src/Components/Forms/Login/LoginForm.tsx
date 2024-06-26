@@ -5,6 +5,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useLazyFetchUserQuery, useRegisterUserMutation } from "@/store/wordpress/wpRestApi";
 import { useFetchUserTokenMutation } from "@/store/wordpress/jwtApi";
 import { useCookies } from 'react-cookie';
+import { WpWooCustomError } from "@/types/services";
+import styles from '../Formstyles/styles.module.scss';
 
 const LoginFormSchema = z.object({
     raidId: z.string(),
@@ -71,7 +73,11 @@ export const LoginForm: FC = () =>
                 {errors.raidId && <p>{errors.raidId?.message}</p>}
                 <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
                 {data && <p>{data.message}</p>}
-                {/* {isError && <p>{error.data.message}</p>} */}
+                {isError && error && (
+                    <p
+                        className={styles.form__error}
+                        dangerouslySetInnerHTML={{ __html: (error as WpWooCustomError).data.message }} />
+                )}
             </form>
         </div>
     );

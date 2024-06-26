@@ -8,10 +8,23 @@ import { useCookies } from 'react-cookie';
 import { useLazyFetchUserCountryQuery } from "@/store/ipapi/ipapi";
 import { CustomInput } from "../CustomInput";
 import styles from '../Formstyles/styles.module.scss';
-import { Button } from "@mui/material";
+
+// UM143785687 | 138407071 
+
+// function validateRaidId(id)
+// {
+//     const regex = /^[A-Z]{2}\d{9} \| \d{9}$/;
+// }
 
 const RegistrationFormSchema = z.object({
+    raidId: z.string().min(1, 'Please, type your ID'),
     email: z.string().email('Please, type valid email'),
+    country: z.boolean().refine(value => value === true, {
+        message: "You must agree to the terms",
+    }),
+    terms: z.boolean().refine(value => value === true, {
+        message: "You must agree to the terms",
+    }),
 });
 
 type RegistrationForm = z.infer<typeof RegistrationFormSchema>;
@@ -81,22 +94,36 @@ export const RegistrationForm: FC = () =>
                 className={styles.form}
                 onSubmit={handleSubmit(onSubmit)}>
                 <CustomInput
+                    placeholder={'Enter Raid ID here'}
+                    name={'raidId'}
+                    register={register}
+                    errors={errors}
+                />
+                <CustomInput
                     placeholder={'Enter Email'}
                     name={'email'}
                     register={register}
                     errors={errors}
                 />
-                <span>
-                    *It make take us up to 5 business days.
-                </span>
+                <CustomInput
+                    fieldName={'I confirm that I am a US citizen (outside New York and Florida)'}
+                    name={'country'}
+                    register={register}
+                    isCheckbox={true}
+                    errors={errors}
+                />
+                <CustomInput
+                    fieldName={"I agree to this event's Official Rules and Privacy notice"}
+                    name={'terms'}
+                    register={register}
+                    isCheckbox={true}
+                    errors={errors}
+                />
                 <button
                     type="submit"
                     className={`hexagon-button hexagon-button_gradient ${styles.form__button}`}
                     disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Join event'}
                 </button>
-                <Button variant="contained" className='btn-second'>
-                    Publish
-                </Button>
                 <div className={styles.form__res}>
                     {data && <p className={styles.form__success}>Account has been created!</p>}
                     {/* {isError && <p className={styles.form__error}>{error?.data?.message}</p>} */}

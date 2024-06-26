@@ -2,9 +2,7 @@ import { FC, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useLazyFetchUserQuery } from "@/store/wordpress/wpRestApi";
 import { useFetchUserTokenMutation } from "@/store/wordpress/jwtApi";
-import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
 import styles from '../Formstyles/styles.module.scss';
 import { Box } from "@mui/material";
@@ -19,6 +17,7 @@ const CheckUserIdSchema = z.object({
     raidId: z.string().refine(value => validateRaidId(value), {
         message: "Invalid raid ID",
     }),
+    // raidId: z.string(),
     country: z.boolean().refine(value => value === true, {
         message: "You must agree to the terms",
     }),
@@ -31,25 +30,20 @@ type CheckUserId = z.infer<typeof CheckUserIdSchema>;
 
 export const CheckUserId: FC = () =>
 {
-    const [fetchUserToken] = useFetchUserTokenMutation();
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const dispatch = useAppDispatch();
-    const router = useRouter();
-
     const { register, handleSubmit, formState: { errors }, reset } = useForm<CheckUserId>({
         resolver: zodResolver(CheckUserIdSchema)
     });
 
+    const [fetchUserToken] = useFetchUserTokenMutation();
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isUserRegistered, setIsUserRegistered] = useState(false);
+    const dispatch = useAppDispatch();
+    const router = useRouter();
+
     const onSubmit = async ({ raidId }: CheckUserId) =>
     {
         setIsSubmitting(true);
-
-        const body = {
-            username: raidId,
-        };
-
-        dispatch(setRaidId(raidId));
-        router.push('/create-video');
+        setIsUserRegistered(false);
 
         try
         {
@@ -57,14 +51,15 @@ export const CheckUserId: FC = () =>
 
             if (userToken)
             {
-                console.log(raidId);
+                setIsUserRegistered(true);
+                setIsSubmitting(false);
             }
         } catch (error)
         {
-            console.error('Error:', error);
+            dispatch(setRaidId(raidId));
+            router.push('/create-video');
         } finally
         {
-            setIsSubmitting(false);
             reset();
         }
     };
@@ -113,6 +108,8 @@ export const CheckUserId: FC = () =>
                 >
                     {isSubmitting ? 'Wait...' : 'Go!'}
                 </button>
+                {isUserRegistered && <p className={styles.form__error}>
+                    Raid ID is already registered.</p>}
             </form>
         </Box>
     );

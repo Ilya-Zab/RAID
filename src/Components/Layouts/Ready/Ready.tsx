@@ -3,6 +3,7 @@ import styles from './styles.module.scss';
 import { Box } from '@mui/material';
 import PromoCode from "@/Components/PromoCode/PromoCode";
 import { CheckUserId } from '@/Components/Forms/CheckUserId';
+import { RegistrationForm } from '@/Components/Forms/RegistrationForm';
 
 const Ready = () =>
 {
@@ -17,6 +18,9 @@ const Ready = () =>
                 <Box className={`subtract-box subtract-box_big ${styles.ready__forms}`}>
                     <Box>
                         <PromoCode />
+                        {/* <Box className={`subtract-box`}>
+                            <RegistrationForm />
+                        </Box> */}
                         <CheckUserId />
                     </Box>
                 </Box>
