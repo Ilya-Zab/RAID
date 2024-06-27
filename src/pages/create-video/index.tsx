@@ -19,11 +19,12 @@ const CreateVideo = () => {
                             #WeFinallyPlayedIt
                         </h1>
                         <Box className={styles.popup}>
-                            <CreateVideoTemplate/>
+                             <CreateVideoTemplate/>
+                            {/*<FinallyVideoTemplate/>*/}
                         </Box>
                     </Box>
                 </Box>
-                {/*<FinallyVideoTemplate/>*/}
+
             </main>
         </>
     );
