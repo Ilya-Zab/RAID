@@ -43,7 +43,7 @@ export default function Home() {
     }
 
     return (
-        <main>
+        <main className='home'>
             <ScrollButton/>
             <Hero />
             <Second />

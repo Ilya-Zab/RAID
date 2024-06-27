@@ -192,3 +192,15 @@
 	@include text-gradient;
 	// -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.5);
 }
+.home {
+	background-color: $graphite;
+	background-image: url('../../public/images/landing_page_1280.png');
+	background-blend-mode: normal;
+	background-repeat: no-repeat;
+	background-size: cover;
+	overflow-x: hidden;
+
+	@media screen and (max-width: 580px) {
+		background-image: url('../../public/images/bg_mob.png');
+	}
+}
