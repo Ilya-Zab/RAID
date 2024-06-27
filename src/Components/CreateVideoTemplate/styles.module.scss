@@ -8,6 +8,7 @@
 	position: relative;
 	min-height: calc(100vh - 66px);
 	overflow-X: hidden;
+	margin-bottom: -68px;
 
 	&:after {
 		content: '';
@@ -48,19 +49,56 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-
+	&__zone {
+		width: 100%;
+		max-width: 266px;
+	}
 	&__social {
+		margin-top: 22px;
 		& p {
-			font-weight: 300;
+			font-weight: 400;
 			font-size: 16px;
 			line-height: 100%;
 			text-align: center;
 			color: $white;
-			margin-top: 8px;
 			letter-spacing: 0;
-		}
-		&_input {
+		}		
+
+		&__input {
 			margin-top: 22px;
+			position: relative;
+			&__customInput {
+				border: 1px solid rgba(66, 113, 161, 0.58);
+				border-radius: 8px;
+				width: 100%;
+				max-width: 266px;
+				height: 46px;
+				padding: 11px 35px 10px 7px;
+				background-color: transparent;
+				color: $white1;
+			}
+			& > div {
+				position: absolute;
+				top: 50%;
+				right: 50%;
+				transform: translateY(-50%) translateX(50%);
+				display: flex;
+				align-items: baseline;
+				grid-gap: 7px;
+				& > span {
+					font-weight: 400;
+					font-size: 16px;
+					line-height: 100%;
+					text-align: center;
+					color: rgba(100, 140, 182, 0.9);
+				}
+			}
+			& > svg {
+				position: absolute;
+				top: 50%;
+				right: 8px;
+				transform: translateY(-50%);
+			}
 		}
 	}
 
@@ -70,18 +108,23 @@
 		align-items: flex-end;
 		justify-content: center;
 		width: 100%;
-
+		margin-top: 12px;
 		& button {
-			font-weight: 400;
-			font-size: 18px;
-			line-height: 22px;
 			text-align: center;
 			letter-spacing: 0;
 			color: $white;
 		}
 	}
 }
-
+.or {
+	font-weight: 300;
+	font-size: 16px;
+	line-height: 100%;
+	text-align: center;
+	color: $white;
+	letter-spacing: 0;
+	margin-top: 57px;
+}
 .svg {
 	display: flex;
 	align-items: baseline;
@@ -106,6 +149,7 @@
 		color: $white;
 		margin-top: 8px;
 		letter-spacing: 0;
+
 		& span {
 			font-weight: 500;
 			background: linear-gradient(to right, #1FFFFF 0%, #23FF5F 37%, #FFB82D 100%);
@@ -123,6 +167,7 @@
 	align-items: center;
 	justify-content: center;
 	grid-gap: 14px;
+
 	&__iconBtn {
 		&:hover {
 			opacity: .7;
