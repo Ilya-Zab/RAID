@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Creatives from "@/Components/Layouts/Creatives";
+import Title from "@/Components/Title/Title";
 
 
 const CreateVideo = () =>
@@ -12,6 +13,7 @@ const CreateVideo = () =>
                 <meta name="description" content={`This is ${pageTitle}`} />
             </Head>
             <main>
+                <Title/>
                 <Creatives />
             </main>
         </>
