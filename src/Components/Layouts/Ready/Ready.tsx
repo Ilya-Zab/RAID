@@ -10,12 +10,10 @@ const Ready = () =>
 {
     const isMobile = useMediaQuery('(max-width: 768px)');
 
-
-
     return (
         <Box className={styles.ready} id='ready'>
             <Image
-                src={`/images/${isMobile ? 'png_char_mob.png' : 'png_char.png'}`}
+                src={`/images/${isMobile ? 'png_char_mob_new.png' : 'png_char.png'}`}
                 alt=''
                 width={isMobile ? 280 : 857}
                 height={isMobile ? 388 : 3114}
