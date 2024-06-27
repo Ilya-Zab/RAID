@@ -11,7 +11,7 @@ import Link from "next/link";
 import { validateRaidId } from "@/utils/validateRaidId";
 import { useAppDispatch } from "@/hooks/redux";
 import { setRaidId } from "@/store/slice/raidIdSlice";
-// UM143785687 | 138407071 
+import { useCookies } from "react-cookie";
 
 const CheckUserIdSchema = z.object({
     raidId: z.string().refine(value => validateRaidId(value), {
@@ -41,22 +41,23 @@ export const CheckUserId: FC = () =>
 
     const [fetchUserToken] = useFetchUserTokenMutation();
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isUserRegistered, setIsUserRegistered] = useState(false);
+    const [cookies, setCookie] = useCookies(['userToken']);
     const dispatch = useAppDispatch();
     const router = useRouter();
 
     const onSubmit = async ({ raidId }: CheckUserId) =>
     {
-        setIsSubmitting(true);
-        setIsUserRegistered(false);
-
+        const transformedId = transformRaidId(raidId);
+        console.log(transformedId);
         try
         {
-            const userToken = await fetchUserToken({ username: raidId, password: raidId }).unwrap();
+            const userToken = await fetchUserToken({ username: transformedId, password: transformedId }).unwrap();
 
             if (userToken)
             {
-                setIsUserRegistered(true);
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                setCookie('userToken', userToken.token, { path: '/', expires: tomorrow });
                 setIsSubmitting(false);
             }
         } catch (error)
@@ -113,8 +114,6 @@ export const CheckUserId: FC = () =>
                 >
                     {isSubmitting ? 'Wait...' : 'Go!'}
                 </button>
-                {isUserRegistered && <p className={styles.form__error}>
-                    Raid ID is already registered.</p>}
             </form>
         </Box>
     );
