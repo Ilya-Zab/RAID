@@ -4,7 +4,8 @@ import CreateVideoTemplate from "@/Components/CreateVideoTemplate/CreateVideoTem
 import styles from './styles.module.scss';
 import {Box} from "@mui/material";
 
-const CreateVideo = () => {
+const CreateVideo = () =>
+{
     const pageTitle = 'Create video';
     return (
         <>
