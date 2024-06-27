@@ -29,7 +29,9 @@ const PromoCode = () => {
                    Download RAID
                </Link>
                <p className={styles.promo__text}>
-                   A small appreciation gift for all players! Redeem promo code:
+                   A small appreciation gift for all
+                   <br/>
+                   players! Redeem promo code:
                </p>
                <Box className={styles.promo__code} onClick={copyPromoCode}>
                    {copied && <span >code copied</span>}

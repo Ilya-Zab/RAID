@@ -28,7 +28,7 @@
 		left: 0;
 		bottom: 0;
 		z-index: 0;
-		width: clamp(248px, 45vw, 445px);
+		width: clamp(248px, 80vw, 445px);
 		height: auto;
 		@media screen and (max-width: 768px) {
 			left: 50%;
@@ -49,6 +49,8 @@
 
 		&__wrapper {
 			margin-bottom: 53px;
+			position: relative;
+			z-index: 20;
 		}
 	}
 
@@ -88,6 +90,7 @@
 				width: 100%;
 				max-width: 400px;
 				margin: 0;
+				padding: 50px 52px;
 				@media screen and (max-width: 1024px) {
 					padding: 30px 27px;
 				}

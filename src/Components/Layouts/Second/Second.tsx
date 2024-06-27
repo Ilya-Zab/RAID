@@ -12,7 +12,7 @@ const Second = () => {
     const isMobile = useMediaQuery('(max-width: 768px)');
     let defaultTop;
     if (isMobile) {
-        defaultTop = -300;
+        defaultTop = -250;
     } else  {
         defaultTop = -410;
     }

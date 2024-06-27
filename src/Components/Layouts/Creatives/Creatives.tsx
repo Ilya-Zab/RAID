@@ -14,7 +14,7 @@ const Creatives = () => {
 
     if (isMobile)
     {
-        defaultTop = -401;
+        defaultTop = -101;
     } else
     {
         defaultTop = -333;
