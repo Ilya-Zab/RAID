@@ -30,8 +30,8 @@ function DropZone() {
                     <Image
                         src='/images/icon/photo.svg'
                         alt=''
-                        width={21}
-                        height={20}
+                        width={16}
+                        height={15}
                     />
                     <span style={files ? {width: '160px'} : {width: '79px'}}>
                         {files ? files.name :'Browse'}
