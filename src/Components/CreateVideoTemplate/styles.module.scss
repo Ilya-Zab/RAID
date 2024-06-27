@@ -40,7 +40,6 @@
 
 .section {
 	margin-top: 14px;
-	height: 605px;
 	background: $bg1;
 	border: 1px solid transparent;
 	border-image: $linearGradient2;
@@ -65,7 +64,7 @@
 		}		
 
 		&__input {
-			margin-top: 22px;
+			margin-top: 12px;
 			position: relative;
 			&__customInput {
 				border: 1px solid rgba(66, 113, 161, 0.58);
@@ -108,7 +107,8 @@
 		align-items: flex-end;
 		justify-content: center;
 		width: 100%;
-		margin-top: 12px;
+		margin-top: 44px;
+		margin-bottom: 45px;
 		& button {
 			text-align: center;
 			letter-spacing: 0;

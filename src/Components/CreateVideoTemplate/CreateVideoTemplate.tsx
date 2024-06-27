@@ -117,7 +117,7 @@ const CreateVideoTemplate = () => {
                             <Box className='btnGradient2'>
                                 <Link className="link" href={"/test-creative-recording"}>
                                     <Button variant="contained" className='btn-second'>
-                                        Make a Video
+                                        Create Content
                                     </Button>
                                 </Link>
                             </Box>
