@@ -17,6 +17,7 @@ const ScrollButton = () => {
         } else {
             setOpacity(1);
         }
+
     };
 
     useEffect(() => {
