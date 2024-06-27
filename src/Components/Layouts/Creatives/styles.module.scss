@@ -9,7 +9,6 @@
         &:before {
             content: '';
             position: absolute;
-            //display: none;
             right: 0;
             bottom: 0;
             background: linear-gradient(to bottom, #FFFFFF00 57%, #000F22 100%);
@@ -38,7 +37,7 @@
     &__img {
         position: relative;
         z-index: 5;
-        width: clamp(533px, 57vw, 1080px);
+        width: clamp(533px, 57vw, 680px);
         height: auto;
         //box-shadow: inset -15px -1300px 215px -575px #000F22;
         @media screen and (max-width: 768px) {
