@@ -12,17 +12,17 @@
 		padding-bottom: 400px;
 	}
 
-	//&:after {
-	//	content: '';
-	//	position: absolute;
-	//	bottom: 0;
-	//	left: 0;
-	//	z-index: 10;
-	//	display: block;
-	//	height: 68px;
-	//	width: 100%;
-	//	background: linear-gradient(to bottom, #ffffff00 0%, #0C0E10 100%);
-	//}
+	&:after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		z-index: 10;
+		display: block;
+		height: 68px;
+		width: 100%;
+		background: linear-gradient(to bottom, #ffffff00 0%, #0C0E10 100%);
+	}
 	&__img {
 		position: absolute;
 		left: 0;
