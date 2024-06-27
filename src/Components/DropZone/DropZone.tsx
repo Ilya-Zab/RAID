@@ -44,10 +44,10 @@ function DropZone() {
                     <defs>
                         <linearGradient id="paint0_linear_697_208" x1="6.82617" y1="-16.3564" x2="27.9002" y2="-16.1558"
                                         gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#08A232"/>
-                            <stop offset="0.333333" stop-color="#2DE6FF"/>
-                            <stop offset="0.666667" stop-color="#3B57ED"/>
-                            <stop offset="1" stop-color="#916AFF"/>
+                            <stop stopColor="#08A232"/>
+                            <stop offset="0.333333" stopColor="#2DE6FF"/>
+                            <stop offset="0.666667" stopColor="#3B57ED"/>
+                            <stop offset="1" stopColor="#916AFF"/>
                         </linearGradient>
                     </defs>
                 </svg>
