@@ -115,16 +115,17 @@
 			color: $white;
 		}
 	}
+	&__or {
+		font-weight: 300;
+		font-size: 16px;
+		line-height: 100%;
+		text-align: center;
+		color: $white;
+		letter-spacing: 0;
+		margin-top: 57px;
+	}
 }
-.or {
-	font-weight: 300;
-	font-size: 16px;
-	line-height: 100%;
-	text-align: center;
-	color: $white;
-	letter-spacing: 0;
-	margin-top: 57px;
-}
+
 .svg {
 	display: flex;
 	align-items: baseline;
