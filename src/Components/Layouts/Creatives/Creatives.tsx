@@ -36,18 +36,18 @@ const Creatives = () => {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, []);
+    }, [isMobile]);
 
     return (
         <div className={styles["creatives-section"]}>
-            <div className={styles['creatives-section__imgWrapper']} style={{ top: computedTop}}>
+            <div className={styles["creatives-section__imgWrapper"]} style={{ top: computedTop}}>
                 <Image
                     ref={beforeRef}
-                    src='/images/vlad.png'
-                    alt='vlad'
+                    src="/images/vlad.png"
+                    alt="vlad"
                     width={635}
                     height={804}
-                    className={styles['creatives-section__img']}
+                    className={styles["creatives-section__img"]}
                 />
             </div>
             <div className={styles["creatives-section__block"]}>
