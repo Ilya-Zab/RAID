@@ -1,51 +1,9 @@
 @import '@/styles/variables.module.scss';
 
-.bg {
-	background: url("../../../public/images/bg1.png"), $linearGradient4;
-	background-repeat: no-repeat;
-	background-size: cover;
-	padding: 20px 0 82px;
-	position: relative;
-	min-height: calc(100vh - 66px);
-	overflow-X: hidden;
-	margin-bottom: -68px;
 
-	&:after {
-		content: '';
-		display: block;
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 476px;
-		height: 627px;
-		background-image: url("../../../public/images/demon.png");
-	}
-}
-
-.container {
-	max-width: 362px;
-	width: 100%;
-	margin: 0 auto;
-	padding: 0 12px;
-	position: relative;
-	z-index: 10;
-}
-
-.title {
-	display: block;
-	margin: 0 auto;
-	max-width: 280px;
-	width: 100%;
-}
 
 .section {
-	margin-top: 14px;
-	height: 605px;
-	background: $bg1;
-	border: 1px solid transparent;
-	border-image: $linearGradient2;
-	border-image-slice: 1;
-	padding: 26px 12px;
+
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -65,7 +23,7 @@
 		}		
 
 		&__input {
-			margin-top: 22px;
+			margin-top: 12px;
 			position: relative;
 			&__customInput {
 				border: 1px solid rgba(66, 113, 161, 0.58);
@@ -108,23 +66,25 @@
 		align-items: flex-end;
 		justify-content: center;
 		width: 100%;
-		margin-top: 12px;
+		margin-top: 44px;
+		margin-bottom: 45px;
 		& button {
 			text-align: center;
 			letter-spacing: 0;
 			color: $white;
 		}
 	}
+	&__or {
+		font-weight: 300;
+		font-size: 16px;
+		line-height: 100%;
+		text-align: center;
+		color: $white;
+		letter-spacing: 0;
+		margin-top: 57px;
+	}
 }
-.or {
-	font-weight: 300;
-	font-size: 16px;
-	line-height: 100%;
-	text-align: center;
-	color: $white;
-	letter-spacing: 0;
-	margin-top: 57px;
-}
+
 .svg {
 	display: flex;
 	align-items: baseline;
