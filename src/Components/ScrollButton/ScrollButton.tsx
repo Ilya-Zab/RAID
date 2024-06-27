@@ -12,7 +12,7 @@ const ScrollButton = () => {
     const handleScroll = () => {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-        if (scrollTop >= 500) {
+        if (scrollTop >= 350) {
             setOpacity(0);
         } else {
             setOpacity(1);

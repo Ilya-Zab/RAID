@@ -71,20 +71,20 @@
 	background-position: 0 0;
 	transition: background-image .1s ease-in-out, filter .2s ease-in-out;
 	cursor: pointer;
-
+	
 	&:hover {
 		filter: brightness(1.1);
 	}
-
+	
 	&:active {
-		background-image: url('../../public/images/hex_hov.png');
+		filter: brightness(0.9);
 	}
-
+	
 	&_gradient {
 		background-image: url('../../public/images/hex-gradient_reg.png');
-
+		
 		&:active {
-			background-image: url('../../public/images/hex-gradient_hov.png');
+			filter: brightness(0.9);
 		}
 	}
 }

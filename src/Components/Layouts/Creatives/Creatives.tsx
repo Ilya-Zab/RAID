@@ -10,18 +10,14 @@ const Creatives = () => {
     const headerHeight = 0;
     const coefficient = 0.2;
     const isMobile = useMediaQuery('(max-width: 768px)');
-    const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1024px)');
     let defaultTop;
 
     if (isMobile)
     {
         defaultTop = -401;
-    } else if (isTablet)
-    {
-        defaultTop = -651;
     } else
     {
-        defaultTop = -351;
+        defaultTop = -651;
     }
 
     const handleScroll = () => {

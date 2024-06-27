@@ -9,10 +9,10 @@
 	&__img {
 		position: absolute;
 		left: 0;
-		width: 64vw;
-		max-width: 1280px;
+		width: clamp(600px, 64vw, 1280px);
 		height: auto;
 		@media screen and (max-width: 768px) {
+			width: clamp(280px, 64vw, 600px);
 			top: -300px;
 		}
 	}

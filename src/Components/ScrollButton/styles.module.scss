@@ -2,7 +2,7 @@
 	&__wrapper {
 		position: fixed;
 		left: 50%;
-		bottom: 30%;
+		bottom: 15%;
 		z-index: 100;
 		@media screen and (max-width: 768px) {
 			display: none;
@@ -16,7 +16,6 @@
 		padding: 0;
 		border: none;
 		outline: none;
-		cursor: pointer;
 		border-radius: 50%;
 	}
 	&__img {

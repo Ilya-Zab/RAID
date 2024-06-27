@@ -40,6 +40,9 @@
 		text-align: center;
 		color: $white1;
 		margin-bottom: 15px;
+		&:last-child {
+			margin-bottom: 0;
+		}
 	}
 	&__code {
 		display: flex;
