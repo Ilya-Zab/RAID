@@ -175,6 +175,11 @@
 	&_ready {
 		max-width: 1134px;
 	}
+	&_createVideo {
+		max-width: 370px;
+		position: relative;
+		z-index: 10;
+	}
 }
 
 .creatives-list-grid {
