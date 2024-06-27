@@ -12,7 +12,7 @@ const CreateVideo = () =>
                 <title>{pageTitle}</title>
                 <meta name="description" content={`This is ${pageTitle}`} />
             </Head>
-            <main>
+            <main className='bg-gallery'>
                 <Title/>
                 <Creatives />
             </main>
