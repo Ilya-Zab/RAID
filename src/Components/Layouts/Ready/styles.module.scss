@@ -64,6 +64,7 @@
 		&>div {
 			padding: 60px 0;
 			display: flex;
+			justify-content: center;
 			grid-gap: 60px;
 			position: relative;
 
@@ -79,8 +80,8 @@
 
 			&>div {
 				width: 100%;
-				max-width: 500px;
-
+				max-width: 400px;
+				margin: 0;
 				@media screen and (max-width: 1024px) {
 					padding: 30px 27px;
 				}

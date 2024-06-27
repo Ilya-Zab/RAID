@@ -7,9 +7,10 @@
 	padding-left: 42px;
 	padding-right: 42px;
 	&__title {
+		font-family: 'Inter-Medium', sans-serif;
 		font-weight: 500;
 		font-size: 22px;
-		line-height: 115%;
+		line-height: 25px;
 		text-align: center;
 		color: $white1;
 		margin-bottom: 31px;
@@ -32,6 +33,7 @@
 		color: $graphite;
 	}
 	&__text {
+		font-family: 'Inter-Regular', sans-serif;
 		font-weight: 400;
 		font-size: 16px;
 		line-height: 115%;
@@ -61,7 +63,7 @@
 			border-radius: 4px;
 		}
 		& p {
-			font-weight: 800;
+			font-weight: 700;
 			font-size: 22px;
 			line-height: 100%;
 			letter-spacing: -0.02em;
@@ -73,6 +75,7 @@
 		}
 	}
 	&__data {
+		font-family: 'Inter-Regular', sans-serif;
 		font-weight: 400;
 		font-size: 14px;
 		line-height: 115%;

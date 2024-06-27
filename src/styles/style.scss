@@ -3,12 +3,25 @@
 @import './variables.module';
 @import 'fonts';
 
+html {
+	scroll-behavior: smooth;
+}
+
 html,
 body {
 	font-size: 18px;
-	font-family: sans-serif;
+	font-family: 'Inter-Bold', sans-serif;
 	color: $white;
 	background-color: $graphite;
+	background-image: url('../../public/images/landing_page_1280.png');
+	background-blend-mode: normal;
+	background-repeat: no-repeat;
+	background-size: cover;
+	overflow-x: hidden;
+
+	@media screen and (max-width: 580px) {
+		background-image: url('../../public/images/bg_mob.png');
+	}
 }
 
 * {

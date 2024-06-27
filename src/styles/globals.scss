@@ -2,6 +2,7 @@
 @import "./text-gradient";
 
 .desc {
+	font-family: 'Inter-Regular', sans-serif;
 	font-weight: 400;
 	font-size: 18px;
 	color: $white1;
@@ -36,16 +37,16 @@
 .subtract-box {
 	margin: 0 auto;
 	width: fit-content;
-	padding: 70px 30px 50px;
-	backdrop-filter: blur(10px);
-	background-image: url('../../public/images/subtract-box.png');
+	padding: 50px 27px;
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	background-position: 0 0;
-
+	&_small {
+		backdrop-filter: blur(10px);
+		background-image: url('../../public/images/subtract-box.png');
+	}
 	&_big {
-		padding: 50px 70px;
-		background-image: url('../../public/images/subtract-big-box.png');
+		background-image: url('../../public/images/subtract-big-box_new.png');
 	}
 }
 
@@ -76,35 +77,17 @@
 	}
 
 	&:active {
-		filter: brightness(0.9);
+		background-image: url('../../public/images/hex_hov.png');
 	}
 
 	&_gradient {
 		background-image: url('../../public/images/hex-gradient_reg.png');
 
 		&:active {
-			filter: brightness(0.9);
+			background-image: url('../../public/images/hex-gradient_hov.png');
 		}
 	}
 }
-
-html {
-	scroll-behavior: smooth;
-}
-
-body {
-	background-image: url('../../public/images/landing_page_1280.png');
-	background-blend-mode: normal;
-	background-repeat: no-repeat;
-	background-size: cover;
-	overflow-x: hidden;
-
-	@media screen and (max-width: 580px) {
-		background-image: url('../../public/images/bg_mob.png');
-	}
-}
-
-
 
 .btnWrapper {
 	position: relative;
@@ -166,17 +149,13 @@ body {
 }
 
 .btn-second {
-	padding: 16px 30px;
 	width: 100%;
 	background: linear-gradient(176deg, #00ded4 0%, #0292bf 100%);
-	
+	padding: 14px;
 	border-radius: 40px;
 	position: relative;
 	z-index: 30;
 	outline: none;
-	font-weight: 400;
-	font-size: 19px;
-	line-height: 22px;
 	text-shadow: 0 2px 3px rgba(0, 0, 0, 0.27);
 	text-transform: capitalize;
 
@@ -186,13 +165,15 @@ body {
 }
 
 .container {
-	box-sizing: border-box;
-	padding: 0 40px;
-	max-width: 1220px;
+	padding: 0 15px;
+	width: 100%;
+	max-width: 1165px;
 	margin: 0 auto;
-
 	&_creatives {
-		max-width: 1240px;
+		max-width: 1215px;
+	}
+	&_ready {
+		max-width: 1134px;
 	}
 }
 

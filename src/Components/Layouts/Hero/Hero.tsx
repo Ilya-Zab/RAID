@@ -14,19 +14,15 @@ const Hero = () =>
     const coefficient = 0.2;
 
     const isMobile = useMediaQuery('(max-width: 768px)');
-    const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1024px)');
 
     let defaultBottom;
 
     if (isMobile)
     {
-        defaultBottom = 100;
-    } else if (isTablet)
+        defaultBottom = 0;
+    }  else
     {
-        defaultBottom = 50;
-    } else
-    {
-        defaultBottom = -106;
+        defaultBottom = -86;
     }
 
     const handleScroll = () =>
@@ -47,23 +43,21 @@ const Hero = () =>
         {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, [isMobile, isTablet]);
+    }, [isMobile]);
 
     return (
         <Box className={styles.hero}>
-            <Box className={'container'}>
-
-                    <Image
-                        ref={beforeRef}
-                        style={{ bottom: computedBottom }}
-                        src={!isMobile ? '/images/king.png' : '/images/king_mob.png'}
-                        alt='king'
-                        width={!isMobile ? 733 : 359}
-                        height={!isMobile ? 745 : 559}
-                        className={styles.hero__img}
-                    />
-
-                <Box className={styles.hero__wrapper}>
+            <Box className={`container ${styles.wrapper}`}>
+                <Image
+                    ref={beforeRef}
+                    style={{ bottom: computedBottom }}
+                    src={!isMobile ? '/images/king.png' : '/images/king_mob.png'}
+                    alt='king'
+                    width={!isMobile ? 733 : 359}
+                    height={!isMobile ? 745 : 559}
+                    className={styles.hero__img}
+                />
+                <Box>
                     <Box className={styles.hero__title_wrapper}>
                         <h1 className={styles.hero__title}>
                             Everyone&apos;s <br />

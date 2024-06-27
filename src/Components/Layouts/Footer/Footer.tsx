@@ -14,23 +14,23 @@ const data = [
         url: 'link1111',
     }, {
         title: 'Privacy Notice',
-        url: 'link1111',
+        url: '/privacy-notice',
     }, {
         title: 'Find ID',
-        url: 'link1111',
+        url: '/find-id',
     }, {
         title: 'Prizes',
-        url: 'link1111',
+        url: '/prizes',
     }, {
         title: 'Rules',
-        url: 'link1111',
+        url: '/rules',
     },
 ];
 const Footer = () => {
     return (
         <footer className={styles.footer__bg_wrapper}>
             <Box className={styles.footer__bg}>
-                <Box className={styles.container}>
+                <Box className={'container'}>
                     <Box className={styles.footer}>
                         <Box className={styles.footer_left}>
                             <Link href={'/'} passHref className={styles.logo}>
