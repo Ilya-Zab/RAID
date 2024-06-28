@@ -16,11 +16,10 @@ const Hero = () =>
     const isMobile = useMediaQuery('(max-width: 768px)');
 
     let defaultBottom;
-
     if (isMobile)
     {
         defaultBottom = 0;
-    }  else
+    } else
     {
         defaultBottom = -86;
     }

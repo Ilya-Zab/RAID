@@ -51,9 +51,25 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     const [music, setMusic] = useState<Blob | null>(null);
     const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
 
+    const stopEver = () =>
+    {
+        if (!deepAR) return;
+
+        deepAR.shutdown();
+    }
+
     useEffect(() =>
     {
         initializeCreativeRecorder();
+
+        return () =>
+        {
+            if (deepAR)
+            {
+                console.log('Finish')
+                deepAR.shutdown();
+            }
+        };
     }, []);
 
     useEffect(() =>
@@ -111,6 +127,11 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
             >
                 Continue
             </button>
+            <button
+                onClick={() => stopEver()}
+            >
+                StopEver
+            </button>
         </Box>
     );
 
@@ -147,12 +168,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         setIsInited(videoGrants && audioGrants);
     }
 }
-
-
-
-
-
-
 
 // used to test recorded videos
 function downloadVideo(video: Blob, videoName: string)

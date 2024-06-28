@@ -3,16 +3,18 @@
 
 
 .section {
-
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+
 	&__zone {
 		width: 100%;
 		max-width: 266px;
 	}
+
 	&__social {
 		margin-top: 22px;
+
 		& p {
 			font-weight: 400;
 			font-size: 16px;
@@ -20,11 +22,12 @@
 			text-align: center;
 			color: $white;
 			letter-spacing: 0;
-		}		
+		}
 
 		&__input {
 			margin-top: 12px;
 			position: relative;
+
 			&__customInput {
 				border: 1px solid rgba(66, 113, 161, 0.58);
 				border-radius: 8px;
@@ -34,8 +37,31 @@
 				padding: 11px 35px 10px 7px;
 				background-color: transparent;
 				color: $white1;
+				background-image: url("../../../public/images/icon/coppy.svg");
+				background-repeat: no-repeat;
+				background-size: 16px 17px;
+				background-position: 32.7%;
+
+				&::placeholder {
+					padding-left: 24%;
+					font-weight: 400;
+					font-size: 16px;
+					line-height: 100%;
+					text-align: center;
+					color: rgba(100, 140, 182, 0.9);
+				}
+
+				&:focus {
+					background-image: none;
+					outline: none;
+
+					&::placeholder {
+						font-size: 0;
+					}
+				}
 			}
-			& > div {
+
+			&>div {
 				position: absolute;
 				top: 50%;
 				right: 50%;
@@ -43,7 +69,8 @@
 				display: flex;
 				align-items: baseline;
 				grid-gap: 7px;
-				& > span {
+
+				&>span {
 					font-weight: 400;
 					font-size: 16px;
 					line-height: 100%;
@@ -51,7 +78,14 @@
 					color: rgba(100, 140, 182, 0.9);
 				}
 			}
-			& > svg {
+
+			&>button {
+				background: transparent;
+				border: none;
+				padding: 0;
+				outline: none;
+				cursor: pointer;
+				line-height: 12px;
 				position: absolute;
 				top: 50%;
 				right: 8px;
@@ -68,12 +102,14 @@
 		width: 100%;
 		margin-top: 44px;
 		margin-bottom: 45px;
+
 		& button {
 			text-align: center;
 			letter-spacing: 0;
 			color: $white;
 		}
 	}
+
 	&__or {
 		font-weight: 300;
 		font-size: 16px;
