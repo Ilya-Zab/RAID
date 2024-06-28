@@ -1,35 +1,5 @@
 @import '@/styles/variables.module.scss';
 
-.bg {
-	background: url("../../../public/images/bg1.png"), $linearGradient4;
-	background-repeat: no-repeat;
-	background-size: cover;
-	padding: 20px 0 82px;
-	position: relative;
-	min-height: calc(100vh - 66px);
-	overflow-X: hidden;
-
-	&:after {
-		content: '';
-		display: block;
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 476px;
-		height: 627px;
-		background-image: url("../../../public/images/demon.png");
-	}
-}
-
-.container {
-	max-width: 362px;
-	width: 100%;
-	margin: 0 auto;
-	padding: 0 12px;
-	position: relative;
-	z-index: 10;
-}
-
 .photo {
 	border-radius: 4px;
 	object-fit: cover;
@@ -43,13 +13,6 @@
 }
 
 .section {
-	margin-top: 14px;
-	height: 605px;
-	background: $bg1;
-	border: 1px solid transparent;
-	border-image: linear-gradient(100deg, #08A232 19%, #2DE6FF 38%, #533BED 58%, #FF3CBD 90%);
-	border-image-slice: 1;
-	padding: 33px 12px 30px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;

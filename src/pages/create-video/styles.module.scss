@@ -1,0 +1,50 @@
+@import '@/styles/variables.module.scss';
+
+.bg {
+	background: url("../../../public/images/bg1.png"), $linearGradient4;
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 20px 0 68px;
+	position: relative;
+	overflow-X: hidden;
+	margin-bottom: -68px;
+
+	&:after {
+		content: '';
+		display: block;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 476px;
+		height: 627px;
+		background-image: url("../../../public/images/demon.png");
+		background-size: cover;
+		@media screen and (max-width: 768px) {
+			display: none;
+		}
+	}
+	@media screen and (max-width: 768px) {
+	background: #080808;
+	}
+}
+
+.title {
+	display: block;
+	margin: 29px auto 0;
+	max-width: 280px;
+	width: 100%;
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 24px;
+	letter-spacing: 0.02px;
+	text-align: center;
+}
+
+.popup {
+	margin-top: 20px;
+	background: $bg1;
+	border: 1px solid transparent;
+	border-image: $linearGradient2;
+	border-image-slice: 1;
+	padding: 26px 12px;
+}
