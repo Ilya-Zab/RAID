@@ -18,8 +18,10 @@ export default function TestCreativeRecording() {
         // return;
 
         async function uploadVideo() {
-            const buffer = Buffer.from(await video.arrayBuffer());
-            axios.post("/api/video-uploader", buffer)
+            const formData = new FormData();
+            formData.append("video", video);
+
+            axios.post("/api/video-uploader", formData)
                 .then(response => {
                     setResult(response.data);
                     setIsUploaded(true);

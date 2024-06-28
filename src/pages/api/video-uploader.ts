@@ -1,17 +1,17 @@
-import { uploadVideo, uploadVideoAsBlob } from '@/services/VideoUploader/VideoUploaderService';
-import formidable from 'formidable';
-import { NextApiRequest, NextApiResponse } from 'next';
-import { NextRequest } from 'next/server';
-import { z } from 'zod';
+import { uploadVideo as uploadVideoAsUrl, uploadVideoAsBuffer } from "@/services/VideoUploader/VideoUploaderService";
+import * as formidable from "formidable";
+import { existsSync, readFileSync, unlinkSync } from "fs";
+import { NextApiRequest, NextApiResponse } from "next";
+import { z } from "zod";
 
-// this disabling of the response size limiter is required, because videos to upload can be more then default max 4MB for the request.
+// this disabling of the request and response size limiter is required, because videos to upload can be more then default max 4MB for the request.
 // See: https://nextjs.org/docs/messages/api-routes-response-size-limit
 export const config = {
     api: {
         responseLimit: false,
         bodyParser: false
     }
-}
+};
 
 const UploadVideoBodySchema = z.object({
     url: z.string().url()
@@ -24,24 +24,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const userToken = getUserToken(req);
     if (!userToken)
         return res.status(401).json({ message: "Only authorized users have access to this API." })
-    
-    try {
-        const videoBuffer = Buffer.from(req.read());
-    console.debug("Buffer:", videoBuffer);
-    const videoItem = await uploadVideoAsBlob(videoBuffer, userToken);
 
-    return res.status(200).send( videoItem );
-    }
-    catch (e) {
-        console.error("Error while handling video posting request.", e);
-        return res.status(500).json({ message: "Error while handling video posting request.", error: e });
-    }
-    
-    if (req.headers['content-type'] == "application/json")
+    if (req.headers['content-type']?.indexOf("application/json") > -1)
         return await handlePostingAsUrl(req, res, userToken);
     else if (req.headers['content-type'].indexOf("multipart/form-data") > -1)
-        return await handlePostingAsBlob(req, res, userToken);
-    else
+        return await handlePostingAsFile(req, res, userToken);
+    else 
         return res.status(400).json({ message: `Unsupported request content type: "${req.headers['content-type']}".` });
 }
 
@@ -58,12 +46,14 @@ function getUserToken(req: NextApiRequest): string | null {
 }
 
 async function handlePostingAsUrl(req: NextApiRequest, res: NextApiResponse, userToken: string) {
-    const { success, data, error } = UploadVideoBodySchema.safeParse(req.body);
+    const body = Buffer.from(req.read()).toString("utf-8");
+    const json = JSON.parse(body);
+    const { success, data, error } = UploadVideoBodySchema.safeParse(json);
     if (!success || !data)
         return res.status(400).json({ message: "Uncorrect body format.", error });
 
     try {
-        const videoItem = await uploadVideo(data.url, userToken);
+        const videoItem = await uploadVideoAsUrl(data.url, userToken);
 
         return res.status(200).json(videoItem);
     }
@@ -73,6 +63,39 @@ async function handlePostingAsUrl(req: NextApiRequest, res: NextApiResponse, use
     }
 }
 
-export async function handlePostingAsBlob(req: NextApiRequest, res: NextApiResponse, userToken: string) {
+async function handlePostingAsFile(req: NextApiRequest, res: NextApiResponse, userToken: string)  {
+    const form = new formidable.IncomingForm();
 
+    form.parse(req, async (err, fields, files) => {
+        if (err) {
+            console.error("Error while parsing form data in the video uploading request.", err);
+            res.status(500).json({ message: "Error while parsing form data in the video uploading request.", error: err });
+            return;
+        }
+
+const videoFile: any = Array.isArray(files.video) && files.video.length > 0 ? files.video[0] : files.video;
+        
+        if (!videoFile || !videoFile.filepath || !existsSync(videoFile.filepath)) {
+            console.error("Error while reading uploaded file in the video uploading request. File:", videoFile);
+            res.status(500).json({ message: "Error while reading uploaded file in the video uploading request." });
+            return;
+        }
+
+        if (!videoFile.mimetype || videoFile.mimetype !== "video/mp4") {
+            console.error(`Error while processing uploaded file in the video uploading request. File mime type should be "video/mp4", but was "`, videoFile.mimetype, `"`);
+            res.status(500).json({ message: `Error while processing uploaded file in the video uploading request. File mime type should be "video/mp4", but was "${videoFile.mimetype}"` });
+            return;
+        }
+
+        const videoBuffer = readFileSync(videoFile.filepath);
+        unlinkSync(videoFile.filepath);
+
+        console.debug("BUFFER:", videoBuffer);
+
+        const videoItem = await uploadVideoAsBuffer(videoBuffer, userToken)
+        
+        res.status(200).json(videoItem);
+    });
+
+    return res;
 }
