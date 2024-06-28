@@ -3,10 +3,11 @@ import styles from './styles.module.scss';
 import { Box } from '@mui/material';
 import Image from 'next/image';
 import PromoCode from "@/Components/PromoCode/PromoCode";
-import { CheckUserId, LoginForm } from '@/Components/Forms/LoginForm';
+import { LoginForm } from '@/Components/Forms/LoginForm';
 import { useMediaQuery } from "@mui/material";
 
-const Ready = () => {
+const Ready = () =>
+{
     const isMobile = useMediaQuery('(max-width: 768px)');
 
     return (

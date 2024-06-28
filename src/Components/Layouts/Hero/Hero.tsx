@@ -15,11 +15,16 @@ const Hero = () =>
 
     const isMobile = useMediaQuery('(max-width: 768px)');
 
-  const defaultBottom = React.useMemo(() => isMobile ? 0 : -86, [isMobile]);
+    const defaultBottom = React.useMemo(() => isMobile ? 0 : -86, [isMobile]);
 
-    const handleScroll = () => {
-        if (!ticking) {
-            window.requestAnimationFrame(() => {
+    let ticking = false;
+
+    const handleScroll = () =>
+    {
+        if (!ticking)
+        {
+            window.requestAnimationFrame(() =>
+            {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
                 let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);

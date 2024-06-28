@@ -1,6 +1,5 @@
 import Head from "next/head";
 import CreateVideoTemplate from "@/Components/CreateVideoTemplate/CreateVideoTemplate";
-import { RecordingVideo } from "@/Components/CreateVideoTemplate";
 import { useEffect, useState } from "react";
 import CreativeRecorder from "@/Components/CreativeRecorder/CreativeRecorder";
 // import FinallyVideoTemplate from "@/Components/FinallyVideoTemplate/FinallyVideoTemplate";
