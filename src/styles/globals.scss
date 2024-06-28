@@ -199,6 +199,7 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 	overflow: hidden;
+	margin-bottom: -68px;
 	@media screen and (max-width: 580px) {
 		background-image: url('../../public/images/bg_mob.png');
 	}
