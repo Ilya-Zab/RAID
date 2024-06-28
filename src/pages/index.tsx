@@ -4,7 +4,6 @@ import { useLazyFetchUserQuery } from "@/store/wordpress/wpRestApi";
 
 import { useRegisterUserMutation } from "@/store/wordpress/wpRestApi";
 import wpRestApi from "@/services/wordpress/wpService";
-import { LoginForm } from "@/Components/Forms/Login";
 import { useEffect } from "react";
 import Creatives from "@/Components/Layouts/Creatives";
 import CreativesList from "@/Components/Creatives/CreativesList";
@@ -14,37 +13,43 @@ import { useLazyFetchUserCountryQuery } from "@/store/ipapi/ipapi";
 import Hero from "@/Components/Layouts/Hero/Hero";
 import Second from "@/Components/Layouts/Second/Second";
 import Ready from "@/Components/Layouts/Ready/Ready";
-import { CheckUserId } from "@/Components/Forms/CheckUserId";
 import ScrollButton from "@/Components/ScrollButton/ScrollButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default function Home()
+{
     const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
 
-    const unsetCookies = () => {
+    const unsetCookies = () =>
+    {
         removeCookie('userToken');
     };
 
-    useEffect(() => {
-        if (cookies.userToken) {
-        } else {
+    useEffect(() =>
+    {
+        if (cookies.userToken)
+        {
+        } else
+        {
             console.log('No cookies!')
         }
     }, [cookies]);
 
     const [checkUserCountry, { data, error }] = useLazyFetchUserCountryQuery()
 
-    const checkUserIp = () => {
+    const checkUserIp = () =>
+    {
         checkUserCountry({});
-        if (data) {
+        if (data)
+        {
             console.log(data);
         }
     }
 
     return (
         <main className='home'>
-            <ScrollButton/>
+            <ScrollButton />
             <Hero />
             <Second />
             <Creatives />

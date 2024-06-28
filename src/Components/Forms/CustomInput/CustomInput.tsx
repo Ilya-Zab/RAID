@@ -38,7 +38,7 @@ export const CustomInput: FC<CustomInputProps> = ({
                         {...registerProps}
                         style={{ color: 'black' }}
                         type={type && type}
-                        className={`${inputClass} ${isError && styles.customInput__input_error}`}
+                        className={`${inputClass} ${isError && styles.customInput__input_error} input`}
                         onChange={onChange && onChange}
                         value={value && value}
                     />

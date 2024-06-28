@@ -44,4 +44,5 @@ export const
         useRegisterUserMutation,
         usePostVideoMutation,
         useFetchAllCreativesByDataQuery,
+        useLazyFetchAllCreativesByDataQuery,
     } = wpAPI;

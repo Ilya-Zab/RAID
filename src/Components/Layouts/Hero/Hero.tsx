@@ -19,9 +19,12 @@ const Hero = () =>
 
     let ticking = false;
 
-    const handleScroll = () => {
-        if (!ticking) {
-            window.requestAnimationFrame(() => {
+    const handleScroll = () =>
+    {
+        if (!ticking)
+        {
+            window.requestAnimationFrame(() =>
+            {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
                 let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
