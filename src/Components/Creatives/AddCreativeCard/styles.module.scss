@@ -1,0 +1,40 @@
+@import "@/styles/variables.module";
+
+.add-creative-card {
+    position: relative;
+    padding-top: $creative-ratio;
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 700;
+    box-shadow: rgba(105, 255, 255, 0.25) 0 0 40px;
+    transition: .2s ease;
+    background-color: transparent;
+    border-radius: 10px;
+
+    &:hover {
+        box-shadow: rgba(105, 255, 255, 0.4) 0 0 40px;
+    }
+
+    &:focus-visible {
+        box-shadow: rgba(105, 255, 255, 0.6) 0 0 40px;
+        outline: none;
+        border: none;
+    }
+
+    &__icon {
+        margin-bottom: 0.8em;
+    }
+
+    &__content {
+        background-size: 100% 100%;
+        position: absolute;
+        inset: 0;
+        color: $white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        padding: 20px;
+    }
+}

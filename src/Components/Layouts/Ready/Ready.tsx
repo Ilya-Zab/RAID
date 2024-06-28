@@ -6,8 +6,7 @@ import PromoCode from "@/Components/PromoCode/PromoCode";
 import { CheckUserId, LoginForm } from '@/Components/Forms/LoginForm';
 import { useMediaQuery } from "@mui/material";
 
-const Ready = () =>
-{
+const Ready = () => {
     const isMobile = useMediaQuery('(max-width: 768px)');
 
     return (

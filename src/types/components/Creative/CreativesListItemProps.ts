@@ -3,7 +3,8 @@ import { CreativeDataTypeSchema } from "./CreativeDataType";
 
 export const CreativesListItemPropsSchema = z.object({
     creative: CreativeDataTypeSchema,
-    hasLiked: z.boolean()
+    hasVoted: z.boolean(),
+    onVote: z.any()
 });
 
 export type CreativesListItemProps = z.infer<typeof CreativesListItemPropsSchema>;

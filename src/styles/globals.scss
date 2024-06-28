@@ -176,9 +176,12 @@
 }
 
 .container {
-	padding: 0 15px;
-	width: 100%;
-	max-width: 1165px;
+	box-sizing: border-box;
+	padding: 0 40px;
+	max-width: 1155px;
+	// padding: 0 15px;
+	// width: 100%;
+	// max-width: 1165px;
 	margin: 0 auto;
 
 	&_creatives {
@@ -228,5 +231,20 @@
 
 	@media screen and (max-width: 580px) {
 		background-image: url('../../public/images/bg_mob.png');
+	}
+}
+
+@media (max-width: 800px) {
+	.container {
+		padding: 0 30px;
+
+		&_creatives {
+			padding: 0 15px;
+		}
+	}
+
+	.creatives-list-grid {
+		grid-template-columns: repeat(3, 1fr);
+		gap: 10px;
 	}
 }
