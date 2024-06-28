@@ -13,13 +13,23 @@ const Second = () => {
 
     const defaultTop = React.useMemo(() => isMobile ? -250 : -410, [isMobile]);
 
+    let ticking = false;
+
     const handleScroll = () => {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-        let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
-        distanceFromHeader *= coefficient;
+                let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
+                distanceFromHeader *= coefficient;
 
-        setComputedTop(`${defaultTop + distanceFromHeader}px`);
+                setComputedTop(`${defaultTop + distanceFromHeader}px`);
+
+                ticking = false;
+            });
+
+            ticking = true;
+        }
     };
 
     useEffect(() => {
