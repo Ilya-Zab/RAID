@@ -179,7 +179,7 @@ body {
 .container {
 	box-sizing: border-box;
 	padding: 0 40px;
-	max-width: 1440px;
+	max-width: 1155px;
 	margin: 0 auto;
 
 	&_creatives {
@@ -196,4 +196,19 @@ body {
 .text-gradient {
 	@include text-gradient;
 	// -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 800px) {
+	.container {
+		padding: 0 30px;
+
+		&_creatives {
+			padding: 0 15px;
+		}
+	}
+
+	.creatives-list-grid {
+		grid-template-columns: repeat(3, 1fr);
+		gap: 10px;
+	}
 }

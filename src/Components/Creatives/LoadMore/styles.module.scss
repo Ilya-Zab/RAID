@@ -1,0 +1,48 @@
+@import "@/styles/variables.module";
+@import "@/styles/text-gradient";
+
+.view-more {
+    font-size: 2.2rem;
+    margin-top: 1em;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+
+    &__line {
+        height: 1px;
+        background: linear-gradient(90deg, rgba(66, 113, 161, 0.9) 0%, #FFCC49 50%, rgba(66, 113, 161, 0.9) 100%);
+    }
+
+    &__button {
+        background-color: transparent;
+        font-weight: 700;
+        padding: 0.4em 2em;
+        border: none;
+        background-image: url('/images/outlined_hexagon_bg.png');
+        background-size: 100% 100%;
+        cursor: pointer;
+        margin: 0 -2px;
+        transition: .2s ease;
+
+        &:hover,
+        &:focus-visible {
+            background-image: url('/images/outlined_hexagon_focus_bg.png');
+            border: none;
+            outline: none;
+        }
+
+        &-text {
+            @include text-gradient-blue;
+            transition: .2s ease;
+        }
+    }
+
+    @media (max-width: 800px) {
+        margin-top: 2em;
+        font-size: 1.2rem;
+
+        &__button {
+            padding: 0.8em 3.5em;
+        }
+    }
+}

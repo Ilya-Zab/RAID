@@ -9,10 +9,19 @@ body {
 	font-family: sans-serif;
 	color: $white;
 	background-color: $graphite;
+	line-height: 1.4;
 }
 
 * {
 	box-sizing: border-box;
 	scrollbar-width: thin;
 	//scrollbar-color: $tech-bg $background-white;
+}
+
+@media (max-width: 800px) {
+
+	html,
+	body {
+		font-size: 14px;
+	}
 }
