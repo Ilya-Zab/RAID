@@ -1,5 +1,4 @@
 @import '@/styles/variables.module.scss';
-
 .header {
 	padding: 12px 0 12px;
 	background-color: $graphite;
@@ -7,7 +6,6 @@
 	border-bottom: 1px solid transparent;
 	border-image: $linearGradient2;
 	border-image-slice: 1;
-
 	&__toolbar {
 		display: flex;
 		justify-content: space-between;
@@ -16,27 +14,17 @@
 	}
 }
 
-.container {
-	max-width: 1220px;
-	width: 100%;
-	padding: 0 40px;
-	margin: 0 auto;
-}
-
 .logo {
 	display: block;
-
 	&_img {
 		display: block;
 	}
 }
-
 .buttons {
 	display: flex;
 	align-items: center;
 	grid-gap: 17px;
 }
-
 .btn {
 	text-decoration: none;
 	padding: 8px 18px;

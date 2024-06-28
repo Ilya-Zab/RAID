@@ -1,16 +1,6 @@
 @import "@/styles/variables.module";
 @import "@/styles/text-gradient";
 
-.container {
-	max-width: 1088px;
-	width: 100%;
-	padding: 0 12px;
-	margin: 0 auto;
-	@media screen and (max-width: 768px) {
-		padding: 0 28px;
-	}
-}
-
 .second {
 	position: relative;
 	@media screen and (max-width: 768px) {
@@ -19,20 +9,15 @@
 	&__img {
 		position: absolute;
 		left: 0;
-		width: 100%;
-		max-width: 816px;
-		height: 1120px;
-		@media screen and (max-width: 1024px) {
-			max-width: 616px;
-			height: 920px;
-		}
+		width: clamp(600px, 64vw, 1280px);
+		height: auto;
 		@media screen and (max-width: 768px) {
-			max-width: 452px;
-			height: auto;
+			width: clamp(280px, 64vw, 600px);
+			top: -300px;
 		}
 	}
 	&__title {
-		font-size: clamp(30px, 9vw, 94px);
+		font-size: clamp(39px, 9vw, 114px);
 		font-weight: 800;
 		line-height: 100%;
 		color: $white;
