@@ -15,6 +15,7 @@ import Hero from "@/Components/Layouts/Hero/Hero";
 import Second from "@/Components/Layouts/Second/Second";
 import Ready from "@/Components/Layouts/Ready/Ready";
 import { CheckUserId } from "@/Components/Forms/CheckUserId";
+import ScrollButton from "@/Components/ScrollButton/ScrollButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,11 +43,13 @@ export default function Home() {
     }
 
     return (
-        <main>
+        <main className='home'>
+            <ScrollButton/>
             <Hero />
             <Second />
             <Creatives />
             <Ready />
+
             {/*<button onClick={() => unsetCookies()}>unsetCookies</button>*/}
             {/* <button onClick={ }></button> */}
             {/*<button onClick={() => checkUserIp()}>Check your IP</button>*/}

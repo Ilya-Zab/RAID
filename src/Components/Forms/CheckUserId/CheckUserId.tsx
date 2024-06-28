@@ -71,7 +71,7 @@ export const CheckUserId: FC = () =>
     };
 
     return (
-        <Box className="subtract-box">
+        <Box className="subtract-box subtract-box_small">
             <h2 className={styles.form__title}>30 days of raid</h2>
             <h3 className={styles.form__subTitle}>with RAID: Shadow Legends</h3>
             <h3 className={styles.form__desc}>Need description here about event!</h3>
