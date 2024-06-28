@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import { Box } from '@mui/material';
 import Image from 'next/image';
 import PromoCode from "@/Components/PromoCode/PromoCode";
-import { CheckUserId } from '@/Components/Forms/CheckUserId';
+import { CheckUserId, LoginForm } from '@/Components/Forms/LoginForm';
 import { useMediaQuery } from "@mui/material";
 
 const Ready = () =>
@@ -28,7 +28,7 @@ const Ready = () =>
                 <Box className={`subtract-box subtract-box_big ${styles.ready__forms}`}>
                     <Box>
                         <PromoCode />
-                        <CheckUserId />
+                        <LoginForm />
                     </Box>
                 </Box>
             </Box>

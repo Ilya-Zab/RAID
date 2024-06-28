@@ -2,7 +2,6 @@
 @import "./text-gradient";
 
 .desc {
-	font-family: 'Inter-Regular', sans-serif;
 	font-weight: 400;
 	font-size: 18px;
 	color: $white1;
@@ -19,6 +18,16 @@
 
 .nav-link {
 	transition: .2s color ease-in-out;
+}
+
+.input {
+	font-family: 'Inter', sans-serif;
+	font-size: 16px;
+	color: $white !Important;
+
+	&::placeholder {
+		color: $placeholder-color;
+	}
 }
 
 .nav-link:hover {

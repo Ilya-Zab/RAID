@@ -33,7 +33,7 @@ export const transformRaidId = (raidId) =>
     return newStr;
 }
 
-export const CheckUserId: FC = () =>
+export const LoginForm: FC = () =>
 {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<CheckUserId>({
         resolver: zodResolver(CheckUserIdSchema)
@@ -58,15 +58,14 @@ export const CheckUserId: FC = () =>
                 const tomorrow = new Date();
                 tomorrow.setDate(tomorrow.getDate() + 1);
                 setCookie('userToken', userToken.token, { path: '/', expires: tomorrow });
-                setIsSubmitting(false);
             }
         } catch (error)
         {
             dispatch(setRaidId(transformRaidId(raidId)));
-            // router.push('/create-video');
         } finally
         {
             reset();
+            router.push('/gallery');
         }
     };
 
@@ -86,7 +85,7 @@ export const CheckUserId: FC = () =>
                     name={'raidId'}
                     register={register}
                     errors={errors}
-                    className={styles.form__input}
+                    className={`${styles.form__input}`}
                 />
                 <Link
                     className={styles.form__link}
