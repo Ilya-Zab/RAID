@@ -2,7 +2,6 @@
 @import "./text-gradient";
 
 .desc {
-	font-family: 'Inter-Regular', sans-serif;
 	font-weight: 400;
 	font-size: 18px;
 	color: $white1;
@@ -19,6 +18,16 @@
 
 .nav-link {
 	transition: .2s color ease-in-out;
+}
+
+.input {
+	font-family: 'Inter', sans-serif;
+	font-size: 16px;
+	color: $white !Important;
+
+	&::placeholder {
+		color: $placeholder-color;
+	}
 }
 
 .nav-link:hover {
@@ -41,12 +50,14 @@
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	background-position: 0 0;
+
 	&_small {
 		backdrop-filter: blur(10px);
-		background-image: url('../../public/images/subtract-box.png');
+		background-image: url('/images/subtract-box.png');
 	}
+
 	&_big {
-		background-image: url('../../public/images/subtract-big-box_new.png');
+		background-image: url('/images/subtract-big-box_new.png');
 	}
 }
 
@@ -65,24 +76,24 @@
 	color: $white1;
 	text-transform: capitalize;
 	background-color: transparent;
-	background-image: url('../../public/images/hex_reg.png');
+	background-image: url('/images/hex_reg.png');
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	background-position: 0 0;
 	transition: background-image .1s ease-in-out, filter .2s ease-in-out;
 	cursor: pointer;
-	
+
 	&:hover {
 		filter: brightness(1.1);
 	}
-	
+
 	&:active {
 		filter: brightness(0.9);
 	}
-	
+
 	&_gradient {
-		background-image: url('../../public/images/hex-gradient_reg.png');
-		
+		background-image: url('/images/hex-gradient_reg.png');
+
 		&:active {
 			filter: brightness(0.9);
 		}
@@ -169,14 +180,16 @@
 	width: 100%;
 	max-width: 1165px;
 	margin: 0 auto;
+
 	&_creatives {
 		max-width: 1215px;
 	}
+
 	&_ready {
 		max-width: 1134px;
 	}
+
 	&_createVideo {
-		max-width: 370px;
 		position: relative;
 		z-index: 10;
 	}
@@ -212,6 +225,7 @@
 	background-size: cover;
 	overflow: hidden;
 	margin-bottom: -68px;
+
 	@media screen and (max-width: 580px) {
 		background-image: url('../../public/images/bg_mob.png');
 	}

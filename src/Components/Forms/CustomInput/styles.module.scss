@@ -15,8 +15,8 @@
     &__checkbox {
         appearance: none;
         -webkit-appearance: none;
-        width: 30px;
-        height: 30px;
+        width: 25px;
+        height: 25px;
         border-radius: 5px;
         border: 2px solid #17E8F5;
         transition: background-color 0.2s;
@@ -24,7 +24,7 @@
 
         &:checked {
             background-color: #17E8F5;
-            background-image: url('../../../../public/images/checkbox-checked.svg');
+            background-image: url('/images/checkbox-checked.svg');
             background-repeat: no-repeat;
             background-position: center;
             background-size: 15px;
@@ -37,7 +37,9 @@
         align-items: center;
         flex-direction: row;
         gap: 15px;
-        font-size: 14px;
+        font-weight: 400;
+        font-size: 12px;
+        text-align: left;
 
         div {
             order: -1;
@@ -53,23 +55,18 @@
     }
 
     &__input {
-        padding: 20px 40px;
+        padding: 13px 40px;
         width: 100%;
         border: 1px solid $border-color;
         border-radius: 5px;
         outline: none;
         text-align: center;
-        color: $white !Important;
         background-color: $bg1;
         transition: outline-width .2s ease-in-out;
 
         &:focus-visible {
             border-color: #FFCC49;
             box-shadow: 0 0 6px 0 rgba(255, 204, 73, 0.9);
-        }
-
-        &::placeholder {
-            color: $placeholder-color;
         }
 
         &_error {
