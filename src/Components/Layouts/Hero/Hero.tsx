@@ -15,9 +15,7 @@ const Hero = () =>
 
     const isMobile = useMediaQuery('(max-width: 768px)');
 
-    const defaultBottom = React.useMemo(() => isMobile ? 0 : -86, [isMobile]);
-
-    let ticking = false;
+  const defaultBottom = React.useMemo(() => isMobile ? 0 : -86, [isMobile]);
 
     const handleScroll = () => {
         if (!ticking) {
