@@ -189,6 +189,11 @@ body {
 	&_creatives {
 		max-width: 1240px;
 	}
+
+	&_createVideo {
+		position: relative;
+		z-index: 10;
+	}
 }
 
 .creatives-list-grid {
