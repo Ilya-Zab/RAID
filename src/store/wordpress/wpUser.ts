@@ -19,4 +19,5 @@ export const wpUser = createApi({
 export const
     {
         useLazyFetchUserDataQuery,
+        useFetchUserDataQuery,
     } = wpUser;

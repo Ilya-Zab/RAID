@@ -14,3 +14,28 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
 }
+
+@mixin text-gradient-light {
+        background: rgb(155, 224, 161);
+        background: linear-gradient(0deg,
+                        rgba(155, 224, 161, 1) 0%,
+                        rgba(176, 247, 232, 1) 33%,
+                        rgba(187, 192, 235, 1) 66%,
+                        rgba(253, 209, 225, 1));
+        background: -webkit-linear-gradient(0deg, rgba(155, 224, 161, 1) 0%,
+                        rgba(176, 247, 232, 1) 33%,
+                        rgba(187, 192, 235, 1) 66%,
+                        rgba(253, 209, 225, 1));
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+}
+
+@mixin text-gradient-blue {
+        background: rgb(81, 150, 203);
+        background: linear-gradient(0deg, rgba(81, 150, 203, 1) 0%, rgba(157, 200, 225, 1) 50%, rgba(81, 150, 203, 1) 100%);
+        background: -webkit-linear-gradient(90deg, rgba(81, 150, 203, 1) 0%, rgba(157, 200, 225, 1) 50%, rgba(81, 150, 203, 1) 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+}
