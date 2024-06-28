@@ -23,6 +23,7 @@
 		width: 100%;
 		background: linear-gradient(to bottom, #ffffff00 0%, #0C0E10 100%);
 	}
+
 	&__img {
 		position: absolute;
 		left: 0;
@@ -30,11 +31,13 @@
 		z-index: 0;
 		width: clamp(248px, 80vw, 445px);
 		height: auto;
+
 		@media screen and (max-width: 768px) {
 			left: 50%;
 			transform: translateX(-50%);
 		}
 	}
+
 	&__title {
 		font-weight: 700;
 		font-size: clamp(36px, 5.3vw, 94px);
@@ -72,7 +75,7 @@
 			display: flex;
 
 			justify-content: center;
-			grid-gap: 60px;
+			grid-gap: 50px;
 			position: relative;
 
 			@media screen and (max-width: 1024px) {
@@ -88,9 +91,10 @@
 
 			&>div {
 				width: 100%;
-				max-width: 400px;
+				max-width: 490px;
 				margin: 0;
-				padding: 50px 52px;
+				padding: 50px 40px;
+
 				@media screen and (max-width: 1024px) {
 					padding: 30px 27px;
 				}

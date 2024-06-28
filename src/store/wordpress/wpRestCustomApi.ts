@@ -24,5 +24,6 @@ export const wpCustomAPI = createApi({
 export const
     {
         useFetchAllCreativesByVotesQuery,
+        useLazyFetchAllCreativesByVotesQuery,
         useFetchUpdateVoteVideoMutation
     } = wpCustomAPI;

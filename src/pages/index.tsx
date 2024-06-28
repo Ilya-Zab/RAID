@@ -14,37 +14,44 @@ import { useLazyFetchUserCountryQuery } from "@/store/ipapi/ipapi";
 import Hero from "@/Components/Layouts/Hero/Hero";
 import Second from "@/Components/Layouts/Second/Second";
 import Ready from "@/Components/Layouts/Ready/Ready";
-import { CheckUserId } from "@/Components/Forms/CheckUserId";
+import { CheckUserId } from "@/Components/Forms/LoginForm";
 import ScrollButton from "@/Components/ScrollButton/ScrollButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default function Home()
+{
     const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
 
-    const unsetCookies = () => {
+    const unsetCookies = () =>
+    {
         removeCookie('userToken');
     };
 
-    useEffect(() => {
-        if (cookies.userToken) {
-        } else {
+    useEffect(() =>
+    {
+        if (cookies.userToken)
+        {
+        } else
+        {
             console.log('No cookies!')
         }
     }, [cookies]);
 
     const [checkUserCountry, { data, error }] = useLazyFetchUserCountryQuery()
 
-    const checkUserIp = () => {
+    const checkUserIp = () =>
+    {
         checkUserCountry({});
-        if (data) {
+        if (data)
+        {
             console.log(data);
         }
     }
 
     return (
         <main className='home'>
-            <ScrollButton/>
+            <ScrollButton />
             <Hero />
             <Second />
             <Creatives />
