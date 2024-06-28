@@ -2,29 +2,31 @@ import React, { useRef, useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import { Box } from '@mui/material';
 import Image from 'next/image';
+import { useMediaQuery } from "@mui/material";
 
 const Second = () => {
     const beforeRef = useRef(null);
-    const [topDistance, setTopDistance] = useState(0);
     const [computedTop, setComputedTop] = useState('');
     const headerHeight = 0;
     const coefficient = 0.2;
+    const isMobile = useMediaQuery('(max-width: 768px)');
+    let defaultTop;
+    if (isMobile) {
+        defaultTop = -250;
+    } else  {
+        defaultTop = -410;
+    }
 
+    const handleScroll = () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
+        let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
+        distanceFromHeader *= coefficient;
 
+        setComputedTop(`${defaultTop + distanceFromHeader}px`);
+    };
 
     useEffect(() => {
-        const isMobile = window.innerWidth >= 768;
-        const defaultTop = isMobile ? -410 : -300;
-        const handleScroll = () => {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-            let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
-            distanceFromHeader *= coefficient;
-
-            setTopDistance(distanceFromHeader);
-            setComputedTop(`${defaultTop + distanceFromHeader}px`);
-        };
 
         window.addEventListener('scroll', handleScroll);
         handleScroll();
@@ -32,7 +34,7 @@ const Second = () => {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, []);
+    }, [isMobile]);
 
     return (
         <Box className={`${styles.second}`}>
@@ -47,16 +49,17 @@ const Second = () => {
                     className={styles.second__img}
                 />
             </Box>
-            <Box className={styles.container}>
+            <Box className={'container'}>
                 <Box className={styles.second__title_wrapper}>
                     <h2 className={styles.second__title}>
                         Many are <br />
                         already a part <br />
                         of the contest. <br />
-                        Check how they <br />
-                        played, get <br />
-                        inspired and <br />
-                        <span className='text-gradient'>JOIN US</span>
+                        Check how <br />
+                        they played,<br />
+                        get inspired<br />
+                        and
+                        <span className='text-gradient'> JOIN US</span>
                     </h2>
                 </Box>
             </Box>

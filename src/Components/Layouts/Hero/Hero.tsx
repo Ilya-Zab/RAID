@@ -9,25 +9,20 @@ import { useMediaQuery } from "@mui/material";
 const Hero = () =>
 {
     const beforeRef = useRef(null);
-    const [topDistance, setTopDistance] = useState(0);
     const [computedBottom, setComputedBottom] = useState('');
     const headerHeight = 0;
     const coefficient = 0.2;
 
     const isMobile = useMediaQuery('(max-width: 768px)');
-    const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1024px)');
 
     let defaultBottom;
 
     if (isMobile)
     {
-        defaultBottom = 100;
-    } else if (isTablet)
+        defaultBottom = 0;
+    }  else
     {
-        defaultBottom = 50;
-    } else
-    {
-        defaultBottom = -106;
+        defaultBottom = -86;
     }
 
     const handleScroll = () =>
@@ -37,7 +32,6 @@ const Hero = () =>
         let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
         distanceFromHeader *= coefficient;
 
-        setTopDistance(distanceFromHeader);
         setComputedBottom(`${defaultBottom - distanceFromHeader}px`);
     };
     useEffect(() =>
@@ -49,23 +43,21 @@ const Hero = () =>
         {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, [isMobile, isTablet]);
+    }, [isMobile]);
 
     return (
         <Box className={styles.hero}>
-            <Box className={styles.container}>
-                <Box className={styles.hero__img__wrapper}>
-                    <Image
-                        ref={beforeRef}
-                        style={{ bottom: computedBottom }}
-                        src={!isMobile ? '/images/king.png' : '/images/king_mob.png'}
-                        alt='king'
-                        width={!isMobile ? 733 : 359}
-                        height={!isMobile ? 745 : 559}
-                        className={styles.hero__img}
-                    />
-                </Box>
-                <Box className={styles.hero__wrapper}>
+            <Box className={`container ${styles.wrapper}`}>
+                <Image
+                    ref={beforeRef}
+                    style={{ bottom: computedBottom }}
+                    src={!isMobile ? '/images/king.png' : '/images/king_mob.png'}
+                    alt='king'
+                    width={!isMobile ? 733 : 359}
+                    height={!isMobile ? 745 : 559}
+                    className={styles.hero__img}
+                />
+                <Box>
                     <Box className={styles.hero__title_wrapper}>
                         <h1 className={styles.hero__title}>
                             Everyone&apos;s <br />

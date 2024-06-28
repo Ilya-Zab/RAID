@@ -2,22 +2,12 @@
 @import "@/styles/text-gradient";
 
 .wrapper {
-	padding: 50px 0 0;
-}
-
-.container {
-	width: 100%;
-	padding: 0 12px;
-	max-width: 1440px;
-	margin: 0 auto;
-
-	@media screen and (max-width: 768px) {
-		padding: 0 28px;
-	}
+	padding: 50px 15px 0;
+	position: relative;
 }
 
 .hero {
-	margin-top: 50px;
+	padding-top: 50px;
 	position: relative;
 
 	@media screen and (max-width: 768px) {
@@ -26,36 +16,21 @@
 
 	&__img {
 		position: absolute;
-		bottom: -106px;
-		right: 0;
-		width: 100%;
-		max-width: 733px;
-
-		@media screen and (max-width: 1024px) {
-			bottom: 50px;
-			max-width: 533px;
-			height: 545px;
-		}
-
+		bottom: -86px;
+		right: -127px;
+		width: clamp(533px,57vw, 733px);
+		height: auto;
 		@media screen and (max-width: 768px) {
-			bottom: 100px;
+			bottom: 0;
+			right: 0;
 			height: auto;
-		}
-	}
-
-	&__wrapper {
-		padding-right: 50px;
-		padding-left: 50px;
-
-		@media screen and (max-width: 768px) {
-			padding-right: 20px;
-			padding-left: 20px;
+			width: clamp(413px, 74vw, 533px);
 		}
 	}
 
 	&__title {
-		font-weight: 800;
-		font-size: clamp(16px, 9vw, 52px);
+		font-weight: 700;
+		font-size: clamp(16px, 9vw, 62px);
 		line-height: 99%;
 		text-transform: uppercase;
 		color: $white;
@@ -73,6 +48,7 @@
 	}
 
 	&__steps {
+		font-family: 'Inter-Light', sans-serif;
 		font-weight: 300;
 		font-size: 16px;
 		line-height: 160%;
@@ -90,7 +66,7 @@
 
 			@media screen and (max-width: 768px) {
 				padding: 14px 12px 16px;
-				margin-bottom: 250px;
+				 margin-bottom: 250px;
 			}
 
 			&:before {
@@ -105,10 +81,12 @@
 		}
 
 		& b {
+			font-family: 'Inter-SemiBold', sans-serif;
 			font-weight: 600;
 		}
 
 		& a {
+			font-family: 'Inter-Light', sans-serif;
 			font-weight: 300;
 			position: relative;
 
@@ -148,20 +126,20 @@
 	}
 
 	&__title2 {
-		font-weight: 800;
-		font-size: clamp(16px, 9vw, 130px);
+		font-weight: 700;
+		font-size: clamp(32px, 9.4vw, 121px);
 		line-height: 125%;
-		text-align: center;
-
-		@media screen and (max-width: 768px) {
-			font-size: clamp(16px, 8vw, 130px);
-		}
+		text-align: left;
+		letter-spacing: -0.02em;
 
 		&_wrapper {
 			margin-top: 40px;
 			position: relative;
 			z-index: 10;
-
+			margin-left: -53px;
+			@media screen and (max-width: 1220px) {
+				margin-left: 0;
+			}
 			@media screen and (max-width: 768px) {
 				margin-top: 240px;
 			}

@@ -2,6 +2,7 @@
 @import "./text-gradient";
 
 .desc {
+	font-family: 'Inter-Regular', sans-serif;
 	font-weight: 400;
 	font-size: 18px;
 	color: $white1;
@@ -37,14 +38,15 @@
 	margin: 0 auto;
 	width: fit-content;
 	padding: 50px 27px;
-	backdrop-filter: blur(10px);
-	background-image: url('../../public/images/subtract-box.png');
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	background-position: 0 0;
-
+	&_small {
+		backdrop-filter: blur(10px);
+		background-image: url('../../public/images/subtract-box.png');
+	}
 	&_big {
-		background-image: url('../../public/images/subtract-big-box.png');
+		background-image: url('../../public/images/subtract-big-box_new.png');
 	}
 }
 
@@ -69,37 +71,23 @@
 	background-position: 0 0;
 	transition: background-image .1s ease-in-out, filter .2s ease-in-out;
 	cursor: pointer;
-
+	
 	&:hover {
 		filter: brightness(1.1);
 	}
-
+	
 	&:active {
-		background-image: url('../../public/images/hex_hov.png');
+		filter: brightness(0.9);
 	}
-
+	
 	&_gradient {
 		background-image: url('../../public/images/hex-gradient_reg.png');
-
+		
 		&:active {
-			background-image: url('../../public/images/hex-gradient_hov.png');
+			filter: brightness(0.9);
 		}
 	}
 }
-
-html {
-	scroll-behavior: smooth;
-}
-
-body {
-	background-image: url('../../public/images/landing_page_1280.png');
-	background-blend-mode: normal;
-	background-repeat: no-repeat;
-	background-size: cover;
-	overflow-x: hidden;
-}
-
-
 
 .btnWrapper {
 	position: relative;
@@ -177,13 +165,20 @@ body {
 }
 
 .container {
-	box-sizing: border-box;
-	padding: 0 40px;
-	max-width: 1440px;
+	padding: 0 15px;
+	width: 100%;
+	max-width: 1165px;
 	margin: 0 auto;
-
 	&_creatives {
-		max-width: 1480px;
+		max-width: 1215px;
+	}
+	&_ready {
+		max-width: 1134px;
+	}
+	&_createVideo {
+		max-width: 370px;
+		position: relative;
+		z-index: 10;
 	}
 }
 
@@ -196,4 +191,16 @@ body {
 .text-gradient {
 	@include text-gradient;
 	// -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.5);
+}
+.home {
+	background-color: $graphite;
+	background-image: url('../../public/images/landing_page_1280.png');
+	background-blend-mode: normal;
+	background-repeat: no-repeat;
+	background-size: cover;
+	overflow: hidden;
+	margin-bottom: -68px;
+	@media screen and (max-width: 580px) {
+		background-image: url('../../public/images/bg_mob.png');
+	}
 }
