@@ -15,24 +15,25 @@ const Hero = () =>
 
     const isMobile = useMediaQuery('(max-width: 768px)');
 
-    let defaultBottom;
-    if (isMobile)
-    {
-        defaultBottom = 0;
-    } else
-    {
-        defaultBottom = -86;
-    }
+  const defaultBottom = React.useMemo(() => isMobile ? 0 : -86, [isMobile]);
 
-    const handleScroll = () =>
-    {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const handleScroll = () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-        let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
-        distanceFromHeader *= coefficient;
+                let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
+                distanceFromHeader *= coefficient;
 
-        setComputedBottom(`${defaultBottom - distanceFromHeader}px`);
+                setComputedBottom(`${defaultBottom - distanceFromHeader}px`);
+
+                ticking = false;
+            });
+
+            ticking = true;
+        }
     };
+
     useEffect(() =>
     {
         handleScroll();

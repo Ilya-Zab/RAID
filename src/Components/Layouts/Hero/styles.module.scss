@@ -2,7 +2,7 @@
 @import "@/styles/text-gradient";
 
 .wrapper {
-	padding: 50px 15px 0;
+	padding: 0 15px;
 	position: relative;
 }
 
@@ -11,7 +11,7 @@
 	position: relative;
 
 	@media screen and (max-width: 768px) {
-		margin-top: 37px;
+		padding-top: 37px;
 	}
 
 	&__img {
