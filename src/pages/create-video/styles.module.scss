@@ -19,6 +19,12 @@
 		height: 627px;
 		background-image: url("../../../public/images/demon.png");
 		background-size: cover;
+		@media screen and (max-width: 768px) {
+			display: none;
+		}
+	}
+	@media screen and (max-width: 768px) {
+	background: #080808;
 	}
 }
 
