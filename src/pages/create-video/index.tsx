@@ -4,8 +4,7 @@ import CreateVideoTemplate from "@/Components/CreateVideoTemplate/CreateVideoTem
 import styles from './styles.module.scss';
 import {Box} from "@mui/material";
 
-const CreateVideo = () =>
-{
+const CreateVideo = () => {
     const pageTitle = 'Create video';
     return (
         <>
@@ -20,11 +19,12 @@ const CreateVideo = () =>
                             #WeFinallyPlayedIt
                         </h1>
                         <Box className={styles.popup}>
-                            <CreateVideoTemplate/>
+                             <CreateVideoTemplate/>
+                            {/*<FinallyVideoTemplate/>*/}
                         </Box>
                     </Box>
                 </Box>
-                {/*<FinallyVideoTemplate/>*/}
+
             </main>
         </>
     );
