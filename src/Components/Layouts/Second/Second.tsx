@@ -10,12 +10,8 @@ const Second = () => {
     const headerHeight = 0;
     const coefficient = 0.2;
     const isMobile = useMediaQuery('(max-width: 768px)');
-    let defaultTop;
-    if (isMobile) {
-        defaultTop = -250;
-    } else  {
-        defaultTop = -410;
-    }
+
+    const defaultTop = React.useMemo(() => isMobile ? -250 : -410, [isMobile]);
 
     const handleScroll = () => {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
