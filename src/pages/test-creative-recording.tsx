@@ -14,15 +14,20 @@ export default function TestCreativeRecording() {
         if (!video) return;
 
         // functionality of the posting video into WordPress was temporary blocked for correct test deployment purposes
-        downloadVideo(video, "video.mp4");
-        return;
+        // downloadVideo(video, "video.mp4");
+        // return;
 
-        axios.post("/api/video-uploader", { video })
-            .then(response => {
-                setResult(response.data);
-                setIsUploaded(true);
-            })
-            .catch(err => setResult(err.response));
+        async function uploadVideo() {
+            const buffer = Buffer.from(await video.arrayBuffer());
+            axios.post("/api/video-uploader", buffer)
+                .then(response => {
+                    setResult(response.data);
+                    setIsUploaded(true);
+                })
+                .catch(err => setResult(err.response));
+        }
+
+        uploadVideo();
     }, [video]);
     
     function handleContinueClick(video: Blob) {
@@ -37,8 +42,9 @@ export default function TestCreativeRecording() {
             <CreativeRecorder
                 onContinueClick={handleContinueClick}
             />
+            
             <div>
-                <h2>Result data</h2>
+                <h2>API response</h2>
 
                 <pre>
                     {result && JSON.stringify(result, null, 4)}

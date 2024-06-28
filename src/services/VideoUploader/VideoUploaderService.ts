@@ -13,12 +13,11 @@ export interface WPUserInfo {
     slug: string
 }
 
-async function uploadVideoAsBlob(video: Blob, userToken: string): Promise<WPVideoItem> {
+async function uploadVideoAsBlob(video: Buffer, userToken: string): Promise<WPVideoItem> {
     const userInfo = await getUserInfo(userToken);
-    const videoBuffer = Buffer.from(await video.arrayBuffer());
     const videoFileName = generateFileName("mp4");
     
-    const videoItem = await postVideo(videoBuffer, videoFileName, userInfo.id);
+    const videoItem = await postVideo(video, videoFileName, userInfo.id);
     return videoItem;
 }
 
