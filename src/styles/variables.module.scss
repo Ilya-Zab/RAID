@@ -24,7 +24,10 @@ $linearGradient2: linear-gradient(to right, #4271A1E5 11%, #FFCC49 50%, #4271A1E
 $linearGradient3: linear-gradient(to bottom, #00DED4 0%, #0292BF 100%);
 $linearGradient4: linear-gradient(180deg, #000f22 0%, #0a0b0c 100%);
 
+$mobile: 'max-width: 800px';
+
 :export {
 	graphiteColor: $graphite;
 	whiteColor: $white;
+	mobile: $mobile;
 }

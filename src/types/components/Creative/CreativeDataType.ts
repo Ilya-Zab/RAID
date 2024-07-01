@@ -7,6 +7,7 @@ export const CreativeDataTypeSchema = z.object({
     date: z.string(),
     date_gmt: z.string(),
     featured_media: z.number(),
+    preview_url: z.string().optional(),
     guid: z.object({
         rendered: z.string()
     }),

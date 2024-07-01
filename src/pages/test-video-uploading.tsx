@@ -1,16 +1,16 @@
+import useCreateCreative from "@/hooks/useCreateCreative";
 import axios from "axios";
+import { create } from "domain";
 import { FormEvent, useEffect, useState } from "react";
 
 export default function TestPage() {
     const [url, setUrl] = useState<string>("");
-    const [result, setResult] = useState<any>(null);
-    
+    const { createCreativeAsUrl, success, data, error } = useCreateCreative();
+
     async function handleSubmit(e: FormEvent) {
         e.preventDefault();
 
-        await axios.post("/api/video-uploader", { url })
-            .then(response => setResult(response.data))
-            .catch(err => setResult(err.response));
+        createCreativeAsUrl(url);
     }
 
     return (
@@ -18,7 +18,7 @@ export default function TestPage() {
             <h1>Upload video</h1>
 
             <form onSubmit={handleSubmit}>
-                <label htmlFor="videoUrlEditor">Enter URL-address of your video</label><br/>
+                <label htmlFor="videoUrlEditor">Enter URL-address of your video</label><br />
                 <input
                     id="videoUrlEditor"
                     type="url"
@@ -27,17 +27,24 @@ export default function TestPage() {
                     onChange={(e) => setUrl(e.target.value)}
                 />
 
-                <br/>
+                <br />
                 <button
                     type="submit"
                 >Send</button>
             </form>
 
-            <h2>API response</h2>
-            
-            <pre>
-                {JSON.stringify(result, null, 4)}
-            </pre>
+
+            <div>
+                <h2>Creation result</h2>
+
+                {success && <p><b>All is good! creative created successfully.</b></p>}
+                {!success && <p><b>Oh, no! Error occured...</b></p>}
+
+                <pre>
+                    {success && JSON.stringify(data, null, 4)}
+                    {!success && JSON.stringify(error, null, 4)}
+                </pre>
+            </div>
         </div>
     );
 }

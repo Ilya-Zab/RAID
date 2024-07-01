@@ -51,26 +51,18 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     const [music, setMusic] = useState<Blob | null>(null);
     const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
 
-    const stopEver = () =>
-    {
-        if (!deepAR) return;
-
-        deepAR.shutdown();
-    }
-
     useEffect(() =>
     {
         initializeCreativeRecorder();
 
         return () =>
         {
-            if (deepAR)
+            if (deepAR && isInited)
             {
-                console.log('Finish')
                 deepAR.shutdown();
             }
         };
-    }, []);
+    }, [isInited]);
 
     useEffect(() =>
     {
@@ -78,6 +70,12 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
             return
 
         videoProcessor.mergeVideoAndAudio(creativeRecorder.video, audioRecorder.audio, music);
+        videoProcessor.extractFirstFrame(creativeRecorder.video);
+        // if (videoProcessor.firstFrame)
+        // {
+        //     const url = URL.createObjectURL(videoProcessor.firstFrame);
+        //     console.log(url);
+        // }
     }, [creativeRecorder.isRecording, audioRecorder.finishRecording, music]);
 
     async function handleVideoStateChange(isStarted: boolean)
@@ -102,16 +100,10 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
             props.onContinueClick(videoProcessor.output);
     }
 
-
     function handleEffectChange(effect: EffectItem)
     {
         deepAR?.switchEffect(effect.url);
     }
-
-    // <StartStopButton
-    //                 onChange={handleVideoStateChange}
-    //                 disabled={!deepAR || !isInited}
-    //             />
 
     //     <EffectPicker
     //     effects={effects}
@@ -121,17 +113,18 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     return (
         <Box className={styles.CreativeRecorder}>
             <Box className={styles.CreativeRecorder__recorder} id="deepar-screen" />
-            <button
-                onClick={handleContinueClick}
-                disabled={!videoProcessor.output}
-            >
-                Continue
-            </button>
-            <button
-                onClick={() => stopEver()}
-            >
-                StopEver
-            </button>
+            <Box className={styles.CreativeRecorder__buttons}>
+                <button
+                    onClick={handleContinueClick}
+                    disabled={!videoProcessor.output}
+                >
+                    Continue
+                </button>
+                <StartStopButton
+                    onChange={handleVideoStateChange}
+                    disabled={!deepAR || !isInited}
+                />
+            </Box>
         </Box>
     );
 
@@ -168,19 +161,3 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         setIsInited(videoGrants && audioGrants);
     }
 }
-
-// used to test recorded videos
-function downloadVideo(video: Blob, videoName: string)
-{
-    const url = URL.createObjectURL(video);
-    const a: any = document.createElement("a");
-
-    a.href = url;
-    a.download = videoName;
-
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-}
-
