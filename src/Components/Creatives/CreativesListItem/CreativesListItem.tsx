@@ -4,33 +4,44 @@ import styles from "./styles.module.scss";
 import Image from "next/image";
 import { trimString } from "@/utils/trimString";
 import VoteButton from "../VoteButton";
+import { useRouter } from "next/router";
 
 const CreativesListItem: FC<CreativesListItemProps> = ({
-    creative: { id, meta, title, author_name },
+    creative: { id, meta, title, preview_url },
     hasVoted,
     onVote
 }) => {
+
+    const router = useRouter();
+
+    const openCreative = (id: number) => {
+        router.push({
+            query: {
+                creative: id
+            }
+        },
+            null,
+            { shallow: true }
+        );
+    }
 
     if (meta.featured_media_url === false) return;
 
     return (
         <div className={styles["creatives-list-item"]}>
-            <button aria-label={title.rendered} className={styles["creatives-list-item__link"]}>
+            <button
+                aria-label={title.rendered}
+                className={styles["creatives-list-item__link"]}
+                onClick={() => openCreative(id)}
+            >
                 <div className={styles["creatives-list-item__media"]}>
-                    {meta.featured_media_type === 'video' ?
-                        <video
-                            autoPlay={false}
-                            loop
-                            muted
-                            width="100%"
-                            height="100%"
-                            className={styles["creatives-list-item__media-video"]}
-                        >
-                            <source
-                                src={`${meta.featured_media_url && meta.featured_media_url}`}
-                                type="video/mp4"
-                            />
-                        </video>
+                    {(meta.featured_media_type === 'video' && preview_url) ?
+                        <Image
+                            layout="fill"
+                            objectFit="cover"
+                            objectPosition="center"
+                            src={`${preview_url}`} alt={title.rendered}
+                        />
                         :
                         <Image
                             layout="fill"
