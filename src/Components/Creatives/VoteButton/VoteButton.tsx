@@ -9,7 +9,8 @@ const VoteButton: FC<VoteButtonProps> = ({ votes, hasVoted, onVote }) => {
 
     useEffect(() => {
         setClicked(hasVoted);
-    }, [hasVoted])
+        setButtonVotes(votes);
+    }, [hasVoted, votes])
 
     const onClick = () => {
         if (hasClicked) return;
