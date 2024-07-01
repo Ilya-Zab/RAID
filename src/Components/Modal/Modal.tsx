@@ -13,11 +13,11 @@ const CustomPopover = styled(Popover)`
       left: 50% !important;
       transform: translateX(-50%) !important;
       background: rgba(66, 113, 161, 0.8);
-      padding: 26px 13px;
+      padding: 26px 12px;
       border-radius: 8px;
       max-width: 286px;
       width: 100%;
-      min-height: 227px;
+      min-height: 226px;
     }
 `;
 
