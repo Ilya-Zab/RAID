@@ -3,7 +3,8 @@ import smvdClient, { SMVDResponse, VideoLink, getLinkWithMinQuality } from "./Ra
 import wpRestApi from "../wordpress/wpService";
 
 export interface WPVideoItem {
-    id: string,
+    id: number,
+    author: number,
     slug: string,
     link: string
 }
