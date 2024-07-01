@@ -58,9 +58,14 @@ const CreateVideo = () =>
         {
             case 1:
                 return (
-                    <Modal open={togglePopover} handleToggle={handleToggle}>
+                    <Modal open={togglePopover} handleToggle={handleToggle} >
                         <div>
-                            <h3>asdsad</h3>
+                            <h3 className={styles.modal__title}>Video Instruction</h3>
+                            <div className={styles.modal__scrollbar}>
+                                <p className={styles.modal__text}>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores ea error incidunt minus provident velit voluptas? Ab enim eveniet labore minus vero? A beatae labore neque porro quas quis repellat.
+                                </p>
+                            </div>
                         </div>
                     </Modal>
                 );
@@ -95,10 +100,10 @@ const CreateVideo = () =>
                                 </button>
                             }
                             {
-                                step > 0 &&
-                                <button onClick={() => nextStep()}>
-                                    next step
-                                </button>
+                                step === 1 ? null : step > 0 &&
+									<button onClick={() => nextStep()}>
+										next step
+									</button>
                             }
                         </Box>
                     </Box>
