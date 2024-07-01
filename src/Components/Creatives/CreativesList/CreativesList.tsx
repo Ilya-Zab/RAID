@@ -7,6 +7,7 @@ import { useCookies } from "react-cookie";
 import { useFetchUpdateVoteVideoMutation, useLazyFetchAllCreativesByVotesQuery } from "@/store/wordpress/wpRestCustomApi";
 import CreativesListItemSkeleton from "../CreativesListItem/CreativesListItemSkeleton";
 import LoadMore from "../LoadMore";
+import variables from "@/styles/variables.module.scss";
 import { useMediaQuery } from "@mui/material";
 
 interface CreativesListPropsType {
@@ -22,7 +23,7 @@ const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes 
     const [updateVoteVideo] = useFetchUpdateVoteVideoMutation();
     const [fetchCreativesByVotes, { data: creativesByVotes = [] }] = useLazyFetchAllCreativesByVotesQuery();
     const [fetchCreativesByDate, { data: creativesByDate = [] }] = useLazyFetchAllCreativesByDataQuery();
-    const isMobile = useMediaQuery('(max-width: 800px)');
+    const isMobile = useMediaQuery(`(max-width: 800px)`);
 
     const creatives = orderByVotes ? creativesByVotes : creativesByDate;
 

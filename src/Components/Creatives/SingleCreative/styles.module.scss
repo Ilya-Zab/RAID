@@ -1,0 +1,77 @@
+@import "@/styles/variables.module";
+@import "@/styles/text-gradient";
+
+.single-creative {
+    position: relative;
+    padding-top: $creative-ratio;
+    background: $bg2;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, .15);
+    overflow: hidden;
+
+    &__media {
+        position: absolute;
+        inset: 0;
+
+        &-video {
+            object-fit: cover;
+        }
+    }
+
+    &__content {
+        color: $white;
+        transition: .1s ease;
+        font-weight: 800;
+        position: absolute;
+        inset: 0;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    &__top {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__votes {
+        font-size: 0.8em;
+    }
+
+    &__title {
+        position: relative;
+
+        &-bg {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 20%;
+            top: 40%;
+            background-color: rgba(0, 0, 0, .5);
+            filter: blur(10px);
+        }
+
+        &-label {
+            z-index: 1;
+            position: relative;
+            text-align: left;
+            @include text-gradient-light;
+            font-weight: 700;
+        }
+
+    }
+
+    &__loader {
+        position: absolute;
+        top: calc(50% - 20px);
+        left: calc(50% - 20px);
+        opacity: 0.5;
+    }
+}

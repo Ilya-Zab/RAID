@@ -17,32 +17,25 @@ import ScrollButton from "@/Components/ScrollButton/ScrollButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home()
-{
+export default function Home() {
     const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
 
-    const unsetCookies = () =>
-    {
+    const unsetCookies = () => {
         removeCookie('userToken');
     };
 
-    useEffect(() =>
-    {
-        if (cookies.userToken)
-        {
-        } else
-        {
+    useEffect(() => {
+        if (cookies.userToken) {
+        } else {
             console.log('No cookies!')
         }
     }, [cookies]);
 
     const [checkUserCountry, { data, error }] = useLazyFetchUserCountryQuery()
 
-    const checkUserIp = () =>
-    {
+    const checkUserIp = () => {
         checkUserCountry({});
-        if (data)
-        {
+        if (data) {
             console.log(data);
         }
     }
@@ -54,7 +47,6 @@ export default function Home()
             <Second />
             <Creatives />
             <Ready />
-
             {/*<button onClick={() => unsetCookies()}>unsetCookies</button>*/}
             {/* <button onClick={ }></button> */}
             {/*<button onClick={() => checkUserIp()}>Check your IP</button>*/}
