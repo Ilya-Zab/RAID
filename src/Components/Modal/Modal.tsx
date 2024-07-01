@@ -9,9 +9,7 @@ const CustomPopover = styled(Popover)`
     .MuiPopover-paper {
       backdrop-filter: blur(55px);
       box-shadow: 0 14px 54px 0 rgba(0, 0, 0, 0.25);
-      top: 40% !important;
-      left: 50% !important;
-      transform: translateX(-50%)!important;
+     
       background: rgba(66, 113, 161, 0.8);
       padding: 39px 21px 47px;
       border-radius: 8px;
@@ -20,10 +18,18 @@ const CustomPopover = styled(Popover)`
 
 const Modal = ({ children, open, handleToggle }) =>
 {
+    const id = open ? "pp" : "";
+
     return (
         <CustomPopover
+            id={id}
             open={open}
             onClose={handleToggle}
+            transformOrigin={{
+                vertical: 'center',
+                horizontal: 'center',
+            }
+            }
         >
             <IconButton className={styles.iconBtn} onClick={handleToggle}>
                 <CloseIcon />
