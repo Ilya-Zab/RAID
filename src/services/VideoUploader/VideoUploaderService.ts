@@ -3,7 +3,8 @@ import smvdClient, { SMVDResponse, VideoLink, getLinkWithMinQuality } from "./Ra
 import wpRestApi from "../wordpress/wpService";
 
 export interface WPVideoItem {
-    id: string,
+    id: number,
+    author: number,
     slug: string,
     link: string
 }
@@ -13,16 +14,15 @@ export interface WPUserInfo {
     slug: string
 }
 
-async function uploadVideoAsBlob(video: Blob, userToken: string): Promise<WPVideoItem> {
+async function uploadVideoAsBuffer(video: Buffer, userToken: string): Promise<WPVideoItem> {
     const userInfo = await getUserInfo(userToken);
-    const videoBuffer = Buffer.from(await video.arrayBuffer());
     const videoFileName = generateFileName("mp4");
     
-    const videoItem = await postVideo(videoBuffer, videoFileName, userInfo.id);
+    const videoItem = await postVideo(video, videoFileName, userInfo.id);
     return videoItem;
 }
 
-async function uploadVideo(url: string, userToken: string): Promise<WPVideoItem> {
+async function uploadVideoAsUrl(url: string, userToken: string): Promise<WPVideoItem> {
     const userInfo = await getUserInfo(userToken);
     const extractedVideo = await smvdClient.extractVideo(url);
     const videoLink = getLinkWithMinQuality(extractedVideo);
@@ -86,4 +86,4 @@ async function postVideo(videoBuffer: Buffer, videoFileName: string, authorId: n
     return data as WPVideoItem;
 }
 
-export { uploadVideo, uploadVideoAsBlob };
+export { uploadVideoAsUrl as uploadVideo, uploadVideoAsBuffer };
