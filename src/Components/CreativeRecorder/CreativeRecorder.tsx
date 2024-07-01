@@ -8,10 +8,13 @@ import { EffectItem, EffectPicker } from "./EffectPicker";
 import useAudioRecorder from "@/hooks/useAudioRecorder";
 import useVideoProcessor from "@/hooks/useVideoProcessor";
 import axios from "axios";
-import styles from './styles.module.scss';
-import { Box } from "@mui/material";
 
 // div element for displaying video should has fixed size
+const ARScreenStyle = {
+    width: "640px",
+    height: "480px"
+}
+
 const musicPath = "/audio/AR_CONTRAST.mp3";
 const effects: EffectItem[] = [
     {
@@ -51,25 +54,9 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     const [music, setMusic] = useState<Blob | null>(null);
     const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
 
-    const stopEver = () =>
-    {
-        if (!deepAR) return;
-
-        deepAR.shutdown();
-    }
-
     useEffect(() =>
     {
         initializeCreativeRecorder();
-
-        return () =>
-        {
-            if (deepAR)
-            {
-                console.log('Finish')
-                deepAR.shutdown();
-            }
-        };
     }, []);
 
     useEffect(() =>
@@ -108,31 +95,31 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         deepAR?.switchEffect(effect.url);
     }
 
-    // <StartStopButton
-    //                 onChange={handleVideoStateChange}
-    //                 disabled={!deepAR || !isInited}
-    //             />
-
-    //     <EffectPicker
-    //     effects={effects}
-    //     onEffectChange={handleEffectChange}
-    // />
-
     return (
-        <Box className={styles.CreativeRecorder}>
-            <Box className={styles.CreativeRecorder__recorder} id="deepar-screen" />
-            <button
-                onClick={handleContinueClick}
-                disabled={!videoProcessor.output}
-            >
-                Continue
-            </button>
-            <button
-                onClick={() => stopEver()}
-            >
-                StopEver
-            </button>
-        </Box>
+        <div style={{ display: "flex" }}>
+            <div>
+                <StartStopButton
+                    onChange={handleVideoStateChange}
+                    disabled={!deepAR || !isInited}
+                />
+                {" "}
+                <button
+                    onClick={handleContinueClick}
+                    disabled={!videoProcessor.output}
+                >
+                    Continue
+                </button>
+
+                <EffectPicker
+                    effects={effects}
+                    onEffectChange={handleEffectChange}
+                />
+            </div>
+
+            <div>
+                <div style={ARScreenStyle} id="deepar-screen"></div>
+            </div>
+        </div>
     );
 
     function startRecording()
@@ -183,4 +170,3 @@ function downloadVideo(video: Blob, videoName: string)
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }
-
