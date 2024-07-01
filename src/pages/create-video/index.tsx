@@ -5,11 +5,36 @@ import CreativeRecorder from "@/Components/CreativeRecorder/CreativeRecorder";
 // import FinallyVideoTemplate from "@/Components/FinallyVideoTemplate/FinallyVideoTemplate";
 import styles from './styles.module.scss';
 import { Box } from "@mui/material";
+import Modal from "@/Components/Modal/Modal";
 
 const CreateVideo = () =>
 {
+    const pageTitle = 'Create video';
     const [video, setVideo] = useState<Blob | null>(null);
-    const [step, setStep] = useState<number | null>(null);
+    const [step, setStep] = useState<number>(0);
+    const [togglePopover, setTogglePopover] = useState(true);
+
+    useEffect(() =>
+    {
+        if (!video) return;
+
+        // functionality of the posting video into WordPress was temporary blocked for correct test deployment purposes
+        downloadVideo(video, "video.mp4");
+        return;
+
+        axios.post("/api/video-uploader", { video })
+            .then(response =>
+            {
+                setResult(response.data);
+                setIsUploaded(true);
+            })
+            .catch(err => setResult(err.response));
+    }, [video]);
+
+    const handleToggle = () =>
+    {
+        nextStep();
+    }
 
     function handleContinueClick(video: Blob)
     {
@@ -17,62 +42,35 @@ const CreateVideo = () =>
             setVideo(video);
     }
 
-    function nextStep(step: number)
+    function nextStep()
     {
-        setStep(step);
+        setStep(prev => prev + 1);
     }
 
-    function prevStep(step: number)
+    function prevStep()
     {
-        setStep(step);
+        setStep(prev => (prev > 1 ? prev - 1 : 1));
     }
 
-    // const CurrentTemplate = (step) =>
-    // {
-    //     {
-    //         switch (step)
-    //         {
-    //             case 1:
-    //                 return <CreateVideoTemplate handleButtonClick={nextStep} />;
-    //             case 2:
-    //                 return <div></div>
-    //             default:
-    //                 return <CreativeRecorder
-    //                     onContinueClick={handleContinueClick}
-    //                 />;
-    //         }
-    //     }
-    // }
-
-    // function changeTemplate(step)
-    // {
-    //     switch (step)
-    //     {
-    //         case 1:
-    //             // return <CreateVideoTemplate handleButtonClick={nextStep} />;
-    //             return <div>First second</div>;
-    //         case 2:
-    //             return <div>Third second</div>;
-    //         default:
-    //             // return <CreativeRecorder onContinueClick={handleContinueClick} />;
-    //             return <div>First step</div>;
-    //     }
-    // }
-
-    const CurrentTemplate = ({ step, nextStep, handleContinueClick }) =>
+    const CurrentTemplate = () =>
     {
         switch (step)
         {
             case 1:
-                return <CreativeRecorder onContinueClick={handleContinueClick} />;
+                return (
+                    <Modal open={togglePopover} handleToggle={handleToggle}>
+                        <div>
+                            <h3>asdsad</h3>
+                        </div>
+                    </Modal>
+                );
             case 2:
-                return <div></div>;
+                return <CreativeRecorder onContinueClick={handleContinueClick} />;
             default:
                 return <CreateVideoTemplate handleButtonClick={nextStep} />;
         }
     };
 
-    const pageTitle = 'Create video';
     return (
         <>
             <Head>
@@ -86,16 +84,22 @@ const CreateVideo = () =>
                             #WeFinallyPlayedIt
                         </h1>
                         <Box className={styles.popup}>
-                            {/* <button onClick={() => prevStep(0)}>
-                                prev step
-                            </button>
-                            <button onClick={() => prevStep(1)}>
-                                next step
-                            </button> */}
                             {/* <CurrentTemplate step={step} /> */}
                             {/* {CurrentTemplate(step)} */}
                             {/* <CreateVideoTemplate /> */}
                             <CurrentTemplate step={step} nextStep={nextStep} handleContinueClick={handleContinueClick} />
+                            {
+                                step > 1 &&
+                                <button onClick={() => prevStep()}>
+                                    prev step
+                                </button>
+                            }
+                            {
+                                step > 0 &&
+                                <button onClick={() => nextStep()}>
+                                    next step
+                                </button>
+                            }
                         </Box>
                     </Box>
                 </Box>
