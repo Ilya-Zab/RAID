@@ -27,19 +27,18 @@ export default function useDeepAR(previewElementId: string): deepar.DeepAR | nul
             initializeDeepAR(previewElement);
             initState.current = true;
         }
-
     }, []);
 
     return deepAR;
 
     async function initializeDeepAR(previewElement: HTMLElement): Promise<void>
     {
-        const newDeepAR = await deepar.initialize({
+        const deepAR = await deepar.initialize({
             ...deepARParams,
             previewElement
         });
 
-        setDeepAR(newDeepAR);
+        setDeepAR(deepAR);
     }
 
     function getDeepARScreen(elementId: string): HTMLElement
