@@ -1,0 +1,38 @@
+.single-creative-popup {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+
+    &__bg {
+        position: absolute;
+        inset: 0;
+    }
+
+    &__content {
+        position: relative;
+        width: 300px;
+    }
+
+    &__close {
+        position: absolute;
+        top: 0;
+        right: -30px;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        opacity: 0.5;
+        transition: .2s ease;
+        padding: 1px 4px;
+
+        &:focus-visible,
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
