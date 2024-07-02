@@ -24,7 +24,6 @@
 	font-family: 'Inter', sans-serif;
 	font-size: 16px;
 	color: $white !Important;
-
 	&::placeholder {
 		color: $placeholder-color;
 	}
@@ -38,7 +37,7 @@
 .subtract-box {
 	margin: 0 auto;
 	width: fit-content;
-	padding: 50px 27px;
+	padding: 50px 40px;
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	background-position: 0 0;
@@ -178,10 +177,6 @@
 
 	&_creatives {
 		max-width: 1215px;
-	}
-
-	&_ready {
-		max-width: 1134px;
 	}
 
 	&_createVideo {
