@@ -17,17 +17,23 @@ const SingleCreative: FC<SingleCreativePropsType> = ({ creativeId }) => {
     const [{ userToken }] = useCookies(['userToken']);
     const [fetchUserData, { data: userData }] = useLazyFetchUserDataQuery();
     const [updateVoteVideo] = useFetchUpdateVoteVideoMutation();
-    const { data: creativeData, isLoading } = useFetchCreativeQuery(creativeId);
+    const { data: creativeData, refetch } = useFetchCreativeQuery(creativeId);
 
     useEffect(() => {
         if (userToken) {
             fetchUserData(userToken);
         }
-    }, [fetchUserData, userToken]);
+    }, [userToken, creativeData]);
 
     const onVote = (creativeId: number) => {
         if (userData === undefined) return false;
+        if (userData.meta.votes_available === "0") {
+            alert('You have no votes available.');
+            return false;
+        }
         updateVoteVideo({ user_id: userData.id, creative_id: creativeId });
+        refetch();
+        return true;
     }
 
     return (
