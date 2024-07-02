@@ -9,10 +9,15 @@ const CustomPopover = styled(Popover)`
     .MuiPopover-paper {
       backdrop-filter: blur(55px);
       box-shadow: 0 14px 54px 0 rgba(0, 0, 0, 0.25);
-     
+      top: 25% !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
       background: rgba(66, 113, 161, 0.8);
-      padding: 39px 21px 47px;
+      padding: 26px 12px;
       border-radius: 8px;
+      max-width: 286px;
+      width: 100%;
+      min-height: 226px;
     }
 `;
 

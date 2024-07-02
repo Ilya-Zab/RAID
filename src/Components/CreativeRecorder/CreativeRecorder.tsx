@@ -10,6 +10,9 @@ import useVideoProcessor from "@/hooks/useVideoProcessor";
 import axios from "axios";
 import styles from './styles.module.scss';
 import { Box } from "@mui/material";
+import Image from "next/image";
+import { useAppDispatch } from "@/hooks/redux";
+import { setFrames } from "@/store/slice/creativeFramesSlice";
 
 // div element for displaying video should has fixed size
 const musicPath = "/audio/AR_CONTRAST.mp3";
@@ -35,7 +38,6 @@ const effects: EffectItem[] = [
         url: "https://cdn.jsdelivr.net/npm/deepar@5.6.5/effects/lion"
     }
 ];
-
 export interface CreativeRecorderProps
 {
     onContinueClick: (video: Blob) => void
@@ -50,6 +52,21 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     const videoProcessor = useVideoProcessor();
     const [music, setMusic] = useState<Blob | null>(null);
     const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
+    const [firstFrameUrl, setFirstFrameUrl] = useState(null);
+    const dispatch = useAppDispatch();
+
+    const processVideo = async (videoBlob: Blob) =>
+    {
+        try
+        {
+            const frames = await videoProcessor.extractAllFrames(videoBlob);
+            console.log(frames);
+            dispatch(setFrames(frames));
+        } catch (error)
+        {
+            console.error("Ошибка при извлечении кадров из видео:", error);
+        }
+    };
 
     useEffect(() =>
     {
@@ -70,12 +87,8 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
             return
 
         videoProcessor.mergeVideoAndAudio(creativeRecorder.video, audioRecorder.audio, music);
-        videoProcessor.extractFirstFrame(creativeRecorder.video);
-        // if (videoProcessor.firstFrame)
-        // {
-        //     const url = URL.createObjectURL(videoProcessor.firstFrame);
-        //     console.log(url);
-        // }
+        processVideo(creativeRecorder.video);
+
     }, [creativeRecorder.isRecording, audioRecorder.finishRecording, music]);
 
     async function handleVideoStateChange(isStarted: boolean)
@@ -118,12 +131,20 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
                     onClick={handleContinueClick}
                     disabled={!videoProcessor.output}
                 >
-                    Continue
+                    Download
                 </button>
                 <StartStopButton
                     onChange={handleVideoStateChange}
                     disabled={!deepAR || !isInited}
                 />
+                <button
+                >
+                    REW
+                </button>
+                <button
+                >
+                    Sound
+                </button>
             </Box>
         </Box>
     );

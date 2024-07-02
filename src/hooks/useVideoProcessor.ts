@@ -7,7 +7,7 @@ export type UseVideoProcessorResult = {
     isLoaded: boolean,
     messages: string[],
     output: Blob | null,
-    extractFirstFrame: (video: Blob) => Promise<void>,
+    extractAllFrames: (video: Blob) => Promise<string[]>,
     firstFrame: Blob | null
 };
 
@@ -70,30 +70,51 @@ export default function useVideoProcessor(): UseVideoProcessorResult
         setOutput(output);
     }
 
-    async function extractFirstFrame(video: Blob): Promise<void>
+    async function extractAllFrames(video: Blob): Promise<string[]>
     {
-        if (!video) return;
+        if (!video) return [];
 
         const videoName = "video.mp4";
-        const frameName = "frame.png";
+        const frameNamePattern = "frame_%d.png";
         const ffmpeg = ffmpegRef.current;
 
         if (!ffmpeg)
+        {
             throw new Error("FFmpeg is not initialized.");
+        }
 
         await ffmpeg.writeFile(videoName, await fetchFile(video));
+
         await ffmpeg.exec([
             "-i", videoName,
-            "-vf", "thumbnail,scale=320:240",
-            "-frames:v", "1",
-            frameName
+            "-vf", "thumbnail,scale=-1:576,crop=ih*9/16:ih",
+            "-vsync", "vfr",
+            frameNamePattern
         ]);
 
-        const data = await ffmpeg.readFile(frameName) as Uint8Array;
-        const frame = new Blob([data.buffer], { type: 'image/png' });
+        const frames: Blob[] = [];
+        let frameIndex = 1;
 
-        setFirstFrame(frame);
+        while (true)
+        {
+            const frameFileName = frameNamePattern.replace("%d", frameIndex.toString());
+            try
+            {
+                const data = await ffmpeg.readFile(frameFileName) as Uint8Array;
+                const frame = new Blob([data.buffer], { type: 'image/png' });
+                const blobUrl = URL.createObjectURL(frame);
+                frames.push(blobUrl);
+                frameIndex++;
+            } catch (error)
+            {
+                console.error("Error reading frame:", error);
+                break;
+            }
+        }
+
+        return frames;
     }
 
-    return { mergeVideoAndAudio, messages, isLoaded, output, extractFirstFrame, firstFrame };
+
+    return { mergeVideoAndAudio, messages, isLoaded, output, extractAllFrames, firstFrame };
 }
