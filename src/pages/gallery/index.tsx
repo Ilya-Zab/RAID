@@ -21,11 +21,10 @@ const CreateVideo = () =>
                 <title>{pageTitle}</title>
                 <meta name="description" content={`This is ${pageTitle}`} />
             </Head>
-            < className='bg-gallery'>
+            <main className='bg-gallery'>
                 <Title title={title} correctClass={'gallery'}/>
-                <Creatives img={'vlad-gallery.png'}>
+                <Creatives>
                     <Image
-                        ref={beforeRef}
                         src='/images/vlad-gallery.png'
                         alt="vlad"
                         width={635}

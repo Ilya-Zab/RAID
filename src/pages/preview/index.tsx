@@ -1,6 +1,9 @@
 import Head from "next/head";
 import Creatives from "@/Components/Layouts/Creatives";
 import Title from "@/Components/Title/Title";
+import Image from "next/image";
+import styles from "@/Components/Layouts/Creatives/styles.module.scss";
+import React from "react";
 
 
 const CreateVideo = () =>
@@ -19,7 +22,15 @@ const CreateVideo = () =>
             </Head>
             <main className='bg-gallery'>
                 <Title title={title} correctClass={'preview'}/>
-                <Creatives img={'vlad-preview.png'}/>
+                <Creatives>
+                    <Image
+                        src='/images/vlad-preview.png'
+                        alt="vlad"
+                        width={635}
+                        height={804}
+                        className={styles["creatives-section__img"]}
+                    />
+                </Creatives>
             </main>
         </>
     );
