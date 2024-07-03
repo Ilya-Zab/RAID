@@ -1,18 +1,12 @@
 import * as React from 'react';
 import styles from './styles.module.scss';
+import {Typography} from "@mui/material";
 
-const Title = () => {
+const Title = ({title,correctClass}) => {
 
     return (
-        <div className={'container'}>
-            <h1 className={styles.title__title}>
-                It&rsquo;ll never be the<br/>
-                same once you
-                <span className='text-gradient'> play<br/>Raid</span>
-                . Show how you<br/>
-                do it and
-                <span className='text-gradient'> win prizes!</span>
-            </h1>
+        <div className={`container ${styles[correctClass]}`}>
+            <Typography className={styles.title__title} variant={'h1'} dangerouslySetInnerHTML={{__html: title}} />
         </div>
     )
 }

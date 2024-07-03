@@ -45,7 +45,7 @@ export default function Home() {
             <ScrollButton />
             <Hero />
             <Second />
-            <Creatives />
+            <Creatives img={'vlad.png'}/>
             <Ready />
             {/*<button onClick={() => unsetCookies()}>unsetCookies</button>*/}
             {/* <button onClick={ }></button> */}

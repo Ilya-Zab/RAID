@@ -7,7 +7,7 @@ import AddCreativeCard from "@/Components/Creatives/AddCreativeCard";
 import { useCookies } from "react-cookie";
 import { useLazyFetchUserDataQuery } from "@/store/wordpress/wpUser";
 
-const Creatives = () => {
+const Creatives = ({children}) => {
     const beforeRef = useRef(null);
     const [computedTop, setComputedTop] = useState('');
     const headerHeight = 0;
@@ -57,12 +57,13 @@ const Creatives = () => {
             <div className={styles["creatives-section__imgWrapper"]} style={{ top: computedTop }}>
                 <Image
                     ref={beforeRef}
-                    src="/images/vlad.png"
+                    src={`/images/${img}`}
                     alt="vlad"
                     width={635}
                     height={804}
                     className={styles["creatives-section__img"]}
                 />
+                {children}
             </div>
             <div className={styles["creatives-section__block"]}>
                 <div className="container">
