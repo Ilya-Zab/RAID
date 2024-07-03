@@ -8,6 +8,7 @@ import Modal from "@/Components/Modal/Modal";
 import { downloadVideo } from "@/utils";
 import useCreateCreative from "@/hooks/useCreateCreative";
 import { useVideoFrames } from "@/hooks/useVideoFrames";
+import Image from "next/image";
 
 const CreateVideo = () =>
 {
@@ -18,6 +19,7 @@ const CreateVideo = () =>
     const { createCreativeAsBlob, success, data, error } = useCreateCreative();
     const [isProcessing, setProcessing] = useState(false);
     const { extractAllFrames, isLoading } = useVideoFrames();
+    const [allFrames, setAllFrames] = useState(null);
 
     useEffect(() =>
     {
@@ -52,6 +54,8 @@ const CreateVideo = () =>
     async function handleVideoReady(video: Blob)
     {
         const frames = await extractAllFrames(video);
+        setAllFrames(frames);
+        nextStep();
         console.log(frames);
     }
 
@@ -59,6 +63,8 @@ const CreateVideo = () =>
     {
         switch (step)
         {
+            case 0:
+                return <CreateVideoTemplate handleButtonClick={nextStep} />;
             case 1:
                 return (
                     <Modal open={togglePopover} handleToggle={handleToggle} >
@@ -74,8 +80,38 @@ const CreateVideo = () =>
                 );
             case 2:
                 return <CreativeRecorder onContinueClick={handleContinueClick} onVideoRecorded={handleVideoReady} />;
+            case 3:
+                return (
+                    <Box sx={{
+                        backgroundImage: `url(${allFrames[0]})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        width: '100%',
+                        height: '100vh'
+                    }}>
+                        {allFrames &&
+                            allFrames.map((frame, index) =>
+                            {
+                                return (
+                                    <Image
+                                        src={frame}
+                                        key={index}
+                                        alt={""}
+                                        width={50}
+                                        height={50}
+                                    />
+                                )
+                            })
+                        }
+                        <button onClick={nextStep}>
+                            Next Step
+                        </button>
+                    </Box>
+                )
+            case 4:
+                return < p > Oops... You have some trouble with creating a creative: (</p >;
             default:
-                return <CreateVideoTemplate handleButtonClick={nextStep} />;
+                return <p>Oops... You have some trouble with creating a creative :(</p>;
         }
     };
 

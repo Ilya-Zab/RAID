@@ -10,7 +10,6 @@ import useVideoProcessor from "@/hooks/useVideoProcessor";
 import axios from "axios";
 import styles from './styles.module.scss';
 import { Box } from "@mui/material";
-import { Loader } from "../Layouts/Loader";
 
 // div element for displaying video should has fixed size
 const musicPath = "/audio/AR_CONTRAST.mp3";
@@ -52,20 +51,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     const [music, setMusic] = useState<Blob | null>(null);
     const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
     const [frames, setLocalFrames] = useState(null);
-
-    // const processVideo = async (videoBlob: Blob) =>
-    // {
-    //     try
-    //     {
-    //         setProcessing(true);
-    //         const frames = await videoProcessor.extractAllFrames(videoBlob);
-
-    //         setProcessing(false);
-    //     } catch (error)
-    //     {
-    //         console.error("Ошибка при извлечении кадров из видео:", error);
-    //     }
-    // };
 
     useEffect(() =>
     {

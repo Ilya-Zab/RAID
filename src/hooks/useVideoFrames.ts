@@ -47,7 +47,8 @@ export const useVideoFrames = () =>
 
         await ffmpeg.exec([
             "-i", videoName,
-            "-vf", "thumbnail,scale=-1:576,crop=ih*9/16:ih",
+            // "-vf", "thumbnail,scale=-1:576,crop=ih*9/16:ih",
+            "-vf", "thumbnail,scale=-1:576,crop=ih*9/16:ih,select='not(mod(n\\,3))'",
             "-vsync", "vfr",
             frameNamePattern
         ]);
@@ -62,7 +63,7 @@ export const useVideoFrames = () =>
             {
                 const data = await ffmpeg.readFile(frameFileName) as Uint8Array;
                 const frame = new Blob([data.buffer], { type: 'image/png' });
-                const blobUrl = URL.createObjectURL(frame).replace('blob:', '');
+                const blobUrl = URL.createObjectURL(frame);
                 frames.push(blobUrl);
                 frameIndex++;
             } catch (error)
