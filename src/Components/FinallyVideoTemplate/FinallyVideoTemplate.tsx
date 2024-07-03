@@ -7,13 +7,6 @@ const FinallyVideoTemplate = () => {
     return (
         <Box className={styles.bg}>
             <Box className={styles.container}>
-                <Image
-                    src='/images/wefinallyplayed.svg'
-                    alt='We Finally Played'
-                    width={280}
-                    height={47}
-                    className={styles.title}
-                />
                 <Box className={styles.section}>
                     <Box className={styles.section__photo}>
                         <Image
@@ -28,22 +21,20 @@ const FinallyVideoTemplate = () => {
                         </Typography>
                     </Box>
                     <Box className={styles.section__text}>
-                        <Image
-                            src='/images/wefinallyplayed.svg'
-                            alt='We Finally Played'
-                            width={250}
-                            height={39}
-                            className={styles.title}
-                        />
-                        <Typography variant='body2'>
-                            Share on social networks
+                        <Typography variant='body1' align='center'>Well done!</Typography>
+                        <Typography variant='body2' align='center'>
+                            Here&lsquo;s your special in-game promo code <br/> for submitting your entry: <span className='text-gradient'>promocode</span>
                         </Typography>
-                        <Typography variant='body2'>
-                            and <span>get extra votes</span>
+                        <Typography variant='caption'>
+                            Enter your email to participate in a prize draw.<br/>
+                            We&lsquo;ll use it to notify you once your post <br/>
+                            successfully passed moderation and published*.
                         </Typography>
-                        <Typography variant='body2'>
-                            But first, your video must be<br/>
-                            moderated! Then you can share it.
+                    </Box>
+                    <Box className={styles.section__inp}>
+                        <input type="text" placeholder='Enter Email'/>
+                        <Typography variant='caption' align='center'>
+                            *It make take us up to 5 business days.
                         </Typography>
                     </Box>
                     <Box className={styles.section__btn}>

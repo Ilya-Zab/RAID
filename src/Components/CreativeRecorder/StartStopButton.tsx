@@ -2,14 +2,14 @@
 
 import { useState } from "react"
 import styles from './styles.module.scss';
-
+import { IconButton } from "@mui/material";
 interface StartStopButtonProps {
     onChange: (isStarted: boolean) => void,
     disabled: boolean
 }
 
 const getStartButton = (onClick: () => void, disabled: boolean) => (
-    <button 
+    <IconButton
     
         onClick={onClick}
         disabled={disabled}
@@ -29,11 +29,11 @@ const getStartButton = (onClick: () => void, disabled: boolean) => (
                 </filter>
             </defs>
         </svg>
-    </button>
+    </IconButton>
 )
 
 const getStopButton = (onClick: () => void, disabled: boolean) => (
-    <button
+    <IconButton
         onClick={onClick}
         disabled={disabled}
         className={`${styles.button} ${styles['button-stop']}`}
@@ -53,7 +53,7 @@ const getStopButton = (onClick: () => void, disabled: boolean) => (
             </defs>
         </svg>
 
-    </button>
+    </IconButton>
 )
 
 export default function StartStopButton(props: StartStopButtonProps) {
