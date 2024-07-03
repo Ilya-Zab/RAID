@@ -10,8 +10,7 @@ import useVideoProcessor from "@/hooks/useVideoProcessor";
 import axios from "axios";
 import styles from './styles.module.scss';
 import { Box } from "@mui/material";
-import { useAppDispatch } from "@/hooks/redux";
-import { setFrames } from "@/store/slice/creativeFramesSlice";
+import { Loader } from "../Layouts/Loader";
 
 // div element for displaying video should has fixed size
 const musicPath = "/audio/AR_CONTRAST.mp3";
@@ -39,7 +38,8 @@ const effects: EffectItem[] = [
 ];
 export interface CreativeRecorderProps
 {
-    onContinueClick: (video: Blob) => void
+    onContinueClick: (video: Blob) => void,
+    onVideoRecorded: (video: Blob) => void,
 }
 
 export default function CreativeRecorder(props: CreativeRecorderProps)
@@ -52,20 +52,20 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     const [music, setMusic] = useState<Blob | null>(null);
     const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
     const [frames, setLocalFrames] = useState(null);
-    const dispatch = useAppDispatch();
 
-    const processVideo = async (videoBlob: Blob) =>
-    {
-        try
-        {
-            const frames = await videoProcessor.extractAllFrames(videoBlob);
-            setLocalFrames(frames);
-            dispatch(setFrames(frames));
-        } catch (error)
-        {
-            console.error("Ошибка при извлечении кадров из видео:", error);
-        }
-    };
+    // const processVideo = async (videoBlob: Blob) =>
+    // {
+    //     try
+    //     {
+    //         setProcessing(true);
+    //         const frames = await videoProcessor.extractAllFrames(videoBlob);
+
+    //         setProcessing(false);
+    //     } catch (error)
+    //     {
+    //         console.error("Ошибка при извлечении кадров из видео:", error);
+    //     }
+    // };
 
     useEffect(() =>
     {
@@ -88,7 +88,8 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         videoProcessor.mergeVideoAndAudio(creativeRecorder.video, audioRecorder.audio, music);
         if (!frames)
         {
-            processVideo(creativeRecorder.video);
+            setLocalFrames(creativeRecorder.video);
+            props.onVideoRecorded(creativeRecorder.video);
         }
 
     }, [creativeRecorder.isRecording, audioRecorder.finishRecording, music]);

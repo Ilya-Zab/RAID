@@ -1,14 +1,16 @@
 import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { fetchFile, toBlobURL } from "@ffmpeg/util";
 import { useEffect, useRef, useState } from "react";
+import { useAppDispatch, useAppSelector } from "./redux";
+import { setFrames } from "@/store/slice/creativeFramesSlice";
 
 export type UseVideoProcessorResult = {
     mergeVideoAndAudio: (video: Blob, audio1: Blob, audio2: Blob) => Promise<void>,
     isLoaded: boolean,
     messages: string[],
     output: Blob | null,
-    extractAllFrames: (video: Blob) => Promise<string[]>,
-    firstFrame: Blob | null
+    // extractAllFrames: (video: Blob) => Promise<string[]>,
+    // firstFrame: Blob | null
 };
 
 export default function useVideoProcessor(): UseVideoProcessorResult
@@ -17,7 +19,10 @@ export default function useVideoProcessor(): UseVideoProcessorResult
     const [messages, setMessages] = useState<string[]>([]);
     const [output, setOutput] = useState<Blob | null>(null);
     const ffmpegRef = useRef<FFmpeg | null>(null);
-    const [firstFrame, setFirstFrame] = useState<Blob | null>(null);
+
+    const dispatch = useAppDispatch();
+    const creativeFrames = useAppSelector(state => state.creativeFrames.frames);
+    // const [firstFrame, setFirstFrame] = useState<Blob | null>(null);
 
     useEffect(() =>
     {
@@ -70,51 +75,51 @@ export default function useVideoProcessor(): UseVideoProcessorResult
         setOutput(output);
     }
 
-    async function extractAllFrames(video: Blob): Promise<string[]>
-    {
-        if (!video) return [];
+    // async function extractAllFrames(video: Blob): Promise<string[]>
+    // {
+    //     if (!video) return [];
 
-        const videoName = "video.mp4";
-        const frameNamePattern = "frame_%d.png";
-        const ffmpeg = ffmpegRef.current;
+    //     const videoName = "video.mp4";
+    //     const frameNamePattern = "frame_%d.png";
+    //     const ffmpeg = ffmpegRef.current;
 
-        if (!ffmpeg)
-        {
-            throw new Error("FFmpeg is not initialized.");
-        }
+    //     if (!ffmpeg)
+    //     {
+    //         throw new Error("FFmpeg is not initialized.");
+    //     }
 
-        await ffmpeg.writeFile(videoName, await fetchFile(video));
+    //     await ffmpeg.writeFile(videoName, await fetchFile(video));
 
-        await ffmpeg.exec([
-            "-i", videoName,
-            "-vf", "thumbnail,scale=-1:576,crop=ih*9/16:ih",
-            "-vsync", "vfr",
-            frameNamePattern
-        ]);
+    //     await ffmpeg.exec([
+    //         "-i", videoName,
+    //         "-vf", "thumbnail,scale=-1:576,crop=ih*9/16:ih",
+    //         "-vsync", "vfr",
+    //         frameNamePattern
+    //     ]);
 
-        const frames: string[] = [];
-        let frameIndex = 1;
+    //     const frames: string[] = [];
+    //     let frameIndex = 1;
 
-        while (true)
-        {
-            const frameFileName = frameNamePattern.replace("%d", frameIndex.toString());
-            try
-            {
-                const data = await ffmpeg.readFile(frameFileName) as Uint8Array;
-                const frame = new Blob([data.buffer], { type: 'image/png' });
-                const blobUrl = URL.createObjectURL(frame).replace('blob:', '');
-                frames.push(blobUrl);
-                frameIndex++;
-            } catch (error)
-            {
-                console.error("Error reading frame:", error);
-                break;
-            }
-        }
+    //     while (true)
+    //     {
+    //         const frameFileName = frameNamePattern.replace("%d", frameIndex.toString());
+    //         try
+    //         {
+    //             const data = await ffmpeg.readFile(frameFileName) as Uint8Array;
+    //             const frame = new Blob([data.buffer], { type: 'image/png' });
+    //             const blobUrl = URL.createObjectURL(frame).replace('blob:', '');
+    //             frames.push(blobUrl);
+    //             frameIndex++;
+    //         } catch (error)
+    //         {
+    //             console.error("Error reading frame:", error);
+    //             break;
+    //         }
+    //     }
+    //     dispatch(setFrames(frames));
+    //     return frames;
+    // }
 
-        return frames;
-    }
-
-
-    return { mergeVideoAndAudio, messages, isLoaded, output, extractAllFrames, firstFrame };
+    // return { mergeVideoAndAudio, messages, isLoaded, output, extractAllFrames, firstFrame };
+    return { mergeVideoAndAudio, messages, isLoaded, output };
 }

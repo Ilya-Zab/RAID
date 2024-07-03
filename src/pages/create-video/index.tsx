@@ -7,7 +7,7 @@ import { Box } from "@mui/material";
 import Modal from "@/Components/Modal/Modal";
 import { downloadVideo } from "@/utils";
 import useCreateCreative from "@/hooks/useCreateCreative";
-import { number } from "zod";
+import { useVideoFrames } from "@/hooks/useVideoFrames";
 
 const CreateVideo = () =>
 {
@@ -16,6 +16,9 @@ const CreateVideo = () =>
     const [step, setStep] = useState<number>(0);
     const [togglePopover, setTogglePopover] = useState(true);
     const { createCreativeAsBlob, success, data, error } = useCreateCreative();
+    const [isProcessing, setProcessing] = useState(false);
+    const { extractAllFrames, isLoading } = useVideoFrames();
+
     useEffect(() =>
     {
         if (!video) return;
@@ -46,6 +49,12 @@ const CreateVideo = () =>
         setStep(prev => (prev > 1 ? prev - 1 : 1));
     }
 
+    async function handleVideoReady(video: Blob)
+    {
+        const frames = await extractAllFrames(video);
+        console.log(frames);
+    }
+
     const CurrentTemplate = () =>
     {
         switch (step)
@@ -64,7 +73,7 @@ const CreateVideo = () =>
                     </Modal>
                 );
             case 2:
-                return <CreativeRecorder onContinueClick={handleContinueClick} />;
+                return <CreativeRecorder onContinueClick={handleContinueClick} onVideoRecorded={handleVideoReady} />;
             default:
                 return <CreateVideoTemplate handleButtonClick={nextStep} />;
         }
