@@ -23,10 +23,18 @@ const CustomPopover = styled(Popover)`
 
 const Modal = ({ children, open, handleToggle }) =>
 {
+    const id = open ? "pp" : "";
+
     return (
         <CustomPopover
+            id={id}
             open={open}
             onClose={handleToggle}
+            transformOrigin={{
+                vertical: 'center',
+                horizontal: 'center',
+            }
+            }
         >
             <IconButton className={styles.iconBtn} onClick={handleToggle}>
                 <CloseIcon />

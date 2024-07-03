@@ -2,10 +2,12 @@ import Head from "next/head";
 import CreateVideoTemplate from "@/Components/CreateVideoTemplate/CreateVideoTemplate";
 import { useEffect, useState } from "react";
 import CreativeRecorder from "@/Components/CreativeRecorder/CreativeRecorder";
-// import FinallyVideoTemplate from "@/Components/FinallyVideoTemplate/FinallyVideoTemplate";
 import styles from './styles.module.scss';
 import { Box } from "@mui/material";
 import Modal from "@/Components/Modal/Modal";
+import { downloadVideo } from "@/utils";
+import useCreateCreative from "@/hooks/useCreateCreative";
+import { number } from "zod";
 
 const CreateVideo = () =>
 {
@@ -13,33 +15,25 @@ const CreateVideo = () =>
     const [video, setVideo] = useState<Blob | null>(null);
     const [step, setStep] = useState<number>(0);
     const [togglePopover, setTogglePopover] = useState(true);
-
+    const { createCreativeAsBlob, success, data, error } = useCreateCreative();
     useEffect(() =>
     {
         if (!video) return;
-
-        // functionality of the posting video into WordPress was temporary blocked for correct test deployment purposes
         downloadVideo(video, "video.mp4");
+        createCreativeAsBlob(video);
         return;
-
-        axios.post("/api/video-uploader", { video })
-            .then(response =>
-            {
-                setResult(response.data);
-                setIsUploaded(true);
-            })
-            .catch(err => setResult(err.response));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [video]);
-
-    const handleToggle = () =>
-    {
-        nextStep();
-    }
 
     function handleContinueClick(video: Blob)
     {
         if (video)
             setVideo(video);
+    }
+
+    const handleToggle = () =>
+    {
+        nextStep();
     }
 
     function nextStep()
@@ -88,23 +82,20 @@ const CreateVideo = () =>
                         <h1 className={`text-gradient ${styles.title}`}>
                             #WeFinallyPlayedIt
                         </h1>
-                        <Box className={styles.popup}>
-                            {/* <CurrentTemplate step={step} /> */}
-                            {/* {CurrentTemplate(step)} */}
-                            {/* <CreateVideoTemplate /> */}
-                            <CurrentTemplate step={step} nextStep={nextStep} handleContinueClick={handleContinueClick} />
+                        <Box className={styles.popup} id="pp">
+                            {CurrentTemplate()}
                             {
                                 step > 1 &&
                                 <button onClick={() => prevStep()}>
                                     prev step
                                 </button>
                             }
-                            {
-                                step === 1 ? null : step > 0 &&
-									<button onClick={() => nextStep()}>
-										next step
-									</button>
-                            }
+                            {/* {
+                                step > 0 &&
+                                <button onClick={() => nextStep()}>
+                                    next step
+                                </button>
+                            } */}
                         </Box>
                     </Box>
                 </Box>

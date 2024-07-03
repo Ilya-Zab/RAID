@@ -8,13 +8,12 @@ import { EffectItem, EffectPicker } from "./EffectPicker";
 import useAudioRecorder from "@/hooks/useAudioRecorder";
 import useVideoProcessor from "@/hooks/useVideoProcessor";
 import axios from "axios";
+import styles from './styles.module.scss';
+import { Box } from "@mui/material";
+import { useAppDispatch } from "@/hooks/redux";
+import { setFrames } from "@/store/slice/creativeFramesSlice";
 
 // div element for displaying video should has fixed size
-const ARScreenStyle = {
-    width: "640px",
-    height: "480px"
-}
-
 const musicPath = "/audio/AR_CONTRAST.mp3";
 const effects: EffectItem[] = [
     {
@@ -38,7 +37,6 @@ const effects: EffectItem[] = [
         url: "https://cdn.jsdelivr.net/npm/deepar@5.6.5/effects/lion"
     }
 ];
-
 export interface CreativeRecorderProps
 {
     onContinueClick: (video: Blob) => void
@@ -53,11 +51,34 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     const videoProcessor = useVideoProcessor();
     const [music, setMusic] = useState<Blob | null>(null);
     const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
+    const [frames, setLocalFrames] = useState(null);
+    const dispatch = useAppDispatch();
+
+    const processVideo = async (videoBlob: Blob) =>
+    {
+        try
+        {
+            const frames = await videoProcessor.extractAllFrames(videoBlob);
+            setLocalFrames(frames);
+            dispatch(setFrames(frames));
+        } catch (error)
+        {
+            console.error("Ошибка при извлечении кадров из видео:", error);
+        }
+    };
 
     useEffect(() =>
     {
         initializeCreativeRecorder();
-    }, []);
+
+        return () =>
+        {
+            if (deepAR && isInited)
+            {
+                deepAR.shutdown();
+            }
+        };
+    }, [isInited]);
 
     useEffect(() =>
     {
@@ -65,6 +86,11 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
             return
 
         videoProcessor.mergeVideoAndAudio(creativeRecorder.video, audioRecorder.audio, music);
+        if (!frames)
+        {
+            processVideo(creativeRecorder.video);
+        }
+
     }, [creativeRecorder.isRecording, audioRecorder.finishRecording, music]);
 
     async function handleVideoStateChange(isStarted: boolean)
@@ -89,37 +115,40 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
             props.onContinueClick(videoProcessor.output);
     }
 
-
     function handleEffectChange(effect: EffectItem)
     {
         deepAR?.switchEffect(effect.url);
     }
 
+    //     <EffectPicker
+    //     effects={effects}
+    //     onEffectChange={handleEffectChange}
+    // />
+
     return (
-        <div style={{ display: "flex" }}>
-            <div>
-                <StartStopButton
-                    onChange={handleVideoStateChange}
-                    disabled={!deepAR || !isInited}
-                />
-                {" "}
+        <Box className={styles.CreativeRecorder}>
+            <Box className={styles.CreativeRecorder__recorder} id="deepar-screen" />
+            <Box className={styles.CreativeRecorder__buttons}>
                 <button
                     onClick={handleContinueClick}
                     disabled={!videoProcessor.output}
                 >
-                    Continue
+                    Download
                 </button>
-
-                <EffectPicker
-                    effects={effects}
-                    onEffectChange={handleEffectChange}
+                <StartStopButton
+                    onChange={handleVideoStateChange}
+                    disabled={!deepAR || !isInited}
                 />
-            </div>
-
-            <div>
-                <div style={ARScreenStyle} id="deepar-screen"></div>
-            </div>
-        </div>
+                <button
+                >
+                    REW
+                </button>
+                <button
+                >
+                    Sound
+                </button>
+            </Box>
+        </Box>
     );
 
     function startRecording()
@@ -154,19 +183,4 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
         setIsInited(videoGrants && audioGrants);
     }
-}
-
-// used to test recorded videos
-function downloadVideo(video: Blob, videoName: string)
-{
-    const url = URL.createObjectURL(video);
-    const a: any = document.createElement("a");
-
-    a.href = url;
-    a.download = videoName;
-
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
 }
