@@ -10,7 +10,6 @@ import useVideoProcessor from "@/hooks/useVideoProcessor";
 import axios from "axios";
 import styles from './styles.module.scss';
 import { Box } from "@mui/material";
-import Image from "next/image";
 import { useAppDispatch } from "@/hooks/redux";
 import { setFrames } from "@/store/slice/creativeFramesSlice";
 
@@ -52,7 +51,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     const videoProcessor = useVideoProcessor();
     const [music, setMusic] = useState<Blob | null>(null);
     const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
-    const [firstFrameUrl, setFirstFrameUrl] = useState(null);
+    const [frames, setLocalFrames] = useState(null);
     const dispatch = useAppDispatch();
 
     const processVideo = async (videoBlob: Blob) =>
@@ -60,7 +59,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         try
         {
             const frames = await videoProcessor.extractAllFrames(videoBlob);
-            console.log(frames);
+            setLocalFrames(frames);
             dispatch(setFrames(frames));
         } catch (error)
         {
@@ -87,7 +86,10 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
             return
 
         videoProcessor.mergeVideoAndAudio(creativeRecorder.video, audioRecorder.audio, music);
-        processVideo(creativeRecorder.video);
+        if (!frames)
+        {
+            processVideo(creativeRecorder.video);
+        }
 
     }, [creativeRecorder.isRecording, audioRecorder.finishRecording, music]);
 

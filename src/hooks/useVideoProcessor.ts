@@ -92,7 +92,7 @@ export default function useVideoProcessor(): UseVideoProcessorResult
             frameNamePattern
         ]);
 
-        const frames: Blob[] = [];
+        const frames: string[] = [];
         let frameIndex = 1;
 
         while (true)
@@ -102,7 +102,7 @@ export default function useVideoProcessor(): UseVideoProcessorResult
             {
                 const data = await ffmpeg.readFile(frameFileName) as Uint8Array;
                 const frame = new Blob([data.buffer], { type: 'image/png' });
-                const blobUrl = URL.createObjectURL(frame);
+                const blobUrl = URL.createObjectURL(frame).replace('blob:', '');
                 frames.push(blobUrl);
                 frameIndex++;
             } catch (error)
