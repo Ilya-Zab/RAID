@@ -28,7 +28,7 @@ const CreateVideo = () =>
                         alt="vlad"
                         width={635}
                         height={804}
-                        className={styles["creatives-section__img"]}
+                        className={`${styles['creatives-section__img']} ${styles['creatives-section__img_preview']}`}
                     />
                 </Creatives>
             </main>
