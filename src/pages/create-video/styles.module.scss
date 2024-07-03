@@ -96,3 +96,19 @@
 	border-radius: 2px;
 	height: 4px;
 }
+.button {
+	padding: 0;
+	background: transparent;
+	border-radius: 50%;
+	cursor: pointer;
+	border: none;
+	outline: none;
+	position: absolute;
+	z-index: 10;
+	&-prev {
+		width: 40px;
+		height: 40px;
+		top: 20px;
+		left: 20px;
+	}
+}
