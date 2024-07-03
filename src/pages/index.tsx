@@ -51,9 +51,9 @@ export default function Home() {
                 <Image
                     src='/images/vlad.png'
                     alt="vlad"
-                    width={635}
-                    height={804}
-                    className={styles["creatives-section__img"]}
+                    width={829}
+                    height={1274}
+                    className={`${styles['creatives-section__img']} ${styles['creatives-section__img_main']}`}
                 />
             </Creatives>
             <Ready />

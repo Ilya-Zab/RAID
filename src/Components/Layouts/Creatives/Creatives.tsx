@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CreativesList from "@/Components/Creatives/CreativesList";
 import styles from "./styles.module.scss";
-import Image from 'next/image';
 import { useMediaQuery } from "@mui/material";
 import AddCreativeCard from "@/Components/Creatives/AddCreativeCard";
 import { useCookies } from "react-cookie";
