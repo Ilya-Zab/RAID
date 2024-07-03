@@ -12,17 +12,24 @@
         position: relative;
         z-index: 5;
         height: auto;
-        @media screen and (max-width: 768px) {
-            width: clamp(280px, 57vw, 450px);
-        }
+
         &_main {
             width: clamp(533px, 57vw, 980px);
+            @media screen and (max-width: 768px) {
+                width: clamp(280px, 57vw, 450px);
+            }
         }
         &_gallery {
             width: clamp(533px, 57vw, 780px);
+            @media screen and (max-width: 768px) {
+                width: clamp(280px, 57vw, 380px);
+            }
         }
         &_preview {
             width: clamp(533px, 57vw, 780px);
+            @media screen and (max-width: 768px) {
+                width: clamp(280px, 57vw, 380px);
+            }
         }
     }
 

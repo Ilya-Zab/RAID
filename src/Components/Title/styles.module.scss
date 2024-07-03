@@ -11,6 +11,11 @@
 		letter-spacing: 0;
 	}
 }
+.gallery,
+.preview {
+	position: relative;
+	z-index: 10;
+}
 .preview {
 	margin-bottom: 115px;
 }
