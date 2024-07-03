@@ -14,9 +14,9 @@ const VoteButton: FC<VoteButtonProps> = ({ votes, hasVoted, onVote }) => {
 
     const onClick = () => {
         if (hasClicked) return;
+        if (!onVote()) return;
         setButtonVotes((buttonVotes) => buttonVotes + 1);
         setClicked(true);
-        onVote();
     }
 
     return (

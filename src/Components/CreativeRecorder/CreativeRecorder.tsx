@@ -10,6 +10,7 @@ import useVideoProcessor from "@/hooks/useVideoProcessor";
 import axios from "axios";
 import styles from './styles.module.scss';
 import { Box } from "@mui/material";
+import { Loader } from "../Layouts/Loader";
 
 // div element for displaying video should has fixed size
 const musicPath = "/audio/AR_CONTRAST.mp3";
@@ -148,7 +149,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     {
         audioRecorder.finishRecording();
         creativeRecorder.finishRecording();
-
         if (audioPlayerRef.current)
         {
             audioPlayerRef.current.pause()
