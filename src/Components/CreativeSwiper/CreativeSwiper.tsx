@@ -18,7 +18,12 @@ const CustomSwiperNav = styled(Swiper)`
 
 const CreativeSwiper = ({data, nextStep}) => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
-    console.log(data.length > 5 ? 5 : data.length)
+
+    const handleSlideChange = (swiper) => {
+        const activeIndex = swiper.activeIndex;
+        const activeFrame = data[activeIndex];
+    };
+
     return (
         <Box className={styles.wrapper}>
             <Box className={styles.swiper_wrapper}>
@@ -27,6 +32,7 @@ const CreativeSwiper = ({data, nextStep}) => {
                     thumbs={{swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null}}
                     modules={[FreeMode, Thumbs]}
                     className={`mySwiper2 ${styles.video_swiper__for}`}
+                    onSlideChange={handleSlideChange}
                 >
                     {data &&
                         data.map((frame, index) => {
