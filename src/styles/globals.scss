@@ -172,6 +172,16 @@
 	&:hover {
 		background: linear-gradient(176deg, #00ded4 0%, #0292bf 100%);
 	}
+	&-next {
+		position: absolute;
+		bottom: 24px;
+		left: 50%;
+		transform: translateX(-50%);
+		max-width: 140px;
+		font-weight: 700;
+		font-size: 19px;
+		line-height: 114%;
+	}
 }
 
 .container {

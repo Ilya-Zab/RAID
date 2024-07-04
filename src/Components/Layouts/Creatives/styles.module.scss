@@ -6,49 +6,33 @@
         position: absolute;
         right: 0;
         z-index: 10;
-
-        &:before {
-            content: '';
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to bottom, #FFFFFF00 57%, #000F22 100%);
-            width: 100%;
-            height: 100%;
-            z-index: 20;
-            box-shadow: -140px 330px 79px -280px #000F22,
-                310px 330px 79px -280px #000F22,
-                210px 330px 79px -280px #000F22,
-                120px 330px 79px -280px #000F22,
-                30px 330px 79px -280px #000F22,
-                -50px 330px 79px -280px #000F22,
-                -150px 330px 79px -280px #000F22,
-                -230px 330px 79px -280px #000F22;
-
-            @media screen and (max-width: 1024px) {
-                max-width: 535px;
-                height: 654px;
-            }
-
-            @media screen and (max-width: 768px) {
-                background: linear-gradient(to bottom, #FFFFFF00 37%, #000F22 100%);
-                width: 342px;
-                height: 435px;
-            }
-        }
     }
 
     &__img {
         position: relative;
         z-index: 5;
-        width: clamp(533px, 57vw, 680px);
         height: auto;
 
-        //box-shadow: inset -15px -1300px 215px -575px #000F22;
-        @media screen and (max-width: 768px) {
-            width: clamp(280px, 57vw, 450px);
+        &_main {
+            width: clamp(533px, 57vw, 980px);
+            @media screen and (max-width: 768px) {
+                width: clamp(280px, 57vw, 450px);
+            }
+        }
+        &_gallery {
+            width: clamp(533px, 57vw, 780px);
+            @media screen and (max-width: 768px) {
+                width: clamp(280px, 57vw, 380px);
+            }
+        }
+        &_preview {
+            width: clamp(533px, 57vw, 780px);
+            @media screen and (max-width: 768px) {
+                width: clamp(280px, 57vw, 380px);
+            }
         }
     }
+
 
     &__line {
         width: 1px;

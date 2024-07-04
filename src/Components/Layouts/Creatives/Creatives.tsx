@@ -1,14 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import CreativesList from "@/Components/Creatives/CreativesList";
 import styles from "./styles.module.scss";
-import Image from 'next/image';
 import { useMediaQuery } from "@mui/material";
 import AddCreativeCard from "@/Components/Creatives/AddCreativeCard";
 import { useCookies } from "react-cookie";
 import { useLazyFetchUserDataQuery } from "@/store/wordpress/wpUser";
 
-const Creatives = () => {
-    const beforeRef = useRef(null);
+const Creatives = ({children}) => {
     const [computedTop, setComputedTop] = useState('');
     const headerHeight = 0;
     const coefficient = 0.2;
@@ -55,14 +53,7 @@ const Creatives = () => {
     return (
         <div className={styles["creatives-section"]}>
             <div className={styles["creatives-section__imgWrapper"]} style={{ top: computedTop }}>
-                <Image
-                    ref={beforeRef}
-                    src="/images/vlad.png"
-                    alt="vlad"
-                    width={635}
-                    height={804}
-                    className={styles["creatives-section__img"]}
-                />
+                {children}
             </div>
             <div className={styles["creatives-section__block"]}>
                 <div className="container">
