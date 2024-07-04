@@ -105,9 +105,7 @@ const CreateVideo = () =>
                     </Box>
                 )
             case 4:
-                return (
-                   <CreativeSwiper data={allFrames} nextStep={nextStep}/>
-                )
+                return <CreativeSwiper data={allFrames} nextStep={nextStep}/>
             case 5:
                 return <FinallyVideoTemplate />;
             default:
