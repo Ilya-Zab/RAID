@@ -6,7 +6,7 @@ import { wpAPI } from './wordpress/wpRestApi';
 import { wpUser } from './wordpress/wpUser';
 import { wpCustomAPI } from './wordpress/wpRestCustomApi';
 import { ipApi } from './ipapi/ipapi';
-import creativeFramesSlice from './slice/creativeFramesSlice';
+import creativeSlice from './slice/creativeSlice';
 
 const rootReducer = combineReducers({
 
@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
     [ipApi.reducerPath]: ipApi.reducer,
     audio: audioReducer,
     raidId: raidIdSlice,
-    creativeFrames: creativeFramesSlice,
+    creative: creativeSlice,
 });
 
 export const setupStore = () =>

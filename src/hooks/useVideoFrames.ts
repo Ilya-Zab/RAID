@@ -2,7 +2,7 @@ import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { fetchFile } from "@ffmpeg/util";
 import { useEffect, useRef, useState } from "react";
 import { useAppDispatch } from "./redux";
-import { setFrames } from "@/store/slice/creativeFramesSlice";
+import { setFrames } from "@/store/slice/creativeSlice";
 
 export const useVideoFrames = () =>
 {
@@ -47,8 +47,7 @@ export const useVideoFrames = () =>
 
         await ffmpeg.exec([
             "-i", videoName,
-            // "-vf", "thumbnail,scale=-1:576,crop=ih*9/16:ih",
-            "-vf", "thumbnail,scale=-1:576,crop=ih*9/16:ih,select='not(mod(n\\,3))'",
+            "-vf", "thumbnail,scale=-1:576,crop=ih*9/16:ih,select='not(mod(n\\,2))'",
             "-vsync", "vfr",
             frameNamePattern
         ]);
