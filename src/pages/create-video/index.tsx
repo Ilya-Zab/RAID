@@ -3,13 +3,18 @@ import CreateVideoTemplate from "@/Components/CreateVideoTemplate/CreateVideoTem
 import { useEffect, useState } from "react";
 import CreativeRecorder from "@/Components/CreativeRecorder/CreativeRecorder";
 import styles from './styles.module.scss';
-import { Box } from "@mui/material";
+import {Box, Button} from "@mui/material";
 import Modal from "@/Components/Modal/Modal";
 import { downloadVideo } from "@/utils";
 import useCreateCreative from "@/hooks/useCreateCreative";
 import { useVideoFrames } from "@/hooks/useVideoFrames";
 import Image from "next/image";
 import FinallyVideoTemplate from "@/Components/FinallyVideoTemplate/FinallyVideoTemplate";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { FreeMode, Thumbs } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/thumbs';
 
 const CreateVideo = () =>
 {
@@ -22,6 +27,7 @@ const CreateVideo = () =>
     const { extractAllFrames, isLoading } = useVideoFrames();
     const [allFrames, setAllFrames] = useState(null);
     const [videoUrl, setVideoUrl] = useState(null);
+    const [thumbsSwiper, setThumbsSwiper] = useState(null);
     useEffect(() =>
     {
         if (!video) return;
@@ -93,6 +99,7 @@ const CreateVideo = () =>
                             loop
                             muted
                         // poster="https://assets.codepen.io/6093409/river.jpg"
+                            className={styles.video}
                         >
                             <source
                                 src={videoUrl}
@@ -108,25 +115,71 @@ const CreateVideo = () =>
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         width: '100%',
-                        height: '100vh'
+                        height: '100%'
                     }}>
-                        {allFrames &&
-                            allFrames.map((frame, index) =>
-                            {
-                                return (
-                                    <Image
-                                        src={frame}
-                                        key={index}
-                                        alt={""}
-                                        width={50}
-                                        height={50}
-                                    />
-                                )
-                            })
-                        }
-                        <button onClick={nextStep}>
-                            Next Step
-                        </button>
+                        <Box
+                            sx={{
+                                position:'absolute',
+                                bottom: 90,
+                            }}
+                        >
+                            <Swiper
+
+                                spaceBetween={10}
+                                navigation={true}
+                                thumbs={{ swiper: thumbsSwiper }}
+                                modules={[FreeMode, Thumbs]}
+                                className="mySwiper2"
+                            >
+                                {allFrames &&
+                                    allFrames.map((frame, index) =>
+                                    {
+                                        return (
+                                            <SwiperSlide key={index} className={styles.video_swiper__item}>
+                                                <Image
+                                                    src={frame}
+                                                    alt={""}
+                                                    width={62}
+                                                    height={62}
+                                                />
+                                            </SwiperSlide>
+                                        )
+                                    })
+                                }
+                            </Swiper>
+                            <Swiper
+                                onSwiper={setThumbsSwiper}
+                                spaceBetween={10}
+                                slidesPerView={4}
+                                freeMode={true}
+                                watchSlidesProgress={true}
+                                modules={[FreeMode, Thumbs]}
+                                className={`mySwiper ${styles.video_swiper}`}
+                            >
+                                {allFrames &&
+                                    allFrames.map((frame, index) =>
+                                    {
+                                        return (
+                                            <SwiperSlide key={index} className={styles.video_swiper__item}>
+                                                <Image
+                                                    src={frame}
+                                                    alt={""}
+                                                    width={62}
+                                                    height={62}
+                                                />
+                                            </SwiperSlide>
+                                        )
+                                    })
+                                }
+                            </Swiper>
+                        </Box>
+                        <Button
+                            type="button"
+                            variant="contained"
+                            className={`btn-second btn-second-next`}
+                            onClick={nextStep}>
+                            Next
+                        </Button>
                     </Box>
                 )
             case 5:
@@ -179,9 +232,14 @@ const CreateVideo = () =>
                             }
                             {
                                 step == 3 &&
-                                <button onClick={() => nextStep()}>
-                                    next step
-                                </button>
+                                <Button
+                                type="button"
+                                variant="contained"
+                                className={`btn-second btn-second-next`}
+                                onClick={() => nextStep()}
+                                >
+                                    Next
+                                </Button>
                             }
                         </Box>
                     </Box>

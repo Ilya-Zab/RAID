@@ -115,3 +115,14 @@
 		left: 20px;
 	}
 }
+.video {
+	width: 100%;
+}
+
+.video_swiper {
+	max-width: 340px;
+	&__item {
+		width: 62px;
+		height: 62px;
+	}
+}
