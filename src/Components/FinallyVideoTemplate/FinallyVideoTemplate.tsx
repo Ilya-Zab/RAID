@@ -3,16 +3,57 @@ import styles from './styles.module.scss';
 import { Box, Button, Typography } from "@mui/material";
 import Image from 'next/image';
 import { RegistrationForm } from "../Forms/RegistrationForm";
+import { useCookies } from "react-cookie";
+import { useAppSelector } from "@/hooks/redux";
+import { useRouter } from "next/router";
+import useCreateCreative from "@/hooks/useCreateCreative";
+import { FinallyVideoSend } from "./FinallyVideoSend";
 
-const FinallyVideoTemplate = () =>
+const FinallyVideoTemplate = ({ video, creativeImage }) =>
 {
+    const [cookies] = useCookies(['userToken']);
+    const raidId = useAppSelector(state => state.raidId.raidId);
+    const router = useRouter();
+    const { createCreativeAsBlob, success, data, error } = useCreateCreative();
+    const [isCreating, setCreating] = React.useState(false);
+
+    React.useEffect(() =>
+    {
+        if (!raidId && !cookies.userToken)
+        {
+            router.push('/');
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [raidId, cookies]);
+
+    const createCreative = () =>
+    {
+        setCreating(true);
+        createCreativeAsBlob(video);
+    }
+
+    React.useEffect(() =>
+    {
+        if (success)
+        {
+            alert('Creative has been created');
+            setCreating(false);
+        }
+
+        if (error)
+        {
+            alert('There is a problem with creating creative');
+            setCreating(false);
+        }
+    }, [success, error]);
+
     return (
         <Box className={styles.bg}>
             <Box className={styles.container}>
                 <Box className={styles.section}>
                     <Box className={styles.section__photo}>
                         <Image
-                            src='/images/user.png'
+                            src={creativeImage}
                             alt='User Photo'
                             width={136}
                             height={243}
@@ -33,23 +74,11 @@ const FinallyVideoTemplate = () =>
                             successfully passed moderation and published*.
                         </Typography>
                     </Box>
-                    <RegistrationForm />
-                    {/* <Box className={styles.section__inp}>
-                        <input type="text" placeholder='Enter Email' />
-                        <Typography variant='caption' align='center'>
-                            *It make take us up to 5 business days.
-                        </Typography>
-                    </Box> */}
-                    {/* <Box className={styles.section__btn}>
-                        <Box className='btnGradient2'>
-                            <Button variant="contained" className='btn-second'>
-                                Publish
-                            </Button>
-                        </Box>
-                    </Box> */}
+                    {!cookies.userToken && <RegistrationForm onSendForm={createCreative} isCreating={isCreating} />}
+                    {cookies.userToken && <FinallyVideoSend onButtonClick={createCreative} isCreating={isCreating} />}
                 </Box>
             </Box>
-        </Box>
+        </Box >
     );
 }
 

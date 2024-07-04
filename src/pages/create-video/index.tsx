@@ -6,10 +6,12 @@ import styles from './styles.module.scss';
 import { Box } from "@mui/material";
 import Modal from "@/Components/Modal/Modal";
 import { downloadVideo } from "@/utils";
-import useCreateCreative from "@/hooks/useCreateCreative";
 import { useVideoFrames } from "@/hooks/useVideoFrames";
 import Image from "next/image";
 import FinallyVideoTemplate from "@/Components/FinallyVideoTemplate/FinallyVideoTemplate";
+import { useAppSelector } from "@/hooks/redux";
+import { useRouter } from "next/router";
+import { useCookies } from "react-cookie";
 
 const CreateVideo = () =>
 {
@@ -17,24 +19,37 @@ const CreateVideo = () =>
     const [video, setVideo] = useState<Blob | null>(null);
     const [step, setStep] = useState<number>(0);
     const [togglePopover, setTogglePopover] = useState(true);
-    const { createCreativeAsBlob, success, data, error } = useCreateCreative();
-    const [isProcessing, setProcessing] = useState(false);
     const { extractAllFrames, isLoading } = useVideoFrames();
     const [allFrames, setAllFrames] = useState(null);
     const [videoUrl, setVideoUrl] = useState(null);
+    const raidId = useAppSelector(state => state.raidId.raidId);
+    const [cookies] = useCookies(['userToken']);
+    const router = useRouter();
+
     useEffect(() =>
     {
-        if (!video) return;
-        downloadVideo(video, "video.mp4");
-        createCreativeAsBlob(video);
-        return;
+        if (!raidId && !cookies.userToken)
+        {
+            router.push('/');
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [video]);
+    }, [raidId, cookies])
+
+    // useEffect(() =>
+    // {
+    //     if (!video) return;
+    //     downloadVideo(video, "video.mp4");
+    //     createCreativeAsBlob(video);
+    //     return;
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [video]);
 
     function handleContinueClick(video: Blob)
     {
         if (video)
+        {
             setVideo(video);
+        }
     }
 
     const handleToggle = () =>
@@ -54,12 +69,11 @@ const CreateVideo = () =>
 
     async function handleVideoReady(video: Blob)
     {
+        setVideo(video);
         setVideoUrl(URL.createObjectURL(video));
-        console.log(videoUrl);
         const frames = await extractAllFrames(video);
         setAllFrames(frames);
         nextStep();
-        console.log(frames);
     }
 
     const CurrentTemplate = () =>
@@ -130,9 +144,9 @@ const CreateVideo = () =>
                     </Box>
                 )
             case 5:
-                return <FinallyVideoTemplate />;
+                return <FinallyVideoTemplate video={video} creativeImage={allFrames[0]} />
             default:
-                return <p>Oops... You have some trouble with creating a creative :(</p>;
+                return <CreateVideoTemplate handleButtonClick={nextStep} />;
         }
     };
 
@@ -151,7 +165,7 @@ const CreateVideo = () =>
                         <Box className={styles.popup} id="pp">
                             {CurrentTemplate()}
                             {
-                                step > 1 &&
+                                (step > 1 && step < 5) &&
                                 <button onClick={() => prevStep()}
                                     className={`${styles.button} ${styles['button-prev']}`}>
                                     <svg width="40" height="40" viewBox="0 0 40 40" fill="none"

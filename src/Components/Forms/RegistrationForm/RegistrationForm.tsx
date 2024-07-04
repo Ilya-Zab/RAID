@@ -17,22 +17,23 @@ const RegistrationFormSchema = z.object({
 
 type RegistrationForm = z.infer<typeof RegistrationFormSchema>;
 
-export const RegistrationForm: FC = () =>
+interface RegistrationFormProps
+{
+    onSendForm?: () => void;
+    isCreating?: boolean;
+}
+
+export const RegistrationForm: FC<RegistrationFormProps> = ({ onSendForm, isCreating }) =>
 {
     const [registerForm, { data, isError, error }] = useRegisterUserMutation();
     const [fetchUserToken] = useFetchUserTokenMutation();
-    const [_, setCookie] = useCookies(['userToken']);
+    const [cookie, setCookie] = useCookies(['userToken']);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { raidId } = useAppSelector(state => state.raidId);
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm<RegistrationForm>({
         resolver: zodResolver(RegistrationFormSchema)
     });
-
-    if (raidId)
-    {
-        console.log(raidId)
-    }
 
     const onSubmit = async ({ email }: RegistrationForm) =>
     {
@@ -54,6 +55,7 @@ export const RegistrationForm: FC = () =>
                 const expiresDate = new Date();
                 expiresDate.setTime(expiresDate.getTime() + (7 * 24 * 60 * 60 * 1000));
                 setCookie('userToken', userToken.token, { path: '/', expires: expiresDate });
+                onSendForm();
             }
         } catch (error)
         {
@@ -76,16 +78,16 @@ export const RegistrationForm: FC = () =>
                 errors={errors}
                 className={styles.form__input}
             />
-            <span className={`${styles.form__link} ${styles.form__link_regis}`}>
+            <span className={`info ${styles.form__link} ${styles.form__link_regis}`}>
                 *It make take us up to 5 business days.
             </span>
             <Button
                 type="submit"
                 variant="contained"
                 className={`btn-second ${styles.form__public}`}
-                disabled={isSubmitting}
+                disabled={isSubmitting || isCreating}
             >
-                {isSubmitting ? 'Publishing...' : 'Publish'}
+                {(isSubmitting || isCreating) ? 'Publishing...' : 'Publish'}
             </Button>
             <div className={styles.form__res}>
                 {isError && error && (

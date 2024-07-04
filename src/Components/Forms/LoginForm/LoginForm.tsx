@@ -41,31 +41,33 @@ export const LoginForm: FC = () =>
 
     const [fetchUserToken] = useFetchUserTokenMutation();
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [cookies, setCookie] = useCookies(['userToken']);
+    const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
     const dispatch = useAppDispatch();
     const router = useRouter();
 
     const onSubmit = async ({ raidId }: CheckUserId) =>
     {
         const transformedId = transformRaidId(raidId);
-        console.log(transformedId);
         try
         {
+            setIsSubmitting(true);
             const userToken = await fetchUserToken({ username: transformedId, password: transformedId }).unwrap();
 
             if (userToken)
             {
-                const tomorrow = new Date();
-                tomorrow.setDate(tomorrow.getDate() + 1);
-                setCookie('userToken', userToken.token, { path: '/', expires: tomorrow });
+                const expiresDate = new Date();
+                expiresDate.setTime(expiresDate.getTime() + (7 * 24 * 60 * 60 * 1000));
+                setCookie('userToken', userToken.token, { path: '/', expires: expiresDate });
             }
         } catch (error)
         {
+            removeCookie('userToken', { path: '/' });
             dispatch(setRaidId(transformRaidId(raidId)));
         } finally
         {
             reset();
             router.push('/gallery');
+            setIsSubmitting(false);
         }
     };
 
@@ -88,7 +90,7 @@ export const LoginForm: FC = () =>
                     className={`${styles.form__input}`}
                 />
                 <Link
-                    className={styles.form__link}
+                    className={`info ${styles.form__link}`}
                     href={"/"}>
                     Where can I find my RAID ID?
                 </Link>
