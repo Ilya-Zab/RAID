@@ -53,6 +53,8 @@
 	background: $bg1;
 	background-image: url('/images/CreateModalGradientpng.png');
 	background-size: 100% 100%;
+	border: 1px solid transparent;
+	border-radius: 4px;
 }
 
 .modal__title {
@@ -117,12 +119,5 @@
 }
 .video {
 	width: 100%;
-}
-
-.video_swiper {
-	max-width: 340px;
-	&__item {
-		width: 62px;
-		height: 62px;
-	}
+	border-radius: 4px;
 }

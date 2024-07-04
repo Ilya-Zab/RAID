@@ -10,11 +10,7 @@ import useCreateCreative from "@/hooks/useCreateCreative";
 import { useVideoFrames } from "@/hooks/useVideoFrames";
 import Image from "next/image";
 import FinallyVideoTemplate from "@/Components/FinallyVideoTemplate/FinallyVideoTemplate";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Thumbs } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/thumbs';
+import CreativeSwiper from "@/Components/CreativeSwiper/CreativeSwiper";
 
 const CreateVideo = () =>
 {
@@ -27,7 +23,7 @@ const CreateVideo = () =>
     const { extractAllFrames, isLoading } = useVideoFrames();
     const [allFrames, setAllFrames] = useState(null);
     const [videoUrl, setVideoUrl] = useState(null);
-    const [thumbsSwiper, setThumbsSwiper] = useState(null);
+
     useEffect(() =>
     {
         if (!video) return;
@@ -110,77 +106,7 @@ const CreateVideo = () =>
                 )
             case 4:
                 return (
-                    <Box sx={{
-                        backgroundImage: `url(${allFrames[0]})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        width: '100%',
-                        height: '100%'
-                    }}>
-                        <Box
-                            sx={{
-                                position:'absolute',
-                                bottom: 90,
-                            }}
-                        >
-                            <Swiper
-
-                                spaceBetween={10}
-                                navigation={true}
-                                thumbs={{ swiper: thumbsSwiper }}
-                                modules={[FreeMode, Thumbs]}
-                                className="mySwiper2"
-                            >
-                                {allFrames &&
-                                    allFrames.map((frame, index) =>
-                                    {
-                                        return (
-                                            <SwiperSlide key={index} className={styles.video_swiper__item}>
-                                                <Image
-                                                    src={frame}
-                                                    alt={""}
-                                                    width={62}
-                                                    height={62}
-                                                />
-                                            </SwiperSlide>
-                                        )
-                                    })
-                                }
-                            </Swiper>
-                            <Swiper
-                                onSwiper={setThumbsSwiper}
-                                spaceBetween={10}
-                                slidesPerView={4}
-                                freeMode={true}
-                                watchSlidesProgress={true}
-                                modules={[FreeMode, Thumbs]}
-                                className={`mySwiper ${styles.video_swiper}`}
-                            >
-                                {allFrames &&
-                                    allFrames.map((frame, index) =>
-                                    {
-                                        return (
-                                            <SwiperSlide key={index} className={styles.video_swiper__item}>
-                                                <Image
-                                                    src={frame}
-                                                    alt={""}
-                                                    width={62}
-                                                    height={62}
-                                                />
-                                            </SwiperSlide>
-                                        )
-                                    })
-                                }
-                            </Swiper>
-                        </Box>
-                        <Button
-                            type="button"
-                            variant="contained"
-                            className={`btn-second btn-second-next`}
-                            onClick={nextStep}>
-                            Next
-                        </Button>
-                    </Box>
+                   <CreativeSwiper data={allFrames} nextStep={nextStep}/>
                 )
             case 5:
                 return <FinallyVideoTemplate />;
