@@ -3,13 +3,14 @@ import CreateVideoTemplate from "@/Components/CreateVideoTemplate/CreateVideoTem
 import { useEffect, useState } from "react";
 import CreativeRecorder from "@/Components/CreativeRecorder/CreativeRecorder";
 import styles from './styles.module.scss';
-import { Box } from "@mui/material";
+import {Box, Button} from "@mui/material";
 import Modal from "@/Components/Modal/Modal";
 import { downloadVideo } from "@/utils";
 import useCreateCreative from "@/hooks/useCreateCreative";
 import { useVideoFrames } from "@/hooks/useVideoFrames";
 import Image from "next/image";
 import FinallyVideoTemplate from "@/Components/FinallyVideoTemplate/FinallyVideoTemplate";
+import CreativeSwiper from "@/Components/CreativeSwiper/CreativeSwiper";
 
 const CreateVideo = () =>
 {
@@ -22,6 +23,7 @@ const CreateVideo = () =>
     const { extractAllFrames, isLoading } = useVideoFrames();
     const [allFrames, setAllFrames] = useState(null);
     const [videoUrl, setVideoUrl] = useState(null);
+
     useEffect(() =>
     {
         if (!video) return;
@@ -93,6 +95,7 @@ const CreateVideo = () =>
                             loop
                             muted
                         // poster="https://assets.codepen.io/6093409/river.jpg"
+                            className={styles.video}
                         >
                             <source
                                 src={videoUrl}
@@ -102,33 +105,7 @@ const CreateVideo = () =>
                     </Box>
                 )
             case 4:
-                return (
-                    <Box sx={{
-                        backgroundImage: `url(${allFrames[0]})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        width: '100%',
-                        height: '100vh'
-                    }}>
-                        {allFrames &&
-                            allFrames.map((frame, index) =>
-                            {
-                                return (
-                                    <Image
-                                        src={frame}
-                                        key={index}
-                                        alt={""}
-                                        width={50}
-                                        height={50}
-                                    />
-                                )
-                            })
-                        }
-                        <button onClick={nextStep}>
-                            Next Step
-                        </button>
-                    </Box>
-                )
+                return <CreativeSwiper data={allFrames} nextStep={nextStep}/>
             case 5:
                 return <FinallyVideoTemplate />;
             default:
@@ -179,9 +156,14 @@ const CreateVideo = () =>
                             }
                             {
                                 step == 3 &&
-                                <button onClick={() => nextStep()}>
-                                    next step
-                                </button>
+                                <Button
+                                type="button"
+                                variant="contained"
+                                className={`btn-second btn-second-next`}
+                                onClick={() => nextStep()}
+                                >
+                                    Next
+                                </Button>
                             }
                         </Box>
                     </Box>
