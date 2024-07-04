@@ -1,5 +1,5 @@
 import { FFmpeg } from "@ffmpeg/ffmpeg";
-import { fetchFile, toBlobURL } from "@ffmpeg/util";
+import { fetchFile } from "@ffmpeg/util";
 import { useEffect, useRef, useState } from "react";
 
 export type UseVideoProcessorResult = {
@@ -7,8 +7,6 @@ export type UseVideoProcessorResult = {
     isLoaded: boolean,
     messages: string[],
     output: Blob | null,
-    extractAllFrames: (video: Blob) => Promise<string[]>,
-    firstFrame: Blob | null
 };
 
 export default function useVideoProcessor(): UseVideoProcessorResult
@@ -17,7 +15,6 @@ export default function useVideoProcessor(): UseVideoProcessorResult
     const [messages, setMessages] = useState<string[]>([]);
     const [output, setOutput] = useState<Blob | null>(null);
     const ffmpegRef = useRef<FFmpeg | null>(null);
-    const [firstFrame, setFirstFrame] = useState<Blob | null>(null);
 
     useEffect(() =>
     {
@@ -70,51 +67,5 @@ export default function useVideoProcessor(): UseVideoProcessorResult
         setOutput(output);
     }
 
-    async function extractAllFrames(video: Blob): Promise<string[]>
-    {
-        if (!video) return [];
-
-        const videoName = "video.mp4";
-        const frameNamePattern = "frame_%d.png";
-        const ffmpeg = ffmpegRef.current;
-
-        if (!ffmpeg)
-        {
-            throw new Error("FFmpeg is not initialized.");
-        }
-
-        await ffmpeg.writeFile(videoName, await fetchFile(video));
-
-        await ffmpeg.exec([
-            "-i", videoName,
-            "-vf", "thumbnail,scale=-1:576,crop=ih*9/16:ih",
-            "-vsync", "vfr",
-            frameNamePattern
-        ]);
-
-        const frames: string[] = [];
-        let frameIndex = 1;
-
-        while (true)
-        {
-            const frameFileName = frameNamePattern.replace("%d", frameIndex.toString());
-            try
-            {
-                const data = await ffmpeg.readFile(frameFileName) as Uint8Array;
-                const frame = new Blob([data.buffer], { type: 'image/png' });
-                const blobUrl = URL.createObjectURL(frame).replace('blob:', '');
-                frames.push(blobUrl);
-                frameIndex++;
-            } catch (error)
-            {
-                console.error("Error reading frame:", error);
-                break;
-            }
-        }
-
-        return frames;
-    }
-
-
-    return { mergeVideoAndAudio, messages, isLoaded, output, extractAllFrames, firstFrame };
+    return { mergeVideoAndAudio, messages, isLoaded, output };
 }

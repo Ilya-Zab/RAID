@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
     [ipApi.reducerPath]: ipApi.reducer,
     audio: audioReducer,
     raidId: raidIdSlice,
-    creativeFramesSlice: creativeFramesSlice,
+    creativeFrames: creativeFramesSlice,
 });
 
 export const setupStore = () =>
