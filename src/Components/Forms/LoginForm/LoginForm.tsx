@@ -73,9 +73,13 @@ export const LoginForm: FC = () =>
 
     return (
         <Box className="subtract-box subtract-box_small">
-            <h2 className={styles.form__title}>30 days of raid</h2>
+            <h2 className={styles.form__title}>
+                <span className='text-gradient'>
+                    #WeFinallyPlayedIt
+                </span>
+            </h2>
             <h3 className={styles.form__subTitle}>with RAID: Shadow Legends</h3>
-            <h3 className={styles.form__desc}>Need description here about event!</h3>
+            <h3 className={styles.form__desc}>Submit your content, get votes and win gaming consoles, drones, and more exciting prizes</h3>
             <h3 className={`${styles.form__desc} ${styles.form__desc_zeroM}`}>
                 Please enter your RAID PLAYER ID to continue:
             </h3>

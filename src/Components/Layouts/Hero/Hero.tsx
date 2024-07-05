@@ -65,34 +65,34 @@ const Hero = () =>
                 <Box>
                     <Box className={styles.hero__title_wrapper}>
                         <h1 className={styles.hero__title}>
-                            Everyone&apos;s <br />
-                            <span className='text-gradient'>Playing Raid</span>.
-                            <br />
-                            Start Now and
-                            <br />
-                            <span className='text-gradient'>win </span>
-                            a huge
-                            <span className='text-gradient'>prize.</span>
+                            It&apos;ll never be the <br/> same once you<br/>
+                            <span className='text-gradient'> play Raid</span>. Show how<br/> you do it and
+                            <span className='text-gradient'> win</span><br/> gaming consoles,<br/> drones, and more<br/>
+                            exicting
+                            <span className='text-gradient'> prizes</span>!
                         </h1>
                     </Box>
                     <Box className={styles.hero__steps_wrapper}>
                         <p className={styles.hero__steps}>
                             <b>Step 1: </b>
                             <Link href={'/'} download className='text-gradient'>
-                                download RAID
+                                Download RAID
                             </Link>
                         </p>
                         <p className={styles.hero__steps}>
                             <b>Step 2: </b>
-                            enter your&nbsp;
+                            Enter your&nbsp;
                             <Link href='#ready' className='text-gradient'>
                                 RAID ID
                             </Link>
                         </p>
                         <p className={styles.hero__steps}>
-                            <b>Step 3: </b> create or upload your content
+                            <b>Step 3: </b> Create or upload your content
                             <br />
                             to take part in the prize draw!
+                        </p>
+                        <p className={styles.hero__text}>
+                            More likes - more chances to win!<br/> Make sure to share on all your social media channels.
                         </p>
                     </Box>
                     <Box className={styles.hero__btn__wrapper}>

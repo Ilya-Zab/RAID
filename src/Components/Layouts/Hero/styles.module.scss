@@ -7,7 +7,6 @@
 }
 
 .hero {
-	padding-top: 50px;
 	position: relative;
 
 	@media screen and (max-width: 768px) {
@@ -27,7 +26,14 @@
 			width: clamp(413px, 74vw, 533px);
 		}
 	}
-
+	&__text {
+		margin-top: 12px;
+		font-family: 'Inter', sans-serif;
+		font-weight: 300;
+		font-size: 16px;
+		line-height: 140%;
+		color: $white1;
+	}
 	&__title {
 		font-weight: 700;
 		font-size: clamp(16px, 9vw, 62px);
@@ -48,7 +54,7 @@
 	}
 
 	&__steps {
-		font-family: 'Inter-Light', sans-serif;
+		font-family: 'Inter', sans-serif;
 		font-weight: 300;
 		font-size: 16px;
 		line-height: 160%;
