@@ -70,8 +70,8 @@ const CreateVideo = () =>
         setVideoUrl(URL.createObjectURL(video));
         const frames = await extractAllFrames(video);
         setAllFrames(frames);
-        console.log(frames.test);
-        createWpMedia(frames.test[0]);
+        console.log(frames);
+        createWpMedia(frames[0].frameBlob);
         nextStep();
     }
 
@@ -131,7 +131,7 @@ const CreateVideo = () =>
             case 4:
                 return <CreativeSwiper data={allFrames} nextStep={nextStep} />
             case 5:
-                return <FinallyVideoTemplate video={video} creativeImage={allFrames[0]} />
+                return <FinallyVideoTemplate video={video} creativeImage={allFrames[0].frameUrl} />
             default:
                 return <CreateVideoTemplate handleButtonClick={nextStep} />;
         }

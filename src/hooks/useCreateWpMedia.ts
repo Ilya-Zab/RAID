@@ -6,7 +6,7 @@ export const useCreateWpMediaResult = z.object({
     isLoading: z.boolean(),
     data: z.any(),
     error: z.any(),
-    createWpMedia: z.function().args(z.string()).returns(z.promise(z.void()))
+    createWpMedia: z.function().args(z.instanceof(Blob)).returns(z.promise(z.void()))
 });
 // instanceof(Blob)
 
@@ -17,16 +17,15 @@ export function useCreateWpMedia(): useCreateWpMediaResult
     const [data, setData] = useState();
     const [error, setError] = useState();
     const [isLoading, setLoading] = useState(false);
-    async function createWpMedia(media: string)
+    async function createWpMedia(media: Blob)
     {
-        console.log('start');
         setLoading(true);
         const formData = new FormData();
         formData.append('media', media);
         try
         {
             const response = await axios({
-                url: '/api/wp/media',
+                url: '/api/media-uploader',
                 method: 'POST',
                 data: formData
             });

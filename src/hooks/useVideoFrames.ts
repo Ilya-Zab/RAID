@@ -2,14 +2,13 @@ import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { fetchFile } from "@ffmpeg/util";
 import { useEffect, useRef, useState } from "react";
 import { useAppDispatch } from "./redux";
-import { setFrames } from "@/store/slice/creativeSlice";
+import { framesType } from "@/types/slices/creativeSlice";
 
 export const useVideoFrames = () =>
 {
     const ffmpegRef = useRef<FFmpeg | null>(null);
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
     const [isLoading, setLoading] = useState<boolean>(false);
-    const dispatch = useAppDispatch();
     const [messages, setMessages] = useState<string[]>([]);
 
     useEffect(() =>
@@ -29,7 +28,7 @@ export const useVideoFrames = () =>
         load();
     }, []);
 
-    async function extractAllFrames(video: Blob): Promise<string[]>
+    async function extractAllFrames(video: Blob): Promise<framesType>
     {
         if (!video) return [];
 
@@ -52,7 +51,7 @@ export const useVideoFrames = () =>
             frameNamePattern
         ]);
 
-        const frames: string[] = [];
+        const frames: framesType = [];
 
         const test = [];
 
@@ -67,8 +66,10 @@ export const useVideoFrames = () =>
                 const data = await ffmpeg.readFile(frameFileName) as Uint8Array;
                 const frame = new Blob([data.buffer], { type: 'image/png' });
                 const blobUrl = URL.createObjectURL(frame);
-                frames.push(blobUrl);
-                test.push(frame);
+                frames.push({
+                    frameBlob: frame,
+                    frameUrl: blobUrl
+                });
                 frameIndex++;
             } catch (error)
             {
@@ -76,12 +77,8 @@ export const useVideoFrames = () =>
                 break;
             }
         }
-        dispatch(setFrames(frames));
         setLoading(false);
-        return {
-            "frames": frames,
-            "test": test
-        };
+        return frames;
     }
     return { extractAllFrames, isLoading };
 
