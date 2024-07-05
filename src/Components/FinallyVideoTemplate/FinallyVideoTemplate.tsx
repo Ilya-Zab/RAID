@@ -8,6 +8,7 @@ import { useAppSelector } from "@/hooks/redux";
 import { useRouter } from "next/router";
 import useCreateCreative from "@/hooks/useCreateCreative";
 import { FinallyVideoSend } from "./FinallyVideoSend";
+import { useCreateWpMedia } from "@/hooks/useCreateWpMedia";
 
 const FinallyVideoTemplate = ({ video, creativeImage }) =>
 {
@@ -16,6 +17,14 @@ const FinallyVideoTemplate = ({ video, creativeImage }) =>
     const router = useRouter();
     const { createCreativeAsBlob, success, data, error } = useCreateCreative();
     const [isCreating, setCreating] = React.useState(false);
+    const { isLoading: isMediaLoading, data: wpMediaResponse, error: wpMediaError, createWpMedia } = useCreateWpMedia();
+
+    React.useEffect(() =>
+    {
+        console.log(creativeImage);
+        // createWpMedia(creativeImage.frameBlob);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [creativeImage]);
 
     React.useEffect(() =>
     {
@@ -52,13 +61,13 @@ const FinallyVideoTemplate = ({ video, creativeImage }) =>
             <Box className={styles.container}>
                 <Box className={styles.section}>
                     <Box className={styles.section__photo}>
-                        <Image
+                        {/* <Image
                             src={creativeImage.frameUrl}
                             alt='User Photo'
                             width={136}
                             height={243}
                             className={styles.photo}
-                        />
+                        /> */}
                         <Typography variant='h1'>
                             UserName
                         </Typography>

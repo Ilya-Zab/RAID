@@ -12,7 +12,6 @@ import { useAppSelector } from "@/hooks/redux";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import CreativeSwiper from "@/Components/CreativeSwiper/CreativeSwiper";
-import { useCreateWpMedia } from "@/hooks/useCreateWpMedia";
 
 const CreateVideo = () =>
 {
@@ -28,17 +27,23 @@ const CreateVideo = () =>
     const [cookies] = useCookies(['userToken']);
     const router = useRouter();
 
-    const { isLoading: isMediaLoading, data, error, createWpMedia } = useCreateWpMedia();
-    const currentFrame = useAppSelector(state => state.creative.currentFrame);
+    // useEffect(() =>
+    // {
+    //     if (currentFrame && allFrames)
+    //     {
+    //         const result = allFrames.find(frame => frame.frameUrl === currentFrame);
+    //         console.log(allFrames);
+    //         setCurrentBlobFrame(result);
+    //     }
+    // }, [currentFrame]);
 
-    useEffect(() =>
+    const getCurrentFrame = (currentFrame: Blob) =>
     {
-        if (currentFrame && allFrames)
+        if (currentFrame)
         {
-            const result = allFrames.find(frame => frame.frameUrl === currentFrame);
-            setCurrentBlobFrame(result);
+            setCurrentBlobFrame(currentFrame);
         }
-    }, [currentFrame]);
+    }
 
 
 
@@ -82,23 +87,8 @@ const CreateVideo = () =>
         setVideoUrl(URL.createObjectURL(video));
         const frames = await extractAllFrames(video);
         setAllFrames(frames);
-        console.log(frames);
-        createWpMedia(frames[0].frameBlob);
         nextStep();
     }
-
-    useEffect(() =>
-    {
-        if (data)
-        {
-            console.log(data);
-        }
-
-        if (error)
-        {
-            console.log(error)
-        }
-    }, [data, error]);
 
     const CurrentTemplate = () =>
     {
@@ -141,7 +131,7 @@ const CreateVideo = () =>
                     </Box>
                 )
             case 4:
-                return <CreativeSwiper data={allFrames} nextStep={nextStep} />
+                return <CreativeSwiper data={allFrames} nextStep={nextStep} getCurrentFrame={getCurrentFrame} />
             case 5:
                 return <FinallyVideoTemplate video={video} creativeImage={currentBlobFrame && currentBlobFrame} />
             default:
