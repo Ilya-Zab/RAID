@@ -18,6 +18,15 @@ const FinallyVideoTemplate = ({ video, creativeImage }) =>
     const { createCreativeAsBlob, success, data, error } = useCreateCreative();
     const [isCreating, setCreating] = React.useState(false);
     const { isLoading: isMediaLoading, data: wpMediaResponse, error: wpMediaError, createWpMedia } = useCreateWpMedia();
+    const [imageId, setImageId] = React.useState();
+    React.useEffect(() =>
+    {
+        if (!raidId && !cookies.userToken)
+        {
+            router.push('/');
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [raidId, cookies]);
 
     React.useEffect(() =>
     {
@@ -27,9 +36,10 @@ const FinallyVideoTemplate = ({ video, creativeImage }) =>
 
     React.useEffect(() =>
     {
-        if (wpMediaResponse)
+        if (wpMediaResponse && "mediaItem" in wpMediaResponse)
         {
-            console.log(wpMediaResponse);
+            console.log(wpMediaResponse.mediaItem.id);
+            setImageId(wpMediaResponse.mediaItem.id);
         }
 
         if (wpMediaError)
@@ -37,15 +47,6 @@ const FinallyVideoTemplate = ({ video, creativeImage }) =>
             console.log(wpMediaError);
         }
     }, [wpMediaResponse, wpMediaError])
-
-    React.useEffect(() =>
-    {
-        if (!raidId && !cookies.userToken)
-        {
-            router.push('/');
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [raidId, cookies]);
 
     const createCreative = () =>
     {

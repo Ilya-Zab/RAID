@@ -28,8 +28,9 @@ const CreateVideo = () =>
     const raidId = useAppSelector(state => state.raidId.raidId);
     const [cookies] = useCookies(['userToken']);
     const router = useRouter();
-    const isCreating = useAppSelector(state => state.creative.isLoading);
+    const [wait, setWait] = useState(false);
     const dispatch = useAppDispatch();
+    const isCreating = useAppSelector(state => state.creative.isLoading);
 
     const getCurrentFrame = (currentFrame: Blob) =>
     {
@@ -75,7 +76,6 @@ const CreateVideo = () =>
 
     async function handleVideoReady(video: Blob)
     {
-        dispatch(setLoading(true));
         setVideo(video);
         setVideoUrl(URL.createObjectURL(video));
         const frames = await extractAllFrames(video);
@@ -145,13 +145,7 @@ const CreateVideo = () =>
                             #WeFinallyPlayedIt
                         </h1>
                         <Box className={styles.popup} id="pp">
-                            {
-                                isCreating
-                                    ?
-                                    <Loader className={styles.popup__loader} thickness={4} size={100} color="white" />
-                                    :
-                                    CurrentTemplate()
-                            }
+                            {CurrentTemplate()}
                             {
                                 (step > 1 && step < 5) &&
                                 <button onClick={() => prevStep()}
