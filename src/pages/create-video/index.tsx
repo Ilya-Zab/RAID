@@ -8,10 +8,11 @@ import Modal from "@/Components/Modal/Modal";
 import { downloadVideo } from "@/utils";
 import { useVideoFrames } from "@/hooks/useVideoFrames";
 import FinallyVideoTemplate from "@/Components/FinallyVideoTemplate/FinallyVideoTemplate";
-import { useAppSelector } from "@/hooks/redux";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import CreativeSwiper from "@/Components/CreativeSwiper/CreativeSwiper";
+import { setLoading } from "@/store/slice/creativeSlice";
 
 const CreateVideo = () =>
 {
@@ -26,16 +27,8 @@ const CreateVideo = () =>
     const raidId = useAppSelector(state => state.raidId.raidId);
     const [cookies] = useCookies(['userToken']);
     const router = useRouter();
-
-    // useEffect(() =>
-    // {
-    //     if (currentFrame && allFrames)
-    //     {
-    //         const result = allFrames.find(frame => frame.frameUrl === currentFrame);
-    //         console.log(allFrames);
-    //         setCurrentBlobFrame(result);
-    //     }
-    // }, [currentFrame]);
+    const isCreating = useAppSelector(state => state.creative.isLoading);
+    const dispatch = useAppDispatch();
 
     const getCurrentFrame = (currentFrame: Blob) =>
     {
@@ -45,8 +38,6 @@ const CreateVideo = () =>
         }
     }
 
-
-
     useEffect(() =>
     {
         if (!raidId && !cookies.userToken)
@@ -54,7 +45,7 @@ const CreateVideo = () =>
             router.push('/');
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [raidId, cookies])
+    }, [raidId, cookies]);
 
     // downloadVideo(video, "video.mp4");
 
@@ -83,12 +74,19 @@ const CreateVideo = () =>
 
     async function handleVideoReady(video: Blob)
     {
+        dispatch(setLoading(true));
         setVideo(video);
         setVideoUrl(URL.createObjectURL(video));
         const frames = await extractAllFrames(video);
         setAllFrames(frames);
         nextStep();
+        dispatch(setLoading(false));
     }
+
+    // if (isCreating)
+    // {
+    //     return <p>Loading...</p>
+    // }
 
     const CurrentTemplate = () =>
     {
@@ -152,7 +150,8 @@ const CreateVideo = () =>
                             #WeFinallyPlayedIt
                         </h1>
                         <Box className={styles.popup} id="pp">
-                            {CurrentTemplate()}
+                            {isCreating && <p>Loadgin...</p>}
+                            {!isCreating && CurrentTemplate()}
                             {
                                 (step > 1 && step < 5) &&
                                 <button onClick={() => prevStep()}

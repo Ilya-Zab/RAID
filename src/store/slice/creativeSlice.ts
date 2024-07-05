@@ -26,5 +26,5 @@ const creativeFramesSlice = createSlice({
     }
 })
 
-export const { setCreativeName } = creativeFramesSlice.actions;
+export const { setCreativeName, setLoading } = creativeFramesSlice.actions;
 export default creativeFramesSlice.reducer;
