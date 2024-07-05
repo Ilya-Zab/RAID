@@ -18,24 +18,16 @@ const ARScreenStyle = {
 const musicPath = "/audio/AR_CONTRAST.mp3";
 const effects: EffectItem[] = [
     {
-        name: "Aviators",
-        url: "https://cdn.jsdelivr.net/npm/deepar@5.6.5/effects/aviators"
+        name: "First part mask",
+        url: "effects/MASK_1.deepar"
     },
     {
-        name: "Dalmatian",
-        url: "https://cdn.jsdelivr.net/npm/deepar@5.6.5/effects/dalmatian"
+        name: "Second part mask #1",
+        url: "effects/MASK_2_(ORC+TATOO).deepar"
     },
     {
-        name: "Galaxy background",
-        url: "https://cdn.jsdelivr.net/npm/deepar@5.6.5/effects/galaxy_background"
-    },
-    {
-        name: "Koala",
-        url: "https://cdn.jsdelivr.net/npm/deepar@5.6.5/effects/koala"
-    },
-    {
-        name: "Lion",
-        url: "https://cdn.jsdelivr.net/npm/deepar@5.6.5/effects/lion"
+        name: "Second part mask #2",
+        url: "effects/MASK_3_(Skeleton+eyes).deepar"
     }
 ];
 
