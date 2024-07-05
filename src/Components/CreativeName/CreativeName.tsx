@@ -6,7 +6,7 @@ const CreativeName = ({nextStep}) =>{
     return (
         <Box>
             <Image
-                src={'./eqeq.png'}
+                src={'/images/user.png'}
                 alt={""}
                 width={340}
                 height={605}

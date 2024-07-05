@@ -14,15 +14,20 @@
 }
 
 .input {
+	position: absolute;
+	bottom: 108px;
+	left: 50%;
+	transform: translateX(-50%);
 	background-color: transparent;
-	border: 1px solid transparent;
-	border-bottom-color: red;
+	border: 3px solid transparent;
 	border-radius: 0;
 	outline: none;
 	margin-bottom: 24px;
 	font-family: 'Inter', sans-serif;
 	font-size: 18px;
 	font-weight: 700;
+	text-align: center;
+	padding: 6px 0;
 	@include text-gradient;
 	&::placeholder {
 		color: $white;
