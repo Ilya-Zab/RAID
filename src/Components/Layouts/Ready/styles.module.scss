@@ -16,7 +16,7 @@
 	&:after {
 		content: '';
 		position: absolute;
-		bottom: 0;
+		bottom: 68px;
 		left: 0;
 		z-index: 10;
 		display: block;
@@ -28,7 +28,7 @@
 	&__img {
 		position: absolute;
 		left: 0;
-		bottom: 0;
+		bottom: 68px;
 		z-index: 0;
 		width: clamp(248px, 80vw, 445px);
 		height: auto;
