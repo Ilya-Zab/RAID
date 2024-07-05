@@ -13,11 +13,16 @@ function DropZone() {
     });
 
     const files = acceptedFiles[0];
-    console.log(files, 'files');
     return (
         <Box {...getRootProps({className: 'dropzone'})}>
             <input {...getInputProps()} />
             <Box className={styles.icon}>
+                <Typography variant="h6" className={styles.text__sub}>
+                    Show how your life was divided into Before and After playing Raid!
+                </Typography>
+                <Typography variant="h6" className={styles.text__sub}>
+                    Create a photo/video using our filter or upload a ready-made one
+                </Typography>
                 <Typography variant="h6" className={styles.text}>
                     Upload
                 </Typography>

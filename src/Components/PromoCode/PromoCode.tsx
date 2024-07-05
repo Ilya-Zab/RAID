@@ -23,8 +23,7 @@ const PromoCode = () => {
             </h2>
            <Box className={styles.promo__wrapper}>
                <Link
-                   href={'#'}
-                   download
+                   href={'https://pl.go-ga.me/chnosnyx'}
                    className={`hexagon-button hexagon-button_gradient ${styles.promo__link}`}>
                    Download RAID
                </Link>
@@ -43,7 +42,7 @@ const PromoCode = () => {
                    </svg>
                </Box>
                <time className={styles.promo__data}>
-                   *available till JULY 31
+                   *available till AUGUST 31ST
                </time>
                <p className={styles.promo__text}>How to redeem the promo code</p>
            </Box>

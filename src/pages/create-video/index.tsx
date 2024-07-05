@@ -96,10 +96,19 @@ const CreateVideo = () =>
                         <div>
                             <h3 className={styles.modal__title}>Video Instruction</h3>
                             <div className={styles.modal__scrollbar}>
+                                <ul className={styles.modal__list}>
+                                    <li className={styles.modal__item}>
+                                        - Grant access to the camera
+                                    </li>
+                                    <li className={styles.modal__item}>
+                                        - Make sure you have the sound on your device turned on
+                                    </li>
+                                    <li className={styles.modal__item}>
+                                        - Record a video using our filter or take a photo
+                                    </li>
+                                </ul>
                                 <p className={styles.modal__text}>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores ea error
-                                    incidunt minus provident velit voluptas? Ab enim eveniet labore minus vero? A beatae
-                                    labore neque porro quas quis repellat.
+                                    Good luck, champion!
                                 </p>
                             </div>
                         </div>

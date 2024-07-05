@@ -12,7 +12,7 @@ export const FinallyVideoSend: FC<FinallyVideoSendProps> = ({ onButtonClick, isC
     return (
         <Box>
             <span className="info">
-                *It make take us up to 5 business days.
+                *It may take us up to 5 business days.
             </span>
             <Button
                 type="submit"
