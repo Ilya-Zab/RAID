@@ -10,7 +10,7 @@ import useCreateCreative from "@/hooks/useCreateCreative";
 import { FinallyVideoSend } from "./FinallyVideoSend";
 import { useCreateWpMedia } from "@/hooks/useCreateWpMedia";
 
-const FinallyVideoTemplate = ({ video, creativeImage }) =>
+const FinallyVideoTemplate = ({ video, creativeImage, userName }) =>
 {
     const [cookies] = useCookies(['userToken']);
     const raidId = useAppSelector(state => state.raidId.raidId);
@@ -82,7 +82,7 @@ const FinallyVideoTemplate = ({ video, creativeImage }) =>
                             className={styles.photo}
                         />
                         <Typography variant='h1'>
-                            UserName
+                            {userName}
                         </Typography>
                     </Box>
                     <Box className={styles.section__text}>

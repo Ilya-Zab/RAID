@@ -3,7 +3,7 @@ import CreateVideoTemplate from "@/Components/CreateVideoTemplate/CreateVideoTem
 import { useCallback, useEffect, useState } from "react";
 import CreativeRecorder from "@/Components/CreativeRecorder/CreativeRecorder";
 import styles from './styles.module.scss';
-import { Box, Button } from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
 import Modal from "@/Components/Modal/Modal";
 import { downloadVideo } from "@/utils";
 import { useVideoFrames } from "@/hooks/useVideoFrames";
@@ -14,6 +14,8 @@ import { useCookies } from "react-cookie";
 import CreativeSwiper from "@/Components/CreativeSwiper/CreativeSwiper";
 import { setLoading } from "@/store/slice/creativeSlice";
 import { Loader } from "@/Components/Layouts/Loader";
+import CreativeName from "@/Components/CreativeName/CreativeName";
+import ProgressBar from "@/Components/ProgressBar/ProgressBar";
 
 const CreateVideo = () =>
 {
@@ -96,10 +98,19 @@ const CreateVideo = () =>
                         <div>
                             <h3 className={styles.modal__title}>Video Instruction</h3>
                             <div className={styles.modal__scrollbar}>
+                                <ul className={styles.modal__list}>
+                                    <li className={styles.modal__item}>
+                                        - Grant access to the camera
+                                    </li>
+                                    <li className={styles.modal__item}>
+                                        - Make sure you have the sound on your device turned on
+                                    </li>
+                                    <li className={styles.modal__item}>
+                                        - Record a video using our filter or take a photo
+                                    </li>
+                                </ul>
                                 <p className={styles.modal__text}>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores ea error
-                                    incidunt minus provident velit voluptas? Ab enim eveniet labore minus vero? A beatae
-                                    labore neque porro quas quis repellat.
+                                    Good luck, champion!
                                 </p>
                             </div>
                         </div>
@@ -124,14 +135,16 @@ const CreateVideo = () =>
                     </Box>
                 )
             case 4:
-                return <CreativeSwiper data={allFrames} nextStep={nextStep} getCurrentFrame={getCurrentFrame} />
+                return <CreativeSwiper data={allFrames && allFrames} nextStep={nextStep} getCurrentFrame={getCurrentFrame} />
             case 5:
-                return <FinallyVideoTemplate video={video} creativeImage={currentBlobFrame && currentBlobFrame} />
+                return <CreativeName nextStep={nextStep} creativeImage={currentBlobFrame} />
+            case 6:
+                return <FinallyVideoTemplate video={video} userName={'fewfw'} creativeImage={currentBlobFrame} />
             default:
                 return <CreateVideoTemplate handleButtonClick={nextStep} />;
         }
     };
-
+    console.log(step, 'step')
     return (
         <>
             <Head>
@@ -141,6 +154,7 @@ const CreateVideo = () =>
             <main>
                 <Box className={styles.bg}>
                     <Box className='container container_createVideo'>
+                        {(step !== 0 && step !== 1) && <ProgressBar value={step} />}
                         <h1 className={`text-gradient ${styles.title}`}>
                             #WeFinallyPlayedIt
                         </h1>

@@ -182,6 +182,9 @@
 		font-size: 19px;
 		line-height: 114%;
 	}
+	&:disabled {
+		opacity: 0.6;
+	}
 }
 
 .container {

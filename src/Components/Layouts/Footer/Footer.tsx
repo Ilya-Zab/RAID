@@ -50,8 +50,7 @@ const Footer = () => {
                             <ul className={styles.list}>
                                 <li className={styles.list__item}>
                                     <Link
-                                        href={'#'}
-                                        download
+                                        href={'https://pl.go-ga.me/chnosnyx'}
                                         className={`hexagon-button hexagon-button_gradient ${styles.btn}`}>
                                         Download RAID
                                     </Link>

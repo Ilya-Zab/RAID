@@ -17,7 +17,7 @@
 		}
 	}
 	&__title {
-		font-size: clamp(39px, 9vw, 114px);
+		font-size: clamp(39px, 9vw, 84px);
 		font-weight: 800;
 		line-height: 100%;
 		color: $white;
@@ -25,7 +25,7 @@
 		z-index: 10;
 		&_wrapper {
 			margin-top: 320px;
-
+			margin-bottom: 50px;
 		}
 		& span {
 			text-transform: uppercase;
