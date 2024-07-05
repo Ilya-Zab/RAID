@@ -8,6 +8,8 @@ import 'swiper/css/free-mode';
 import 'swiper/css/thumbs';
 import { useState } from "react";
 import { styled } from '@mui/material/styles';
+import { useAppDispatch } from "@/hooks/redux";
+import { setCurrentFrame } from "@/store/slice/creativeSlice";
 
 const CustomSwiperNav = styled(Swiper)`
 	.swiper-slide-thumb-active img {
@@ -19,11 +21,13 @@ const CustomSwiperNav = styled(Swiper)`
 const CreativeSwiper = ({ data, nextStep }) =>
 {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
+    const dispatch = useAppDispatch();
 
     const handleSlideChange = (swiper) =>
     {
         const activeIndex = swiper.activeIndex;
         const activeFrame = data[activeIndex];
+        dispatch(setCurrentFrame(activeFrame.frameUrl));
     };
 
     return (

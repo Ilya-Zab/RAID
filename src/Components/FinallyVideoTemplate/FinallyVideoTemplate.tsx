@@ -53,7 +53,7 @@ const FinallyVideoTemplate = ({ video, creativeImage }) =>
                 <Box className={styles.section}>
                     <Box className={styles.section__photo}>
                         <Image
-                            src={creativeImage}
+                            src={creativeImage.frameUrl}
                             alt='User Photo'
                             width={136}
                             height={243}

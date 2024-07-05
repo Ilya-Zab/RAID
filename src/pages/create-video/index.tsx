@@ -1,6 +1,6 @@
 import Head from "next/head";
 import CreateVideoTemplate from "@/Components/CreateVideoTemplate/CreateVideoTemplate";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CreativeRecorder from "@/Components/CreativeRecorder/CreativeRecorder";
 import styles from './styles.module.scss';
 import { Box, Button } from "@mui/material";
@@ -18,6 +18,7 @@ const CreateVideo = () =>
 {
     const pageTitle = 'Create video';
     const [video, setVideo] = useState<Blob | null>(null);
+    const [currentBlobFrame, setCurrentBlobFrame] = useState<Blob | null>(null);
     const [step, setStep] = useState<number>(0);
     const [togglePopover, setTogglePopover] = useState(true);
     const { extractAllFrames, isLoading } = useVideoFrames();
@@ -28,6 +29,17 @@ const CreateVideo = () =>
     const router = useRouter();
 
     const { isLoading: isMediaLoading, data, error, createWpMedia } = useCreateWpMedia();
+    const currentFrame = useAppSelector(state => state.creative.currentFrame);
+
+    useEffect(() =>
+    {
+        if (currentFrame && allFrames)
+        {
+            const result = allFrames.find(frame => frame.frameUrl === currentFrame);
+            setCurrentBlobFrame(result);
+        }
+    }, [currentFrame]);
+
 
 
     useEffect(() =>
@@ -131,7 +143,7 @@ const CreateVideo = () =>
             case 4:
                 return <CreativeSwiper data={allFrames} nextStep={nextStep} />
             case 5:
-                return <FinallyVideoTemplate video={video} creativeImage={allFrames[0].frameUrl} />
+                return <FinallyVideoTemplate video={video} creativeImage={currentBlobFrame && currentBlobFrame} />
             default:
                 return <CreateVideoTemplate handleButtonClick={nextStep} />;
         }
