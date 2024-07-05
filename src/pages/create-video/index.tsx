@@ -14,6 +14,8 @@ import { useCookies } from "react-cookie";
 import CreativeSwiper from "@/Components/CreativeSwiper/CreativeSwiper";
 import { setLoading } from "@/store/slice/creativeSlice";
 import { Loader } from "@/Components/Layouts/Loader";
+import CreativeName from "@/Components/CreativeName/CreativeName";
+import ProgressBar from "@/Components/ProgressBar/ProgressBar";
 
 const CreateVideo = () =>
 {
@@ -109,29 +111,29 @@ const CreateVideo = () =>
                 return <CreativeRecorder onContinueClick={handleContinueClick} onVideoRecorded={handleVideoReady} />;
             case 3:
                 return (
-                    <Box>
-                        <video
-                            autoPlay
-                            loop
-                            muted
-                            className={styles.video}
-                        >
-                            <source
-                                src={videoUrl}
-                                type="video/mp4"
-                            />
-                        </video>
-                    </Box>
+                    <video
+                        autoPlay
+                        loop
+                        muted
+                        className={styles.video}
+                    >
+                        <source
+                            src={videoUrl}
+                            type="video/mp4"
+                        />
+                    </video>
                 )
             case 4:
                 return <CreativeSwiper data={allFrames} nextStep={nextStep} getCurrentFrame={getCurrentFrame} />
             case 5:
-                return <FinallyVideoTemplate video={video} creativeImage={currentBlobFrame && currentBlobFrame} />
+                return <CreativeName nextStep={nextStep} creativeImage={currentBlobFrame && currentBlobFrame}  />
+            case 6:
+                return <FinallyVideoTemplate video={video} userName={'fewfw'} creativeImage={currentBlobFrame && currentBlobFrame} />
             default:
                 return <CreateVideoTemplate handleButtonClick={nextStep} />;
         }
     };
-
+    console.log(step,'step')
     return (
         <>
             <Head>
@@ -141,6 +143,7 @@ const CreateVideo = () =>
             <main>
                 <Box className={styles.bg}>
                     <Box className='container container_createVideo'>
+                        {(step !== 0 && step !== 1) && <ProgressBar value={step} />}
                         <h1 className={`text-gradient ${styles.title}`}>
                             #WeFinallyPlayedIt
                         </h1>

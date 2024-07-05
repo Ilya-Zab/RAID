@@ -16,7 +16,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     },
 }));
 const ProgressBar = ({value}) => {
-    const normalizedValue = Math.min(value, 6) / 6 * 100;
+    const normalizedValue = ((value - 2) / 4) * 100;
     return (
         <Box className={styles.wrapper}>
             <BorderLinearProgress variant="determinate" value={normalizedValue} />
@@ -24,7 +24,7 @@ const ProgressBar = ({value}) => {
     )
 }
 ProgressBar.defaultProps  = {
-    value: 0,
+    value: 2,
 }
 
 export default ProgressBar;
