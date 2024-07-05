@@ -60,9 +60,9 @@ const Second = () => {
                     <h2 className={styles.second__title}>
                         Many have<br/>
                         entered the contest.<br/>
-                        Check how<br/> they played,<br/>
-                        get inspired,<br/>
-                        or vote for your<br/>
+                        Check how they played,<br/>
+                        get inspired,
+                        or vote <br/>for your
                         favorites!
                     </h2>
                 </Box>
