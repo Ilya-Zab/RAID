@@ -1,0 +1,60 @@
+@import '@/styles/variables.module';
+@import "@/styles/text-gradient";
+
+.wrapper {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	&:after {
+		content: '';
+		width: 100%;
+		height: 100%;
+		display: block;
+		background-color: rgba(0, 0, 0, 0.3);
+		position: absolute;
+		top: 0;
+		left: 0;
+		border-radius: 4px;
+	}
+}
+
+.img {
+	width: 100%;
+	height: 100%;
+	border-radius: 4px;
+}
+
+.form {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	z-index: 10;
+	width: 100%;
+}
+
+.input {
+	position: absolute;
+	bottom: 108px;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: transparent;
+	border: 3px solid transparent;
+	border-radius: 0;
+	outline: none;
+	margin-bottom: 24px;
+	font-family: 'Inter', sans-serif;
+	font-size: 18px;
+	font-weight: 700;
+	text-align: center;
+	padding: 6px 0;
+	@include text-gradient;
+	&::placeholder {
+		color: $white;
+		font-family: 'Inter', sans-serif;
+		font-size: 18px;
+		font-weight: 700;
+	}
+	&:focus {
+		border-bottom-color: red;
+	}
+}
