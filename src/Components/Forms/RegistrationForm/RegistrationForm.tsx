@@ -79,7 +79,7 @@ export const RegistrationForm: FC<RegistrationFormProps> = ({ onSendForm, isCrea
                 className={styles.form__input}
             />
             <span className={`info ${styles.form__link} ${styles.form__link_regis}`}>
-                *It make take us up to 5 business days.
+                *It may take us up to 5 business days.
             </span>
             <Button
                 type="submit"

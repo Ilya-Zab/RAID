@@ -22,6 +22,9 @@ const data = [
     }, {
         title: 'Email Us',
         url: 'mailto:support@wefinallyplayedit.com',
+    }, {
+        title: 'Materials',
+        url: '/materials',
     }
 ];
 
