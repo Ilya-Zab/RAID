@@ -21,10 +21,22 @@ const FinallyVideoTemplate = ({ video, creativeImage }) =>
 
     React.useEffect(() =>
     {
-        console.log(creativeImage);
-        // createWpMedia(creativeImage.frameBlob);
+        createWpMedia(creativeImage.frameBlob);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [creativeImage]);
+
+    React.useEffect(() =>
+    {
+        if (wpMediaResponse)
+        {
+            console.log(wpMediaResponse);
+        }
+
+        if (wpMediaError)
+        {
+            console.log(wpMediaError);
+        }
+    }, [wpMediaResponse, wpMediaError])
 
     React.useEffect(() =>
     {
@@ -61,13 +73,13 @@ const FinallyVideoTemplate = ({ video, creativeImage }) =>
             <Box className={styles.container}>
                 <Box className={styles.section}>
                     <Box className={styles.section__photo}>
-                        {/* <Image
+                        <Image
                             src={creativeImage.frameUrl}
                             alt='User Photo'
                             width={136}
                             height={243}
                             className={styles.photo}
-                        /> */}
+                        />
                         <Typography variant='h1'>
                             UserName
                         </Typography>

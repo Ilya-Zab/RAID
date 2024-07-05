@@ -55,6 +55,10 @@
 	background-size: 100% 100%;
 	border: 1px solid transparent;
 	border-radius: 4px;
+
+	&__loader {
+		align-items: center;
+	}
 }
 
 .modal__title {
@@ -89,18 +93,22 @@
 	background: #f1f1f1;
 	border-radius: 2px;
 	width: 4px;
-	height: 4px; /* width of the entire scrollbar */
+	height: 4px;
+	/* width of the entire scrollbar */
 }
 
 .modal__scrollbar::-webkit-scrollbar-track {
-	background: rgba(255, 255, 255, 0); /* color of the tracking area */
+	background: rgba(255, 255, 255, 0);
+	/* color of the tracking area */
 }
 
 .modal__scrollbar::-webkit-scrollbar-thumb {
-	background: rgba(255, 255, 255, 0);;
+	background: rgba(255, 255, 255, 0);
+	;
 	border-radius: 2px;
 	height: 4px;
 }
+
 .button {
 	padding: 0;
 	background: transparent;
@@ -110,6 +118,7 @@
 	outline: none;
 	position: absolute;
 	z-index: 10;
+
 	&-prev {
 		width: 40px;
 		height: 40px;
@@ -117,6 +126,7 @@
 		left: 20px;
 	}
 }
+
 .video {
 	width: 100%;
 	border-radius: 4px;
