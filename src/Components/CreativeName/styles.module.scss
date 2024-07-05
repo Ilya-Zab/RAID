@@ -1,0 +1,36 @@
+@import '@/styles/variables.module';
+@import "@/styles/text-gradient";
+
+.img {
+	width: 100%;
+	height: 100%;
+}
+
+.form {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+}
+
+.input {
+	background-color: transparent;
+	border: 1px solid transparent;
+	border-bottom-color: red;
+	border-radius: 0;
+	outline: none;
+	margin-bottom: 24px;
+	font-family: 'Inter', sans-serif;
+	font-size: 18px;
+	font-weight: 700;
+	@include text-gradient;
+	&::placeholder {
+		color: $white;
+		font-family: 'Inter', sans-serif;
+		font-size: 18px;
+		font-weight: 700;
+	}
+	&:focus {
+		border-bottom-color: red;
+	}
+}
