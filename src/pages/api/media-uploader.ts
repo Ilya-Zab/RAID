@@ -79,7 +79,17 @@ async function handlePostingAsFile(req: NextApiRequest, res: NextApiResponse, us
         unlinkSync(mediaFile.filepath);
         console.log('Second Result:', videoBuffer);
 
-        const mediaItem = await uploadMediaAsBuffer(videoBuffer, userToken);
+        try
+        {
+            const mediaItem = await uploadMediaAsBuffer(videoBuffer, userToken);
+            return res.status(200).json({ message: "File uploaded successfully", mediaItem });
+        } catch (uploadError)
+        {
+            console.error("Error uploading media buffer", uploadError);
+            return res.status(500).json({ message: "Error uploading media buffer", error: uploadError });
+        }
+
+        // const mediaItem = await uploadMediaAsBuffer(videoBuffer, userToken);
         // await registerUserCreative(videoItem.id, videoItem.author, res);
     });
 
@@ -87,25 +97,25 @@ async function handlePostingAsFile(req: NextApiRequest, res: NextApiResponse, us
 }
 
 // registrate video as a creative of the specified user using custom WordPress API.
-async function registerUserCreative(videoId: number, authorId: number, res: NextApiResponse): Promise<void>
-{
-    const requestBody = {
-        title: "By json 3",
-        author: authorId,
-        status: "pending",
-        "meta": {
-            featured_media: videoId
-        }
-    };
+// async function registerUserCreative(videoId: number, authorId: number, res: NextApiResponse): Promise<void>
+// {
+//     const requestBody = {
+//         title: "By json 3",
+//         author: authorId,
+//         status: "pending",
+//         "meta": {
+//             featured_media: videoId
+//         }
+//     };
 
-    await wpRestApi.post("creative", requestBody)
-        .then(response =>
-        {
-            res.status(200).json(response.data);
-        })
-        .catch(err =>
-        {
-            console.error("Error while registration video as a user creative.", err);
-            res.status(500).json({ message: "Error while registration video as a user creative.", error: err });
-        });
-}   
+//     await wpRestApi.post("creative", requestBody)
+//         .then(response =>
+//         {
+//             res.status(200).json(response.data);
+//         })
+//         .catch(err =>
+//         {
+//             console.error("Error while registration video as a user creative.", err);
+//             res.status(500).json({ message: "Error while registration video as a user creative.", error: err });
+//         });
+// }   
