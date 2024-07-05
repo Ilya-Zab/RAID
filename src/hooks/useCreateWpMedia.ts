@@ -8,6 +8,7 @@ export const useCreateWpMediaResult = z.object({
     error: z.any(),
     createWpMedia: z.function().args(z.instanceof(Blob)).returns(z.promise(z.void()))
 });
+// instanceof(Blob)
 
 export type useCreateWpMediaResult = z.infer<typeof useCreateWpMediaResult>
 
@@ -24,7 +25,7 @@ export function useCreateWpMedia(): useCreateWpMediaResult
         try
         {
             const response = await axios({
-                url: '/api/wp',
+                url: '/api/media-uploader',
                 method: 'POST',
                 data: formData
             });

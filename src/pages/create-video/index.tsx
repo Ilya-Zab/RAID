@@ -1,23 +1,24 @@
 import Head from "next/head";
 import CreateVideoTemplate from "@/Components/CreateVideoTemplate/CreateVideoTemplate";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CreativeRecorder from "@/Components/CreativeRecorder/CreativeRecorder";
 import styles from './styles.module.scss';
 import { Box, Button } from "@mui/material";
 import Modal from "@/Components/Modal/Modal";
 import { downloadVideo } from "@/utils";
 import { useVideoFrames } from "@/hooks/useVideoFrames";
-import Image from "next/image";
 import FinallyVideoTemplate from "@/Components/FinallyVideoTemplate/FinallyVideoTemplate";
 import { useAppSelector } from "@/hooks/redux";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import CreativeSwiper from "@/Components/CreativeSwiper/CreativeSwiper";
+import { useCreateWpMedia } from "@/hooks/useCreateWpMedia";
 
 const CreateVideo = () =>
 {
     const pageTitle = 'Create video';
     const [video, setVideo] = useState<Blob | null>(null);
+    const [currentBlobFrame, setCurrentBlobFrame] = useState<Blob | null>(null);
     const [step, setStep] = useState<number>(0);
     const [togglePopover, setTogglePopover] = useState(true);
     const { extractAllFrames, isLoading } = useVideoFrames();
@@ -26,6 +27,21 @@ const CreateVideo = () =>
     const raidId = useAppSelector(state => state.raidId.raidId);
     const [cookies] = useCookies(['userToken']);
     const router = useRouter();
+
+    const { isLoading: isMediaLoading, data, error, createWpMedia } = useCreateWpMedia();
+    const currentFrame = useAppSelector(state => state.creative.currentFrame);
+
+    useEffect(() =>
+    {
+        if (currentFrame && allFrames)
+        {
+            const result = allFrames.find(frame => frame.frameUrl === currentFrame);
+            setCurrentBlobFrame(result);
+        }
+    }, [currentFrame]);
+
+
+
     useEffect(() =>
     {
         if (!raidId && !cookies.userToken)
@@ -35,14 +51,7 @@ const CreateVideo = () =>
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [raidId, cookies])
 
-    // useEffect(() =>
-    // {
-    //     if (!video) return;
-    //     downloadVideo(video, "video.mp4");
-    //     createCreativeAsBlob(video);
-    //     return;
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [video]);
+    // downloadVideo(video, "video.mp4");
 
     function handleContinueClick(video: Blob)
     {
@@ -73,8 +82,23 @@ const CreateVideo = () =>
         setVideoUrl(URL.createObjectURL(video));
         const frames = await extractAllFrames(video);
         setAllFrames(frames);
+        console.log(frames);
+        createWpMedia(frames[0].frameBlob);
         nextStep();
     }
+
+    useEffect(() =>
+    {
+        if (data)
+        {
+            console.log(data);
+        }
+
+        if (error)
+        {
+            console.log(error)
+        }
+    }, [data, error]);
 
     const CurrentTemplate = () =>
     {
@@ -119,7 +143,7 @@ const CreateVideo = () =>
             case 4:
                 return <CreativeSwiper data={allFrames} nextStep={nextStep} />
             case 5:
-                return <FinallyVideoTemplate video={video} creativeImage={allFrames[0]} />
+                return <FinallyVideoTemplate video={video} creativeImage={currentBlobFrame && currentBlobFrame} />
             default:
                 return <CreateVideoTemplate handleButtonClick={nextStep} />;
         }
