@@ -7,12 +7,12 @@ import { Box, Button } from "@mui/material";
 import Modal from "@/Components/Modal/Modal";
 import { downloadVideo } from "@/utils";
 import { useVideoFrames } from "@/hooks/useVideoFrames";
-import Image from "next/image";
 import FinallyVideoTemplate from "@/Components/FinallyVideoTemplate/FinallyVideoTemplate";
 import { useAppSelector } from "@/hooks/redux";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import CreativeSwiper from "@/Components/CreativeSwiper/CreativeSwiper";
+import { useCreateWpMedia } from "@/hooks/useCreateWpMedia";
 
 const CreateVideo = () =>
 {
@@ -26,6 +26,10 @@ const CreateVideo = () =>
     const raidId = useAppSelector(state => state.raidId.raidId);
     const [cookies] = useCookies(['userToken']);
     const router = useRouter();
+
+    const { isLoading: isMediaLoading, data, error, createWpMedia } = useCreateWpMedia();
+
+
     useEffect(() =>
     {
         if (!raidId && !cookies.userToken)
@@ -35,14 +39,7 @@ const CreateVideo = () =>
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [raidId, cookies])
 
-    // useEffect(() =>
-    // {
-    //     if (!video) return;
-    //     downloadVideo(video, "video.mp4");
-    //     createCreativeAsBlob(video);
-    //     return;
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [video]);
+    // downloadVideo(video, "video.mp4");
 
     function handleContinueClick(video: Blob)
     {
@@ -73,8 +70,23 @@ const CreateVideo = () =>
         setVideoUrl(URL.createObjectURL(video));
         const frames = await extractAllFrames(video);
         setAllFrames(frames);
+        console.log(frames.test);
+        createWpMedia(frames.test[0]);
         nextStep();
     }
+
+    useEffect(() =>
+    {
+        if (data)
+        {
+            console.log(data);
+        }
+
+        if (error)
+        {
+            console.log(error)
+        }
+    }, [data, error]);
 
     const CurrentTemplate = () =>
     {

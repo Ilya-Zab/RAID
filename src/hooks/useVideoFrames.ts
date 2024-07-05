@@ -53,6 +53,10 @@ export const useVideoFrames = () =>
         ]);
 
         const frames: string[] = [];
+
+        const test = [];
+
+
         let frameIndex = 1;
 
         while (true)
@@ -64,6 +68,7 @@ export const useVideoFrames = () =>
                 const frame = new Blob([data.buffer], { type: 'image/png' });
                 const blobUrl = URL.createObjectURL(frame);
                 frames.push(blobUrl);
+                test.push(frame);
                 frameIndex++;
             } catch (error)
             {
@@ -73,7 +78,10 @@ export const useVideoFrames = () =>
         }
         dispatch(setFrames(frames));
         setLoading(false);
-        return frames;
+        return {
+            "frames": frames,
+            "test": test
+        };
     }
     return { extractAllFrames, isLoading };
 
