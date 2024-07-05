@@ -2,25 +2,23 @@
 @import "@/styles/text-gradient";
 
 .wrapper {
-	padding: 0 15px;
+	padding: 50px 15px 0;
 	position: relative;
 }
 
 .hero {
-	padding-top: 50px;
 	position: relative;
 
 	@media screen and (max-width: 768px) {
-		padding-top: 37px;
+		margin-top: 37px;
 	}
 
 	&__img {
 		position: absolute;
 		bottom: -86px;
 		right: -127px;
-		width: clamp(533px, 57vw, 733px);
+		width: clamp(533px,57vw, 733px);
 		height: auto;
-
 		@media screen and (max-width: 768px) {
 			bottom: 0;
 			right: 0;
@@ -28,7 +26,14 @@
 			width: clamp(413px, 74vw, 533px);
 		}
 	}
-
+	&__text {
+		margin-top: 12px;
+		font-family: 'Inter', sans-serif;
+		font-weight: 300;
+		font-size: 16px;
+		line-height: 140%;
+		color: $white1;
+	}
 	&__title {
 		font-weight: 700;
 		font-size: clamp(16px, 9vw, 62px);
@@ -67,7 +72,7 @@
 
 			@media screen and (max-width: 768px) {
 				padding: 14px 12px 16px;
-				margin-bottom: 250px;
+				 margin-bottom: 150px;
 			}
 
 			&:before {
@@ -87,7 +92,7 @@
 		}
 
 		& a {
-			font-family: 'Inter', sans-serif;
+			font-family: 'Inter-Light', sans-serif;
 			font-weight: 300;
 			position: relative;
 
@@ -138,13 +143,11 @@
 			position: relative;
 			z-index: 10;
 			margin-left: -53px;
-
 			@media screen and (max-width: 1220px) {
 				margin-left: 0;
 			}
-
 			@media screen and (max-width: 768px) {
-				margin-top: 240px;
+				margin-top: 340px;
 			}
 		}
 	}

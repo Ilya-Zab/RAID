@@ -9,7 +9,6 @@
         margin-bottom: 5px;
         font-size: 36px;
         font-weight: 700;
-        text-transform: uppercase;
         text-align: center;
         color: $white1;
     }
@@ -35,10 +34,6 @@
 
     &__link {
         margin-bottom: 15px;
-        display: block;
-        text-align: center;
-        font-size: 14px;
-        color: $grey2;
 
         &_regis {
             margin-bottom: 25px;

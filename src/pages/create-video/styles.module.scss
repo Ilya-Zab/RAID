@@ -35,6 +35,7 @@
 	margin: 29px auto 0;
 	max-width: 280px;
 	width: 100%;
+	font-family: inherit;
 	font-weight: 700;
 	font-size: 24px;
 	line-height: 24px;
@@ -48,8 +49,97 @@
 	margin-top: 20px;
 	width: 340px;
 	height: 100vh;
-	max-height: 600px;
+	max-height: 605px;
 	background: $bg1;
 	background-image: url('/images/CreateModalGradientpng.png');
 	background-size: 100% 100%;
+	border: 1px solid transparent;
+	border-radius: 4px;
+
+	&__loader {
+		align-items: center;
+	}
+}
+
+.modal__title {
+	font-family: inherit;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 100%;
+	text-align: center;
+	color: #fff;
+	margin-bottom: 14px;
+}
+.modal__list {
+	margin-bottom: 20px;
+}
+.modal__item {
+	font-family: inherit;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 120%;
+	text-align: left;
+	color: #fff;
+	margin-bottom: 8px;
+}
+.modal__text {
+	font-family: inherit;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 120%;
+	text-align: left;
+	color: #fff;
+}
+
+.modal__scrollbar {
+	max-height: 320px;
+	overflow-y: auto;
+	padding: 8px;
+	scrollbar-width: thin;
+	scrollbar-color: #f1f1f1 rgba(255, 255, 255, 0);
+}
+
+/* Chrome, Edge, and Safari */
+.modal__scrollbar::-webkit-scrollbar {
+	background: #f1f1f1;
+	border-radius: 2px;
+	width: 4px;
+	height: 4px;
+	/* width of the entire scrollbar */
+}
+
+.modal__scrollbar::-webkit-scrollbar-track {
+	background: rgba(255, 255, 255, 0);
+	/* color of the tracking area */
+}
+
+.modal__scrollbar::-webkit-scrollbar-thumb {
+	background: rgba(255, 255, 255, 0);
+	;
+	border-radius: 2px;
+	height: 4px;
+}
+
+.button {
+	padding: 0;
+	background: transparent;
+	border-radius: 50%;
+	cursor: pointer;
+	border: none;
+	outline: none;
+	position: absolute;
+	z-index: 10;
+
+	&-prev {
+		width: 40px;
+		height: 40px;
+		top: 20px;
+		left: 20px;
+	}
+}
+
+.video {
+	width: 100%;
+	height: 100%;
+	border-radius: 4px;
 }

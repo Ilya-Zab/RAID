@@ -6,8 +6,11 @@
 
 .icon {
 	margin: 0 auto;
-	padding: 125px 0 26px;
+	padding: 45px 0 26px;
 	width: fit-content;
+	& .text__sub {
+		margin-bottom: 30px;
+	}
 }
 
 .text {

@@ -41,39 +41,45 @@ export const LoginForm: FC = () =>
 
     const [fetchUserToken] = useFetchUserTokenMutation();
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [cookies, setCookie] = useCookies(['userToken']);
+    const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
     const dispatch = useAppDispatch();
     const router = useRouter();
 
     const onSubmit = async ({ raidId }: CheckUserId) =>
     {
         const transformedId = transformRaidId(raidId);
-        console.log(transformedId);
         try
         {
+            setIsSubmitting(true);
             const userToken = await fetchUserToken({ username: transformedId, password: transformedId }).unwrap();
 
             if (userToken)
             {
-                const tomorrow = new Date();
-                tomorrow.setDate(tomorrow.getDate() + 1);
-                setCookie('userToken', userToken.token, { path: '/', expires: tomorrow });
+                const expiresDate = new Date();
+                expiresDate.setTime(expiresDate.getTime() + (7 * 24 * 60 * 60 * 1000));
+                setCookie('userToken', userToken.token, { path: '/', expires: expiresDate });
             }
         } catch (error)
         {
+            removeCookie('userToken', { path: '/' });
             dispatch(setRaidId(transformRaidId(raidId)));
         } finally
         {
             reset();
             router.push('/gallery');
+            setIsSubmitting(false);
         }
     };
 
     return (
         <Box className="subtract-box subtract-box_small">
-            <h2 className={styles.form__title}>30 days of raid</h2>
+            <h2 className={styles.form__title}>
+                <span className='text-gradient'>
+                    #WeFinallyPlayedIt
+                </span>
+            </h2>
             <h3 className={styles.form__subTitle}>with RAID: Shadow Legends</h3>
-            <h3 className={styles.form__desc}>Need description here about event!</h3>
+            <h3 className={styles.form__desc}>Submit your content, get votes and win gaming consoles, drones, and more exciting prizes</h3>
             <h3 className={`${styles.form__desc} ${styles.form__desc_zeroM}`}>
                 Please enter your RAID PLAYER ID to continue:
             </h3>
@@ -88,7 +94,7 @@ export const LoginForm: FC = () =>
                     className={`${styles.form__input}`}
                 />
                 <Link
-                    className={styles.form__link}
+                    className={`info ${styles.form__link}`}
                     href={"/"}>
                     Where can I find my RAID ID?
                 </Link>

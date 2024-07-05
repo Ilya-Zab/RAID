@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useEffect } from "react";
+import React, { FC, ReactNode, useEffect, useState } from "react";
 import { useLazyFetchAllCreativesByDataQuery } from "@/store/wordpress/wpRestApi";
 import CreativesListItem from "../CreativesListItem";
 import { CreativeDataType } from "@/types/components/Creative";
@@ -7,7 +7,6 @@ import { useCookies } from "react-cookie";
 import { useFetchUpdateVoteVideoMutation, useLazyFetchAllCreativesByVotesQuery } from "@/store/wordpress/wpRestCustomApi";
 import CreativesListItemSkeleton from "../CreativesListItem/CreativesListItemSkeleton";
 import LoadMore from "../LoadMore";
-import variables from "@/styles/variables.module.scss";
 import { useMediaQuery } from "@mui/material";
 
 interface CreativesListPropsType {
@@ -22,8 +21,9 @@ const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes 
     const [fetchUserData, { data: userData }] = useLazyFetchUserDataQuery();
     const [updateVoteVideo] = useFetchUpdateVoteVideoMutation();
     const [fetchCreativesByVotes, { data: creativesByVotes = [] }] = useLazyFetchAllCreativesByVotesQuery();
-    const [fetchCreativesByDate, { data: creativesByDate = [] }] = useLazyFetchAllCreativesByDataQuery();
+    const [fetchCreativesByDate, { data: creativesByDate = [], isFetching }] = useLazyFetchAllCreativesByDataQuery();
     const isMobile = useMediaQuery(`(max-width: 800px)`);
+    const [creativesPerPage, setCreativesPerPage] = useState(perPage);
 
     const creatives = orderByVotes ? creativesByVotes : creativesByDate;
 
@@ -33,16 +33,13 @@ const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes 
         }
 
         orderByVotes ?
-            fetchCreativesByVotes({ per_page: perPage, offset: 0 }) :
-            fetchCreativesByDate({ per_page: perPage, offset: 0 });
-    }, [
-        fetchCreativesByDate,
-        fetchCreativesByVotes,
-        fetchUserData,
-        orderByVotes,
-        perPage,
-        userToken
-    ]);
+            fetchCreativesByVotes({ per_page: creativesPerPage, offset: 0 }) :
+            fetchCreativesByDate({ per_page: creativesPerPage, offset: 0 });
+    }, [userToken, creativesPerPage, orderByVotes, , fetchCreativesByDate, fetchUserData]);
+
+    const loadMore = () => {
+        setCreativesPerPage(100)
+    }
 
     const checkUserHasVoted = (creativeId) => {
         if (userData !== undefined) {
@@ -52,7 +49,12 @@ const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes 
 
     const onVote = (creativeId: number) => {
         if (userData === undefined) return false;
+        if (userData.meta.votes_available === "0") {
+            alert('You have no votes available.');
+            return false;
+        }
         updateVoteVideo({ user_id: userData.id, creative_id: creativeId });
+        return true;
     }
 
     const renderListItems = () => {
@@ -63,7 +65,7 @@ const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes 
 
     const renderSkeleton = () => {
         const skeletonItems = [];
-        for (let i = 0; i < perPage; i++) skeletonItems.push(
+        for (let i = 0; i < creativesPerPage; i++) skeletonItems.push(
             <CreativesListItemSkeleton key={i} />
         )
         return skeletonItems;
@@ -74,13 +76,13 @@ const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes 
             <div className="container container_creatives">
                 <div className="creatives-list-grid">
                     {firstItem && firstItem}
-                    {Boolean(creatives.length) ? renderListItems() : renderSkeleton()}
+                    {(Boolean(creatives.length) && !isFetching) ? renderListItems() : renderSkeleton()}
                 </div>
             </div>
 
-            {!limited &&
+            {(!limited && creativesPerPage < 100) &&
                 <div className={!isMobile && 'container'}>
-                    <LoadMore />
+                    <LoadMore onClick={loadMore} />
                 </div>
             }
         </>

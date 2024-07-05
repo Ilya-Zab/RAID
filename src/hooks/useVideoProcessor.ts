@@ -1,5 +1,5 @@
 import { FFmpeg } from "@ffmpeg/ffmpeg";
-import { fetchFile, toBlobURL } from "@ffmpeg/util";
+import { fetchFile } from "@ffmpeg/util";
 import { useEffect, useRef, useState } from "react";
 
 export type UseVideoProcessorResult = {
@@ -7,8 +7,6 @@ export type UseVideoProcessorResult = {
     isLoaded: boolean,
     messages: string[],
     output: Blob | null,
-    extractFirstFrame: (video: Blob) => Promise<void>,
-    firstFrame: Blob | null
 };
 
 export default function useVideoProcessor(): UseVideoProcessorResult
@@ -17,7 +15,6 @@ export default function useVideoProcessor(): UseVideoProcessorResult
     const [messages, setMessages] = useState<string[]>([]);
     const [output, setOutput] = useState<Blob | null>(null);
     const ffmpegRef = useRef<FFmpeg | null>(null);
-    const [firstFrame, setFirstFrame] = useState<Blob | null>(null);
 
     useEffect(() =>
     {
@@ -70,30 +67,5 @@ export default function useVideoProcessor(): UseVideoProcessorResult
         setOutput(output);
     }
 
-    async function extractFirstFrame(video: Blob): Promise<void>
-    {
-        if (!video) return;
-
-        const videoName = "video.mp4";
-        const frameName = "frame.png";
-        const ffmpeg = ffmpegRef.current;
-
-        if (!ffmpeg)
-            throw new Error("FFmpeg is not initialized.");
-
-        await ffmpeg.writeFile(videoName, await fetchFile(video));
-        await ffmpeg.exec([
-            "-i", videoName,
-            "-vf", "thumbnail,scale=320:240",
-            "-frames:v", "1",
-            frameName
-        ]);
-
-        const data = await ffmpeg.readFile(frameName) as Uint8Array;
-        const frame = new Blob([data.buffer], { type: 'image/png' });
-
-        setFirstFrame(frame);
-    }
-
-    return { mergeVideoAndAudio, messages, isLoaded, output, extractFirstFrame, firstFrame };
+    return { mergeVideoAndAudio, messages, isLoaded, output };
 }

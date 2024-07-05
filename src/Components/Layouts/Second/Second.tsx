@@ -58,14 +58,12 @@ const Second = () => {
             <Box className={'container'}>
                 <Box className={styles.second__title_wrapper}>
                     <h2 className={styles.second__title}>
-                        Many are <br />
-                        already a part <br />
-                        of the contest. <br />
-                        Check how <br />
-                        they played,<br />
-                        get inspired<br />
-                        and
-                        <span className='text-gradient'> JOIN US</span>
+                        Many have<br/>
+                        entered the contest.<br/>
+                        Check how they played,<br/>
+                        get inspired,
+                        or vote <br/>for your
+                        favorites!
                     </h2>
                 </Box>
             </Box>
