@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import CreativeSwiper from "@/Components/CreativeSwiper/CreativeSwiper";
 import { setLoading } from "@/store/slice/creativeSlice";
+import { Loader } from "@/Components/Layouts/Loader";
 
 const CreateVideo = () =>
 {
@@ -83,11 +84,6 @@ const CreateVideo = () =>
         dispatch(setLoading(false));
     }
 
-    // if (isCreating)
-    // {
-    //     return <p>Loading...</p>
-    // }
-
     const CurrentTemplate = () =>
     {
         switch (step)
@@ -118,7 +114,6 @@ const CreateVideo = () =>
                             autoPlay
                             loop
                             muted
-                            // poster="https://assets.codepen.io/6093409/river.jpg"
                             className={styles.video}
                         >
                             <source
@@ -150,8 +145,13 @@ const CreateVideo = () =>
                             #WeFinallyPlayedIt
                         </h1>
                         <Box className={styles.popup} id="pp">
-                            {isCreating && <p>Loadgin...</p>}
-                            {!isCreating && CurrentTemplate()}
+                            {
+                                isCreating
+                                    ?
+                                    <Loader className={styles.popup__loader} thickness={4} size={100} color="white" />
+                                    :
+                                    CurrentTemplate()
+                            }
                             {
                                 (step > 1 && step < 5) &&
                                 <button onClick={() => prevStep()}
