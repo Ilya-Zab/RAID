@@ -1,0 +1,46 @@
+@import '@/styles/variables.module.scss';
+
+.gift_wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	margin-bottom: 30px;
+}
+.gift_img {
+	flex: 0 1 100px;
+	@media screen and (max-width: 768px) {
+		width: 75px;
+		height: 50px;
+	}
+}
+.gift_name {
+	flex: 0 1 350px;
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 99%;
+	text-transform: uppercase;
+	color: #ffffff;
+	margin: 0 20px;
+	@media screen and (max-width: 768px) {
+		flex: 0 1 250px;
+		font-weight: 500;
+		font-size: 16px;
+		margin: 0 10px;
+	}
+}
+.gift_quantity{
+	flex: 0 1 min(85px);
+	min-width: 85px;
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 99%;
+	text-transform: uppercase;
+	color: #ffffff;
+	margin: 0;
+	@media screen and (max-width: 768px) {
+		flex: 0 1 55px;
+		min-width: 55px;
+		font-weight: 500;
+		font-size: 16px;
+	}
+}

@@ -20,7 +20,7 @@ const data = [
         url: '/find-id',
     }, {
         title: 'Prizes',
-        url: '/prizes',
+        url: '',
     }, {
         title: 'Rules',
         url: '/rules',
