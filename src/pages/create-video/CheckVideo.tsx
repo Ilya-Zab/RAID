@@ -12,7 +12,7 @@ export const CheckVideoSchema = z.object({
 
 export type CheckVideoProps = z.infer<typeof CheckVideoSchema>;
 
-export const CheckVideo: FC<CheckVideoProps> = ({ videoUrl, onDownload, prevStep }) =>
+const CheckVideo: FC<CheckVideoProps> = ({ videoUrl, onDownload, prevStep }) =>
 {
     return (
         <Box>
@@ -77,4 +77,6 @@ export const CheckVideo: FC<CheckVideoProps> = ({ videoUrl, onDownload, prevStep
             </Box>
         </Box>
     )
-} 
+}
+
+export default CheckVideo;
