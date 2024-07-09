@@ -19,14 +19,17 @@ const musicPath = "/audio/AR_CONTRAST.mp3";
 const effects: EffectItem[] = [
     {
         name: "First part mask",
+        src: 'PICKER3.png',
         url: "effects/MASK_1.deepar"
     },
     {
         name: "Second part mask #1",
+        src: 'PICKER1.png',
         url: "effects/MASK_2_(ORC+TATOO).deepar"
     },
     {
         name: "Second part mask #2",
+        src: 'PICKER2.png',
         url: "effects/MASK_3_(Skeleton+eyes).deepar"
     }
 ];
@@ -95,38 +98,26 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     {
         deepAR?.switchEffect(effect.url);
     }
+    function handleMaskChange(effect: EffectItem)
+    {
+        deepAR?.switchEffect(effect.url);
+    }
 
     return (
         <Box className={styles.CreativeRecorder}>
             <Box className={styles.CreativeRecorder__recorder} id="deepar-screen" />
             <Box className={styles.CreativeRecorder__buttons}>
-                {/* <EffectPicker
+                <EffectPicker
                     effects={effects}
                     onEffectChange={handleEffectChange}
-                /> */}
-                <button onClick={() => handleEffectChange(
-                    {
-                        name: "First part mask",
-                        url: "effects/MASK_1.deepar"
-                    }
-                )}>Effect 1</button>
-
-                <button onClick={() => handleEffectChange(
-                    {
-                        name: "Second part mask #1",
-                        url: "effects/MASK_2_(ORC+TATOO).deepar"
-                    }
-                )}>Effect 2</button>
-
-                <button onClick={() => handleEffectChange(
-                    {
-                        name: "Second part mask #2",
-                        url: "effects/MASK_3_(Skeleton+eyes).deepar"
-                    }
-                )}>Effect 3</button>
-
+                    orientation={'vertical'}
+                />
+                <EffectPicker
+                    effects={effects}
+                    onEffectChange={handleEffectChange}
+                    orientation={'horizontal'}
+                />
                 <StartStopButton
-
                     onChange={handleVideoStateChange}
                     disabled={!deepAR || !isInited}
                 />
