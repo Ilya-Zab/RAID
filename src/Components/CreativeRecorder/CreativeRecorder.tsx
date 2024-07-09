@@ -19,14 +19,17 @@ const musicPath = "/audio/AR_CONTRAST.mp3";
 const effects: EffectItem[] = [
     {
         name: "First part mask",
+        src:'PICKER3.png',
         url: "effects/MASK_1.deepar"
     },
     {
         name: "Second part mask #1",
+        src:'PICKER1.png',
         url: "effects/MASK_2_(ORC+TATOO).deepar"
     },
     {
         name: "Second part mask #2",
+        src:'PICKER2.png',
         url: "effects/MASK_3_(Skeleton+eyes).deepar"
     }
 ];
@@ -95,6 +98,10 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     {
         deepAR?.switchEffect(effect.url);
     }
+    function handleMaskChange(effect: EffectItem)
+    {
+        deepAR?.switchEffect(effect.url);
+    }
 
     return (
         <Box className={styles.CreativeRecorder}>
@@ -103,9 +110,14 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
                 <EffectPicker
                     effects={effects}
                     onEffectChange={handleEffectChange}
+                    orientation={'horizontal'}
+                />
+                <EffectPicker
+                    effects={effects}
+                    onEffectChange={handleEffectChange}
+                    orientation={'vertical'}
                 />
                 <StartStopButton
-
                     onChange={handleVideoStateChange}
                     disabled={!deepAR || !isInited}
                 />
