@@ -203,6 +203,7 @@
 	&_createVideo {
 		position: relative;
 		z-index: 10;
+		padding: 0 10px;
 	}
 }
 
@@ -248,6 +249,9 @@
 
 		&_creatives {
 			padding: 0 15px;
+		}
+		&_createVideo {
+			padding: 0 10px;
 		}
 	}
 

@@ -19,15 +19,18 @@ const CreativeName = ({nextStep, creativeImage }) =>{
     return (
         <Box className={styles.wrapper}>
             <Image
-                src={'/images/user.png'}
-                // src={creativeImage.frameUrl}
+                src={creativeImage.frameUrl}
                 alt={""}
                 width={340}
                 height={605}
                 className={styles.img}
             />
             <form className={styles.form} onSubmit={handleSubmit}>
-                <input type="text" value={value} onChange={handlerChange} className={styles.input} placeholder={'Enter Your Nickname'}/>
+                <label className={styles.label}>
+                    <input type="text" value={value} onChange={handlerChange} className={styles.input}
+                           placeholder={'Enter Your Nickname'}/>
+                    <hr/>
+                </label>
                 <Button
                     type="button"
                     variant="contained"
