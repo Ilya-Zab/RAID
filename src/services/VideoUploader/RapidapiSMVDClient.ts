@@ -13,9 +13,9 @@ const VideoLinkSchema = z.object({
 const SMVDResponseSchema = z.object({
     success: z.boolean(),
     message: z.string().nullable(), // I doesn't find information about response type schemas
-    src_url: z.string().optional(),
-    image: z.string().optional(),
-    title: z.string().optional(),
+    src_url: z.string().optional().optional(),
+    picture: z.string().optional(),
+    title: z.string().optional().optional().optional(),
     links: z.array(VideoLinkSchema).optional()
 });
 
@@ -43,11 +43,12 @@ export class RapidapiSMVDClient {
 
         const { success, data, error } = SMVDResponseSchema.safeParse(response);
 
-        console.error("ZODERROR:", error);
-        if (!success)
+        if (!success) {
+            console.error("ZODERROR:", error);
             throw new Error("Invalid response was received by Social Media Video Downloader API.");
-        if (!data.success)
-            throw new Error(response.message ?? "Not succeded response was received from Social Media Video Downloader API.");
+        }
+        else if (!data.success || !data.links)
+            throw new Error(response.message ?? `Not succeded response was received from Social Media Video Downloader API.`);
 
         return data;
     }
@@ -85,7 +86,7 @@ export class RapidapiSMVDClient {
 
 // returns link of the object with minimal quality of the given in the SMVD API response
 export function getLinkWithMinQuality(response: SMVDResponse): VideoLink {
-    const qualities: string[] = ["1080", "720", "540", "480", "360", "240", "144"];
+    const qualities: string[] = ["1080", "hd", "720", "540", "480", "360", "240", "144"];
 
     for (const quality of qualities.reverse()) {
         const link = response.links.find(l => l.quality.includes(quality));
