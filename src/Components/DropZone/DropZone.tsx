@@ -26,7 +26,6 @@ function DropZone()
     });
 
     const files = acceptedFiles[0];
-    console.log(files);
     return (
         <Box {...getRootProps({ className: 'dropzone' })}>
             <input {...getInputProps()} />
