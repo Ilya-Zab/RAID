@@ -100,21 +100,22 @@ async function handlePostingAsFile(req: NextApiRequest, res: NextApiResponse, us
         }
 
         const featuredMedia = fields.media[0];
+        const title = fields.title[0];
         const videoBuffer = readFileSync(videoFile.filepath);
         unlinkSync(videoFile.filepath);
 
         const videoItem = await uploadVideoAsBuffer(videoBuffer, userToken)
-        await registerUserCreative(videoItem.id, videoItem.author, res, featuredMedia);
+        await registerUserCreative(videoItem.id, videoItem.author, res, featuredMedia, title);
     });
 
     return res;
 }
 
 // registrate video as a creative of the specified user using custom WordPress API.
-async function registerUserCreative(videoId: number, authorId: number, res: NextApiResponse, featuredMedia?: string): Promise<void>
+async function registerUserCreative(videoId: number, authorId: number, res: NextApiResponse, featuredMedia?: string, title?: string): Promise<void>
 {
     const requestBody = {
-        title: "By json 3",
+        title: title,
         author: authorId,
         status: "pending",
         featured_media: featuredMedia,
