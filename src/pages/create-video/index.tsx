@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from "react";
 import CreativeRecorder from "@/Components/CreativeRecorder/CreativeRecorder";
 import styles from './styles.module.scss';
 import { Box, Button, IconButton } from "@mui/material";
-import Modal from "@/Components/Modal/Modal";
 import { useVideoFrames } from "@/hooks/useVideoFrames";
 import FinallyVideoTemplate from "@/Components/FinallyVideoTemplate/FinallyVideoTemplate";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
@@ -17,14 +16,15 @@ import CreativeName from "@/Components/CreativeName/CreativeName";
 import ProgressBar from "@/Components/ProgressBar/ProgressBar";
 import { CheckVideo } from "./CheckVideo";
 import { downloadVideo } from "@/utils";
+import CreateVideoInfo from "@/Components/CreateVideoInfo/CreateVideoInfo";
+import { frameType } from "@/types/slices/creativeSlice";
 
 const CreateVideo = () =>
 {
     const pageTitle = 'Create video';
     const [video, setVideo] = useState<Blob | null>(null);
-    const [currentBlobFrame, setCurrentBlobFrame] = useState<Blob | null>(null);
+    const [currentBlobFrame, setCurrentBlobFrame] = useState<frameType | null>(null);
     const [step, setStep] = useState<number>(0);
-    const [togglePopover, setTogglePopover] = useState(true);
     const { extractAllFrames, isLoading } = useVideoFrames();
     const [allFrames, setAllFrames] = useState(null);
     const [videoUrl, setVideoUrl] = useState(null);
@@ -36,17 +36,15 @@ const CreateVideo = () =>
 
     const onDownloadClick = useCallback(() =>
     {
-        alert('after');
         if (videoUrl)
         {
-            alert('inside');
-            // downloadVideo(video, "video.mp4");
-            console.log(videoUrl);
+            console.log(video);
+            downloadVideo(video, "video.mp4");
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [videoUrl, video]);
 
-    const getCurrentFrame = (currentFrame: Blob) =>
+    const getCurrentFrame = (currentFrame: frameType): void =>
     {
         if (currentFrame)
         {
@@ -63,15 +61,7 @@ const CreateVideo = () =>
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [raidId, cookies]);
 
-    function creativeRecorderNext(video: Blob): void
-    {
-        if (video)
-        {
-            setVideo(video);
-        }
-    }
-
-    const handleToggle = () =>
+    const handleToggle = (): void =>
     {
         nextStep();
     }
@@ -81,13 +71,14 @@ const CreateVideo = () =>
         setStep(prev => prev + 1);
     }
 
-    function prevStep()
+    function prevStep(): void
     {
         setStep(prev => (prev > 1 ? prev - 1 : 1));
     }
 
     async function handleVideoReady(video: Blob)
     {
+        setVideo(video);
         setVideoUrl(URL.createObjectURL(video));
         const frames = await extractAllFrames(video);
         if (frames.length > 0 && video)
@@ -109,36 +100,16 @@ const CreateVideo = () =>
                 return <CreateVideoTemplate handleButtonClick={nextStep} />;
             case 1:
                 return (
-                    <Modal open={togglePopover} handleToggle={handleToggle}>
-                        <div>
-                            <h3 className={styles.modal__title}>Video Instruction</h3>
-                            <div className={styles.modal__scrollbar}>
-                                <ul className={styles.modal__list}>
-                                    <li className={styles.modal__item}>
-                                        - Grant access to the camera
-                                    </li>
-                                    <li className={styles.modal__item}>
-                                        - Make sure you have the sound on your device turned on
-                                    </li>
-                                    <li className={styles.modal__item}>
-                                        - Record a video using our filter or take a photo
-                                    </li>
-                                </ul>
-                                <p className={styles.modal__text}>
-                                    Good luck, champion!
-                                </p>
-                            </div>
-                        </div>
-                    </Modal>
+                    <CreateVideoInfo handleToggle={handleToggle} />
                 );
             case 2:
-                return <CreativeRecorder onContinueClick={creativeRecorderNext} onVideoRecorded={handleVideoReady} />;
+                return <CreativeRecorder onVideoRecorded={handleVideoReady} />;
             case 3:
-                return <CheckVideo videoUrl={videoUrl} onDownload={onDownloadClick} />
+                return <CheckVideo videoUrl={videoUrl} onDownload={onDownloadClick} prevStep={prevStep} />
             case 4:
                 return <CreativeSwiper data={allFrames} nextStep={nextStep} getCurrentFrame={getCurrentFrame} />;
             case 5:
-                return <CreativeName nextStep={nextStep} creativeImage={currentBlobFrame} prevStep={prevStep} />
+                return <CreativeName nextStep={nextStep} creativeImage={currentBlobFrame} />
             case 6:
                 return <FinallyVideoTemplate video={video} userName={'fewfw'} creativeImage={currentBlobFrame} />
             default:

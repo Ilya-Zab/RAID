@@ -8,8 +8,8 @@ import { useLazyFetchUserDataQuery } from "@/store/wordpress/wpUser";
 
 const Creatives = ({children}) => {
     const [computedTop, setComputedTop] = useState('');
-    const headerHeight = 0;
-    const coefficient = 0.2;
+    const headerHeight = 0.00234131;
+    const coefficient = 0.20934;
     const isMobile = useMediaQuery('(max-width: 800px)');
     const [fetchUserData, { data: userData }] = useLazyFetchUserDataQuery();
     const [{ userToken }] = useCookies(['userToken']);
@@ -30,7 +30,7 @@ const Creatives = ({children}) => {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
                 let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
-                distanceFromHeader *= coefficient;
+                distanceFromHeader = parseFloat((distanceFromHeader * coefficient).toFixed(8));
 
                 setComputedTop(`${defaultTop + distanceFromHeader}px`);
 

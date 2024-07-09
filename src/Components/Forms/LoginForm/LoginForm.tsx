@@ -45,7 +45,6 @@ export const LoginForm: FC = () =>
     const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
     const dispatch = useAppDispatch();
     const router = useRouter();
-
     const onSubmit = async ({ raidId }: CheckUserId) =>
     {
         const transformedId = transformRaidId(raidId);
@@ -73,7 +72,7 @@ export const LoginForm: FC = () =>
     };
 
     return (
-        <Box className="subtract-box subtract-box_small">
+        <Box className={`subtract-box subtract-box_small`}>
             <h2 className={styles.form__title}>
                 <span className='text-gradient'>
                     #WeFinallyPlayedIt

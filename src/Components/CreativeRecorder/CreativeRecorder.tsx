@@ -32,7 +32,6 @@ const effects: EffectItem[] = [
 ];
 export interface CreativeRecorderProps
 {
-    onContinueClick: (video: Blob) => void,
     onVideoRecorded: (video: Blob) => void,
 }
 
@@ -92,12 +91,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         }
     }
 
-    function handleContinueClick()
-    {
-        if (videoProcessor.output)
-            props.onContinueClick(videoProcessor.output);
-    }
-
     function handleEffectChange(effect: EffectItem)
     {
         deepAR?.switchEffect(effect.url);
@@ -112,6 +105,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
                     onEffectChange={handleEffectChange}
                 />
                 <StartStopButton
+
                     onChange={handleVideoStateChange}
                     disabled={!deepAR || !isInited}
                 />

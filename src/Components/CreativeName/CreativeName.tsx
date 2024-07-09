@@ -1,11 +1,20 @@
 import { Box, Button } from "@mui/material";
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import { useState } from "react";
+import { FC, useState } from "react";
 import { useAppDispatch } from "@/hooks/redux";
 import { setCreativeName } from "@/store/slice/creativeSlice";
+import { z } from "zod";
+import { frame } from "@/types/slices/creativeSlice";
 
-const CreativeName = ({ nextStep, creativeImage }) =>
+const CreativeNameSchema = z.object({
+    nextStep: z.function().args(z.any()).returns(z.void()),
+    creativeImage: frame,
+});
+
+type CreativeNameProps = z.infer<typeof CreativeNameSchema>;
+
+const CreativeName: FC<CreativeNameProps> = ({ nextStep, creativeImage }) =>
 {
     const [value, setValue] = useState("");
     const dispatch = useAppDispatch();
@@ -20,7 +29,7 @@ const CreativeName = ({ nextStep, creativeImage }) =>
         e.preventDefault();
         if (value.trim())
         {
-            nextStep();
+            nextStep(event);
         }
     };
 
@@ -34,7 +43,11 @@ const CreativeName = ({ nextStep, creativeImage }) =>
                 className={styles.img}
             />
             <form className={styles.form} onSubmit={handleSubmit}>
-                <input type="text" value={value} onChange={handlerChange} className={styles.input} placeholder={'Enter Your Nickname'} />
+                <label className={styles.label}>
+                    <input type="text" value={value} onChange={handlerChange} className={styles.input}
+                        placeholder={'Enter Your Nickname'} />
+                    <hr />
+                </label>
                 <Button
                     type="button"
                     variant="contained"

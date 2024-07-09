@@ -9,7 +9,7 @@ import AudioPlayer from "../../AudioPlayer/AudioPlayer";
 const data = [
     {
         title: 'Prizes',
-        url: '/prizes',
+        url: '',
     }, {
         title: 'Rules',
         url: '/rules',
@@ -18,7 +18,6 @@ const data = [
         url: '/privacy-notice',
     }, {
         title: 'Find ID',
-        url: '/find-id',
     }, {
         title: 'Email Us',
         url: 'mailto:support@wefinallyplayedit.com',

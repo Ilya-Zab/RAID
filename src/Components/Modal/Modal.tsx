@@ -1,4 +1,4 @@
-import { Box, Popover, IconButton } from "@mui/material";
+import { Popover, IconButton } from "@mui/material";
 
 import styles from "./styles.module.scss";
 import * as React from "react";

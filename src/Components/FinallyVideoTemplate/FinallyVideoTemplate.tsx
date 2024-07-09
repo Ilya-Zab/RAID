@@ -31,6 +31,7 @@ const FinallyVideoTemplate = ({ video, creativeImage, userName }) =>
 
     React.useEffect(() =>
     {
+        setCreating(true);
         createWpMedia(creativeImage.frameBlob);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [creativeImage]);
@@ -39,8 +40,8 @@ const FinallyVideoTemplate = ({ video, creativeImage, userName }) =>
     {
         if (wpMediaResponse && "mediaItem" in wpMediaResponse)
         {
+            setCreating(false);
             setImageId(wpMediaResponse.mediaItem.id);
-            console.log(imageId);
         }
 
         if (wpMediaError)
@@ -49,13 +50,12 @@ const FinallyVideoTemplate = ({ video, creativeImage, userName }) =>
         }
     }, [wpMediaResponse, wpMediaError])
 
-    const createCreative = () =>
+    async function onCreateClick()
     {
         setCreating(true);
-        console.log('Is video here?', video);
-        createCreativeAsBlob(video);
+        if (imageId)
+            createCreativeAsBlob(video, wpMediaResponse.mediaItem.id);
     }
-
     React.useEffect(() =>
     {
         if (success)
@@ -98,8 +98,8 @@ const FinallyVideoTemplate = ({ video, creativeImage, userName }) =>
                             successfully passed moderation and published*.
                         </Typography>
                     </Box>
-                    {!cookies.userToken && <RegistrationForm onSendForm={createCreative} isCreating={isCreating} />}
-                    {cookies.userToken && <FinallyVideoSend onButtonClick={createCreative} isCreating={isCreating} />}
+                    {!cookies.userToken && <RegistrationForm onSendForm={onCreateClick} isCreating={isCreating} />}
+                    {cookies.userToken && <FinallyVideoSend onButtonClick={onCreateClick} isCreating={isCreating} />}
                 </Box>
             </Box>
         </Box >
