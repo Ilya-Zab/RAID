@@ -4,8 +4,6 @@ import { useCallback, useEffect, useState } from "react";
 import CreativeRecorder from "@/Components/CreativeRecorder/CreativeRecorder";
 import styles from './styles.module.scss';
 import { Box, Button, IconButton } from "@mui/material";
-import Modal from "@/Components/Modal/Modal";
-import { downloadVideo } from "@/utils";
 import { useVideoFrames } from "@/hooks/useVideoFrames";
 import FinallyVideoTemplate from "@/Components/FinallyVideoTemplate/FinallyVideoTemplate";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
@@ -16,25 +14,39 @@ import { setLoading } from "@/store/slice/creativeSlice";
 import { Loader } from "@/Components/Layouts/Loader";
 import CreativeName from "@/Components/CreativeName/CreativeName";
 import ProgressBar from "@/Components/ProgressBar/ProgressBar";
+import { CheckVideo } from "./CheckVideo";
+import { downloadVideo } from "@/utils";
+import CreateVideoInfo from "@/Components/CreateVideoInfo/CreateVideoInfo";
+import { frameType } from "@/types/slices/creativeSlice";
+import {useSelector} from "react-redux";
+import {RootState} from "@/store/store";
 
 const CreateVideo = () =>
 {
     const pageTitle = 'Create video';
     const [video, setVideo] = useState<Blob | null>(null);
-    const [currentBlobFrame, setCurrentBlobFrame] = useState<Blob | null>(null);
+    const [currentBlobFrame, setCurrentBlobFrame] = useState<frameType | null>(null);
     const [step, setStep] = useState<number>(0);
-    const [togglePopover, setTogglePopover] = useState(true);
     const { extractAllFrames, isLoading } = useVideoFrames();
     const [allFrames, setAllFrames] = useState(null);
     const [videoUrl, setVideoUrl] = useState(null);
     const raidId = useAppSelector(state => state.raidId.raidId);
     const [cookies] = useCookies(['userToken']);
     const router = useRouter();
-    const [wait, setWait] = useState(false);
     const dispatch = useAppDispatch();
     const isCreating = useAppSelector(state => state.creative.isLoading);
 
-    const getCurrentFrame = (currentFrame: Blob) =>
+    const onDownloadClick = useCallback(() =>
+    {
+        if (videoUrl)
+        {
+            console.log(video);
+            downloadVideo(video, "video.mp4");
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [videoUrl, video]);
+
+    const getCurrentFrame = (currentFrame: frameType): void =>
     {
         if (currentFrame)
         {
@@ -51,17 +63,7 @@ const CreateVideo = () =>
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [raidId, cookies]);
 
-    // downloadVideo(video, "video.mp4");
-
-    function handleContinueClick(video: Blob)
-    {
-        if (video)
-        {
-            setVideo(video);
-        }
-    }
-
-    const handleToggle = () =>
+    const handleToggle = (): void =>
     {
         nextStep();
     }
@@ -71,7 +73,7 @@ const CreateVideo = () =>
         setStep(prev => prev + 1);
     }
 
-    function prevStep()
+    function prevStep(): void
     {
         setStep(prev => (prev > 1 ? prev - 1 : 1));
     }
@@ -81,11 +83,18 @@ const CreateVideo = () =>
         setVideo(video);
         setVideoUrl(URL.createObjectURL(video));
         const frames = await extractAllFrames(video);
-        setAllFrames(frames);
-        nextStep();
+        if (frames.length > 0 && video)
+        {
+            setAllFrames(frames);
+            nextStep();
+        } else
+        {
+            alert('The video is too short, please record it again!');
+        }
         dispatch(setLoading(false));
     }
-
+    const videoBlob = useSelector((state: RootState) => state.video.video);
+    console.log(videoBlob,'videoBlob');
     const CurrentTemplate = () =>
     {
         switch (step)
@@ -93,58 +102,22 @@ const CreateVideo = () =>
             case 0:
                 return <CreateVideoTemplate handleButtonClick={nextStep} />;
             case 1:
-                return (
-                    <Modal open={togglePopover} handleToggle={handleToggle}>
-                        <div>
-                            <h3 className={styles.modal__title}>Video Instruction</h3>
-                            <div className={styles.modal__scrollbar}>
-                                <ul className={styles.modal__list}>
-                                    <li className={styles.modal__item}>
-                                        - Grant access to the camera
-                                    </li>
-                                    <li className={styles.modal__item}>
-                                        - Make sure you have the sound on your device turned on
-                                    </li>
-                                    <li className={styles.modal__item}>
-                                        - Record a video using our filter or take a photo
-                                    </li>
-                                </ul>
-                                <p className={styles.modal__text}>
-                                    Good luck, champion!
-                                </p>
-                            </div>
-                        </div>
-                    </Modal>
-                );
+                return <CreateVideoInfo handleToggle={handleToggle} />;
             case 2:
-                return <CreativeRecorder onContinueClick={handleContinueClick} onVideoRecorded={handleVideoReady} />;
+                return <CreativeRecorder onVideoRecorded={handleVideoReady} />;
             case 3:
-                return (
-                    <Box>
-                        <video
-                            autoPlay
-                            loop
-                            muted
-                            className={styles.video}
-                        >
-                            <source
-                                src={videoUrl}
-                                type="video/mp4"
-                            />
-                        </video>
-                    </Box>
-                )
+                return <CheckVideo videoUrl={videoUrl} onDownload={onDownloadClick} prevStep={prevStep} />;
             case 4:
-                return <CreativeSwiper data={allFrames && allFrames} nextStep={nextStep} getCurrentFrame={getCurrentFrame} />
+                return <CreativeSwiper data={allFrames} nextStep={nextStep} getCurrentFrame={getCurrentFrame} />;
             case 5:
-                return <CreativeName nextStep={nextStep} creativeImage={currentBlobFrame} />
+                return <CreativeName nextStep={nextStep} creativeImage={currentBlobFrame} />;
             case 6:
-                return <FinallyVideoTemplate video={video} userName={'fewfw'} creativeImage={currentBlobFrame} />
+                return <FinallyVideoTemplate video={video} userName={'fewfw'} creativeImage={currentBlobFrame} />;
             default:
                 return <CreateVideoTemplate handleButtonClick={nextStep} />;
         }
     };
-    console.log(step, 'step')
+
     return (
         <>
             <Head>
@@ -159,9 +132,10 @@ const CreateVideo = () =>
                             #WeFinallyPlayedIt
                         </h1>
                         <Box className={styles.popup} id="pp">
-                            {CurrentTemplate()}
+                            {isLoading && < Loader className={styles.popup__loader} color="white" />}
+                            {!isLoading && CurrentTemplate()}
                             {
-                                (step > 1 && step < 5) &&
+                                (step > 1 && step < 6) &&
                                 <button onClick={() => prevStep()}
                                     className={`${styles.button} ${styles['button-prev']}`}>
                                     <svg width="40" height="40" viewBox="0 0 40 40" fill="none"
@@ -194,8 +168,9 @@ const CreateVideo = () =>
                                     variant="contained"
                                     className={`btn-second btn-second-next`}
                                     onClick={() => nextStep()}
+                                    disabled={isLoading}
                                 >
-                                    Next
+                                    {allFrames.length > 0 ? "Next" : "Wait.."}
                                 </Button>
                             }
                         </Box>

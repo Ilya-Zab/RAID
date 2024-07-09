@@ -1,10 +1,11 @@
 import { z } from "zod";
 
-const frame = z.object({
+export const frame = z.object({
     frameBlob: z.instanceof(Blob),
     frameUrl: z.string()
 });
 
-const frames = z.array(frame);
+export const frames = z.array(frame);
 
+export type frameType = z.infer<typeof frame>;
 export type framesType = z.infer<typeof frames>;

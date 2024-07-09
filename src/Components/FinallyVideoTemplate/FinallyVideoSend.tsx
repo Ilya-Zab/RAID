@@ -1,5 +1,6 @@
 import { Box, Button } from "@mui/material";
 import { FC } from "react";
+import styles from './styles.module.scss';
 
 interface FinallyVideoSendProps
 {
@@ -11,13 +12,13 @@ export const FinallyVideoSend: FC<FinallyVideoSendProps> = ({ onButtonClick, isC
 {
     return (
         <Box>
-            <span className="info">
+            <span className={styles.info}>
                 *It may take us up to 5 business days.
             </span>
             <Button
                 type="submit"
                 variant="contained"
-                className={`btn-second`}
+                className={`btn-second ${styles.section__btn}`}
                 onClick={onButtonClick}
                 disabled={isCreating}
             >

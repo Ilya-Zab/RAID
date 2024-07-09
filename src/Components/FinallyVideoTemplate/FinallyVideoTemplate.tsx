@@ -14,6 +14,7 @@ const FinallyVideoTemplate = ({ video, creativeImage, userName }) =>
 {
     const [cookies] = useCookies(['userToken']);
     const raidId = useAppSelector(state => state.raidId.raidId);
+    const creativeName = useAppSelector(state => state.creative.creativeName);
     const router = useRouter();
     const { createCreativeAsBlob, success, data, error } = useCreateCreative();
     const [isCreating, setCreating] = React.useState(false);
@@ -28,31 +29,24 @@ const FinallyVideoTemplate = ({ video, creativeImage, userName }) =>
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [raidId, cookies]);
 
-    React.useEffect(() =>
+    function onCreateClick()
     {
+        setCreating(true);
         createWpMedia(creativeImage.frameBlob);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [creativeImage]);
+    }
 
     React.useEffect(() =>
     {
         if (wpMediaResponse && "mediaItem" in wpMediaResponse)
         {
-            console.log(wpMediaResponse.mediaItem.id);
-            setImageId(wpMediaResponse.mediaItem.id);
+            createCreativeAsBlob(video, wpMediaResponse.mediaItem.id);
         }
 
         if (wpMediaError)
         {
             console.log(wpMediaError);
         }
-    }, [wpMediaResponse, wpMediaError])
-
-    const createCreative = () =>
-    {
-        setCreating(true);
-        createCreativeAsBlob(video);
-    }
+    }, [wpMediaResponse, wpMediaError]);
 
     React.useEffect(() =>
     {
@@ -82,7 +76,7 @@ const FinallyVideoTemplate = ({ video, creativeImage, userName }) =>
                             className={styles.photo}
                         />
                         <Typography variant='h1'>
-                            {userName}
+                            {creativeName && creativeName}
                         </Typography>
                     </Box>
                     <Box className={styles.section__text}>
@@ -96,8 +90,8 @@ const FinallyVideoTemplate = ({ video, creativeImage, userName }) =>
                             successfully passed moderation and published*.
                         </Typography>
                     </Box>
-                    {!cookies.userToken && <RegistrationForm onSendForm={createCreative} isCreating={isCreating} />}
-                    {cookies.userToken && <FinallyVideoSend onButtonClick={createCreative} isCreating={isCreating} />}
+                    {!cookies.userToken && <RegistrationForm onSendForm={onCreateClick} isCreating={isCreating} />}
+                    {cookies.userToken && <FinallyVideoSend onButtonClick={onCreateClick} isCreating={isCreating} />}
                 </Box>
             </Box>
         </Box >

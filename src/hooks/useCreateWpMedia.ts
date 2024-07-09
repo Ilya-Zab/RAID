@@ -8,7 +8,6 @@ export const useCreateWpMediaResult = z.object({
     error: z.any(),
     createWpMedia: z.function().args(z.instanceof(Blob)).returns(z.promise(z.void()))
 });
-// instanceof(Blob)
 
 export type useCreateWpMediaResult = z.infer<typeof useCreateWpMediaResult>
 

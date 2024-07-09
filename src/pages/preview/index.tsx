@@ -13,7 +13,7 @@ const CreateVideo = () =>
     same once you 
     <span class='text-gradient'>play Raid</span>.<br/>
     Show how you do it<br/>
-    and <span class='text-gradient'>win prizes!</span>`
+    and <span class='text-gradient'>win prizes!</span>`;
     return (
         <>
             <Head>

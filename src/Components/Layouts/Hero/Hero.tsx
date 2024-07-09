@@ -10,12 +10,12 @@ const Hero = () =>
 {
     const beforeRef = useRef(null);
     const [computedBottom, setComputedBottom] = useState('');
-    const headerHeight = 0;
-    const coefficient = 0.2;
+    const headerHeight = 0.00234131;
+    const coefficient = 0.20934;
 
     const isMobile = useMediaQuery('(max-width: 768px)');
 
-    const defaultBottom = React.useMemo(() => isMobile ? 0 : -86, [isMobile]);
+    const defaultBottom = React.useMemo(() => isMobile ? 0 : 86, [isMobile]);
 
     let ticking = false;
 
@@ -28,7 +28,8 @@ const Hero = () =>
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
                 let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
-                distanceFromHeader *= coefficient;
+                distanceFromHeader = parseFloat((distanceFromHeader * coefficient).toFixed(8));
+
 
                 setComputedBottom(`${defaultBottom - distanceFromHeader}px`);
 
@@ -75,7 +76,7 @@ const Hero = () =>
                     <Box className={styles.hero__steps_wrapper}>
                         <p className={styles.hero__steps}>
                             <b>Step 1: </b>
-                            <Link href={'/'} download className='text-gradient'>
+                            <Link href={'https://pl.go-ga.me/chnosnyx'} target='_blank' className='text-gradient'>
                                 Download RAID
                             </Link>
                         </p>

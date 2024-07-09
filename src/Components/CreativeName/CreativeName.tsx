@@ -1,33 +1,53 @@
-import {Box, Button} from "@mui/material";
+import { Box, Button } from "@mui/material";
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import {useState} from "react";
+import { FC, useState } from "react";
+import { useAppDispatch } from "@/hooks/redux";
+import { setCreativeName } from "@/store/slice/creativeSlice";
+import { z } from "zod";
+import { frame } from "@/types/slices/creativeSlice";
 
-const CreativeName = ({nextStep, creativeImage }) =>{
+const CreativeNameSchema = z.object({
+    nextStep: z.function().args(z.any()).returns(z.void()),
+    creativeImage: frame,
+});
+
+type CreativeNameProps = z.infer<typeof CreativeNameSchema>;
+
+const CreativeName: FC<CreativeNameProps> = ({ nextStep, creativeImage }) =>
+{
     const [value, setValue] = useState("");
-    const handlerChange = (e) => {
+    const dispatch = useAppDispatch();
+    const handlerChange = (e) =>
+    {
         setValue(e.target.value);
+        dispatch(setCreativeName(e.target.value));
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e) =>
+    {
         e.preventDefault();
-        if (value.trim()) {
-            nextStep();
+        if (value.trim())
+        {
+            nextStep(event);
         }
     };
 
     return (
         <Box className={styles.wrapper}>
             <Image
-                src={'/images/user.png'}
-                // src={creativeImage.frameUrl}
-                alt={""}
+                src={creativeImage.frameUrl}
+                alt={"Creatvie"}
                 width={340}
                 height={605}
                 className={styles.img}
             />
             <form className={styles.form} onSubmit={handleSubmit}>
-                <input type="text" value={value} onChange={handlerChange} className={styles.input} placeholder={'Enter Your Nickname'}/>
+                <label className={styles.label}>
+                    <input type="text" value={value} onChange={handlerChange} className={styles.input}
+                        placeholder={'Enter Your Nickname'} />
+                    <hr />
+                </label>
                 <Button
                     type="button"
                     variant="contained"

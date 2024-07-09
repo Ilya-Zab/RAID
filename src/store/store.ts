@@ -7,6 +7,8 @@ import { wpUser } from './wordpress/wpUser';
 import { wpCustomAPI } from './wordpress/wpRestCustomApi';
 import { ipApi } from './ipapi/ipapi';
 import creativeSlice from './slice/creativeSlice';
+import modalsSlice from "@/store/slice/modalsSlice";
+import videoReducer from "./slice/videoSlice";
 
 const rootReducer = combineReducers({
 
@@ -18,6 +20,8 @@ const rootReducer = combineReducers({
     audio: audioReducer,
     raidId: raidIdSlice,
     creative: creativeSlice,
+    modal: modalsSlice,
+    video: videoReducer,
 });
 
 export const setupStore = () =>
@@ -25,7 +29,9 @@ export const setupStore = () =>
     return configureStore({
         reducer: rootReducer,
         middleware: (getDefaultMiddleware) =>
-            getDefaultMiddleware()
+            getDefaultMiddleware({
+                serializableCheck: false,
+            })
                 .concat(jwtApi.middleware)
                 .concat(wpAPI.middleware)
                 .concat(wpUser.middleware)

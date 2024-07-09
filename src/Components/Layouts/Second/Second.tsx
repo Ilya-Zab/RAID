@@ -7,8 +7,8 @@ import { useMediaQuery } from "@mui/material";
 const Second = () => {
     const beforeRef = useRef(null);
     const [computedTop, setComputedTop] = useState('');
-    const headerHeight = 0;
-    const coefficient = 0.2;
+    const headerHeight = 0.00234131;
+    const coefficient = 0.20934;
     const isMobile = useMediaQuery('(max-width: 768px)');
 
     const defaultTop = React.useMemo(() => isMobile ? -250 : -410, [isMobile]);
@@ -21,7 +21,7 @@ const Second = () => {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
                 let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
-                distanceFromHeader *= coefficient;
+                distanceFromHeader = parseFloat((distanceFromHeader * coefficient).toFixed(8));
 
                 setComputedTop(`${defaultTop + distanceFromHeader}px`);
 

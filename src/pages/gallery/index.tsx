@@ -9,12 +9,11 @@ import React from "react";
 const CreateVideo = () =>
 {
     const pageTitle = 'Gallery';
-    const title = ` It&rsquo;ll never be the<br/>
-                same once you
-                <span class='text-gradient'> play<br/>Raid</span>
-                . Show how you<br/>
-                do it and
-                <span class='text-gradient'> win prizes!</span>`
+    const title = `It'll never be the <br/>
+    same once you 
+    <span class='text-gradient'>play Raid</span>.<br/>
+    Show how you do it<br/>
+    and <span class='text-gradient'>win prizes!</span>`;
     return (
         <>
             <Head>

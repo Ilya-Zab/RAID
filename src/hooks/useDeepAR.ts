@@ -2,7 +2,7 @@
 
 import * as deepar from 'deepar';
 import { useEffect, useRef, useState } from 'react';
-
+// 77ea85616186b0f1ba7a2c0091c992606914b88c23829977ecf5bb48b567c758211ae53973767de1
 const deepARParams: deepar.DeepARParams = {
     licenseKey: "77ea85616186b0f1ba7a2c0091c992606914b88c23829977ecf5bb48b567c758211ae53973767de1",
     additionalOptions: {

@@ -12,6 +12,7 @@ import { validateRaidId } from "@/utils/validateRaidId";
 import { useAppDispatch } from "@/hooks/redux";
 import { setRaidId } from "@/store/slice/raidIdSlice";
 import { useCookies } from "react-cookie";
+import { downloadVideo } from "@/utils";
 
 const CheckUserIdSchema = z.object({
     raidId: z.string().refine(value => validateRaidId(value), {
@@ -44,7 +45,6 @@ export const LoginForm: FC = () =>
     const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
     const dispatch = useAppDispatch();
     const router = useRouter();
-
     const onSubmit = async ({ raidId }: CheckUserId) =>
     {
         const transformedId = transformRaidId(raidId);
@@ -72,7 +72,7 @@ export const LoginForm: FC = () =>
     };
 
     return (
-        <Box className="subtract-box subtract-box_small">
+        <Box className={`subtract-box subtract-box_small`}>
             <h2 className={styles.form__title}>
                 <span className='text-gradient'>
                     #WeFinallyPlayedIt

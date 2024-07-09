@@ -6,7 +6,7 @@ import { FreeMode, Thumbs } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/thumbs';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { styled } from '@mui/material/styles';
 
 const CustomSwiperNav = styled(Swiper)`
@@ -19,12 +19,16 @@ const CustomSwiperNav = styled(Swiper)`
 const CreativeSwiper = ({ data, nextStep, getCurrentFrame }) =>
 {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
-    console.log(data,'CreativeSwiper');
-    const handleSlideChange = (swiper) =>
-    {
-        const activeIndex = swiper.activeIndex;
-        const activeFrame = data[activeIndex];
-        getCurrentFrame(activeFrame);
+    const [activeIndex, setActiveIndex] = useState(0);
+
+    useEffect(() => {
+        if (data && data.length > 0) {
+            getCurrentFrame(data[activeIndex]);
+        }
+    }, [activeIndex]);
+
+    const handleSlideChange = (swiper) => {
+        setActiveIndex(swiper.activeIndex);
     };
 
     return (
@@ -36,6 +40,7 @@ const CreativeSwiper = ({ data, nextStep, getCurrentFrame }) =>
                     modules={[FreeMode, Thumbs]}
                     className={`mySwiper2 ${styles.video_swiper__for}`}
                     onSlideChange={handleSlideChange}
+                    onSwiper={(swiper) => setActiveIndex(swiper.activeIndex)}
                 >
                     {data &&
                         data.map((frame, index) =>
