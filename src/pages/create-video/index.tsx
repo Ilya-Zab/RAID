@@ -18,6 +18,8 @@ import { CheckVideo } from "./CheckVideo";
 import { downloadVideo } from "@/utils";
 import CreateVideoInfo from "@/Components/CreateVideoInfo/CreateVideoInfo";
 import { frameType } from "@/types/slices/creativeSlice";
+import {useSelector} from "react-redux";
+import {RootState} from "@/store/store";
 
 const CreateVideo = () =>
 {
@@ -91,7 +93,8 @@ const CreateVideo = () =>
         }
         dispatch(setLoading(false));
     }
-
+    const videoBlob = useSelector((state: RootState) => state.video.video);
+    console.log(videoBlob,'videoBlob');
     const CurrentTemplate = () =>
     {
         switch (step)
