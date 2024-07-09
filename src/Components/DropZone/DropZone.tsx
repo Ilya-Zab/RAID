@@ -3,13 +3,23 @@ import styles from './styles.module.scss';
 import {useDropzone} from 'react-dropzone';
 import {Box, Typography} from "@mui/material";
 import Image from 'next/image';
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "@/store/store";
+import {setVideo} from '@/store/slice/videoSlice';
 
 function DropZone() {
+    const dispatch = useDispatch<AppDispatch>();
     const {acceptedFiles, getRootProps, getInputProps} = useDropzone({
         maxFiles: 1,
         accept: {
             'video/*': [],
-        }
+        },
+        onDrop: (acceptedFiles) => {
+            const video = acceptedFiles[0];
+            if (video) {
+                dispatch(setVideo(video));
+            }
+        },
     });
 
     const files = acceptedFiles[0];
