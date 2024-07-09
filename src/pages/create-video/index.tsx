@@ -14,12 +14,12 @@ import { setLoading } from "@/store/slice/creativeSlice";
 import { Loader } from "@/Components/Layouts/Loader";
 import CreativeName from "@/Components/CreativeName/CreativeName";
 import ProgressBar from "@/Components/ProgressBar/ProgressBar";
-import { CheckVideo } from "./CheckVideo";
 import { downloadVideo } from "@/utils";
 import CreateVideoInfo from "@/Components/CreateVideoInfo/CreateVideoInfo";
 import { frameType } from "@/types/slices/creativeSlice";
-import {useSelector} from "react-redux";
-import {RootState} from "@/store/store";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import CheckVideo from "./CheckVideo";
 
 const CreateVideo = () =>
 {
@@ -35,6 +35,7 @@ const CreateVideo = () =>
     const router = useRouter();
     const dispatch = useAppDispatch();
     const isCreating = useAppSelector(state => state.creative.isLoading);
+    const videoBlob = useSelector((state: RootState) => state.video.video);
 
     const onDownloadClick = useCallback(() =>
     {
@@ -53,7 +54,6 @@ const CreateVideo = () =>
             setCurrentBlobFrame(currentFrame);
         }
     }
-
     useEffect(() =>
     {
         if (!raidId && !cookies.userToken)
@@ -78,6 +78,29 @@ const CreateVideo = () =>
         setStep(prev => (prev > 1 ? prev - 1 : 1));
     }
 
+    useEffect(() =>
+    {
+        if (videoBlob)
+        {
+            uploadVideo();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [videoBlob])
+
+    async function uploadVideo()
+    {
+        const blob = new Blob([videoBlob], { type: videoBlob.type });
+        setVideo(blob);
+        setVideoUrl(URL.createObjectURL(blob));
+        const frames = await extractAllFrames(blob);
+        console.log(frames);
+        if (frames.length > 0 && video)
+        {
+            setAllFrames(frames);
+            setStep(3);
+        }
+    }
+
     async function handleVideoReady(video: Blob)
     {
         setVideo(video);
@@ -93,8 +116,7 @@ const CreateVideo = () =>
         }
         dispatch(setLoading(false));
     }
-    const videoBlob = useSelector((state: RootState) => state.video.video);
-    console.log(videoBlob,'videoBlob');
+
     const CurrentTemplate = () =>
     {
         switch (step)

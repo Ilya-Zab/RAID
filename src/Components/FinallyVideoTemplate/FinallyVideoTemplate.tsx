@@ -4,11 +4,13 @@ import { Box, Button, Typography } from "@mui/material";
 import Image from 'next/image';
 import { RegistrationForm } from "../Forms/RegistrationForm";
 import { useCookies } from "react-cookie";
-import { useAppSelector } from "@/hooks/redux";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useRouter } from "next/router";
 import useCreateCreative from "@/hooks/useCreateCreative";
 import { FinallyVideoSend } from "./FinallyVideoSend";
 import { useCreateWpMedia } from "@/hooks/useCreateWpMedia";
+import { setVideo } from "@/store/slice/videoSlice";
+import { setCreativeName } from "@/store/slice/creativeSlice";
 
 const FinallyVideoTemplate = ({ video, creativeImage, userName }) =>
 {
@@ -19,7 +21,7 @@ const FinallyVideoTemplate = ({ video, creativeImage, userName }) =>
     const { createCreativeAsBlob, success, data, error } = useCreateCreative();
     const [isCreating, setCreating] = React.useState(false);
     const { isLoading: isMediaLoading, data: wpMediaResponse, error: wpMediaError, createWpMedia } = useCreateWpMedia();
-    const [imageId, setImageId] = React.useState();
+    const dispatch = useAppDispatch();
     React.useEffect(() =>
     {
         if (!raidId && !cookies.userToken)
@@ -52,8 +54,10 @@ const FinallyVideoTemplate = ({ video, creativeImage, userName }) =>
     {
         if (success)
         {
-            alert('Creative has been created');
+            router.push('/gallery');
             setCreating(false);
+            dispatch(setVideo(null));
+            dispatch(setCreativeName(null));
         }
 
         if (error)
