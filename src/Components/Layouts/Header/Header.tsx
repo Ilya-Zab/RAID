@@ -12,18 +12,19 @@ const data = [
         url: '',
     }, {
         title: 'Rules',
-        url: '/rules',
+        url: '',
     }, {
         title: 'Privacy Notice',
         url: '/privacy-notice',
     }, {
         title: 'Find ID',
+        url: '',
     }, {
         title: 'Email Us',
         url: 'mailto:support@wefinallyplayedit.com',
     }, {
         title: 'Materials',
-        url: '/materials',
+        url: '',
     }
 ];
 

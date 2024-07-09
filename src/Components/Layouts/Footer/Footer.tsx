@@ -17,13 +17,13 @@ const data = [
         url: '/privacy-notice',
     }, {
         title: 'Find ID',
-        url: '/find-id',
+        url: '',
     }, {
         title: 'Prizes',
         url: '',
     }, {
         title: 'Rules',
-        url: '/rules',
+        url: '',
     },
 ];
 const Footer = () => {
