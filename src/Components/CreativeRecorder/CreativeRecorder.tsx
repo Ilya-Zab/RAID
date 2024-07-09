@@ -16,22 +16,64 @@ import { setLoading } from "@/store/slice/creativeSlice";
 
 // div element for displaying video should has fixed size
 const musicPath = "/audio/AR_CONTRAST.mp3";
+
+const orcEffects: EffectItem[] = [
+    {
+        name: "Orc + EYES",
+        src: 'PICKER1.png',
+        url: "effects/ORC_BG+EYES.deepar"
+    },
+    {
+        name: "Orc + orc head",
+        src: 'PICKER1.png',
+        url: "effects/ORC_BG+ORC_HEAD.deepar"
+    },
+    {
+        name: "Orc + skeleton head",
+        src: 'PICKER1.png',
+        url: "effects/ORC_BG+SKELETON_HEAD.deepar"
+    },
+    {
+        name: "Orc + tatoo",
+        src: 'PICKER1.png',
+        url: "effects/ORC_BG+TATOO.deepar"
+    },
+]
+
+const skeletEffects: EffectItem[] = [
+    {
+        name: "Skeleton + eyes",
+        src: 'PICKER2.png',
+        url: "effects/SKELETON+EYES.deepar"
+    },
+    {
+        name: "Skeleton + orc head",
+        src: 'PICKER2.png',
+        url: "effects/SKELETON_BG+ORC_HEAD.deepar"
+    },
+    {
+        name: "Skeleton + skeleton head",
+        src: 'PICKER2.png',
+        url: "effects/SKELETON_BG+SKELETON_HEAD.deepar"
+    },
+    {
+        name: "Skeleton + tatoo",
+        src: 'PICKER2.png',
+        url: "effects/SKELETON_BG_TATOO.deepar"
+    },
+]
+
 const effects: EffectItem[] = [
     {
-        name: "First part mask",
-        src: 'PICKER3.png',
+        name: "orc",
+        src: 'PICKER1.png',
         url: "effects/MASK_1.deepar"
     },
     {
-        name: "Second part mask #1",
-        src: 'PICKER1.png',
-        url: "effects/MASK_2_(ORC+TATOO).deepar"
-    },
-    {
-        name: "Second part mask #2",
+        name: "skelet",
         src: 'PICKER2.png',
-        url: "effects/MASK_3_(Skeleton+eyes).deepar"
-    }
+        url: "effects/MASK_1.deepar"
+    },
 ];
 export interface CreativeRecorderProps
 {
@@ -46,9 +88,13 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     const audioRecorder = useAudioRecorder();
     const videoProcessor = useVideoProcessor();
     const [music, setMusic] = useState<Blob | null>(null);
+    const [isOrc, setOrc] = useState<boolean>(true);
     const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
     const [frames, setLocalFrames] = useState(null);
     const dispatch = useAppDispatch();
+
+    const [recordingTime, setRecordingTime] = useState<number>(0);
+    const timerRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() =>
     {
@@ -59,6 +105,11 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
             if (deepAR && isInited)
             {
                 deepAR.shutdown();
+            }
+
+            if (timerRef.current)
+            {
+                clearInterval(timerRef.current);
             }
         };
     }, [isInited, deepAR]);
@@ -94,29 +145,65 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         }
     }
 
+    function firstEffectChange(effect: EffectItem)
+    {
+        deepAR?.switchEffect(effect.url);
+        if (effect.name === 'orc')
+            setOrc(true);
+        else
+        {
+            setOrc(false);
+        }
+    }
+
     function handleEffectChange(effect: EffectItem)
     {
         deepAR?.switchEffect(effect.url);
     }
-    function handleMaskChange(effect: EffectItem)
+
+    useEffect(() =>
     {
-        deepAR?.switchEffect(effect.url);
-    }
+        if (recordingTime > 7)
+            firstEffectChange(
+                isOrc
+                    ?
+                    {
+                        name: "Orc + EYES",
+                        src: 'PICKER1.png',
+                        url: "effects/ORC_BG+EYES.deepar"
+                    }
+                    :
+                    {
+                        name: "Skeleton + eyes",
+                        src: 'PICKER2.png',
+                        url: "effects/SKELETON+EYES.deepar"
+                    }
+            )
+
+        if (recordingTime == 60)
+            handleVideoStateChange(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [recordingTime])
 
     return (
         <Box className={styles.CreativeRecorder}>
             <Box className={styles.CreativeRecorder__recorder} id="deepar-screen" />
             <Box className={styles.CreativeRecorder__buttons}>
-                <EffectPicker
-                    effects={effects}
-                    onEffectChange={handleEffectChange}
-                    orientation={'vertical'}
-                />
-                <EffectPicker
-                    effects={effects}
-                    onEffectChange={handleEffectChange}
-                    orientation={'horizontal'}
-                />
+                {recordingTime < 1 &&
+                    <EffectPicker
+                        effects={effects}
+                        onEffectChange={firstEffectChange}
+                        orientation={'horizontal'}
+                    />
+                }
+
+                {recordingTime > 7 &&
+                    < EffectPicker
+                        effects={isOrc ? orcEffects : skeletEffects}
+                        onEffectChange={handleEffectChange}
+                        orientation={'vertical'}
+                    />
+                }
                 <StartStopButton
                     onChange={handleVideoStateChange}
                     disabled={!deepAR || !isInited}
@@ -127,9 +214,19 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     function startRecording()
     {
-        creativeRecorder?.startRecording(),
-            audioRecorder.startRecording()
+        creativeRecorder?.startRecording();
+        audioRecorder.startRecording();
         audioPlayerRef.current?.play();
+
+        setRecordingTime(0);
+        if (timerRef.current)
+        {
+            clearInterval(timerRef.current);
+        }
+        timerRef.current = setInterval(() =>
+        {
+            setRecordingTime(prev => prev + 1);
+        }, 1000);
     }
 
     function finishRecording()
@@ -139,8 +236,13 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         creativeRecorder.finishRecording();
         if (audioPlayerRef.current)
         {
-            audioPlayerRef.current.pause()
+            audioPlayerRef.current.pause();
             audioPlayerRef.current.currentTime = 0;
+        }
+        if (timerRef.current)
+        {
+            clearInterval(timerRef.current);
+            timerRef.current = null;
         }
     }
 
