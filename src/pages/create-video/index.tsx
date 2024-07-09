@@ -102,19 +102,17 @@ const CreateVideo = () =>
             case 0:
                 return <CreateVideoTemplate handleButtonClick={nextStep} />;
             case 1:
-                return (
-                    <CreateVideoInfo handleToggle={handleToggle} />
-                );
+                return <CreateVideoInfo handleToggle={handleToggle} />;
             case 2:
                 return <CreativeRecorder onVideoRecorded={handleVideoReady} />;
             case 3:
-                return <CheckVideo videoUrl={videoUrl} onDownload={onDownloadClick} prevStep={prevStep} />
+                return <CheckVideo videoUrl={videoUrl} onDownload={onDownloadClick} prevStep={prevStep} />;
             case 4:
                 return <CreativeSwiper data={allFrames} nextStep={nextStep} getCurrentFrame={getCurrentFrame} />;
             case 5:
-                return <CreativeName nextStep={nextStep} creativeImage={currentBlobFrame} />
+                return <CreativeName nextStep={nextStep} creativeImage={currentBlobFrame} />;
             case 6:
-                return <FinallyVideoTemplate video={video} userName={'fewfw'} creativeImage={currentBlobFrame} />
+                return <FinallyVideoTemplate video={video} userName={'fewfw'} creativeImage={currentBlobFrame} />;
             default:
                 return <CreateVideoTemplate handleButtonClick={nextStep} />;
         }

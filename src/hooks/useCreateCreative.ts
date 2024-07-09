@@ -35,8 +35,9 @@ export default function useCreateCreative(): CreateCreativeResult
     async function createCreativeAsBlob(video: Blob, featuredMedia: number): Promise<void>
     {
         const formData = new FormData();
+        const media = featuredMedia.toString();
         formData.append("video", video);
-        formData.append("media", featuredMedia);
+        formData.append("media", media);
 
         await axios.post("/api/video-uploader", formData)
             .then(response =>
