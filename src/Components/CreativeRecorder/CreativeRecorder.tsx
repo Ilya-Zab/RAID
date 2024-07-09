@@ -231,11 +231,11 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     function finishRecording()
     {
-        dispatch(setLoading(true));
         audioRecorder.finishRecording();
         creativeRecorder.finishRecording();
         if (audioPlayerRef.current)
         {
+            dispatch(setLoading(true));
             audioPlayerRef.current.pause();
             audioPlayerRef.current.currentTime = 0;
         }
