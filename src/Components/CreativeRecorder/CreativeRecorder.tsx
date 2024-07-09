@@ -100,10 +100,31 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         <Box className={styles.CreativeRecorder}>
             <Box className={styles.CreativeRecorder__recorder} id="deepar-screen" />
             <Box className={styles.CreativeRecorder__buttons}>
-                <EffectPicker
+                {/* <EffectPicker
                     effects={effects}
                     onEffectChange={handleEffectChange}
-                />
+                /> */}
+                <button onClick={() => handleEffectChange(
+                    {
+                        name: "First part mask",
+                        url: "effects/MASK_1.deepar"
+                    }
+                )}>Effect 1</button>
+
+                <button onClick={() => handleEffectChange(
+                    {
+                        name: "Second part mask #1",
+                        url: "effects/MASK_2_(ORC+TATOO).deepar"
+                    }
+                )}>Effect 2</button>
+
+                <button onClick={() => handleEffectChange(
+                    {
+                        name: "Second part mask #2",
+                        url: "effects/MASK_3_(Skeleton+eyes).deepar"
+                    }
+                )}>Effect 3</button>
+
                 <StartStopButton
 
                     onChange={handleVideoStateChange}

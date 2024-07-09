@@ -72,11 +72,6 @@ type CreateVideoTemplateProps = z.infer<typeof CreateVideoTemplateSchema>;
 
 const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonClick }) =>
 {
-    // const [togglePopover, setTogglePopover] = useState(false)
-    //
-    // const handleToggle = () => {
-    //     setTogglePopover(!togglePopover);
-    // }
     return (
 
         <Box className={styles.section}>

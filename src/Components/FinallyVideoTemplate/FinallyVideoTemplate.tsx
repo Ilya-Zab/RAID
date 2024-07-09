@@ -29,33 +29,25 @@ const FinallyVideoTemplate = ({ video, creativeImage, userName }) =>
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [raidId, cookies]);
 
-    React.useEffect(() =>
+    function onCreateClick()
     {
         setCreating(true);
         createWpMedia(creativeImage.frameBlob);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [creativeImage]);
+    }
 
     React.useEffect(() =>
     {
         if (wpMediaResponse && "mediaItem" in wpMediaResponse)
         {
-            setCreating(false);
-            setImageId(wpMediaResponse.mediaItem.id);
+            createCreativeAsBlob(video, wpMediaResponse.mediaItem.id);
         }
 
         if (wpMediaError)
         {
             console.log(wpMediaError);
         }
-    }, [wpMediaResponse, wpMediaError])
+    }, [wpMediaResponse, wpMediaError]);
 
-    async function onCreateClick()
-    {
-        setCreating(true);
-        if (imageId)
-            createCreativeAsBlob(video, wpMediaResponse.mediaItem.id);
-    }
     React.useEffect(() =>
     {
         if (success)
