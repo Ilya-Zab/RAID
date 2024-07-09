@@ -122,37 +122,6 @@ const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonC
                         </Button>
                     </Box>
                 </Box>
-                {/* цей бляок для випадашкипо натисканню  */}
-                {/*<SocialNetworks open={togglePopover} handleToggle={handleToggle}>*/}
-                {/*    <Box  className={styles.wrapper}>*/}
-                {/*        <Typography variant='body2'>*/}
-                {/*            Share on social networks*/}
-                {/*        </Typography>*/}
-                {/*        <Typography variant='body2'>*/}
-                {/*            and <span>get extra votes</span>*/}
-                {/*        </Typography>*/}
-                {/*        <ul className={styles.list}>*/}
-                {/*            {socialArr && socialArr.map((item) => (*/}
-                {/*                <li key={item.icon}>*/}
-                {/*                    <IconButton*/}
-                {/*                        size="large"*/}
-                {/*                        edge="start"*/}
-                {/*                        color="inherit"*/}
-                {/*                        aria-label='social'*/}
-                {/*                        className={`iconBtn ${styles.list__iconBtn}`}*/}
-                {/*                    >*/}
-                {/*                        <Image*/}
-                {/*                            src={`/images/icon/${item.icon}.svg`}*/}
-                {/*                            alt={item.icon}*/}
-                {/*                            width={40}*/}
-                {/*                            height={40}*/}
-                {/*                        />*/}
-                {/*                    </IconButton>*/}
-                {/*                </li>*/}
-                {/*            ))}*/}
-                {/*        </ul>*/}
-                {/*    </Box>*/}
-                {/*</SocialNetworks>*/}
             </Box>
         </Box>
     );

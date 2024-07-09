@@ -6,7 +6,7 @@ import { FreeMode, Thumbs } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/thumbs';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { styled } from '@mui/material/styles';
 
 const CustomSwiperNav = styled(Swiper)`
@@ -19,7 +19,6 @@ const CustomSwiperNav = styled(Swiper)`
 const CreativeSwiper = ({ data, nextStep, getCurrentFrame }) =>
 {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
-    console.log(data,'CreativeSwiper');
     const handleSlideChange = (swiper) =>
     {
         const activeIndex = swiper.activeIndex;

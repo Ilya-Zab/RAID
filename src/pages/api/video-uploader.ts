@@ -19,7 +19,8 @@ const UploadVideoBodySchema = z.object({
     url: z.string().url()
 });
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse)
+{
     if (req.method != "POST")
         return res.status(400).json({ message: "Only POST method available for this path." });
 
@@ -36,7 +37,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 }
 
 // gets user token by Cookie request header
-function getUserToken(req: NextApiRequest): string | null {
+function getUserToken(req: NextApiRequest): string | null
+{
     const cookies = req.headers.cookie?.split("; ") ?? [];
     const userTokenCookie = cookies.find(c => c.startsWith("userToken="));
 
@@ -47,29 +49,35 @@ function getUserToken(req: NextApiRequest): string | null {
     return userToken;
 }
 
-async function handlePostingAsUrl(req: NextApiRequest, res: NextApiResponse, userToken: string) {
+async function handlePostingAsUrl(req: NextApiRequest, res: NextApiResponse, userToken: string)
+{
     const body = Buffer.from(req.read()).toString("utf-8");
     const json = JSON.parse(body);
     const { success, data, error } = UploadVideoBodySchema.safeParse(json);
     if (!success || !data)
         return res.status(400).json({ message: "Uncorrect body format.", error });
 
-    try {
+    try
+    {
         const videoItem = await uploadVideoAsUrl(data.url, userToken);
         await registerUserCreative(videoItem.id, videoItem.author, res);
         return res;
     }
-    catch (e: any) {
+    catch (e: any)
+    {
         console.error("APIERROR: Error occured while uploading video into WordPress.", e);
         return res.status(500).json({ message: e?.message });
     }
 }
 
-async function handlePostingAsFile(req: NextApiRequest, res: NextApiResponse, userToken: string) {
+async function handlePostingAsFile(req: NextApiRequest, res: NextApiResponse, userToken: string)
+{
     const form = new formidable.IncomingForm();
 
-    form.parse(req, async (err, fields, files) => {
-        if (err) {
+    form.parse(req, async (err, fields, files) =>
+    {
+        if (err)
+        {
             console.error("Error while parsing form data in the video uploading request.", err);
             res.status(500).json({ message: "Error while parsing form data in the video uploading request.", error: err });
             return;
@@ -77,44 +85,51 @@ async function handlePostingAsFile(req: NextApiRequest, res: NextApiResponse, us
 
         const videoFile: any = Array.isArray(files.video) && files.video.length > 0 ? files.video[0] : files.video;
 
-        if (!videoFile || !videoFile.filepath || !existsSync(videoFile.filepath)) {
+        if (!videoFile || !videoFile.filepath || !existsSync(videoFile.filepath))
+        {
             console.error("Error while reading uploaded file in the video uploading request. File:", videoFile);
             res.status(500).json({ message: "Error while reading uploaded file in the video uploading request." });
             return;
         }
 
-        if (!videoFile.mimetype || videoFile.mimetype !== "video/mp4") {
+        if (!videoFile.mimetype || videoFile.mimetype !== "video/mp4")
+        {
             console.error(`Error while processing uploaded file in the video uploading request. File mime type should be "video/mp4", but was "`, videoFile.mimetype, `"`);
             res.status(500).json({ message: `Error while processing uploaded file in the video uploading request. File mime type should be "video/mp4", but was "${videoFile.mimetype}"` });
             return;
         }
 
+        const featuredMedia = fields[0].media;
         const videoBuffer = readFileSync(videoFile.filepath);
         unlinkSync(videoFile.filepath);
 
         const videoItem = await uploadVideoAsBuffer(videoBuffer, userToken)
-        await registerUserCreative(videoItem.id, videoItem.author, res);
+        await registerUserCreative(videoItem.id, videoItem.author, res, featuredMedia);
     });
 
     return res;
 }
 
 // registrate video as a creative of the specified user using custom WordPress API.
-async function registerUserCreative(videoId: number, authorId: number, res: NextApiResponse): Promise<void> {
+async function registerUserCreative(videoId: number, authorId: number, res: NextApiResponse, featuredMedia: string): Promise<void>
+{
     const requestBody = {
         title: "By json 3",
         author: authorId,
         status: "pending",
+        featured_media: "300",
         "meta": {
             featured_media: videoId
         }
     };
 
     await wpRestApi.post("creative", requestBody)
-        .then(response => {
+        .then(response =>
+        {
             res.status(200).json(response.data);
         })
-        .catch(err => {
+        .catch(err =>
+        {
             console.error("Error while registration video as a user creative.", err);
             res.status(500).json({ message: "Error while registration video as a user creative.", error: err });
         });
