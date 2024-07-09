@@ -18,20 +18,41 @@ import { setLoading } from "@/store/slice/creativeSlice";
 const musicPath = "/audio/AR_CONTRAST.mp3";
 const effects: EffectItem[] = [
     {
-        name: "First part mask",
-        src:'PICKER3.png',
+        name: "Negative",
         url: "effects/MASK_1.deepar"
     },
     {
-        name: "Second part mask #1",
-        src:'PICKER1.png',
-        url: "effects/MASK_2_(ORC+TATOO).deepar"
+        name: "Orc + EYES",
+        url: "effects/ORC_BG+EYES.deepar"
     },
     {
-        name: "Second part mask #2",
-        src:'PICKER2.png',
-        url: "effects/MASK_3_(Skeleton+eyes).deepar"
-    }
+        name: "Orc + orc head",
+        url: "effects/ORC_BG+ORC_HEAD.deepar"
+    },
+    {
+        name: "Orc + skeleton head",
+        url: "effects/ORC_BG+SKELETON_HEAD.deepar"
+    },
+    {
+        name: "Orc + tatoo",
+        url: "effects/ORC_BG+TATOO.deepar"
+    },
+    {
+        name: "Skeleton + eyes",
+        url: "effects/SKELETON+EYES.deepar"
+    },
+    {
+        name: "Skeleton + orc head",
+        url: "effects/SKELETON_BG+ORC_HEAD.deepar"
+    },
+    {
+        name: "Skeleton + skeleton head",
+        url: "effects/SKELETON_BG+SKELETON_HEAD.deepar"
+    },
+    {
+        name: "Skeleton + tatoo",
+        url: "effects/SKELETON_BG_TATOO.deepar"
+    },
 ];
 export interface CreativeRecorderProps
 {
