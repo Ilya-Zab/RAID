@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export type CreateCreativeResult = {
     createCreativeAsUrl: (url: string) => Promise<void>,
-    createCreativeAsBlob: (video: Blob, featuredMedia: number) => Promise<void>,
+    createCreativeAsBlob: (video: Blob, featuredMedia: number, creativeName) => Promise<void>,
     success: boolean,
     data: any | null,
     error: Error | null
@@ -32,12 +32,13 @@ export default function useCreateCreative(): CreateCreativeResult
             });
     }
 
-    async function createCreativeAsBlob(video: Blob, featuredMedia: number): Promise<void>
+    async function createCreativeAsBlob(video: Blob, featuredMedia: number, creativeName: string): Promise<void>
     {
         const formData = new FormData();
         const media = featuredMedia.toString();
         formData.append("video", video);
         formData.append("media", media);
+        formData.append("title", creativeName);
 
         await axios.post("/api/video-uploader", formData)
             .then(response =>
