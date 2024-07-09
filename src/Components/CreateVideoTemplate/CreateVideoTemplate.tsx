@@ -6,6 +6,9 @@ import DropZone from "@/Components/DropZone/DropZone";
 import { styled } from '@mui/material/styles';
 import Link from "next/link";
 import { z } from "zod";
+import axios from "axios";
+import { setVideo } from "@/store/slice/videoSlice";
+import { useAppDispatch } from "@/hooks/redux";
 // import SocialNetworks from "@/Components/SocialNetworks/SocialNetworks";
 // import {useState} from "react";
 
@@ -68,10 +71,62 @@ const CreateVideoTemplateSchema = z.object({
     handleButtonClick: z.function().args(z.number()).returns(z.void())
 })
 
+
 type CreateVideoTemplateProps = z.infer<typeof CreateVideoTemplateSchema>;
 
 const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonClick }) =>
 {
+    const [url, setUrl] = React.useState();
+    const dispatch = useAppDispatch();
+
+    async function getVideoUrl(url: string)
+    {
+        return await axios("/api/rapid", {
+            params: {
+                url
+            }
+        })
+            .then(response => response.data.url)
+            .catch(err => alert(JSON.stringify(err.response.data)));
+    }
+
+    async function getVideo(url: string): Promise<Blob>
+    {
+        try
+        {
+            const response = await axios.get(url, {
+                responseType: "blob"
+            });
+            console.log(response);
+            return response.data;
+        } catch (err)
+        {
+            console.error(`Error while downloading video. URL: "${url}".`);
+            throw err;
+        }
+    }
+
+    const onInputChange = (event) =>
+    {
+        if (event.target)
+        {
+            console.log(event.target.value);
+            setUrl(event.target.value);
+        }
+    }
+
+    const onSocialClick = async () =>
+    {
+        if (url)
+        {
+            const videoUrl = await getVideoUrl(url);
+            const rapidVideo = await getVideo(videoUrl);
+            if (rapidVideo)
+                dispatch(setVideo(rapidVideo));
+        }
+
+    }
+
     return (
 
         <Box className={styles.section}>
@@ -83,8 +138,17 @@ const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonC
                     Browse from Social Media
                 </Typography>
                 <Box className={styles.section__social__input}>
-                    <input type='url' className={styles.section__social__input__customInput} placeholder={'Put the link'} />
-                    <button type='button'>
+                    <input
+                        type='url'
+                        className={styles.section__social__input__customInput}
+                        placeholder={'Put the link'}
+                        onChange={() => onInputChange(event)}
+                        value={url}
+                    />
+                    <button
+                        type='button'
+                        onClick={onSocialClick}
+                    >
                         <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path

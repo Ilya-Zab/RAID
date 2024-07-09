@@ -39,9 +39,9 @@ const FinallyVideoTemplate = ({ video, creativeImage, userName }) =>
 
     React.useEffect(() =>
     {
-        if (wpMediaResponse && "mediaItem" in wpMediaResponse)
+        if (wpMediaResponse && "mediaItem" in wpMediaResponse && creativeName)
         {
-            createCreativeAsBlob(video, wpMediaResponse.mediaItem.id);
+            createCreativeAsBlob(video, wpMediaResponse.mediaItem.id, creativeName);
         }
 
         if (wpMediaError)
