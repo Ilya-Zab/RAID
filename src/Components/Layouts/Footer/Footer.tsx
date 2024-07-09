@@ -26,6 +26,7 @@ const data = [
         url: '',
     },
 ];
+
 const Footer = () => {
     return (
         <footer className={styles.footer__bg_wrapper}>
