@@ -39,7 +39,7 @@ const Navigation: FC<wpMenuProps> = ({correctStyle, data}) => {
                                     {link.title}
                                 </button>
                             ) : link.title === 'Rules' ? (
-                                <a href="/public/file/Official_Rules.docx" download className="desc nav-link link">
+                                <a href="/file/Official_Rules.docx" download className="desc nav-link link">
                                     {link.title}
                                 </a>
                             ) : link.title === 'Materials' ? (
@@ -51,9 +51,9 @@ const Navigation: FC<wpMenuProps> = ({correctStyle, data}) => {
                                         open &&
 										<Box className={styles.dropDown__list}>
 											<Link className={'desc nav-link link'}
-											      href="https://www.instagram.com/ar/1410842746283057/?ch=NTA2MzNjMDM0ODg0ODk2YjZjODNiNjk0YjQ0MDFlZTk%3D"
-											      target={'_blank'}>Mask</Link>
-                                            <a href="/public/audio/AR_CONTRAST_2.mp3" download className="desc nav-link link">Sound</a>
+                                                  href="https://www.instagram.com/ar/1410842746283057/?ch=NTA2MzNjMDM0ODg0ODk2YjZjODNiNjk0YjQ0MDFlZTk%3D"
+                                                  target={'_blank'}>Mask</Link>
+                                            <a href="/audio/AR_CONTRAST_2.mp3" download className="desc nav-link link">Sound</a>
 										</Box>
                                     }
                                 </Box>
