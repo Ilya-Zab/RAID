@@ -9,7 +9,7 @@ import AudioPlayer from "../../AudioPlayer/AudioPlayer";
 const data = [
     {
         title: 'Prizes',
-        url: '/prizes',
+        url: '',
     }, {
         title: 'Rules',
         url: '/rules',
@@ -18,17 +18,19 @@ const data = [
         url: '/privacy-notice',
     }, {
         title: 'Find ID',
-        url: '/find-id',
     }, {
-        title: 'Email us',
-        url: '/email-ul',
+        title: 'Email Us',
+        url: 'mailto:support@wefinallyplayedit.com',
+    }, {
+        title: 'Materials',
+        url: '/materials',
     }
 ];
 
 const Header: React.FC = () => {
     return (
         <AppBar position="static" className={styles.header}>
-            <Box className={styles.container}>
+            <Box className={'container'}>
                 <Toolbar disableGutters className={styles.header__toolbar}>
                     <Link href={'/'} passHref className={styles.logo}>
                         <Image
@@ -42,8 +44,7 @@ const Header: React.FC = () => {
                     <Navigation data={data}/>
                     <Box className={styles.buttons}>
                         <Link
-                            href={'#'}
-                            download
+                            href={'https://pl.go-ga.me/chnosnyx'}
                             className={`hexagon-button hexagon-button_gradient ${styles.btn}`}>
                             Download RAID
                         </Link>

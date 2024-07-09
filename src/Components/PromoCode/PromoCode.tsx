@@ -3,6 +3,7 @@ import styles from './styles.module.scss';
 import {Box} from '@mui/material';
 import Link from "next/link";
 
+
 const PromoCode = () => {
     const textToCopy = 'WEFINALLY2024';
     const [copied, setCopied] = useState(false);
@@ -16,19 +17,20 @@ const PromoCode = () => {
         });
     };
     return (
-        <Box className={`subtract-box ${styles.promo}`}>
+        <Box className={`subtract-box subtract-box_small ${styles.promo}`}>
             <h2 className={styles.promo__title}>
                 Install the game to get your Raid ID and take part in the competition
             </h2>
            <Box className={styles.promo__wrapper}>
                <Link
-                   href={'#'}
-                   download
+                   href={'https://pl.go-ga.me/chnosnyx'}
                    className={`hexagon-button hexagon-button_gradient ${styles.promo__link}`}>
                    Download RAID
                </Link>
                <p className={styles.promo__text}>
-                   A small appreciation gift for all players! Redeem promo code:
+                   A small appreciation gift for all
+                   <br/>
+                   players! Redeem promo code:
                </p>
                <Box className={styles.promo__code} onClick={copyPromoCode}>
                    {copied && <span >code copied</span>}
@@ -40,7 +42,7 @@ const PromoCode = () => {
                    </svg>
                </Box>
                <time className={styles.promo__data}>
-                   *available till JULY 31
+                   *available till AUGUST 31ST
                </time>
                <p className={styles.promo__text}>How to redeem the promo code</p>
            </Box>

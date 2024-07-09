@@ -6,8 +6,11 @@
 
 .icon {
 	margin: 0 auto;
-	padding: 151px 0 26px;
+	padding: 45px 0 26px;
 	width: fit-content;
+	& .text__sub {
+		margin-bottom: 30px;
+	}
 }
 
 .text {
@@ -52,7 +55,7 @@
 	& > div {
 		margin: 0 auto;
 		display: flex;
-		align-items: baseline;
+		align-items: flex-start;
 		justify-content: center;
 		grid-gap: 7px;
 		& span {

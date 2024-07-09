@@ -1,63 +1,20 @@
 @import '@/styles/variables.module.scss';
 
-.bg {
-	background: url("../../../public/images/bg1.png"), $linearGradient4;
-	background-repeat: no-repeat;
-	background-size: cover;
-	padding: 20px 0 82px;
-	position: relative;
-	min-height: calc(100vh - 66px);
-	overflow-X: hidden;
-
-	&:after {
-		content: '';
-		display: block;
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 476px;
-		height: 627px;
-		background-image: url("../../../public/images/demon.png");
-	}
-}
-
-.container {
-	max-width: 362px;
-	width: 100%;
-	margin: 0 auto;
-	padding: 0 12px;
-	position: relative;
-	z-index: 10;
-}
-
 .photo {
 	border-radius: 4px;
 	object-fit: cover;
 }
 
-.title {
-	display: block;
-	margin: 0 auto 20px;
-	max-width: 250px;
-	width: 100%;
-}
-
 .section {
-	margin-top: 14px;
-	height: 605px;
-	background: $bg1;
-	border: 1px solid transparent;
-	border-image: linear-gradient(100deg, #08A232 19%, #2DE6FF 38%, #533BED 58%, #FF3CBD 90%);
-	border-image-slice: 1;
-	padding: 33px 12px 30px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-
+	text-align: center;
 	&__photo {
 		display: flex;
 		justify-content: center;
-		margin-bottom: 26px;
+		margin-top: 33px;
+		margin-bottom: 12px;
 		position: relative;
 		& h1 {
 			position: absolute;
@@ -77,40 +34,75 @@
 	}
 
 	&__text {
-		& p {
-			font-weight: 300;
+		max-width: 285px;
+		& > p {
+			font-family: inherit;
+			font-weight: 700;
 			font-size: 16px;
-			line-height: 100%;
+			line-height: 19px;
 			text-align: center;
 			color: $white;
 			margin-top: 5px;
 			letter-spacing: 0;
+			margin-bottom: 21px;
 			&:nth-of-type(2) {
-				font-size: 18px;
+				font-weight: 400;
+				font-size: 12px;
+				color: #fff;
+				margin-bottom: 20px;
+				line-height: 108%;
 				& span {
-					font-weight: 500;
-					background: linear-gradient(90deg, #08a232 19%, #2de6ff 38%, #533bed 58%, #ff3cbd 90%);
-					background-clip: text;
-					-webkit-background-clip: text;
-					-webkit-text-fill-color: transparent;
+					font-weight: 700;
+					text-transform: uppercase;
 				}
 			}
-			&:last-of-type {
-				margin-top: 20px;
-				font-size: 12px;
-			}
 		}
-		& .list {
-			margin-top: 17px;
-			list-style-type: none;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			grid-gap: 20px;
+		& > span {
+			display: inline-block;
+			font-family: inherit;
+			font-weight: 300;
+			font-size: 12px;
+			line-height: 114%;
+			color: $white;
+			letter-spacing: 0;
 		}
 	}
-
+	&__inp {
+		max-width: 285px;
+		margin-top: 20px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		& input {
+			width: 100%;
+			height: 38px;
+			padding: 12px;
+			background: rgba(8, 36, 64, 0.9);
+			border: 1px solid rgba(66, 113, 161, 0.58);
+			border-radius: 6px;
+			color: $white;
+			outline: none;
+			&::placeholder {
+				font-family: inherit;
+				font-weight: 400;
+				font-size: 14px;
+				line-height: 100%;
+				text-align: center;
+				color: rgba(100, 140, 182, 0.9);
+			}
+		}
+		& span {
+			margin-top: 15px;
+			font-family: inherit;
+			font-weight: 300;
+			font-size: 10px;
+			line-height: 120%;
+			text-align: center;
+			color: $grey1;
+		}
+	}
 	&__btn {
+		margin-top: 25px;
 		flex: 1 1 auto;
 		display: flex;
 		align-items: flex-end;
@@ -118,6 +110,7 @@
 		width: 100%;
 
 		& button {
+			font-family: inherit;
 			font-weight: 400;
 			font-size: 18px;
 			line-height: 22px;

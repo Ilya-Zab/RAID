@@ -1,7 +1,38 @@
 .creatives-section {
-    padding-top: 60px;
     position: relative;
     z-index: 2;
+
+    &__imgWrapper {
+        position: absolute;
+        right: 0;
+        z-index: 10;
+    }
+
+    &__img {
+        position: relative;
+        z-index: 5;
+        height: auto;
+
+        &_main {
+            width: clamp(533px, 57vw, 980px);
+            @media screen and (max-width: 768px) {
+                width: clamp(280px, 57vw, 450px);
+            }
+        }
+        &_gallery {
+            width: clamp(533px, 57vw, 780px);
+            @media screen and (max-width: 768px) {
+                width: clamp(280px, 57vw, 380px);
+            }
+        }
+        &_preview {
+            width: clamp(533px, 57vw, 780px);
+            @media screen and (max-width: 768px) {
+                width: clamp(280px, 57vw, 380px);
+            }
+        }
+    }
+
 
     &__line {
         width: 1px;
@@ -10,7 +41,6 @@
     }
 
     &__tag {
-        margin-top: 60px;
         font-size: 2rem;
         margin-bottom: 40px;
         font-weight: 700;
@@ -24,5 +54,7 @@
 
     &__block {
         margin-bottom: 40px;
+        position: relative;
+        z-index: 10;
     }
 }

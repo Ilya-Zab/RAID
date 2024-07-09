@@ -3,20 +3,28 @@ import Header from "../Layouts/Header/Header";
 import { useMediaQuery } from "@mui/material";
 import MobileHeader from "../Layouts/MobileHeader/MobileHeader";
 import Footer from "../Layouts/Footer/Footer";
+import SingleCreativePopup from "../Popups/SingleCreativePopup";
+import GiftList from "@/Components/GiftList/GiftList";
+import {useSelector} from "react-redux";
+import ModalFindId from "@/Components/ModalFindId/ModalFindId";
 
-interface LayoutProps
-{
+interface LayoutProps {
     children?: ReactNode;
 }
 
-const Layout: FC<LayoutProps> = ({ children }) =>
-{
+const Layout: FC<LayoutProps> = ({ children }) => {
+    // @ts-ignore
+    const {isOpenGifts,isOpenFindId} = useSelector((state) => state.modal);
     const isMobile = useMediaQuery('(max-width: 768px)');
+
     return (
         <>
             {!isMobile ? <Header /> : <MobileHeader />}
+            <SingleCreativePopup />
             {children}
-            {<Footer />}
+            <Footer />
+            {isOpenGifts && <GiftList/>}
+            {isOpenFindId && <ModalFindId/>}
         </>
     )
 }

@@ -1,0 +1,82 @@
+@import '@/styles/variables.module.scss';
+
+.modal {
+	backdrop-filter: blur(55px);
+	box-shadow: 0 14px 54px 0 rgba(0, 0, 0, 0.25);
+	background: rgba(66, 113, 161, 0.8);
+	border-radius: 8px;
+	width: 85%;
+	margin: 80px auto 0;
+	padding: 26px 12px 12px;
+	
+	&__btn {
+		cursor: pointer;
+		color: white;
+		position: absolute;
+		top: 0;
+		right: 0;
+		
+		& svg {
+			font-size: 22px;
+		}
+	}
+	
+	&__title {
+		font-family: inherit;
+		font-weight: 500;
+		font-size: 16px;
+		line-height: 100%;
+		text-align: center;
+		color: #fff;
+		margin-bottom: 14px;
+	}
+	
+	&__list {
+		margin-bottom: 20px;
+		list-style: none;
+	}
+	
+	&__item {
+		font-family: inherit;
+		font-weight: 400;
+		font-size: 14px;
+		line-height: 120%;
+		text-align: left;
+		color: #fff;
+		margin-bottom: 8px;
+	}
+	
+	&__text {
+		font-family: inherit;
+		font-weight: 400;
+		font-size: 14px;
+		line-height: 120%;
+		text-align: left;
+		color: #fff;
+	}
+	
+	&__scrollbar {
+		max-height: 320px;
+		overflow-y: auto;
+		padding: 8px;
+		scrollbar-width: thin;
+		scrollbar-color: #f1f1f1 rgba(255, 255, 255, 0);
+		
+		&::-webkit-scrollbar {
+			background: #f1f1f1;
+			border-radius: 2px;
+			width: 4px;
+			height: 4px;
+		}
+		
+		&::-webkit-scrollbar-track {
+			background: rgba(255, 255, 255, 0);
+		}
+		
+		&::-webkit-scrollbar-thumb {
+			background: rgba(255, 255, 255, 0);
+			border-radius: 2px;
+			height: 4px;
+		}
+	}
+}

@@ -1,0 +1,128 @@
+@import '@/styles/variables.module.scss';
+
+.CreativeRecorder {
+	position: relative;
+	width: 100%;
+	height: 100%;
+
+	&__buttons {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	&__recorder {
+		width: 100%;
+		height: 100%;
+		max-height: 605px;
+		border-radius: 4px;
+
+		& canvas {
+			border-radius: 6px;
+		}
+	}
+}
+
+.button {
+	padding: 0;
+	background: transparent;
+	border-radius: 50%;
+	cursor: pointer;
+	position: absolute;
+	z-index: 100;
+
+	&-start,
+	&-stop {
+		width: 60px;
+		height: 60px;
+		border: 1px solid $white;
+		padding: 4px;
+	}
+
+	&-start {
+		bottom: 17px;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+	&-stop {
+		bottom: 17px;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+	&-rew,
+	&-download,
+	&-sound {
+		width: 40px;
+		height: 40px;
+	}
+
+	&-rew {
+		bottom: 24px;
+		right: 20px;
+	}
+
+	&-sound {
+		top: 20px;
+		right: 20px;
+	}
+
+	&-download {
+		bottom: 24px;
+		left: 20px;
+	}
+}
+
+.wrapper {
+	position: absolute;
+	bottom: 100px;
+	left: 50%;
+	transform: translateX(-50%);
+	display: flex;
+	align-items: center;
+	grid-gap: 20px;
+}
+.wrapper2 {
+	position: absolute;
+	top: 50%;
+	right: 20px;
+	transform: translateY(-50%);
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	grid-gap: 20px;
+}
+.label {
+	display: inline-block;
+	width: 52px;
+	height: 52px;
+	cursor: pointer;
+}
+.input {
+	display: none;
+	&:checked {
+		& + span {
+			border-color: $white;
+		}
+	}
+}
+.img {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 52px;
+	height: 52px;
+	border: 2px solid transparent;
+	border-radius: 50%;
+	padding: 4px;
+	& img {
+		display: block;
+		border-radius: 50%;
+		width: 40px;
+		height: 40px;
+		object-fit: cover;
+	}
+}

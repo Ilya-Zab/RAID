@@ -4,8 +4,7 @@ import { useLazyFetchUserQuery } from "@/store/wordpress/wpRestApi";
 
 import { useRegisterUserMutation } from "@/store/wordpress/wpRestApi";
 import wpRestApi from "@/services/wordpress/wpService";
-import { LoginForm } from "@/Components/Forms/Login";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import Creatives from "@/Components/Layouts/Creatives";
 import CreativesList from "@/Components/Creatives/CreativesList";
 
@@ -14,7 +13,9 @@ import { useLazyFetchUserCountryQuery } from "@/store/ipapi/ipapi";
 import Hero from "@/Components/Layouts/Hero/Hero";
 import Second from "@/Components/Layouts/Second/Second";
 import Ready from "@/Components/Layouts/Ready/Ready";
-import { CheckUserId } from "@/Components/Forms/CheckUserId";
+import ScrollButton from "@/Components/ScrollButton/ScrollButton";
+import styles from "@/Components/Layouts/Creatives/styles.module.scss";
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,10 +43,19 @@ export default function Home() {
     }
 
     return (
-        <main>
+        <main className='home'>
+            <ScrollButton />
             <Hero />
             <Second />
-            <Creatives />
+            <Creatives>
+                <Image
+                    src='/images/vlad.png'
+                    alt="vlad"
+                    width={829}
+                    height={1274}
+                    className={`${styles['creatives-section__img']} ${styles['creatives-section__img_main']}`}
+                />
+            </Creatives>
             <Ready />
             {/*<button onClick={() => unsetCookies()}>unsetCookies</button>*/}
             {/* <button onClick={ }></button> */}

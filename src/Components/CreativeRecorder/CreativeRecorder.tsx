@@ -8,13 +8,13 @@ import { EffectItem, EffectPicker } from "./EffectPicker";
 import useAudioRecorder from "@/hooks/useAudioRecorder";
 import useVideoProcessor from "@/hooks/useVideoProcessor";
 import axios from "axios";
+import styles from './styles.module.scss';
+import { Box, IconButton } from "@mui/material";
+import { Loader } from "../Layouts/Loader";
+import { useAppDispatch } from "@/hooks/redux";
+import { setLoading } from "@/store/slice/creativeSlice";
 
 // div element for displaying video should has fixed size
-const ARScreenStyle = {
-    width: "640px",
-    height: "480px"
-}
-
 const musicPath = "/audio/AR_CONTRAST.mp3";
 const effects: EffectItem[] = [
     {
@@ -52,14 +52,15 @@ const effects: EffectItem[] = [
     {
         name: "Skeleton + tatoo",
         url: "effects/SKELETON_BG_TATOO.deepar"
-    }
+    },
 ];
-
-export interface CreativeRecorderProps {
-    onContinueClick: (video: Blob) => void
+export interface CreativeRecorderProps
+{
+    onVideoRecorded: (video: Blob) => void,
 }
 
-export default function CreativeRecorder(props: CreativeRecorderProps) {
+export default function CreativeRecorder(props: CreativeRecorderProps)
+{
     const deepAR = useDeepAR("#deepar-screen");
     const [isInited, setIsInited] = useState<boolean>(false);
     const creativeRecorder = useCreativeRecorder({ deepAR });
@@ -67,85 +68,105 @@ export default function CreativeRecorder(props: CreativeRecorderProps) {
     const videoProcessor = useVideoProcessor();
     const [music, setMusic] = useState<Blob | null>(null);
     const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
+    const [frames, setLocalFrames] = useState(null);
+    const dispatch = useAppDispatch();
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         initializeCreativeRecorder();
-    }, []);
 
-    useEffect(() => {
+        return () =>
+        {
+            if (deepAR && isInited)
+            {
+                deepAR.shutdown();
+            }
+        };
+    }, [isInited, deepAR]);
+
+    useEffect(() =>
+    {
         if (!creativeRecorder.video || !audioRecorder.audio || !music)
             return
 
         videoProcessor.mergeVideoAndAudio(creativeRecorder.video, audioRecorder.audio, music);
+        if (!frames)
+        {
+            setLocalFrames(creativeRecorder.video);
+            props.onVideoRecorded(creativeRecorder.video);
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [creativeRecorder.isRecording, audioRecorder.finishRecording, music]);
 
-    async function handleVideoStateChange(isStarted: boolean) {
-        try {
-            if (isStarted) 
+    async function handleVideoStateChange(isStarted: boolean)
+    {
+        try
+        {
+            if (isStarted)
                 finishRecording();
-            else 
+            else
                 startRecording();
         }
-        catch (e) {
+        catch (e)
+        {
             console.error(e);
             alert("Error!");
         }
     }
-        
-    function handleContinueClick() {
-        if (videoProcessor.output)
-            props.onContinueClick(videoProcessor.output);
-    }
 
-
-    function handleEffectChange(effect: EffectItem) {
+    function handleEffectChange(effect: EffectItem)
+    {
         deepAR?.switchEffect(effect.url);
     }
-    
+    function handleMaskChange(effect: EffectItem)
+    {
+        deepAR?.switchEffect(effect.url);
+    }
+
     return (
-        <div style={{ display: "flex" }}>
-            <div>
+        <Box className={styles.CreativeRecorder}>
+            <Box className={styles.CreativeRecorder__recorder} id="deepar-screen" />
+            <Box className={styles.CreativeRecorder__buttons}>
+                <EffectPicker
+                    effects={effects}
+                    onEffectChange={handleEffectChange}
+                    orientation={'horizontal'}
+                />
+                <EffectPicker
+                    effects={effects}
+                    onEffectChange={handleEffectChange}
+                    orientation={'vertical'}
+                />
                 <StartStopButton
                     onChange={handleVideoStateChange}
                     disabled={!deepAR || !isInited}
                 />
-                {" "}
-                <button
-                    onClick={handleContinueClick}
-                    disabled={!videoProcessor.output}
-                >
-                    Continue
-                </button>
-
-                <EffectPicker  
-                effects={effects}
-                onEffectChange={handleEffectChange}
-                />
-            </div>
-
-            <div>
-                <div style={ARScreenStyle} id="deepar-screen"></div>
-            </div>
-        </div>
+            </Box>
+        </Box>
     );
-    
-    function startRecording() {
+
+    function startRecording()
+    {
         creativeRecorder?.startRecording(),
-        audioRecorder.startRecording()
+            audioRecorder.startRecording()
         audioPlayerRef.current?.play();
     }
 
-    function finishRecording() {
+    function finishRecording()
+    {
+        dispatch(setLoading(true));
         audioRecorder.finishRecording();
         creativeRecorder.finishRecording();
-                
-        if (audioPlayerRef.current) {
+        if (audioPlayerRef.current)
+        {
             audioPlayerRef.current.pause()
             audioPlayerRef.current.currentTime = 0;
         }
     }
 
-    async function initializeCreativeRecorder() {
+    async function initializeCreativeRecorder()
+    {
         const music = await axios.get(musicPath, { responseType: "blob" })
             .then(response => response.data);
 
@@ -158,24 +179,3 @@ export default function CreativeRecorder(props: CreativeRecorderProps) {
         setIsInited(videoGrants && audioGrants);
     }
 }
-
-
-
-
-
-
-
-// used to test recorded videos
-function downloadVideo(video: Blob, videoName: string) {
-    const url = URL.createObjectURL(video);
-    const a: any = document.createElement("a");
-
-    a.href = url;
-    a.download = videoName;
-
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-}
-

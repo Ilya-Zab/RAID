@@ -2,7 +2,7 @@
 
 .nav {
 	padding: 0 12px;
-	max-width: 489px;
+	max-width: 589px;
 	width: 100%;
 	&__list {
 		display: flex;
@@ -10,5 +10,19 @@
 		padding: 0;
 		gap: 12px;
 		list-style: none;
+	}
+}
+.btn {
+	padding: 0;
+	border: none;
+	outline: none;
+	background: transparent;
+	cursor: pointer;
+	font-weight: 400;
+	font-size: 18px;
+	color: $white1;
+	
+	@media screen and (max-width: 768px) {
+		font-size: 16px;
 	}
 }

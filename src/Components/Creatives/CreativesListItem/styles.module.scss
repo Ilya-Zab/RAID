@@ -3,34 +3,38 @@
 
 .creatives-list-item {
     position: relative;
-    padding-top: 164.5%;
-    background: $bg2;
-    border-radius: 10px;
-    overflow: hidden;
-    border: none;
-    color: $white;
-    transition: .1s ease;
-    outline: 4px solid transparent;
-    cursor: pointer;
-    font-size: 0.7em;
-    font-weight: 800;
-    text-shadow: rgba(0, 0, 0, .2) 0 0 10px;
-    border: 1px solid rgba(255, 255, 255, .15);
+    padding-top: $creative-ratio;
 
-    &:hover {
-        outline: 4px solid rgba(255, 255, 255, .2);
+    &__link {
+        background: $bg2;
+        border-radius: 10px;
+        overflow: hidden;
+        border: none;
+        color: $white;
+        transition: .1s ease;
+        outline: 4px solid transparent;
+        cursor: pointer;
+        font-size: 0.8em;
+        font-weight: 800;
+        border: 1px solid rgba(255, 255, 255, .15);
+        position: absolute;
+        inset: 0;
 
-        .creatives-list-item__content {
-            background-color: transparent;
+        &:hover {
+            outline: 4px solid rgba(255, 255, 255, .2);
+
+            .creatives-list-item__content {
+                background-color: transparent;
+            }
         }
-    }
 
-    &:focus-visible {
-        outline: 4px solid $white;
-        box-shadow: rgba(255, 255, 255, 0.4) 0 0 20px;
+        &:focus-visible {
+            outline: 4px solid $white;
+            box-shadow: rgba(255, 255, 255, 0.4) 0 0 20px;
 
-        .creatives-list-item__content {
-            background-color: transparent;
+            .creatives-list-item__content {
+                background-color: transparent;
+            }
         }
     }
 
@@ -51,17 +55,37 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        padding: 15px 10px 10px;
+        padding: 15px;
         background-color: rgba(0, 0, 0, .15);
         transition: 0.1s ease;
     }
 
     &__title {
-        @include text-gradient;
+        position: relative;
+
+        &-bg {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 20%;
+            top: 40%;
+            background-color: rgba(0, 0, 0, .5);
+            filter: blur(10px);
+        }
+
+        &-label {
+            position: relative;
+            text-align: left;
+            @include text-gradient-light;
+        }
+
     }
 
     &__votes {
-        font-size: 0.8em;
+        font-size: 0.6em;
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
     }
 
     &__top {
@@ -74,5 +98,21 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        padding-right: 30px;
+    }
+
+    @media (max-width: 800px) {
+        &__link {
+            font-size: 0.8em;
+        }
+
+        &__content {
+            padding: 10px 5px;
+        }
+
+        &__votes {
+            bottom: 5px;
+            right: 0px;
+        }
     }
 }

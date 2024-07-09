@@ -11,6 +11,13 @@
 	}
 }
 
+.info {
+	display: block;
+	text-align: center;
+	font-size: 14px;
+	color: $grey2;
+}
+
 .link {
 	text-decoration: none;
 	color: inherit;
@@ -20,32 +27,36 @@
 	transition: .2s color ease-in-out;
 }
 
-.nav-link:hover {
-	//color: $accent;
+.input {
+	font-family: 'Inter', sans-serif;
+	font-size: 16px;
+	color: $white !Important;
+
+	&::placeholder {
+		color: $placeholder-color;
+	}
 }
 
-.nav-link:active {
-	//color: $black-color;
-}
 
 .nav-link:focus-visible {
-	//outline: 2px solid $accent;
 	outline-offset: 10px;
 }
 
 .subtract-box {
 	margin: 0 auto;
 	width: fit-content;
-	padding: 70px 30px 50px;
-	backdrop-filter: blur(10px);
-	background-image: url('../../public/images/subtract-box.png');
+	padding: 50px 40px;
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	background-position: 0 0;
 
+	&_small {
+		backdrop-filter: blur(10px);
+		background-image: url('/images/subtract-box.png');
+	}
+
 	&_big {
-		padding: 50px 70px;
-		background-image: url('../../public/images/subtract-big-box.png');
+		background-image: url('/images/subtract-big-box_new.png');
 	}
 }
 
@@ -64,7 +75,7 @@
 	color: $white1;
 	text-transform: capitalize;
 	background-color: transparent;
-	background-image: url('../../public/images/hex_reg.png');
+	background-image: url('/images/hex_reg.png');
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	background-position: 0 0;
@@ -80,27 +91,13 @@
 	}
 
 	&_gradient {
-		background-image: url('../../public/images/hex-gradient_reg.png');
+		background-image: url('/images/hex-gradient_reg.png');
 
 		&:active {
 			filter: brightness(0.9);
 		}
 	}
 }
-
-html {
-	scroll-behavior: smooth;
-}
-
-body {
-	background-image: url('../../public/images/landing_page_1280.png');
-	background-blend-mode: normal;
-	background-repeat: no-repeat;
-	background-size: cover;
-	overflow-x: hidden;
-}
-
-
 
 .btnWrapper {
 	position: relative;
@@ -162,32 +159,51 @@ body {
 }
 
 .btn-second {
-	padding: 16px 30px;
 	width: 100%;
 	background: linear-gradient(176deg, #00ded4 0%, #0292bf 100%);
+	padding: 14px;
 	border-radius: 40px;
 	position: relative;
 	z-index: 30;
 	outline: none;
-	font-weight: 400;
-	font-size: 19px;
-	line-height: 22px;
 	text-shadow: 0 2px 3px rgba(0, 0, 0, 0.27);
 	text-transform: capitalize;
 
 	&:hover {
 		background: linear-gradient(176deg, #00ded4 0%, #0292bf 100%);
 	}
+	&-next {
+		position: absolute;
+		bottom: 24px;
+		left: 50%;
+		transform: translateX(-50%);
+		max-width: 140px;
+		font-weight: 700;
+		font-size: 19px;
+		line-height: 114%;
+	}
+	&:disabled {
+		opacity: 0.6;
+	}
 }
 
 .container {
 	box-sizing: border-box;
 	padding: 0 40px;
-	max-width: 1220px;
+	max-width: 1155px;
+	// padding: 0 15px;
+	width: 100%;
+	// max-width: 1165px;
 	margin: 0 auto;
 
 	&_creatives {
-		max-width: 1240px;
+		max-width: 1215px;
+	}
+
+	&_createVideo {
+		position: relative;
+		z-index: 10;
+		padding: 0 10px;
 	}
 }
 
@@ -200,4 +216,47 @@ body {
 .text-gradient {
 	@include text-gradient;
 	// -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.5);
+}
+
+.bg-gallery {
+	background-image: url('../../public/images/bg-gallery.png');
+	background-blend-mode: normal;
+	background-repeat: no-repeat;
+	background-size: cover;
+	overflow-x: hidden;
+	padding-top: 50px;
+	padding-bottom: 158px;
+	margin-bottom: -68px;
+}
+
+.home {
+	background-color: $graphite;
+	background-image: url('../../public/images/landing_page_1280.png');
+	background-blend-mode: normal;
+	background-repeat: no-repeat;
+	background-size: cover;
+	overflow: hidden;
+	margin-bottom: -68px;
+
+	@media screen and (max-width: 580px) {
+		background-image: url('../../public/images/bg_mob.png');
+	}
+}
+
+@media (max-width: 800px) {
+	.container {
+		padding: 0 30px;
+
+		&_creatives {
+			padding: 0 15px;
+		}
+		&_createVideo {
+			padding: 0 10px;
+		}
+	}
+
+	.creatives-list-grid {
+		grid-template-columns: repeat(3, 1fr);
+		gap: 10px;
+	}
 }

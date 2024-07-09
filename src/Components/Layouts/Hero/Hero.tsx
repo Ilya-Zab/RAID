@@ -9,37 +9,37 @@ import { useMediaQuery } from "@mui/material";
 const Hero = () =>
 {
     const beforeRef = useRef(null);
-    const [topDistance, setTopDistance] = useState(0);
     const [computedBottom, setComputedBottom] = useState('');
-    const headerHeight = 0;
-    const coefficient = 0.2;
+    const headerHeight = 0.00234131;
+    const coefficient = 0.20934;
 
     const isMobile = useMediaQuery('(max-width: 768px)');
-    const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1024px)');
 
-    let defaultBottom;
+    const defaultBottom = React.useMemo(() => isMobile ? 0 : 86, [isMobile]);
 
-    if (isMobile)
-    {
-        defaultBottom = 100;
-    } else if (isTablet)
-    {
-        defaultBottom = 50;
-    } else
-    {
-        defaultBottom = -106;
-    }
+    let ticking = false;
 
     const handleScroll = () =>
     {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        if (!ticking)
+        {
+            window.requestAnimationFrame(() =>
+            {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-        let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
-        distanceFromHeader *= coefficient;
+                let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
+                distanceFromHeader = parseFloat((distanceFromHeader * coefficient).toFixed(8));
 
-        setTopDistance(distanceFromHeader);
-        setComputedBottom(`${defaultBottom - distanceFromHeader}px`);
+
+                setComputedBottom(`${defaultBottom - distanceFromHeader}px`);
+
+                ticking = false;
+            });
+
+            ticking = true;
+        }
     };
+
     useEffect(() =>
     {
         handleScroll();
@@ -49,53 +49,51 @@ const Hero = () =>
         {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, [isMobile, isTablet]);
+    }, [isMobile]);
 
     return (
         <Box className={styles.hero}>
-            <Box className={styles.container}>
-                <Box className={styles.hero__img__wrapper}>
-                    <Image
-                        ref={beforeRef}
-                        style={{ bottom: computedBottom }}
-                        src={!isMobile ? '/images/king.png' : '/images/king_mob.png'}
-                        alt='king'
-                        width={!isMobile ? 733 : 359}
-                        height={!isMobile ? 745 : 559}
-                        className={styles.hero__img}
-                    />
-                </Box>
-                <Box className={styles.hero__wrapper}>
+            <Box className={`container ${styles.wrapper}`}>
+                <Image
+                    ref={beforeRef}
+                    style={{ bottom: computedBottom }}
+                    src={!isMobile ? '/images/king.png' : '/images/king_mob.png'}
+                    alt='king'
+                    width={!isMobile ? 733 : 359}
+                    height={!isMobile ? 745 : 559}
+                    className={styles.hero__img}
+                />
+                <Box>
                     <Box className={styles.hero__title_wrapper}>
                         <h1 className={styles.hero__title}>
-                            Everyone&apos;s <br />
-                            <span className='text-gradient'>Playing Raid</span>.
-                            <br />
-                            Start Now and
-                            <br />
-                            <span className='text-gradient'>win </span>
-                            a huge
-                            <span className='text-gradient'>prize.</span>
+                            It&apos;ll never be the <br/> same once you<br/>
+                            <span className='text-gradient'> play Raid</span>. Show how<br/> you do it and
+                            <span className='text-gradient'> win</span><br/> gaming consoles,<br/> drones, and more<br/>
+                            exicting
+                            <span className='text-gradient'> prizes</span>!
                         </h1>
                     </Box>
                     <Box className={styles.hero__steps_wrapper}>
                         <p className={styles.hero__steps}>
                             <b>Step 1: </b>
-                            <Link href={'/'} download className='text-gradient'>
-                                download RAID
+                            <Link href={'https://pl.go-ga.me/chnosnyx'} target='_blank' className='text-gradient'>
+                                Download RAID
                             </Link>
                         </p>
                         <p className={styles.hero__steps}>
                             <b>Step 2: </b>
-                            enter your&nbsp;
+                            Enter your&nbsp;
                             <Link href='#ready' className='text-gradient'>
                                 RAID ID
                             </Link>
                         </p>
                         <p className={styles.hero__steps}>
-                            <b>Step 3: </b> create or upload your content
+                            <b>Step 3: </b> Create or upload your content
                             <br />
                             to take part in the prize draw!
+                        </p>
+                        <p className={styles.hero__text}>
+                            More likes - more chances to win!<br/> Make sure to share on all your social media channels.
                         </p>
                     </Box>
                     <Box className={styles.hero__btn__wrapper}>

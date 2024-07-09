@@ -20,8 +20,11 @@ const data = [
         title: 'Find ID',
         url: '/find-id',
     }, {
-        title: 'Email us',
-        url: '/email-ul',
+        title: 'Email Us',
+        url: 'mailto:support@wefinallyplayedit.com',
+    }, {
+        title: 'Materials',
+        url: '/materials',
     }
 ];
 
@@ -52,8 +55,7 @@ const MobileHeaderDrawer: React.FC<MobileHeaderDrawerProps> = ({ toggleDrawer })
             <Divider />
             <Box className={styles.buttons}>
                 <Link
-                    href={'#'}
-                    download
+                    href={'https://pl.go-ga.me/chnosnyx'}
                     className={`hexagon-button hexagon-button_gradient ${styles.btn}`}>
                     Download RAID
                 </Link>

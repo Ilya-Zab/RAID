@@ -17,6 +17,11 @@ export const wpAPI = createApi({
                 params,
             }),
         }),
+        fetchCreative: build.query({
+            query: (id) => ({
+                url: `/creative/${id}`
+            }),
+        }),
         registerUser: build.mutation({
             query: (credentials) => ({
                 url: '/users',
@@ -44,4 +49,6 @@ export const
         useRegisterUserMutation,
         usePostVideoMutation,
         useFetchAllCreativesByDataQuery,
+        useFetchCreativeQuery,
+        useLazyFetchAllCreativesByDataQuery,
     } = wpAPI;
