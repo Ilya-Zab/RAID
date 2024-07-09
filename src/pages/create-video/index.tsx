@@ -5,7 +5,6 @@ import CreativeRecorder from "@/Components/CreativeRecorder/CreativeRecorder";
 import styles from './styles.module.scss';
 import { Box, Button, IconButton } from "@mui/material";
 import Modal from "@/Components/Modal/Modal";
-import { downloadVideo } from "@/utils";
 import { useVideoFrames } from "@/hooks/useVideoFrames";
 import FinallyVideoTemplate from "@/Components/FinallyVideoTemplate/FinallyVideoTemplate";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
@@ -16,6 +15,8 @@ import { setLoading } from "@/store/slice/creativeSlice";
 import { Loader } from "@/Components/Layouts/Loader";
 import CreativeName from "@/Components/CreativeName/CreativeName";
 import ProgressBar from "@/Components/ProgressBar/ProgressBar";
+import { CheckVideo } from "./CheckVideo";
+import { downloadVideo } from "@/utils";
 
 const CreateVideo = () =>
 {
@@ -30,9 +31,20 @@ const CreateVideo = () =>
     const raidId = useAppSelector(state => state.raidId.raidId);
     const [cookies] = useCookies(['userToken']);
     const router = useRouter();
-    const [wait, setWait] = useState(false);
     const dispatch = useAppDispatch();
     const isCreating = useAppSelector(state => state.creative.isLoading);
+
+    const onDownloadClick = useCallback(() =>
+    {
+        alert('after');
+        if (videoUrl)
+        {
+            alert('inside');
+            // downloadVideo(video, "video.mp4");
+            console.log(videoUrl);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [videoUrl, video]);
 
     const getCurrentFrame = (currentFrame: Blob) =>
     {
@@ -51,9 +63,7 @@ const CreateVideo = () =>
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [raidId, cookies]);
 
-    // downloadVideo(video, "video.mp4");
-
-    function handleContinueClick(video: Blob)
+    function creativeRecorderNext(video: Blob): void
     {
         if (video)
         {
@@ -78,11 +88,16 @@ const CreateVideo = () =>
 
     async function handleVideoReady(video: Blob)
     {
-        setVideo(video);
         setVideoUrl(URL.createObjectURL(video));
         const frames = await extractAllFrames(video);
-        setAllFrames(frames);
-        nextStep();
+        if (frames.length > 0 && video)
+        {
+            setAllFrames(frames);
+            nextStep();
+        } else
+        {
+            alert('The video is too short, please record it again!');
+        }
         dispatch(setLoading(false));
     }
 
@@ -117,34 +132,20 @@ const CreateVideo = () =>
                     </Modal>
                 );
             case 2:
-                return <CreativeRecorder onContinueClick={handleContinueClick} onVideoRecorded={handleVideoReady} />;
+                return <CreativeRecorder onContinueClick={creativeRecorderNext} onVideoRecorded={handleVideoReady} />;
             case 3:
-                return (
-                    <Box>
-                        <video
-                            autoPlay
-                            loop
-                            muted
-                            className={styles.video}
-                        >
-                            <source
-                                src={videoUrl}
-                                type="video/mp4"
-                            />
-                        </video>
-                    </Box>
-                )
+                return <CheckVideo videoUrl={videoUrl} onDownload={onDownloadClick} />
             case 4:
-                return <CreativeSwiper data={allFrames && allFrames} nextStep={nextStep} getCurrentFrame={getCurrentFrame} />
+                return <CreativeSwiper data={allFrames} nextStep={nextStep} getCurrentFrame={getCurrentFrame} />;
             case 5:
-                return <CreativeName nextStep={nextStep} creativeImage={currentBlobFrame} />
+                return <CreativeName nextStep={nextStep} creativeImage={currentBlobFrame} prevStep={prevStep} />
             case 6:
                 return <FinallyVideoTemplate video={video} userName={'fewfw'} creativeImage={currentBlobFrame} />
             default:
                 return <CreateVideoTemplate handleButtonClick={nextStep} />;
         }
     };
-    console.log(step, 'step')
+
     return (
         <>
             <Head>
@@ -159,9 +160,10 @@ const CreateVideo = () =>
                             #WeFinallyPlayedIt
                         </h1>
                         <Box className={styles.popup} id="pp">
-                            {CurrentTemplate()}
+                            {isLoading && < Loader className={styles.popup__loader} color="white" />}
+                            {!isLoading && CurrentTemplate()}
                             {
-                                (step > 1 && step < 5) &&
+                                (step > 1 && step < 6) &&
                                 <button onClick={() => prevStep()}
                                     className={`${styles.button} ${styles['button-prev']}`}>
                                     <svg width="40" height="40" viewBox="0 0 40 40" fill="none"
@@ -194,8 +196,9 @@ const CreateVideo = () =>
                                     variant="contained"
                                     className={`btn-second btn-second-next`}
                                     onClick={() => nextStep()}
+                                    disabled={isLoading}
                                 >
-                                    Next
+                                    {allFrames.length > 0 ? "Next" : "Wait.."}
                                 </Button>
                             }
                         </Box>

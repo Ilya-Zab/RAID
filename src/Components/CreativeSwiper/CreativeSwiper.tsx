@@ -19,7 +19,6 @@ const CustomSwiperNav = styled(Swiper)`
 const CreativeSwiper = ({ data, nextStep, getCurrentFrame }) =>
 {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
-    console.log(data,'CreativeSwiper');
     const handleSlideChange = (swiper) =>
     {
         const activeIndex = swiper.activeIndex;

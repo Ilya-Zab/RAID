@@ -1,17 +1,25 @@
-import {Box, Button} from "@mui/material";
+import { Box, Button } from "@mui/material";
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import {useState} from "react";
+import { useState } from "react";
+import { useAppDispatch } from "@/hooks/redux";
+import { setCreativeName } from "@/store/slice/creativeSlice";
 
-const CreativeName = ({nextStep, creativeImage }) =>{
+const CreativeName = ({ nextStep, creativeImage }) =>
+{
     const [value, setValue] = useState("");
-    const handlerChange = (e) => {
+    const dispatch = useAppDispatch();
+    const handlerChange = (e) =>
+    {
         setValue(e.target.value);
+        dispatch(setCreativeName(e.target.value));
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e) =>
+    {
         e.preventDefault();
-        if (value.trim()) {
+        if (value.trim())
+        {
             nextStep();
         }
     };
@@ -19,15 +27,14 @@ const CreativeName = ({nextStep, creativeImage }) =>{
     return (
         <Box className={styles.wrapper}>
             <Image
-                src={'/images/user.png'}
-                // src={creativeImage.frameUrl}
-                alt={""}
+                src={creativeImage.frameUrl}
+                alt={"Creatvie"}
                 width={340}
                 height={605}
                 className={styles.img}
             />
             <form className={styles.form} onSubmit={handleSubmit}>
-                <input type="text" value={value} onChange={handlerChange} className={styles.input} placeholder={'Enter Your Nickname'}/>
+                <input type="text" value={value} onChange={handlerChange} className={styles.input} placeholder={'Enter Your Nickname'} />
                 <Button
                     type="button"
                     variant="contained"

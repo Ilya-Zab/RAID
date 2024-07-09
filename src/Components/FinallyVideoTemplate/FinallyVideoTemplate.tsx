@@ -14,6 +14,7 @@ const FinallyVideoTemplate = ({ video, creativeImage, userName }) =>
 {
     const [cookies] = useCookies(['userToken']);
     const raidId = useAppSelector(state => state.raidId.raidId);
+    const creativeName = useAppSelector(state => state.creative.creativeName);
     const router = useRouter();
     const { createCreativeAsBlob, success, data, error } = useCreateCreative();
     const [isCreating, setCreating] = React.useState(false);
@@ -38,8 +39,8 @@ const FinallyVideoTemplate = ({ video, creativeImage, userName }) =>
     {
         if (wpMediaResponse && "mediaItem" in wpMediaResponse)
         {
-            console.log(wpMediaResponse.mediaItem.id);
             setImageId(wpMediaResponse.mediaItem.id);
+            console.log(imageId);
         }
 
         if (wpMediaError)
@@ -51,6 +52,7 @@ const FinallyVideoTemplate = ({ video, creativeImage, userName }) =>
     const createCreative = () =>
     {
         setCreating(true);
+        console.log('Is video here?', video);
         createCreativeAsBlob(video);
     }
 
@@ -82,7 +84,7 @@ const FinallyVideoTemplate = ({ video, creativeImage, userName }) =>
                             className={styles.photo}
                         />
                         <Typography variant='h1'>
-                            {userName}
+                            {creativeName && creativeName}
                         </Typography>
                     </Box>
                     <Box className={styles.section__text}>
