@@ -9,13 +9,15 @@ import Link from "next/link";
 
 
 interface MyCreativeCardPropsType {
-    creative: CreativeDataType
+    creative: CreativeDataType,
+    hasVoted: boolean,
+    onVote: (creativeId: number) => void
 }
 
-const MyCreativeCard: FC<MyCreativeCardPropsType> = ({ creative }) => {
+const MyCreativeCard: FC<MyCreativeCardPropsType> = ({ creative, hasVoted, onVote }) => {
     return (
         (creative.status === 'publish') ?
-            <CreativesListItem creative={creative} hasVoted={false} onVote={() => { }} /> :
+            <CreativesListItem creative={creative} hasVoted={hasVoted} onVote={onVote} /> :
             <div className={styles['my-creative-card']}>
                 <div className={styles["my-creative-card__media"]}>
                     {(creative.meta.featured_media_type === 'video' && creative.preview_url) ?

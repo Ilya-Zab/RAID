@@ -8,6 +8,7 @@ import { useLazyFetchUserDataQuery } from "@/store/wordpress/wpUser";
 import { useLazyFetchAllCreativesByDataQuery } from "@/store/wordpress/wpRestApi";
 import { useRouter } from "next/router";
 import MyCreativeCard from "@/Components/Creatives/MyCreativeCard";
+import { useFetchUpdateVoteVideoMutation } from "@/store/wordpress/wpRestCustomApi";
 
 const Creatives = ({ children }) => {
     const router = useRouter();
@@ -16,10 +17,10 @@ const Creatives = ({ children }) => {
     const coefficient = 0.20934;
     const isMobile = useMediaQuery('(max-width: 800px)');
     const [fetchUserData, { data: userData }] = useLazyFetchUserDataQuery();
+    const [updateVoteVideo] = useFetchUpdateVoteVideoMutation();
     const [{ userToken }] = useCookies(['userToken']);
     const [fetchCreativesByDate, { data: creativePending = [] }] = useLazyFetchAllCreativesByDataQuery();
     const pageSlug = router.pathname.split('/').filter(slug => slug)[0] || '';
-
 
     useEffect(() => {
         if (userToken) {
@@ -60,6 +61,24 @@ const Creatives = ({ children }) => {
         }
     };
 
+    const onVote = (creativeId: number) => {
+        if (userData === undefined) return false;
+        if (userData.meta.votes_available === "0") {
+            alert('You have no votes available.');
+            return false;
+        }
+        updateVoteVideo({ user_id: userData.id, creative_id: creativeId });
+
+
+        fetchCreativesByDate({
+            per_page: 1,
+            author: userData.id,
+            status: 'pending,publish'
+        })
+
+        return true;
+    }
+
     useEffect(() => {
         handleScroll();
         window.addEventListener('scroll', handleScroll);
@@ -70,7 +89,11 @@ const Creatives = ({ children }) => {
     }, [isMobile]);
 
 
-    // console.log();
+    const checkUserHasVoted = (creativeId) => {
+        if (userData !== undefined) {
+            return userData.meta.votes_creatives.includes(String(creativeId));
+        }
+    }
 
     return (
         <div className={styles["creatives-section"]}>
@@ -93,7 +116,8 @@ const Creatives = ({ children }) => {
                     firstItem={(pageSlug === 'preview' && creativePending.length) ?
                         <MyCreativeCard
                             creative={creativePending[0]}
-                        // userVotes={userData.}
+                            hasVoted={checkUserHasVoted(creativePending[0].id)}
+                            onVote={onVote}
                         /> :
                         <AddCreativeCard hasLogin={Boolean(userData)} />
                     }
