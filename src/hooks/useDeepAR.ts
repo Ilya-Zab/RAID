@@ -1,9 +1,10 @@
 "use client"
+// 0985b5275cf03e7866a432d7817c39af9f7306fd5deda931d18335c169b9d98f31af4ef68511c390
 // 00c8c511f53336d982642b6d914f9e0e6ca22f9754a0d90778403d608d79c035219ce95776c0eafa
 import * as deepar from 'deepar';
 import { useEffect, useRef, useState } from 'react';
 const deepARParams: deepar.DeepARParams = {
-    licenseKey: "0985b5275cf03e7866a432d7817c39af9f7306fd5deda931d18335c169b9d98f31af4ef68511c390",
+    licenseKey: "00c8c511f53336d982642b6d914f9e0e6ca22f9754a0d90778403d608d79c035219ce95776c0eafa",
     additionalOptions: {
         cameraConfig: {
             // https://docs.deepar.ai/deepar-sdk/platforms/web/getting-started#:~:text=cameraConfig%3A%20%7B-,disableDefaultCamera,-%3A%20true%0A%20%20%20%20%20%20%20%20%7D
