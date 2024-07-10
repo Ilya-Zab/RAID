@@ -12,7 +12,7 @@ import { useCreateWpMedia } from "@/hooks/useCreateWpMedia";
 import { setVideo } from "@/store/slice/videoSlice";
 import { setCreativeName } from "@/store/slice/creativeSlice";
 
-const FinallyVideoTemplate = ({ video, creativeImage, userName }) =>
+const FinallyVideoTemplate = ({ video, creativeImage }) =>
 {
     const [cookies] = useCookies(['userToken']);
     const raidId = useAppSelector(state => state.raidId.raidId);

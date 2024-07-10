@@ -128,6 +128,20 @@ const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonC
 
         <Box className={styles.section}>
             <Box className={styles.section__zone}>
+                <Box className={styles.icon}>
+                    <Typography variant="h6" className={styles.text__sub}>
+                        Show how your life was divided into Before and After playing Raid!
+                    </Typography>
+                    <Typography variant="h6" className={styles.text__sub}>
+                        Create a photo/video using our filter or upload a ready-made one
+                    </Typography>
+                    <Typography variant="h6" className={styles.text}>
+                        Upload
+                    </Typography>
+                </Box>
+                <Typography variant="h6" className={styles.text__sub}>
+                    Drag & drop or browse your files
+                </Typography>
                 <DropZone />
             </Box>
             <Box className={styles.section__social}>

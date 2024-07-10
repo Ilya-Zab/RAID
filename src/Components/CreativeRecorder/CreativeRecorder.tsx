@@ -20,22 +20,22 @@ const musicPath = "/audio/AR_CONTRAST.mp3";
 const orcEffects: EffectItem[] = [
     {
         name: "Orc + EYES",
-        src: 'PICKER1.png',
+        src: 'PICKER7.png',
         url: "effects/ORC_BG+EYES.deepar"
     },
     {
         name: "Orc + orc head",
-        src: 'PICKER1.png',
+        src: 'PICKER8.png',
         url: "effects/ORC_BG+ORC_HEAD.deepar"
     },
     {
         name: "Orc + skeleton head",
-        src: 'PICKER1.png',
+        src: 'PICKER3.png',
         url: "effects/ORC_BG+SKELETON_HEAD.deepar"
     },
     {
         name: "Orc + tatoo",
-        src: 'PICKER1.png',
+        src: 'PICKER4.png',
         url: "effects/ORC_BG+TATOO.deepar"
     },
 ]
@@ -43,22 +43,22 @@ const orcEffects: EffectItem[] = [
 const skeletEffects: EffectItem[] = [
     {
         name: "Skeleton + eyes",
-        src: 'PICKER2.png',
+        src: 'PICKER7.png',
         url: "effects/SKELETON+EYES.deepar"
     },
     {
         name: "Skeleton + orc head",
-        src: 'PICKER2.png',
+        src: 'PICKER8.png',
         url: "effects/SKELETON_BG+ORC_HEAD.deepar"
     },
     {
         name: "Skeleton + skeleton head",
-        src: 'PICKER2.png',
+        src: 'PICKER3.png',
         url: "effects/SKELETON_BG+SKELETON_HEAD.deepar"
     },
     {
         name: "Skeleton + tatoo",
-        src: 'PICKER2.png',
+        src: 'PICKER4.png',
         url: "effects/SKELETON_BG_TATOO.deepar"
     },
 ]
