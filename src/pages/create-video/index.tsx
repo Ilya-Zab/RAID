@@ -35,13 +35,21 @@ const CreateVideo = () =>
     const router = useRouter();
     const dispatch = useAppDispatch();
     const isCreating = useAppSelector(state => state.creative.isLoading);
-    const videoBlob = useSelector((state: RootState) => state.video.video);
+    const uploadedVideo = useSelector((state: RootState) => state.video.video);
+
+    useEffect(() =>
+    {
+        if (!raidId && !cookies.userToken)
+        {
+            router.push('/');
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [raidId, cookies]);
 
     const onDownloadClick = useCallback(() =>
     {
         if (videoUrl)
         {
-            console.log(video);
             downloadVideo(video, "video.mp4");
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,14 +62,6 @@ const CreateVideo = () =>
             setCurrentBlobFrame(currentFrame);
         }
     }
-    useEffect(() =>
-    {
-        if (!raidId && !cookies.userToken)
-        {
-            router.push('/');
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [raidId, cookies]);
 
     const handleToggle = (): void =>
     {
@@ -78,26 +78,20 @@ const CreateVideo = () =>
         setStep(prev => (prev > 1 ? prev - 1 : 1));
     }
 
-    useEffect(() =>
-    {
-        if (videoBlob)
-        {
-            uploadVideo();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [videoBlob])
-
     async function uploadVideo()
     {
-        const blob = new Blob([videoBlob], { type: videoBlob.type });
+        const blob = await new Blob([uploadedVideo], { type: uploadedVideo.type });
         setVideo(blob);
-        setVideoUrl(URL.createObjectURL(blob));
         const frames = await extractAllFrames(blob);
+        await setVideoUrl(URL.createObjectURL(blob));
         console.log(frames);
-        if (frames.length > 0 && video)
+        if (frames.length > 0)
         {
             setAllFrames(frames);
             setStep(3);
+        } else
+        {
+            console.log('Frames not ready or video not set');
         }
     }
 
@@ -117,12 +111,20 @@ const CreateVideo = () =>
         dispatch(setLoading(false));
     }
 
+    const onCreateClick = () =>
+    {
+        if (uploadedVideo)
+            uploadVideo();
+        else
+            nextStep();
+    }
+
     const CurrentTemplate = () =>
     {
         switch (step)
         {
             case 0:
-                return <CreateVideoTemplate handleButtonClick={nextStep} />;
+                return <CreateVideoTemplate handleButtonClick={onCreateClick} />;
             case 1:
                 return <CreateVideoInfo handleToggle={handleToggle} />;
             case 2:
@@ -136,7 +138,7 @@ const CreateVideo = () =>
             case 6:
                 return <FinallyVideoTemplate video={video} userName={'fewfw'} creativeImage={currentBlobFrame} />;
             default:
-                return <CreateVideoTemplate handleButtonClick={nextStep} />;
+                return <CreateVideoTemplate handleButtonClick={onCreateClick} />;
         }
     };
 
