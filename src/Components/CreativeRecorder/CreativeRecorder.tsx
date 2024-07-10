@@ -88,7 +88,8 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     const audioRecorder = useAudioRecorder();
     const videoProcessor = useVideoProcessor();
     const [music, setMusic] = useState<Blob | null>(null);
-    const [isOrc, setOrc] = useState<boolean>(true);
+    const [isOrc, setOrc] = useState<boolean>(null);
+    const [currentEffects, setCurrentEffects] = useState(null);
     const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
     const [frames, setLocalFrames] = useState(null);
     const dispatch = useAppDispatch();
@@ -145,45 +146,35 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         }
     }
 
+    useEffect(() =>
+    {
+        setCurrentEffects(orcEffects);
+    }, []);
+
     function firstEffectChange(effect: EffectItem)
     {
-        deepAR?.switchEffect(effect.url);
         if (effect.name === 'orc')
-            setOrc(true);
-        else
         {
-            setOrc(false);
+            setCurrentEffects(orcEffects);
+        } else if (effect.name === 'skelet')
+        {
+            setCurrentEffects(skeletEffects);
         }
     }
+
+    useEffect(() =>
+    {
+        if (recordingTime !== 6) return;
+        deepAR?.switchEffect(currentEffects[0].url);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [recordingTime]);
+
+
 
     function handleEffectChange(effect: EffectItem)
     {
         deepAR?.switchEffect(effect.url);
     }
-
-    useEffect(() =>
-    {
-        if (recordingTime > 7)
-            firstEffectChange(
-                isOrc
-                    ?
-                    {
-                        name: "Orc + EYES",
-                        src: 'PICKER1.png',
-                        url: "effects/ORC_BG+EYES.deepar"
-                    }
-                    :
-                    {
-                        name: "Skeleton + eyes",
-                        src: 'PICKER2.png',
-                        url: "effects/SKELETON+EYES.deepar"
-                    }
-            )
-
-        if (recordingTime == 60)
-            handleVideoStateChange(true);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [recordingTime])
 
     return (
         <Box className={styles.CreativeRecorder}>
@@ -199,7 +190,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
                 {recordingTime > 7 &&
                     < EffectPicker
-                        effects={isOrc ? orcEffects : skeletEffects}
+                        effects={currentEffects}
                         onEffectChange={handleEffectChange}
                         orientation={'vertical'}
                     />
