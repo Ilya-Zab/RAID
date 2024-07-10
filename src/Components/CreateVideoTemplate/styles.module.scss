@@ -1,6 +1,43 @@
 @import '@/styles/variables.module.scss';
 
 
+.icon {
+	margin: 0 auto;
+	padding: 45px 0 26px;
+	width: fit-content;
+	& .text__sub {
+		margin-bottom: 30px;
+	}
+}
+
+.text {
+	text-align: center;
+	font-weight: 300;
+	font-size: 18px;
+	line-height: 100%;
+	color: $white1;
+	margin-bottom: 0;
+	letter-spacing: 0;
+	
+	&__gradient {
+		text-decoration: underline;
+		text-decoration-skip-ink: none;
+		background: linear-gradient(170deg, #08a232 19.5%, #2de6ff 37.5%, #533bed 58%, #ff3cbd 90%);
+		background-clip: text;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+	
+	&__sub {
+		font-weight: 300;
+		font-size: 16px;
+		line-height: 100%;
+		text-align: center;
+		color: $white1;
+		letter-spacing: 0;
+		margin-bottom: 12px;
+	}
+}
 
 .section {
 	display: flex;

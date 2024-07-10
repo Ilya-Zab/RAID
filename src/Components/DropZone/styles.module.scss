@@ -3,43 +3,21 @@
 .dropzone {
 
 }
-
-.icon {
-	margin: 0 auto;
-	padding: 45px 0 26px;
-	width: fit-content;
-	& .text__sub {
-		margin-bottom: 30px;
-	}
+.wrapper {
+	position: relative;
 }
-
-.text {
-	text-align: center;
-	font-weight: 300;
-	font-size: 18px;
-	line-height: 100%;
-	color: $white1;
-	margin-bottom: 0;
-	letter-spacing: 0;
-
-	&__gradient {
-		text-decoration: underline;
-		text-decoration-skip-ink: none;
-		background: linear-gradient(170deg, #08a232 19.5%, #2de6ff 37.5%, #533bed 58%, #ff3cbd 90%);
-		background-clip: text;
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-
-	&__sub {
-		font-weight: 300;
-		font-size: 16px;
-		line-height: 100%;
-		text-align: center;
-		color: $white1;
-		letter-spacing: 0;
-		margin-bottom: 12px;
-	}
+.btn {
+	position: absolute;
+	right: 8px;
+	top: 50%;
+	transform: translateY(-50%);
+	padding: 0;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	display: block;
+	background: transparent;
+	height: 25px;
 }
 .customInput {
 	border: 1px solid rgba(66, 113, 161, 0.58);
@@ -69,11 +47,5 @@
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
-	}
-	& > svg {
-		position: absolute;
-		right: 8px;
-		top: 50%;
-		transform: translateY(-50%);
 	}
 }

@@ -15,7 +15,7 @@ export type CheckVideoProps = z.infer<typeof CheckVideoSchema>;
 const CheckVideo: FC<CheckVideoProps> = ({ videoUrl, onDownload, prevStep }) =>
 {
     return (
-        <Box>
+        <Box className={styles.wrapper}>
             <video
                 autoPlay
                 loop

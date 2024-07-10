@@ -39,7 +39,7 @@ const Navigation: FC<wpMenuProps> = ({correctStyle, data}) => {
                                     {link.title}
                                 </button>
                             ) : link.title === 'Rules' ? (
-                                <a href="/file/Official_Rules.docx" download className="desc nav-link link">
+                                <a href="/file/Official_Rules_I_Finally_Played_it_Final.docx" download className="desc nav-link link">
                                     {link.title}
                                 </a>
                             ) : link.title === 'Materials' ? (
