@@ -112,7 +112,7 @@ const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonC
         }
     }
 
-    const onSocialClick = async () =>
+    const onInputBtnClick = async () =>
     {
         if (url)
         {
@@ -144,7 +144,7 @@ const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonC
                     />
                     <button
                         type='button'
-                        onClick={onSocialClick}
+                        onClick={onInputBtnClick}
                     >
                         <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
