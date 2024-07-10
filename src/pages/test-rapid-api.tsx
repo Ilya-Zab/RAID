@@ -3,18 +3,20 @@ import { FormEvent, useRef, useState } from "react";
 
 export default function TestRapidApi() {
     const [url, setUrl] = useState<string>("");
-    const isRequestedRef = useRef<boolean>(false);
+    const [result, setResult] = useState<any>(null);
 
     async function handleSubmit(e: FormEvent) {
         e.preventDefault();
 
-        axios("/api/rapid", {
-            params: {
-                url
-            }
+        const buffer: Buffer = await axios.get("/api/rapid", {
+            params: { url },
+            responseType: "arraybuffer"
         })
-            .then(response => alert(JSON.stringify(response.data)))
+            .then(response => response.data)
             .catch(err => alert(JSON.stringify(err.response.data)));
+
+            console.log(buffer);
+        alert(buffer?.length);
     }
 
     return (

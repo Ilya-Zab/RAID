@@ -1,4 +1,5 @@
 import smvdClient, { getLinkWithMinQuality } from "@/services/VideoUploader/RapidapiSMVDClient";
+import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
 
@@ -29,7 +30,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
         const extractedVideo = await smvdClient.extractVideo(data.url);
         const videoLink = getLinkWithMinQuality(extractedVideo);
-        return res.status(200).json({ url: videoLink.link });
+        const videoBuffer = await axios.get(videoLink.link, {
+            responseType: "arraybuffer"
+        })
+            .then(response => response.data);
+        console.debug("BUFFER:", videoBuffer);
+        return res.status(200).send(videoBuffer);
     }
     catch (e) {
         console.error("Error while getting video using RapidAPI.", e);
