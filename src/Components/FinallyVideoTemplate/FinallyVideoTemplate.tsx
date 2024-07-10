@@ -46,15 +46,16 @@ const FinallyVideoTemplate = ({ video, creativeImage, userName }) =>
 
         if (wpMediaError)
         {
-            console.log(wpMediaError);
+            console.error(wpMediaError);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [wpMediaResponse, wpMediaError]);
 
     React.useEffect(() =>
     {
         if (success)
         {
-            router.push('/gallery');
+            router.push('/preview');
             setCreating(false);
             dispatch(setVideo(null));
             dispatch(setCreativeName(null));
@@ -65,6 +66,7 @@ const FinallyVideoTemplate = ({ video, creativeImage, userName }) =>
             alert('There is a problem with creating creative');
             setCreating(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [success, error]);
 
     return (

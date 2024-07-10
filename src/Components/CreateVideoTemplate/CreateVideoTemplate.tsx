@@ -68,7 +68,7 @@ const socialArr = [
 ]
 
 const CreateVideoTemplateSchema = z.object({
-    handleButtonClick: z.function().args(z.number()).returns(z.void())
+    handleButtonClick: z.function().args(z.void()).returns(z.void())
 })
 
 type CreateVideoTemplateProps = z.infer<typeof CreateVideoTemplateSchema>;
@@ -96,7 +96,6 @@ const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonC
             const response = await axios.get(url, {
                 responseType: "blob"
             });
-            console.log(response);
             return response.data;
         } catch (err)
         {
@@ -109,7 +108,6 @@ const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonC
     {
         if (event.target)
         {
-            console.log(event.target.value);
             setUrl(event.target.value);
         }
     }
@@ -174,7 +172,7 @@ const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonC
                         <Button
                             variant="contained"
                             className='btn-second'
-                            onClick={() => handleButtonClick(1)}
+                            onClick={() => handleButtonClick()}
                         >
                             Create Content
                         </Button>
