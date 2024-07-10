@@ -3,6 +3,7 @@ import { FormEvent, useRef, useState } from "react";
 
 export default function TestRapidApi() {
     const [url, setUrl] = useState<string>("");
+    const [result, setResult] = useState<any>(null);
     const isRequestedRef = useRef<boolean>(false);
 
     async function handleSubmit(e: FormEvent) {
@@ -13,8 +14,8 @@ export default function TestRapidApi() {
                 url
             }
         })
-            .then(response => alert(JSON.stringify(response.data)))
-            .catch(err => alert(JSON.stringify(err.response.data)));
+            .then(response => setResult(response.data))
+            .catch(err => setResult(err.response.data));
     }
 
     return (
@@ -39,7 +40,10 @@ export default function TestRapidApi() {
 
             <div>
                 <h2>Result</h2>
-                </div>
+                <pre>
+                    {JSON.stringify(result)}
+                </pre>
+            </div>
         </div>
     );
 }
