@@ -1,6 +1,6 @@
 "use client"
 
-import { ChangeEvent, useState } from "react"
+import {ChangeEvent, useEffect, useState} from "react"
 import Image from "next/image";
 import * as React from "react";
 import styles from "./styles.module.scss";
@@ -20,6 +20,12 @@ export interface EffectPickerOptions {
 
 export function EffectPicker(options: EffectPickerOptions) {
     const [selectedEffect, setSelectedEffect] = useState<EffectItem>(options.selectedEffect ?? options.effects[0]);
+
+    useEffect(() => {
+        if (!options.selectedEffect) {
+            options.onEffectChange(options.effects[0]);
+        }
+    }, []);
 
     function handleEffectChange(effect: EffectItem) {
         setSelectedEffect(effect);

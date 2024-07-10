@@ -95,6 +95,15 @@ const CreateVideo = () =>
         }
     }
 
+    useEffect(() =>
+    {
+        if (uploadedVideo)
+        {
+            uploadVideo();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [uploadedVideo])
+
     async function handleVideoReady(video: Blob)
     {
         setVideo(video);
@@ -111,20 +120,12 @@ const CreateVideo = () =>
         dispatch(setLoading(false));
     }
 
-    const onCreateClick = () =>
-    {
-        if (uploadedVideo)
-            uploadVideo();
-        else
-            nextStep();
-    }
-
     const CurrentTemplate = () =>
     {
         switch (step)
         {
             case 0:
-                return <CreateVideoTemplate handleButtonClick={onCreateClick} />;
+                return <CreateVideoTemplate handleButtonClick={nextStep} />;
             case 1:
                 return <CreateVideoInfo handleToggle={handleToggle} />;
             case 2:
@@ -136,9 +137,9 @@ const CreateVideo = () =>
             case 5:
                 return <CreativeName nextStep={nextStep} creativeImage={currentBlobFrame} />;
             case 6:
-                return <FinallyVideoTemplate video={video} userName={'fewfw'} creativeImage={currentBlobFrame} />;
+                return <FinallyVideoTemplate video={video} creativeImage={currentBlobFrame} />;
             default:
-                return <CreateVideoTemplate handleButtonClick={onCreateClick} />;
+                return <CreateVideoTemplate handleButtonClick={nextStep} />;
         }
     };
 
@@ -149,7 +150,7 @@ const CreateVideo = () =>
                 <meta name="description" content={`This is ${pageTitle}`} />
             </Head>
             <main>
-                <Box className={styles.bg}>
+                <Box className={(step <= 1) ? styles.bg : (step === 6) ? styles.bg3 : styles.bg2}>
                     <Box className='container container_createVideo'>
                         {(step !== 0 && step !== 1) && <ProgressBar value={step} />}
                         <h1 className={`text-gradient ${styles.title}`}>
