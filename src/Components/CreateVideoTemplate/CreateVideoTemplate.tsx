@@ -9,6 +9,7 @@ import { z } from "zod";
 import axios from "axios";
 import { setVideo } from "@/store/slice/videoSlice";
 import { useAppDispatch } from "@/hooks/redux";
+import { setLoading } from "@/store/slice/creativeSlice";
 // import SocialNetworks from "@/Components/SocialNetworks/SocialNetworks";
 // import {useState} from "react";
 
@@ -116,16 +117,24 @@ const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonC
     {
         if (url)
         {
-            const videoUrl = await getVideoUrl(url);
-            const rapidVideo = await getVideo(videoUrl);
-            if (rapidVideo)
-                dispatch(setVideo(rapidVideo));
+            dispatch(setLoading(true));
+            try
+            {
+                const videoUrl = await getVideoUrl(url);
+                const rapidVideo = await getVideo(videoUrl);
+                if (rapidVideo)
+                    dispatch(setVideo(rapidVideo));
+            } catch (err)
+            {
+                dispatch(setLoading(false));
+                console.error(err);
+                alert('There is a problem with creating creative');
+            }
         }
 
     }
 
     return (
-
         <Box className={styles.section}>
             <Box className={styles.section__zone}>
                 <Box className={styles.icon}>
