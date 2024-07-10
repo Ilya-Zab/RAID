@@ -1,8 +1,8 @@
 import Box from '@mui/material/Box';
-import { FC } from 'react';
+import {FC, useState} from 'react';
 import styles from './styles.module.scss';
 import Link from 'next/link';
-import { z } from 'zod';
+import {z} from 'zod';
 import {useDispatch} from "react-redux";
 import {openModal} from "@/store/slice/modalsSlice";
 
@@ -16,11 +16,14 @@ const wpMenuPropsSchema = z.object({
 
 type wpMenuProps = z.infer<typeof wpMenuPropsSchema>;
 
-const Navigation: FC<wpMenuProps> = ({ correctStyle, data }) => {
+const Navigation: FC<wpMenuProps> = ({correctStyle, data}) => {
+    const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
-    const handleOpenGist = () => dispatch(openModal({modalName : 'isOpenGifts'}));
-    const handleOpenFindId = () => dispatch(openModal({modalName : 'isOpenFindId'}));
-
+    const handleOpenGist = () => dispatch(openModal({modalName: 'isOpenGifts'}));
+    const handleOpenFindId = () => dispatch(openModal({modalName: 'isOpenFindId'}));
+    const handlerClick = () => {
+        setOpen(!open);
+    }
     return (
         <Box className={`${styles.nav} ${correctStyle}`}>
             <nav>
@@ -35,6 +38,25 @@ const Navigation: FC<wpMenuProps> = ({ correctStyle, data }) => {
                                 <button className={styles.btn} onClick={handleOpenFindId}>
                                     {link.title}
                                 </button>
+                            ) : link.title === 'Rules' ? (
+                                <a href="/file/Official_Rules.docx" download className="desc nav-link link">
+                                    {link.title}
+                                </a>
+                            ) : link.title === 'Materials' ? (
+                                <Box className={styles.dropDown}>
+                                    <button className={styles.btn} onClick={handlerClick}>
+                                        {link.title}
+                                    </button>
+                                    {
+                                        open &&
+										<Box className={styles.dropDown__list}>
+											<Link className={'desc nav-link link'}
+                                                  href="https://www.instagram.com/ar/1410842746283057/?ch=NTA2MzNjMDM0ODg0ODk2YjZjODNiNjk0YjQ0MDFlZTk%3D"
+                                                  target={'_blank'}>Mask</Link>
+                                            <a href="/audio/AR_CONTRAST_2.mp3" download className="desc nav-link link">Sound</a>
+										</Box>
+                                    }
+                                </Box>
                             ) : (
                                 <Link className='desc nav-link link' href={link.url || ''}>
                                     {link.title}
