@@ -71,7 +71,6 @@ const CreateVideoTemplateSchema = z.object({
     handleButtonClick: z.function().args(z.number()).returns(z.void())
 })
 
-
 type CreateVideoTemplateProps = z.infer<typeof CreateVideoTemplateSchema>;
 
 const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonClick }) =>
