@@ -78,7 +78,7 @@ export const RegistrationForm: FC<RegistrationFormProps> = ({ onSendForm, isCrea
                 errors={errors}
                 className={styles.form__input}
             />
-            <span className={`info ${styles.form__link} ${styles.form__link_regis}`}>
+            <span className={`${styles.info} ${styles.form__link} ${styles.form__link_regis}`}>
                 *It may take us up to 5 business days.
             </span>
             <Button
