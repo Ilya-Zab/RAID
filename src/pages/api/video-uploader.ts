@@ -1,10 +1,8 @@
 import { uploadVideo as uploadVideoAsUrl, uploadVideoAsBuffer } from "@/services/VideoUploader/VideoUploaderService";
 import wpRestApi from "@/services/wordpress/wpService";
-import axios from "axios";
 import * as formidable from "formidable";
 import { existsSync, readFileSync, unlinkSync } from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
-import { Readable } from "stream";
 import { z } from "zod";
 
 export const config = {
@@ -69,29 +67,7 @@ async function handlePostingAsUrl(req: NextApiRequest, res: NextApiResponse, use
     }
 }
 
-async function streamToRequest(inputStream: Readable, url: string): Promise<void>
-{
-    try
-    {
-        const response = await axios({
-            method: 'post',
-            url: url,
-            data: inputStream,
-            headers: {
-                'Content-Type': 'application/octet-stream'
-            },
-            maxContentLength: Infinity,
-            maxBodyLength: Infinity,
-        });
-
-        console.log('Response status:', response.status);
-    } catch (error)
-    {
-        console.error('Error during request:', error);
-    }
-}
-
-async function handlePostingAsFile(req: NextApiRequest, res: NextApiResponse, userToken: string): Promise<void>
+async function handlePostingAsFile(req: NextApiRequest, res: NextApiResponse, userToken: string)
 {
     const form = new formidable.IncomingForm();
 
@@ -115,7 +91,7 @@ async function handlePostingAsFile(req: NextApiRequest, res: NextApiResponse, us
 
         if (!videoFile.mimetype || videoFile.mimetype !== "video/mp4")
         {
-            console.error(`Error while processing uploaded file in the video uploading request. File mime type should be "video/mp4", but was "${videoFile.mimetype}"`);
+            console.error(`Error while processing uploaded file in the video uploading request. File mime type should be "video/mp4", but was "`, videoFile.mimetype, `"`);
             res.status(500).json({ message: `Error while processing uploaded file in the video uploading request. File mime type should be "video/mp4", but was "${videoFile.mimetype}"` });
             return;
         }
@@ -125,18 +101,13 @@ async function handlePostingAsFile(req: NextApiRequest, res: NextApiResponse, us
         const videoBuffer = readFileSync(videoFile.filepath);
         unlinkSync(videoFile.filepath);
 
-        const videoStream = new Readable();
-        videoStream.push(videoBuffer);
-        videoStream.push(null);
-
-        const targetUrl = 'https://raid.digiway-dev.online/wp-json/wp/v2/media';
-
-        await streamToRequest(videoStream, targetUrl);
-
-        // const videoItem = await uploadVideoAsBuffer(videoBuffer, userToken);
-        await registerUserCreative(531, 51, res, featuredMedia, title);
+        const videoItem = await uploadVideoAsBuffer(videoBuffer, userToken)
+        await registerUserCreative(videoItem.id, videoItem.author, res, featuredMedia, title);
     });
+
+    return res;
 }
+
 // registrate video as a creative of the specified user using custom WordPress API.
 async function registerUserCreative(videoId: number, authorId: number, res: NextApiResponse, featuredMedia?: string, title?: string): Promise<void>
 {
