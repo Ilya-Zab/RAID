@@ -131,11 +131,11 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         if (!frames)
         {
             setLocalFrames(creativeRecorder.video);
-            props.onVideoRecorded(creativeRecorder.video);
+            props.onVideoRecorded(videoProcessor.output);
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [creativeRecorder.isRecording, audioRecorder.finishRecording, music]);
+    }, [creativeRecorder.isRecording, audioRecorder.finishRecording, music, videoProcessor.output]);
 
     async function handleVideoStateChange(isStarted: boolean)
     {
