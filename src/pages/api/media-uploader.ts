@@ -6,8 +6,6 @@ import { existsSync, readFileSync, unlinkSync } from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
 
-// this disabling of the request and response size limiter is required, because videos to upload can be more then default max 4MB for the request.
-// See: https://nextjs.org/docs/messages/api-routes-response-size-limit
 export const config = {
     api: {
         responseLimit: false,
@@ -88,34 +86,7 @@ async function handlePostingAsFile(req: NextApiRequest, res: NextApiResponse, us
             console.error("Error uploading media buffer", uploadError);
             return res.status(500).json({ message: "Error uploading media buffer", error: uploadError });
         }
-
-        // const mediaItem = await uploadMediaAsBuffer(videoBuffer, userToken);
-        // await registerUserCreative(videoItem.id, videoItem.author, res);
     });
 
     return res;
 }
-
-// registrate video as a creative of the specified user using custom WordPress API.
-// async function registerUserCreative(videoId: number, authorId: number, res: NextApiResponse): Promise<void>
-// {
-//     const requestBody = {
-//         title: "By json 3",
-//         author: authorId,
-//         status: "pending",
-//         "meta": {
-//             featured_media: videoId
-//         }
-//     };
-
-//     await wpRestApi.post("creative", requestBody)
-//         .then(response =>
-//         {
-//             res.status(200).json(response.data);
-//         })
-//         .catch(err =>
-//         {
-//             console.error("Error while registration video as a user creative.", err);
-//             res.status(500).json({ message: "Error while registration video as a user creative.", error: err });
-//         });
-// }   

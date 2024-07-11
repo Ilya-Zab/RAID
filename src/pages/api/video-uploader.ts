@@ -6,8 +6,6 @@ import { existsSync, readFileSync, unlinkSync } from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
 
-// this disabling of the request and response size limiter is required, because videos to upload can be more then default max 4MB for the request.
-// See: https://nextjs.org/docs/messages/api-routes-response-size-limit
 export const config = {
     api: {
         responseLimit: false,
