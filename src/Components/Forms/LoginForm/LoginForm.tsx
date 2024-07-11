@@ -12,7 +12,6 @@ import { validateRaidId } from "@/utils/validateRaidId";
 import { useAppDispatch } from "@/hooks/redux";
 import { setRaidId } from "@/store/slice/raidIdSlice";
 import { useCookies } from "react-cookie";
-import { downloadVideo } from "@/utils";
 
 const CheckUserIdSchema = z.object({
     raidId: z.string().refine(value => validateRaidId(value), {
