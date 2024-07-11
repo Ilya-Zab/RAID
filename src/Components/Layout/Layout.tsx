@@ -7,6 +7,7 @@ import SingleCreativePopup from "../Popups/SingleCreativePopup";
 import GiftList from "@/Components/GiftList/GiftList";
 import {useSelector} from "react-redux";
 import ModalFindId from "@/Components/ModalFindId/ModalFindId";
+import ModalPrivacyNotice from "@/Components/ModalPrivacyNotice/ModalPrivacyNotice";
 
 interface LayoutProps {
     children?: ReactNode;
@@ -14,7 +15,7 @@ interface LayoutProps {
 
 const Layout: FC<LayoutProps> = ({ children }) => {
     // @ts-ignore
-    const {isOpenGifts,isOpenFindId} = useSelector((state) => state.modal);
+    const {isOpenGifts,isOpenFindId,isOpenPrivacyNotice} = useSelector((state) => state.modal);
     const isMobile = useMediaQuery('(max-width: 768px)');
 
     return (
@@ -25,6 +26,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
             <Footer />
             {isOpenGifts && <GiftList/>}
             {isOpenFindId && <ModalFindId/>}
+            {isOpenPrivacyNotice && <ModalPrivacyNotice/>}
         </>
     )
 }

@@ -4,10 +4,12 @@ interface modalSlice
 {
     isOpenGifts: boolean;
     isOpenFindId: boolean;
+    isOpenPrivacyNotice: boolean;
 }
 const initialState:modalSlice = {
     isOpenGifts: false,
     isOpenFindId: false,
+    isOpenPrivacyNotice: false,
 }
 const modalSlice = createSlice({
     name: 'modal',
@@ -16,6 +18,7 @@ const modalSlice = createSlice({
         openModal: (state, action) => {
             const { modalName } = action.payload;
             state[modalName] = true;
+            console.log(state[modalName]);
         },
         closeModal: (state, action) => {
             const { modalName } = action.payload;

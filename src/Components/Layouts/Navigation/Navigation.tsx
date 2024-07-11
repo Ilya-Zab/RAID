@@ -21,6 +21,8 @@ const Navigation: FC<wpMenuProps> = ({correctStyle, data}) => {
     const dispatch = useDispatch();
     const handleOpenGist = () => dispatch(openModal({modalName: 'isOpenGifts'}));
     const handleOpenFindId = () => dispatch(openModal({modalName: 'isOpenFindId'}));
+    const handleOpenPrivacyNotice = () => dispatch(openModal({modalName: 'isOpenPrivacyNotice'}));
+
     const handlerClick = () => {
         setOpen(!open);
     }
@@ -36,6 +38,10 @@ const Navigation: FC<wpMenuProps> = ({correctStyle, data}) => {
                                 </button>
                             ) : link.title === 'Find ID' ? (
                                 <button className={styles.btn} onClick={handleOpenFindId}>
+                                    {link.title}
+                                </button>
+                            ) : link.title === 'Privacy Notice' ? (
+                                <button className={styles.btn} onClick={handleOpenPrivacyNotice}>
                                     {link.title}
                                 </button>
                             ) : link.title === 'Rules' ? (
