@@ -49,17 +49,6 @@ export default function useVideoProcessor(): UseVideoProcessorResult
         await ffmpeg.writeFile(videoName, await fetchFile(video));
         await ffmpeg.writeFile(audio1Name, await fetchFile(audio1));
         await ffmpeg.writeFile(audio2Name, await fetchFile(audio2));
-        // await ffmpeg.exec([
-        //     "-i", videoName,
-        //     "-i", audio1Name,
-        //     "-i", audio2Name,
-        //     "-filter_complex", `[1:a][2:a]amix=inputs=2[a]`,
-        //     "-map", "0:v",
-        //     "-map", `[a]`,
-        //     "-c:v", "copy",
-        //     "-c:a", "aac",
-        //     "-strict", "experimental",
-        //     "-shortest", outputName]);
         await ffmpeg.exec([
             "-i", videoName,
             "-i", audio1Name,
