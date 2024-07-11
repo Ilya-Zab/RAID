@@ -122,6 +122,11 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
                 clearInterval(timerRef.current);
                 timerRef.current = null;
             }
+
+            if (audioPlayerRef.current) {
+                audioPlayerRef.current.pause();
+                audioPlayerRef.current.currentTime = 0;
+            }
         };
     }, [isInited, deepAR]);
 
