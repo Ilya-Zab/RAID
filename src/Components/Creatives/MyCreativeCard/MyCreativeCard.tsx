@@ -47,15 +47,15 @@ const MyCreativeCard: FC<MyCreativeCardPropsType> = ({ creative, hasVoted, onVot
                     </div>
 
                     <div className={styles['my-creative-card__title']}>
-                        Your post is being moderated
+                        It may take us up to 5 business days. Once verified, you&lsquo;ll be able to share it on the other socials to get more likes.
                     </div>
 
                     <div className={styles['my-creative-card__text']}>
-                        Once verified, you&apos;ll be able to share  it on the other socials to get more likes & a special badge for attracting more attention!
+                        While you&lsquo;re waiting, resume playing RAID!
                     </div>
 
                     <Link
-                        href={'/'}
+                        href={'https://pl.go-ga.me/chnosnyx'}
                         className={`hexagon-button hexagon-button_gradient ${styles['my-creative-card__button']}`}
                     >
                         Play RAID Now
