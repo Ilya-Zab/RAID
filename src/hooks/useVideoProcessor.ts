@@ -56,8 +56,10 @@ export default function useVideoProcessor(): UseVideoProcessorResult
             "-filter_complex", `[1:a][2:a]amix=inputs=2[a]`,
             "-map", "0:v",
             "-map", `[a]`,
-            "-c:v", "copy",
+            "-c:v", "libx264",
+            "-b:v", "1000k",
             "-c:a", "aac",
+            "-b:a", "128k",
             "-strict", "experimental",
             "-shortest", outputName]);
 
