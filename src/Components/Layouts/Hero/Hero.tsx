@@ -105,7 +105,6 @@ const Hero = () =>
                         </Link>
                     </Box>
                 </Box>
-
                 <Box className={styles.hero__title2_wrapper}>
                     <h2 className={`text-gradient animate animate_7 ${styles.hero__title2}`}>
                         #WeFinallyPlayedIt
