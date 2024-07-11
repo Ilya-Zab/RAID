@@ -64,6 +64,7 @@ const FinallyVideoTemplate = ({ video, creativeImage }) =>
         if (error)
         {
             alert('There is a problem with creating creative');
+            alert(error);
             setCreating(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
