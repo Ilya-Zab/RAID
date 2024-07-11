@@ -1,3 +1,4 @@
+import { downloadFile } from "@/utils/downloadFile";
 import axios from "axios";
 import { FormEvent, useRef, useState } from "react";
 
@@ -9,6 +10,7 @@ export default function TestRapidApi() {
     async function handleSubmit(e: FormEvent) {
         e.preventDefault();
 
+<<<<<<< HEAD
         axios("/api/rapid", {
             params: {
                 url
@@ -16,6 +18,17 @@ export default function TestRapidApi() {
         })
             .then(response => setResult(response.data))
             .catch(err => setResult(err.response.data));
+=======
+        const blob: Blob = await axios.get("/api/rapid", {
+            params: { url },
+            responseType: "blob"
+        })
+            .then(response => response.data);
+
+        console.log(blob);
+        if (blob)
+            downloadFile(blob, "rapidapi-video.mp4");
+>>>>>>> dae9ea0 (Change response type of the api/rapid endpoint)
     }
 
     return (
@@ -47,3 +60,4 @@ export default function TestRapidApi() {
         </div>
     );
 }
+
