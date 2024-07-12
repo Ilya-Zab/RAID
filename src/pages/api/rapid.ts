@@ -34,11 +34,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         
         // get target video as a stream
         const response = await axios.get<Stream>(videoLink.link, { responseType: "stream" });
-
-        console.debug("HEADERS:", response.headers);
-
-        res.setHeader("Content-Type", response.headers["content-type"] || "application/octet-stream");
+ res.setHeader("Content-Type", response.headers["content-type"] || "application/octet-stream");
         res.setHeader("Content-Disposition", `attachment; filename="video.mp4"`);
+       
 
         // redirect data stream from video download request into API response. MAGIC!
         response.data.pipe(res);

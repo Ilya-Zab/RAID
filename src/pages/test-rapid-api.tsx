@@ -5,18 +5,17 @@ import { FormEvent, useRef, useState } from "react";
 export default function TestRapidApi() {
     const [url, setUrl] = useState<string>("");
     const [result, setResult] = useState<any>(null);
+  const isRequestedRef = useRef<boolean>(false);
 
     async function handleSubmit(e: FormEvent) {
         e.preventDefault();
 
-        const blob: Blob = await axios.get("/api/rapid", {
+const blob: Blob = await axios.get("/api/rapid", {
             params: { url },
             responseType: "blob"
-        })
-            .then(response => response.data);
-
-        console.log(blob);
-        if (blob)
+        }).then(response => response.data);
+            console.log(blob);
+            if (blob)
             downloadFile(blob, "rapidapi-video.mp4");
     }
 
@@ -42,7 +41,10 @@ export default function TestRapidApi() {
 
             <div>
                 <h2>Result</h2>
-                </div>
+                <pre>
+                    {JSON.stringify(result)}
+                </pre>
+            </div>
         </div>
     );
 }

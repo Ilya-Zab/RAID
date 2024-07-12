@@ -1,5 +1,4 @@
 "use client"
-
 import useDeepAR from "../../hooks/useDeepAR";
 import useCreativeRecorder from "../../hooks/useCreativeRecorder";
 import { useEffect, useRef, useState } from "react";
@@ -9,12 +8,11 @@ import useAudioRecorder from "@/hooks/useAudioRecorder";
 import useVideoProcessor from "@/hooks/useVideoProcessor";
 import axios from "axios";
 import styles from './styles.module.scss';
-import { Box, IconButton } from "@mui/material";
-import { Loader } from "../Layouts/Loader";
+import { Box } from "@mui/material";
 import { useAppDispatch } from "@/hooks/redux";
 import { setLoading } from "@/store/slice/creativeSlice";
+import { useEffectsPreloader } from "@/hooks/useEffectsPreloader";
 
-// div element for displaying video should has fixed size
 const musicPath = "/audio/AR_CONTRAST.mp3";
 
 const orcEffects: EffectItem[] = [
@@ -44,22 +42,22 @@ const skeletEffects: EffectItem[] = [
     {
         name: "Skeleton + eyes",
         src: 'PICKER7.png',
-        url: "effects/SKELETON+EYES.deepar"
+        url: "/effects/SKELETON+EYES.deepar"
     },
     {
         name: "Skeleton + orc head",
         src: 'PICKER8.png',
-        url: "effects/SKELETON_BG+ORC_HEAD.deepar"
+        url: "/effects/SKELETON_BG+ORC_HEAD.deepar"
     },
     {
         name: "Skeleton + skeleton head",
         src: 'PICKER3.png',
-        url: "effects/SKELETON_BG+SKELETON_HEAD.deepar"
+        url: "/effects/SKELETON_BG+SKELETON_HEAD.deepar"
     },
     {
         name: "Skeleton + tatoo",
         src: 'PICKER4.png',
-        url: "effects/SKELETON_BG_TATOO.deepar"
+        url: "/effects/SKELETON_BG_TATOO.deepar"
     },
 ]
 
@@ -83,19 +81,29 @@ export interface CreativeRecorderProps
 export default function CreativeRecorder(props: CreativeRecorderProps)
 {
     const deepAR = useDeepAR("#deepar-screen");
+    const { startPreloading, isPreloaded } = useEffectsPreloader({ effects: [...orcEffects, ...skeletEffects] });
     const [isInited, setIsInited] = useState<boolean>(false);
     const creativeRecorder = useCreativeRecorder({ deepAR });
     const audioRecorder = useAudioRecorder();
     const videoProcessor = useVideoProcessor();
     const [music, setMusic] = useState<Blob | null>(null);
-    const [isOrc, setOrc] = useState<boolean>(null);
     const [currentEffects, setCurrentEffects] = useState(null);
     const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
     const [frames, setLocalFrames] = useState(null);
     const dispatch = useAppDispatch();
-
     const [recordingTime, setRecordingTime] = useState<number>(0);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+    useEffect(() =>
+    {
+        if (isInited)
+        {
+            dispatch(setLoading(false));
+        } else
+        {
+            dispatch(setLoading(true));
+        }
+    }, [isInited])
 
     useEffect(() =>
     {
@@ -111,6 +119,12 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
             if (timerRef.current)
             {
                 clearInterval(timerRef.current);
+                timerRef.current = null;
+            }
+
+            if (audioPlayerRef.current) {
+                audioPlayerRef.current.pause();
+                audioPlayerRef.current.currentTime = 0;
             }
         };
     }, [isInited, deepAR]);
@@ -128,21 +142,22 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [creativeRecorder.isRecording, audioRecorder.finishRecording, music]);
+    }, [creativeRecorder.isRecording, audioRecorder.finishRecording, music, videoProcessor.output]);
 
     async function handleVideoStateChange(isStarted: boolean)
     {
         try
         {
             if (isStarted)
+            {
                 finishRecording();
-            else
+                dispatch(setLoading(true));
+            } else
                 startRecording();
         }
         catch (e)
         {
             console.error(e);
-            alert("Error!");
         }
     }
 
@@ -164,42 +179,50 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     useEffect(() =>
     {
-        if (recordingTime !== 6) return;
+  if (recordingTime !== 6) return;
+        creativeRecorder.switchEffect(currentEffects[0].data);
+      
+ if (recordingTime === 40)
+        {
+            finishRecording();
+            dispatch(setLoading(true));
+        }
+        if (recordingTime !== 5) return;
         deepAR?.switchEffect(currentEffects[0].url);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [recordingTime]);
 
-
-
     function handleEffectChange(effect: EffectItem)
     {
-        deepAR?.switchEffect(effect.url);
+        creativeRecorder.switchEffect(effect.data);
     }
 
     return (
         <Box className={styles.CreativeRecorder}>
             <Box className={styles.CreativeRecorder__recorder} id="deepar-screen" />
-            <Box className={styles.CreativeRecorder__buttons}>
-                {recordingTime < 1 &&
-                    <EffectPicker
-                        effects={effects}
-                        onEffectChange={firstEffectChange}
-                        orientation={'horizontal'}
-                    />
-                }
+            {isInited &&
+                <Box className={styles.CreativeRecorder__buttons}>
+                    {recordingTime < 1 &&
+                        <EffectPicker
+                            effects={effects}
+                            onEffectChange={firstEffectChange}
+                            orientation={'horizontal'}
+                        />
+                    }
 
-                {recordingTime > 7 &&
-                    < EffectPicker
-                        effects={currentEffects}
-                        onEffectChange={handleEffectChange}
-                        orientation={'vertical'}
+                    {recordingTime > 7 &&
+                        < EffectPicker
+                            effects={currentEffects}
+                            onEffectChange={handleEffectChange}
+                            orientation={'vertical'}
+                        />
+                    }
+                    <StartStopButton
+                        onChange={handleVideoStateChange}
+                        disabled={!deepAR || !isInited}
                     />
-                }
-                <StartStopButton
-                    onChange={handleVideoStateChange}
-                    disabled={!deepAR || !isInited}
-                />
-            </Box>
+                </Box>
+            }
         </Box>
     );
 
@@ -239,6 +262,8 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     async function initializeCreativeRecorder()
     {
+        await startPreloading();
+
         const music = await axios.get(musicPath, { responseType: "blob" })
             .then(response => response.data);
 

@@ -3,7 +3,7 @@ import CreateVideoTemplate from "@/Components/CreateVideoTemplate/CreateVideoTem
 import { useCallback, useEffect, useState } from "react";
 import CreativeRecorder from "@/Components/CreativeRecorder/CreativeRecorder";
 import styles from './styles.module.scss';
-import { Box, Button, IconButton } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useVideoFrames } from "@/hooks/useVideoFrames";
 import FinallyVideoTemplate from "@/Components/FinallyVideoTemplate/FinallyVideoTemplate";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
@@ -26,6 +26,7 @@ const CreateVideo = () =>
     const pageTitle = 'Create video';
     const [video, setVideo] = useState<Blob | null>(null);
     const [currentBlobFrame, setCurrentBlobFrame] = useState<frameType | null>(null);
+    const [prevStep, setPrevStep] = useState<number>(0);
     const [step, setStep] = useState<number>(0);
     const { extractAllFrames, isLoading } = useVideoFrames();
     const [allFrames, setAllFrames] = useState(null);
@@ -63,36 +64,19 @@ const CreateVideo = () =>
         }
     }
 
-    const handleToggle = (): void =>
-    {
-        nextStep();
-    }
-
     function nextStep()
     {
+
+        setPrevStep(step);
         setStep(prev => prev + 1);
     }
 
-    function prevStep(): void
+    function previousStep(): void
     {
-        setStep(prev => (prev > 1 ? prev - 1 : 1));
-    }
-
-    async function uploadVideo()
-    {
-        const blob = await new Blob([uploadedVideo], { type: uploadedVideo.type });
-        setVideo(blob);
-        const frames = await extractAllFrames(blob);
-        await setVideoUrl(URL.createObjectURL(blob));
-        console.log(frames);
-        if (frames.length > 0)
-        {
-            setAllFrames(frames);
-            setStep(3);
-        } else
-        {
-            console.log('Frames not ready or video not set');
-        }
+        if (step === 1)
+            setStep(0);
+        else
+            setStep(prevStep);
     }
 
     useEffect(() =>
@@ -102,7 +86,25 @@ const CreateVideo = () =>
             uploadVideo();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [uploadedVideo])
+    }, [uploadedVideo]);
+
+    async function uploadVideo()
+    {
+        const blob = await new Blob([uploadedVideo], { type: uploadedVideo.type });
+        setVideo(blob);
+        const frames = await extractAllFrames(blob);
+        await setVideoUrl(URL.createObjectURL(blob));
+        if (frames.length > 0)
+        {
+            setAllFrames(frames);
+            setStep(3);
+            dispatch(setLoading(false));
+        } else
+        {
+            alert('There is a problem with creating creative');
+            dispatch(setLoading(false));
+        }
+    }
 
     async function handleVideoReady(video: Blob)
     {
@@ -127,11 +129,11 @@ const CreateVideo = () =>
             case 0:
                 return <CreateVideoTemplate handleButtonClick={nextStep} />;
             case 1:
-                return <CreateVideoInfo handleToggle={handleToggle} />;
+                return <CreateVideoInfo handleToggle={nextStep} handleBack={previousStep}/>;
             case 2:
                 return <CreativeRecorder onVideoRecorded={handleVideoReady} />;
             case 3:
-                return <CheckVideo videoUrl={videoUrl} onDownload={onDownloadClick} prevStep={prevStep} />;
+                return <CheckVideo videoUrl={videoUrl} onDownload={onDownloadClick} prevStep={previousStep} />;
             case 4:
                 return <CreativeSwiper data={allFrames} nextStep={nextStep} getCurrentFrame={getCurrentFrame} />;
             case 5:
@@ -157,11 +159,12 @@ const CreateVideo = () =>
                             #WeFinallyPlayedIt
                         </h1>
                         <Box className={styles.popup} id="pp">
-                            {isLoading && < Loader className={styles.popup__loader} color="white" />}
+
                             {!isLoading && CurrentTemplate()}
+                            {isCreating && < Loader className={styles.popup__loader} color="white" />}
                             {
-                                (step > 1 && step < 6) &&
-                                <button onClick={() => prevStep()}
+                                (step > 0 && step < 6) &&
+                                <button onClick={() => previousStep()}
                                     className={`${styles.button} ${styles['button-prev']}`}>
                                     <svg width="40" height="40" viewBox="0 0 40 40" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
