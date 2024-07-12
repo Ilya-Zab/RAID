@@ -93,7 +93,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     const dispatch = useAppDispatch();
     const [recordingTime, setRecordingTime] = useState<number>(0);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
-    const abortController = useRef(new AbortController());
 
     useEffect(() =>
     {
@@ -112,8 +111,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
         return () =>
         {
-            abortController.current.abort();
-
             if (deepAR && isInited)
             {
                 deepAR.shutdown();
@@ -123,6 +120,11 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
             {
                 clearInterval(timerRef.current);
                 timerRef.current = null;
+            }
+
+            if (audioPlayerRef.current) {
+                audioPlayerRef.current.pause();
+                audioPlayerRef.current.currentTime = 0;
             }
         };
     }, [isInited, deepAR]);
@@ -140,7 +142,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [creativeRecorder.isRecording, audioRecorder.finishRecording, music]);
+    }, [creativeRecorder.isRecording, audioRecorder.finishRecording, music, videoProcessor.output]);
 
     async function handleVideoStateChange(isStarted: boolean)
     {
@@ -177,8 +179,16 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     useEffect(() =>
     {
-        if (recordingTime !== 6) return;
+  if (recordingTime !== 6) return;
         creativeRecorder.switchEffect(currentEffects[0].data);
+      
+ if (recordingTime === 40)
+        {
+            finishRecording();
+            dispatch(setLoading(true));
+        }
+        if (recordingTime !== 5) return;
+        deepAR?.switchEffect(currentEffects[0].url);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [recordingTime]);
 
