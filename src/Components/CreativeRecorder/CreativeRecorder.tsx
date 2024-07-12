@@ -13,7 +13,7 @@ import { useAppDispatch } from "@/hooks/redux";
 import { setLoading } from "@/store/slice/creativeSlice";
 import { useEffectsPreloader } from "@/hooks/useEffectsPreloader";
 
-const musicPath = "/audio/AR_CONTRAST.mp3";
+const musicPath = "/audio/AR_CONTRAST_sad_piano_Break_v04.1.mp3";
 
 const orcEffects: EffectItem[] = [
     {

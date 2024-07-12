@@ -18,6 +18,14 @@
 	display: block;
 	background: transparent;
 	height: 25px;
+	@media screen and (max-width: 768px) {
+		height: 35px;
+		width: 35px;
+		& svg {
+			height: 35px;
+			width: 35px;
+		}
+	}
 }
 .customInput {
 	border: 1px solid rgba(66, 113, 161, 0.58);
