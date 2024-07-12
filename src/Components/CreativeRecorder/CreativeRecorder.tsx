@@ -16,6 +16,11 @@ const musicPath = "/audio/AR_CONTRAST.mp3";
 
 const orcEffects: EffectItem[] = [
     {
+        name: "Orc + tatoo",
+        src: 'PICKER4.png',
+        url: "effects/ORC_BG+TATOO.deepar"
+    },
+    {
         name: "Orc + EYES",
         src: 'PICKER7.png',
         url: "effects/ORC_BG+EYES.deepar"
@@ -30,14 +35,14 @@ const orcEffects: EffectItem[] = [
         src: 'PICKER3.png',
         url: "effects/ORC_BG+SKELETON_HEAD.deepar"
     },
-    {
-        name: "Orc + tatoo",
-        src: 'PICKER4.png',
-        url: "effects/ORC_BG+TATOO.deepar"
-    },
 ]
 
 const skeletEffects: EffectItem[] = [
+    {
+        name: "Skeleton + tatoo",
+        src: 'PICKER4.png',
+        url: "/effects/SKELETON_BG_TATOO.deepar"
+    },
     {
         name: "Skeleton + eyes",
         src: 'PICKER7.png',
@@ -52,11 +57,6 @@ const skeletEffects: EffectItem[] = [
         name: "Skeleton + skeleton head",
         src: 'PICKER3.png',
         url: "/effects/SKELETON_BG+SKELETON_HEAD.deepar"
-    },
-    {
-        name: "Skeleton + tatoo",
-        src: 'PICKER4.png',
-        url: "/effects/SKELETON_BG_TATOO.deepar"
     },
 ]
 
@@ -94,17 +94,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     useEffect(() =>
     {
-        if (isInited)
-        {
-            dispatch(setLoading(false));
-        } else
-        {
-            dispatch(setLoading(true));
-        }
-    }, [isInited])
-
-    useEffect(() =>
-    {
         initializeCreativeRecorder();
 
         return () =>
@@ -126,6 +115,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
                 audioPlayerRef.current.currentTime = 0;
             }
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isInited, deepAR]);
 
     useEffect(() =>
@@ -137,15 +127,16 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [creativeRecorder.isRecording, music]);
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         if (!videoProcessor.output)
             return;
 
         if (!frames)
-            {
-                setLocalFrames(videoProcessor.output);
-                props.onVideoRecorded(videoProcessor.output);
-            }
+        {
+            setLocalFrames(videoProcessor.output);
+            props.onVideoRecorded(videoProcessor.output);
+        }
     }, [videoProcessor.output]);
 
     async function handleVideoStateChange(isStarted: boolean)
@@ -155,7 +146,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
             if (isStarted)
             {
                 finishRecording();
-                dispatch(setLoading(true));
             } else
                 startRecording();
         }
@@ -183,16 +173,16 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     useEffect(() =>
     {
-  if (recordingTime !== 6) return;
-        creativeRecorder.switchEffect(currentEffects[0].data);
-      
- if (recordingTime === 40)
+        if (recordingTime === 40)
         {
             finishRecording();
             dispatch(setLoading(true));
         }
-        if (recordingTime !== 10) return;
-        deepAR?.switchEffect(currentEffects[0].url);
+        if (recordingTime === 8)
+        {
+            creativeRecorder.switchEffect(currentEffects[0].data);
+        }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [recordingTime]);
 
@@ -250,7 +240,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         creativeRecorder.finishRecording();
         if (audioPlayerRef.current)
         {
-            dispatch(setLoading(true));
             audioPlayerRef.current.pause();
             audioPlayerRef.current.currentTime = 0;
         }
@@ -259,6 +248,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
             clearInterval(timerRef.current);
             timerRef.current = null;
         }
+        dispatch(setLoading(true));
     }
 
     async function initializeCreativeRecorder()
