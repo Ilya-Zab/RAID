@@ -1,7 +1,7 @@
 "use client"
 
 import { DeepAR } from "deepar"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 interface CreativeRecorderOptions
 {
@@ -14,6 +14,7 @@ export type CreativeRecorderResult = {
     startRecording: () => Promise<void>,
     finishRecording: () => Promise<void>,
     getPermissions: () => Promise<boolean>,
+    switchEffect: (effect: string | ArrayBuffer) => Promise<void>,
     isRecording: boolean,
     video: Blob | null
 };
@@ -26,6 +27,7 @@ export default function useCreativeRecorder({
 {
     const [isRecording, setIsRecording] = useState<boolean>(false);
     const [video, setVideo] = useState<Blob | null>(null);
+    const currentEffectRef = useRef<string | ArrayBuffer | null>(null);
 
     async function startRecording()
     {
@@ -61,5 +63,16 @@ export default function useCreativeRecorder({
         }
     }
 
-    return { startRecording, finishRecording, getPermissions, isRecording, video };
+    async function switchEffect(effect: string | ArrayBuffer): Promise<void> {
+        if (!deepAR)
+            throw new Error("DeepAR library is not initialized.");
+        
+        if (effect == currentEffectRef.current)
+            return;
+
+        currentEffectRef.current = effect;
+        await deepAR.switchEffect(effect);
+    }
+
+    return { startRecording, finishRecording, getPermissions, switchEffect, isRecording, video };
 }

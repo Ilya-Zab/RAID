@@ -11,6 +11,7 @@ import styles from './styles.module.scss';
 import { Box } from "@mui/material";
 import { useAppDispatch } from "@/hooks/redux";
 import { setLoading } from "@/store/slice/creativeSlice";
+import { useEffectsPreloader } from "@/hooks/useEffectsPreloader";
 
 const musicPath = "/audio/AR_CONTRAST.mp3";
 
@@ -80,6 +81,7 @@ export interface CreativeRecorderProps
 export default function CreativeRecorder(props: CreativeRecorderProps)
 {
     const deepAR = useDeepAR("#deepar-screen");
+    const { startPreloading, isPreloaded } = useEffectsPreloader({ effects: [...orcEffects, ...skeletEffects] });
     const [isInited, setIsInited] = useState<boolean>(false);
     const creativeRecorder = useCreativeRecorder({ deepAR });
     const audioRecorder = useAudioRecorder();
@@ -157,7 +159,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         catch (e)
         {
             console.error(e);
-            alert("Error!");
         }
     }
 
@@ -179,7 +180,10 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     useEffect(() =>
     {
-        if (recordingTime === 40)
+  if (recordingTime !== 6) return;
+        creativeRecorder.switchEffect(currentEffects[0].data);
+      
+ if (recordingTime === 40)
         {
             finishRecording();
             dispatch(setLoading(true));
@@ -191,7 +195,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     function handleEffectChange(effect: EffectItem)
     {
-        deepAR?.switchEffect(effect.url);
+        creativeRecorder.switchEffect(effect.data);
     }
 
     return (
@@ -258,6 +262,8 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     async function initializeCreativeRecorder()
     {
+        await startPreloading();
+
         const music = await axios.get(musicPath, { responseType: "blob" })
             .then(response => response.data);
 
