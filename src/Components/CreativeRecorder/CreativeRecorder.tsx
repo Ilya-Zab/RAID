@@ -120,7 +120,8 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
                 timerRef.current = null;
             }
 
-            if (audioPlayerRef.current) {
+            if (audioPlayerRef.current)
+            {
                 audioPlayerRef.current.pause();
                 audioPlayerRef.current.currentTime = 0;
             }
@@ -183,7 +184,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
             finishRecording();
             dispatch(setLoading(true));
         }
-        if (recordingTime !== 5) return;
+        if (recordingTime !== 10) return;
         deepAR?.switchEffect(currentEffects[0].url);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [recordingTime]);
@@ -205,7 +206,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
                             orientation={'horizontal'}
                         />
                     }
-
                     {recordingTime > 7 &&
                         < EffectPicker
                             effects={currentEffects}
