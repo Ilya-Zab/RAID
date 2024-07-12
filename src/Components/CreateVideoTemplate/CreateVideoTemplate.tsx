@@ -79,30 +79,14 @@ const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonC
     const [url, setUrl] = React.useState();
     const dispatch = useAppDispatch();
 
-    async function getVideoUrl(url: string)
+    async function uploadVideoFromRapid(url: string)
     {
-        return await axios("/api/rapid", {
-            params: {
-                url
-            }
-        })
-            .then(response => response.data.url)
-            .catch(err => alert(JSON.stringify(err.response.data)));
-    }
-
-    async function getVideo(url: string): Promise<Blob>
-    {
-        try
-        {
-            const response = await axios.get(url, {
-                responseType: "blob"
-            });
-            return response.data;
-        } catch (err)
-        {
-            console.error(`Error while downloading video. URL: "${url}".`);
-            throw err;
-        }
+        const blob: Blob = await axios.get("/api/rapid", {
+            params: { url },
+            responseType: "blob"
+        }).then(response => response.data);
+        console.log(blob);
+        return blob;
     }
 
     const onInputChange = (event) =>
@@ -120,8 +104,7 @@ const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonC
             dispatch(setLoading(true));
             try
             {
-                const videoUrl = await getVideoUrl(url);
-                const rapidVideo = await getVideo(videoUrl);
+                const rapidVideo = await uploadVideoFromRapid(url);
                 if (rapidVideo)
                     dispatch(setVideo(rapidVideo));
             } catch (err)
