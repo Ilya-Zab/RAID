@@ -129,14 +129,19 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
             return
 
         videoProcessor.mergeVideoAndAudio(creativeRecorder.video, music);
-        if (!frames)
-        {
-            setLocalFrames(creativeRecorder.video);
-            props.onVideoRecorded(creativeRecorder.video);
-        }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [creativeRecorder.isRecording, music]);
+
+    useEffect(() => {
+        if (!videoProcessor.output)
+            return;
+
+        if (!frames)
+            {
+                setLocalFrames(videoProcessor.output);
+                props.onVideoRecorded(videoProcessor.output);
+            }
+    }, [videoProcessor.output]);
 
     async function handleVideoStateChange(isStarted: boolean)
     {
