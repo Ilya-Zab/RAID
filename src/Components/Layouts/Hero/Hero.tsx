@@ -93,7 +93,8 @@ const Hero = () =>
                             to take part in the prize draw!
                         </p>
                         <p className={styles.hero__text}>
-                            More likes - more chances to win!<br/> Make sure to share on all your social media channels.
+                            More likes - more chances to win!<br/>
+                            Make sure to share on all your social media channels with the hashtag #WeFinallyPlayedIt.
                         </p>
                     </Box>
                     <Box className={styles.hero__btn__wrapper}>

@@ -156,11 +156,3 @@ export const total = [
         quantity: '50',
     },
 ];
-export const pityPrizes = [
-    {
-        img: '/images/logo.png',
-        name: 'Energy 250',
-        subText:'',
-        quantity: '15 000',
-    },
-];

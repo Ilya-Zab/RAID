@@ -33,7 +33,7 @@ const AudioPlayer: React.FC = () =>
 
     return (
         <div>
-            <audio className={styles.audio} ref={audioRef} src="/audio/audio.mp3" loop />
+            <audio className={styles.audio} ref={audioRef} src="/audio/audio_bg.mp3" loop />
             <IconButton
                 size="large"
                 edge="start"

@@ -89,9 +89,6 @@ const FinallyVideoTemplate = ({ video, creativeImage }) =>
                     </Box>
                     <Box className={styles.section__text}>
                         <Typography variant='body1' align='center'>Well done!</Typography>
-                        <Typography variant='body2' align='center'>
-                            Here&lsquo;s your special in-game promo code <br /> for submitting your entry: <span className='text-gradient'>promocode</span>
-                        </Typography>
                         <Typography variant='caption'>
                             Enter your email to participate in a prize draw.<br />
                             We&lsquo;ll use it to notify you once your post <br />

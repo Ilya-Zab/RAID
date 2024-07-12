@@ -60,7 +60,7 @@ const Navigation: FC<wpMenuProps> = ({correctStyle, data}) => {
 											<Link className={'desc nav-link link'}
                                                   href="https://www.instagram.com/ar/1410842746283057/?ch=NTA2MzNjMDM0ODg0ODk2YjZjODNiNjk0YjQ0MDFlZTk%3D"
                                                   target={'_blank'}>Mask</Link>
-                                            <a href="/audio/AR_CONTRAST_2.mp3" download className="desc nav-link link">Sound</a>
+                                            <a href="/audio/AR_CONTRAST_sad_piano_Break_v04.1.mp3" download className="desc nav-link link">Sound</a>
 										</Box>
                                     }
                                 </Box>
