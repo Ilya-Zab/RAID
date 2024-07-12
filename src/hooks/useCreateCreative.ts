@@ -5,8 +5,8 @@ import { useCookies } from "react-cookie";
 
 export type CreateCreativeResult = {
     createCreativeAsUrl: (url: string) => Promise<void>,
-    createCreativeAsBlob: (video: Blob, featuredMedia: number, creativeName) => Promise<void>,
-    uploadVideoByUserToken: (video: Blob) => Promise<void>,
+    createCreativeAsBlob: (video: number, author: number, featuredMedia: number, creativeName) => Promise<void>,
+    uploadVideoByUserToken: (video: Blob, featuredMedia: number, creativeName: string) => Promise<void>,
     success: boolean,
     data: any | null,
     error: Error | null
@@ -37,7 +37,7 @@ export default function useCreateCreative(): CreateCreativeResult
             });
     }
 
-    async function uploadVideoByUserToken(video: Blob): Promise<void>
+    async function uploadVideoByUserToken(video: Blob, featuredMedia: number, creativeName: string): Promise<void>
     {
         if (!cookies.userToken)
             setError(new Error('This user is not allowed to make post requests.'));
@@ -62,18 +62,23 @@ export default function useCreateCreative(): CreateCreativeResult
             }
 
             const data = await response.json();
-            console.log('Video uploaded successfully:', data);
+            await createCreativeAsBlob(data.id, data.author, featuredMedia, creativeName);
         } catch (err)
         {
+            setSuccess(false);
+            setData(null);
             setError(err);
         }
     };
 
-    async function createCreativeAsBlob(video: Blob, featuredMedia: number, creativeName: string): Promise<void>
+    async function createCreativeAsBlob(video: number, authorId: number, featuredMedia: number, creativeName: string): Promise<void>
     {
         const formData = new FormData();
+        const videoId = video.toString();
         const media = featuredMedia.toString();
-        formData.append("video", video);
+        const author = authorId.toString();
+        formData.append("video", videoId);
+        formData.append("author", author);
         formData.append("media", media);
         formData.append("title", creativeName);
 

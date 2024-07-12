@@ -41,8 +41,7 @@ const FinallyVideoTemplate = ({ video, creativeImage }) =>
     {
         if (wpMediaResponse && "mediaItem" in wpMediaResponse && creativeName)
         {
-            uploadVideoByUserToken(video);
-            // createCreativeAsBlob(video, wpMediaResponse.mediaItem.id, creativeName);
+            uploadVideoByUserToken(video, wpMediaResponse.mediaItem.id, creativeName);
         }
 
         if (wpMediaError)
