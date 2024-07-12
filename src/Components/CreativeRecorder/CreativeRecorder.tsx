@@ -4,7 +4,6 @@ import useCreativeRecorder from "../../hooks/useCreativeRecorder";
 import { useEffect, useRef, useState } from "react";
 import StartStopButton from "./StartStopButton";
 import { EffectItem, EffectPicker } from "./EffectPicker";
-import useAudioRecorder from "@/hooks/useAudioRecorder";
 import useVideoProcessor from "@/hooks/useVideoProcessor";
 import axios from "axios";
 import styles from './styles.module.scss';
@@ -18,6 +17,11 @@ import { useSelector } from "react-redux";
 const musicPath = "/audio/AR_CONTRAST.mp3";
 
 const orcEffects: EffectItem[] = [
+    {
+        name: "Orc + tatoo",
+        src: 'PICKER4.png',
+        url: "effects/ORC_BG+TATOO.deepar"
+    },
     {
         name: "Orc + EYES",
         src: 'PICKER7.png',
@@ -33,14 +37,14 @@ const orcEffects: EffectItem[] = [
         src: 'PICKER3.png',
         url: "effects/ORC_BG+SKELETON_HEAD.deepar"
     },
-    {
-        name: "Orc + tatoo",
-        src: 'PICKER4.png',
-        url: "effects/ORC_BG+TATOO.deepar"
-    },
 ]
 
 const skeletEffects: EffectItem[] = [
+    {
+        name: "Skeleton + tatoo",
+        src: 'PICKER4.png',
+        url: "/effects/SKELETON_BG_TATOO.deepar"
+    },
     {
         name: "Skeleton + eyes",
         src: 'PICKER7.png',
@@ -55,11 +59,6 @@ const skeletEffects: EffectItem[] = [
         name: "Skeleton + skeleton head",
         src: 'PICKER3.png',
         url: "/effects/SKELETON_BG+SKELETON_HEAD.deepar"
-    },
-    {
-        name: "Skeleton + tatoo",
-        src: 'PICKER4.png',
-        url: "/effects/SKELETON_BG_TATOO.deepar"
     },
 ]
 
@@ -77,7 +76,7 @@ const effects: EffectItem[] = [
 ];
 
 const creativeRecordingStartedEvent = new Event("creative-recording-started", { bubbles: true });
- 
+
 export interface CreativeRecorderProps
 {
     onVideoRecorded: (video: Blob) => void,
@@ -88,7 +87,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     const deepAR = useDeepAR("#deepar-screen");
     const [isInited, setIsInited] = useState<boolean>(false);
     const creativeRecorder = useCreativeRecorder({ deepAR });
-    const audioRecorder = useAudioRecorder();
     const videoProcessor = useVideoProcessor();
     const [music, setMusic] = useState<Blob | null>(null);
     const [currentEffects, setCurrentEffects] = useState(null);
@@ -99,17 +97,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     const timerRef = useRef<NodeJS.Timeout | null>(null);
     const abortController = useRef(new AbortController());
     const isNavbarMusicPlaying = useSelector((state: RootState) => state.audio.isPlaying);
-
-    useEffect(() =>
-    {
-        if (isInited)
-        {
-            dispatch(setLoading(false));
-        } else
-        {
-            dispatch(setLoading(true));
-        }
-    }, [isInited])
 
     useEffect(() =>
     {
@@ -130,27 +117,35 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
                 timerRef.current = null;
             }
 
-            if (audioPlayerRef.current) {
+            if (audioPlayerRef.current)
+            {
                 audioPlayerRef.current.pause();
                 audioPlayerRef.current.currentTime = 0;
             }
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isInited, deepAR]);
 
     useEffect(() =>
     {
-        if (!creativeRecorder.video || !audioRecorder.audio || !music)
+        if (!creativeRecorder.video || !music)
             return
 
-        videoProcessor.mergeVideoAndAudio(creativeRecorder.video, audioRecorder.audio, music);
+        videoProcessor.mergeVideoAndAudio(creativeRecorder.video, music);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [creativeRecorder.isRecording, music]);
+
+    useEffect(() =>
+    {
+        if (!videoProcessor.output)
+            return;
+
         if (!frames)
         {
-            setLocalFrames(creativeRecorder.video);
-            props.onVideoRecorded(creativeRecorder.video);
+            setLocalFrames(videoProcessor.output);
+            props.onVideoRecorded(videoProcessor.output);
         }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [creativeRecorder.isRecording, audioRecorder.finishRecording, music]);
+    }, [videoProcessor.output]);
 
     async function handleVideoStateChange(isStarted: boolean)
     {
@@ -159,7 +154,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
             if (isStarted)
             {
                 finishRecording();
-                dispatch(setLoading(true));
             } else
                 startRecording();
         }
@@ -188,8 +182,16 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     useEffect(() =>
     {
-        if (recordingTime !== 6) return;
-        deepAR?.switchEffect(currentEffects[0].url);
+        if (recordingTime === 40)
+        {
+            finishRecording();
+            dispatch(setLoading(true));
+        }
+        if (recordingTime === 8)
+        {
+            creativeRecorder.switchEffect(currentEffects[0].data);
+        }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [recordingTime]);
 
@@ -210,7 +212,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
                             orientation={'horizontal'}
                         />
                     }
-
                     {recordingTime > 7 &&
                         < EffectPicker
                             effects={currentEffects}
@@ -234,7 +235,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
             dispatch(togglePlay());
 
         creativeRecorder?.startRecording();
-        audioRecorder.startRecording();
         audioPlayerRef.current?.play();
 
         setRecordingTime(0);
@@ -250,11 +250,9 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     function finishRecording()
     {
-        audioRecorder.finishRecording();
         creativeRecorder.finishRecording();
         if (audioPlayerRef.current)
         {
-            dispatch(setLoading(true));
             audioPlayerRef.current.pause();
             audioPlayerRef.current.currentTime = 0;
         }
@@ -263,6 +261,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
             clearInterval(timerRef.current);
             timerRef.current = null;
         }
+        dispatch(setLoading(true));
     }
 
     async function initializeCreativeRecorder()
@@ -274,8 +273,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         setMusic(music);
 
         const videoGrants = await creativeRecorder.getPermissions();
-        const audioGrants = await audioRecorder.getPermissions();
 
-        setIsInited(videoGrants && audioGrants);
+        setIsInited(videoGrants);
     }
 }
