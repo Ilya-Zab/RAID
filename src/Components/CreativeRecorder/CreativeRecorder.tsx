@@ -10,7 +10,9 @@ import styles from './styles.module.scss';
 import { Box } from "@mui/material";
 import { useAppDispatch } from "@/hooks/redux";
 import { setLoading } from "@/store/slice/creativeSlice";
-import { useEffectsPreloader } from "@/hooks/useEffectsPreloader";
+import { RootState, AppDispatch } from '../../store/store';
+import { togglePlay } from '../../store/slice/audioSlice';
+import { useSelector } from "react-redux";
 
 const musicPath = "/audio/AR_CONTRAST.mp3";
 
@@ -72,6 +74,9 @@ const effects: EffectItem[] = [
         url: "effects/MASK_1.deepar"
     },
 ];
+
+const creativeRecordingStartedEvent = new Event("creative-recording-started", { bubbles: true });
+
 export interface CreativeRecorderProps
 {
     onVideoRecorded: (video: Blob) => void,
@@ -80,9 +85,9 @@ export interface CreativeRecorderProps
 export default function CreativeRecorder(props: CreativeRecorderProps)
 {
     const deepAR = useDeepAR("#deepar-screen");
-    const { startPreloading, isPreloaded } = useEffectsPreloader({ effects: [...orcEffects, ...skeletEffects] });
     const [isInited, setIsInited] = useState<boolean>(false);
     const creativeRecorder = useCreativeRecorder({ deepAR });
+    const audioRecorder = useAudioRecorder();
     const videoProcessor = useVideoProcessor();
     const [music, setMusic] = useState<Blob | null>(null);
     const [currentEffects, setCurrentEffects] = useState(null);
@@ -91,6 +96,8 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     const dispatch = useAppDispatch();
     const [recordingTime, setRecordingTime] = useState<number>(0);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
+    const abortController = useRef(new AbortController());
+    const isNavbarMusicPlaying = useSelector((state: RootState) => state.audio.isPlaying);
 
     useEffect(() =>
     {
@@ -98,6 +105,8 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
         return () =>
         {
+            abortController.current.abort();
+
             if (deepAR && isInited)
             {
                 deepAR.shutdown();
@@ -120,7 +129,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     useEffect(() =>
     {
-        if (!creativeRecorder.video || !music)
+        if (!creativeRecorder.video || !audioRecorder.audio || !music)
             return
 
         videoProcessor.mergeVideoAndAudio(creativeRecorder.video, music);
@@ -152,6 +161,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         catch (e)
         {
             console.error(e);
+            alert("Error!");
         }
     }
 
@@ -188,7 +198,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     function handleEffectChange(effect: EffectItem)
     {
-        creativeRecorder.switchEffect(effect.data);
+        deepAR?.switchEffect(effect.url);
     }
 
     return (
@@ -221,7 +231,12 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     function startRecording()
     {
+        // stop background music that can be playing after click button in the site navbar 
+        if (isNavbarMusicPlaying)
+            dispatch(togglePlay());
+
         creativeRecorder?.startRecording();
+        audioRecorder.startRecording();
         audioPlayerRef.current?.play();
 
         setRecordingTime(0);
@@ -237,6 +252,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     function finishRecording()
     {
+        audioRecorder.finishRecording();
         creativeRecorder.finishRecording();
         if (audioPlayerRef.current)
         {
@@ -253,8 +269,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     async function initializeCreativeRecorder()
     {
-        await startPreloading();
-
         const music = await axios.get(musicPath, { responseType: "blob" })
             .then(response => response.data);
 
@@ -262,7 +276,8 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         setMusic(music);
 
         const videoGrants = await creativeRecorder.getPermissions();
+        const audioGrants = await audioRecorder.getPermissions();
 
-        setIsInited(videoGrants);
+        setIsInited(videoGrants && audioGrants);
     }
 }
