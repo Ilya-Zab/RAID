@@ -9,14 +9,16 @@ import CreativesListItemSkeleton from "../CreativesListItem/CreativesListItemSke
 import LoadMore from "../LoadMore";
 import { useMediaQuery } from "@mui/material";
 
-interface CreativesListPropsType {
+interface CreativesListPropsType
+{
     perPage?: number,
     orderByVotes?: boolean,
     limited?: boolean
     firstItem?: ReactNode
 }
 
-const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes = false, limited = false, firstItem }) => {
+const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes = false, limited = false, firstItem }) =>
+{
     const [{ userToken }] = useCookies(['userToken']);
     const [fetchUserData, { data: userData }] = useLazyFetchUserDataQuery();
     const [updateVoteVideo] = useFetchUpdateVoteVideoMutation();
@@ -27,29 +29,37 @@ const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes 
 
     const creatives = orderByVotes ? creativesByVotes : creativesByDate;
 
-    useEffect(() => {
-        if (userToken) {
+    useEffect(() =>
+    {
+        if (userToken)
+        {
             fetchUserData(userToken);
         }
 
         orderByVotes ?
             fetchCreativesByVotes({ per_page: creativesPerPage, offset: 0 }) :
             fetchCreativesByDate({ per_page: creativesPerPage, offset: 0 });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userToken, creativesPerPage, orderByVotes, , fetchCreativesByDate, fetchUserData]);
 
-    const loadMore = () => {
+    const loadMore = () =>
+    {
         setCreativesPerPage(100)
     }
 
-    const checkUserHasVoted = (creativeId) => {
-        if (userData !== undefined) {
+    const checkUserHasVoted = (creativeId) =>
+    {
+        if (userData !== undefined)
+        {
             return userData.meta.votes_creatives.includes(String(creativeId));
         }
     }
 
-    const onVote = (creativeId: number) => {
+    const onVote = (creativeId: number) =>
+    {
         if (userData === undefined) return false;
-        if (userData.meta.votes_available === "0") {
+        if (userData.meta.votes_available === "0")
+        {
             alert('You have no votes available.');
             return false;
         }
@@ -57,13 +67,15 @@ const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes 
         return true;
     }
 
-    const renderListItems = () => {
+    const renderListItems = () =>
+    {
         return creatives.map((creative: CreativeDataType) => (
             <CreativesListItem key={creative.id} creative={creative} hasVoted={checkUserHasVoted(creative.id)} onVote={onVote} />
         ))
     }
 
-    const renderSkeleton = () => {
+    const renderSkeleton = () =>
+    {
         const skeletonItems = [];
         for (let i = 0; i < creativesPerPage; i++) skeletonItems.push(
             <CreativesListItemSkeleton key={i} />

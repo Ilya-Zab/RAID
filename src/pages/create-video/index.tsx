@@ -28,7 +28,7 @@ const CreateVideo = () =>
     const [currentBlobFrame, setCurrentBlobFrame] = useState<frameType | null>(null);
     const [prevStep, setPrevStep] = useState<number>(0);
     const [step, setStep] = useState<number>(0);
-    const { extractAllFrames, isLoading } = useVideoFrames();
+    const { extractAllFrames } = useVideoFrames();
     const [allFrames, setAllFrames] = useState(null);
     const [videoUrl, setVideoUrl] = useState(null);
     const raidId = useAppSelector(state => state.raidId.raidId);
@@ -66,17 +66,21 @@ const CreateVideo = () =>
 
     function nextStep()
     {
-
         setPrevStep(step);
         setStep(prev => prev + 1);
     }
 
     function previousStep(): void
     {
+        if (prevStep > -1)
+        {
+            setStep(prevStep);
+            setPrevStep(0);
+            setStep(0);
+        }
         if (step === 1)
             setStep(0);
-        else
-            setStep(prevStep);
+        dispatch(setLoading(false));
     }
 
     useEffect(() =>
@@ -97,6 +101,7 @@ const CreateVideo = () =>
         if (frames.length > 0)
         {
             setAllFrames(frames);
+            setPrevStep(0);
             setStep(3);
             dispatch(setLoading(false));
         } else
@@ -108,6 +113,7 @@ const CreateVideo = () =>
 
     async function handleVideoReady(video: Blob)
     {
+        dispatch(setLoading(true));
         setVideo(video);
         setVideoUrl(URL.createObjectURL(video));
         const frames = await extractAllFrames(video);
@@ -129,7 +135,7 @@ const CreateVideo = () =>
             case 0:
                 return <CreateVideoTemplate handleButtonClick={nextStep} />;
             case 1:
-                return <CreateVideoInfo handleToggle={nextStep} handleBack={previousStep}/>;
+                return <CreateVideoInfo handleToggle={nextStep} handleBack={previousStep} />;
             case 2:
                 return <CreativeRecorder onVideoRecorded={handleVideoReady} />;
             case 3:
@@ -160,8 +166,8 @@ const CreateVideo = () =>
                         </h1>
                         <Box className={styles.popup} id="pp">
 
-                            {!isLoading && CurrentTemplate()}
-                            {isCreating && < Loader className={styles.popup__loader} color="white" />}
+                            {CurrentTemplate()}
+                            {isCreating && <Loader className={styles.popup__loader} color="white" />}
                             {
                                 (step > 0 && step < 6) &&
                                 <button onClick={() => previousStep()}
@@ -196,7 +202,7 @@ const CreateVideo = () =>
                                     variant="contained"
                                     className={`btn-second btn-second-next`}
                                     onClick={() => nextStep()}
-                                    disabled={isLoading}
+                                    disabled={isCreating}
                                 >
                                     {allFrames.length > 0 ? "Next" : "Wait.."}
                                 </Button>

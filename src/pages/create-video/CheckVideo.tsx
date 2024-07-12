@@ -19,7 +19,7 @@ const CheckVideo: FC<CheckVideoProps> = ({ videoUrl, onDownload, prevStep }) =>
             <video
                 autoPlay
                 loop
-                muted
+                // muted
                 className={styles.video}
             >
                 <source

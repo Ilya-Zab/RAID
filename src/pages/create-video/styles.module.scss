@@ -29,6 +29,7 @@
 		background: #080808;
 	}
 }
+
 .bg3 {
 	background: url("/images/bg1.png"), $linearGradient4;
 	background-repeat: no-repeat;
@@ -46,6 +47,7 @@
 		background: #080808;
 	}
 }
+
 .bg2 {
 	background: url("/images/bg1.png"), $linearGradient4;
 	background-repeat: no-repeat;
@@ -53,6 +55,7 @@
 	padding: 20px 0 68px;
 	position: relative;
 	margin-bottom: -68px;
+
 	&:before {
 		content: '';
 		display: block;
@@ -63,6 +66,7 @@
 		z-index: 1;
 		background: rgba(8, 8, 8, 0.6);
 	}
+
 	&:after {
 		content: '';
 		display: none;
@@ -102,6 +106,12 @@
 	}
 
 	&__loader {
+		position: absolute;
+		inset: 0;
+		z-index: 20;
+		background: url('/images/CreateModalGradientpng.png');
+		background-color: $bg4;
+
 		align-items: center;
 		min-height: auto;
 		height: 100%;
@@ -152,9 +162,11 @@
 		height: 50px;
 	}
 }
+
 .wrapper {
 	height: 100%;
 }
+
 .video {
 	object-fit: contain;
 	width: 100%;
