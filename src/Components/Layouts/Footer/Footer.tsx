@@ -14,7 +14,7 @@ const data = [
         url: 'link1111',
     }, {
         title: 'Privacy Notice',
-        url: '/privacy-notice',
+        url: '',
     }, {
         title: 'Find ID',
         url: '',
