@@ -1,14 +1,15 @@
 import styles from "./styles.module.scss";
-import {Box, Button, IconButton} from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import * as React from "react";
 
-const CreateVideoInfo = ({handleToggle,handleBack}) => {
+const CreateVideoInfo = ({ handleToggle, handleBack }) =>
+{
     return (
         <Box className={styles.wrapper}>
             <Box className={styles.modal}>
                 <IconButton className={styles.modal__btn} onClick={handleBack}>
-                    <CloseIcon/>
+                    <CloseIcon />
                 </IconButton>
                 <h3 className={styles.modal__title}>Video Instruction</h3>
                 <Box className={styles.modal__scrollbar}>
