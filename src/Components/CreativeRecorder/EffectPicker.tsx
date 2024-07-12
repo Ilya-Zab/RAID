@@ -8,7 +8,8 @@ import styles from "./styles.module.scss";
 export interface EffectItem {
     name: string,
     src: string,
-    url: string
+    url: string,
+    data?: ArrayBuffer
 }
 
 export interface EffectPickerOptions {
