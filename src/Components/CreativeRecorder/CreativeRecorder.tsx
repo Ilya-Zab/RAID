@@ -131,7 +131,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         if (!frames)
         {
             setLocalFrames(creativeRecorder.video);
-            props.onVideoRecorded(videoProcessor.output);
+            props.onVideoRecorded(creativeRecorder.video);
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -178,7 +178,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
             finishRecording();
             dispatch(setLoading(true));
         }
-        if (recordingTime !== 6) return;
+        if (recordingTime !== 5) return;
         deepAR?.switchEffect(currentEffects[0].url);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [recordingTime]);
