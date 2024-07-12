@@ -4,7 +4,6 @@ import useCreativeRecorder from "../../hooks/useCreativeRecorder";
 import { useEffect, useRef, useState } from "react";
 import StartStopButton from "./StartStopButton";
 import { EffectItem, EffectPicker } from "./EffectPicker";
-import useAudioRecorder from "@/hooks/useAudioRecorder";
 import useVideoProcessor from "@/hooks/useVideoProcessor";
 import axios from "axios";
 import styles from './styles.module.scss';
@@ -82,7 +81,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     const deepAR = useDeepAR("#deepar-screen");
     const [isInited, setIsInited] = useState<boolean>(false);
     const creativeRecorder = useCreativeRecorder({ deepAR });
-    const audioRecorder = useAudioRecorder();
     const videoProcessor = useVideoProcessor();
     const [music, setMusic] = useState<Blob | null>(null);
     const [currentEffects, setCurrentEffects] = useState(null);
@@ -127,10 +125,10 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     useEffect(() =>
     {
-        if (!creativeRecorder.video || !audioRecorder.audio || !music)
+        if (!creativeRecorder.video || !music)
             return
 
-        videoProcessor.mergeVideoAndAudio(creativeRecorder.video, audioRecorder.audio, music);
+        videoProcessor.mergeVideoAndAudio(creativeRecorder.video, music);
         if (!frames)
         {
             setLocalFrames(creativeRecorder.video);
@@ -138,7 +136,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [creativeRecorder.isRecording, audioRecorder.finishRecording, music]);
+    }, [creativeRecorder.isRecording, music]);
 
     async function handleVideoStateChange(isStarted: boolean)
     {
@@ -218,7 +216,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     function startRecording()
     {
         creativeRecorder?.startRecording();
-        audioRecorder.startRecording();
         audioPlayerRef.current?.play();
 
         setRecordingTime(0);
@@ -234,7 +231,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     function finishRecording()
     {
-        audioRecorder.finishRecording();
         creativeRecorder.finishRecording();
         if (audioPlayerRef.current)
         {
@@ -258,8 +254,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         setMusic(music);
 
         const videoGrants = await creativeRecorder.getPermissions();
-        const audioGrants = await audioRecorder.getPermissions();
 
-        setIsInited(videoGrants && audioGrants);
+        setIsInited(videoGrants);
     }
 }
