@@ -11,6 +11,9 @@ import styles from './styles.module.scss';
 import { Box } from "@mui/material";
 import { useAppDispatch } from "@/hooks/redux";
 import { setLoading } from "@/store/slice/creativeSlice";
+import { RootState, AppDispatch } from '../../store/store';
+import { togglePlay } from '../../store/slice/audioSlice';
+import { useSelector } from "react-redux";
 
 const musicPath = "/audio/AR_CONTRAST.mp3";
 
@@ -72,6 +75,9 @@ const effects: EffectItem[] = [
         url: "effects/MASK_1.deepar"
     },
 ];
+
+const creativeRecordingStartedEvent = new Event("creative-recording-started", { bubbles: true });
+ 
 export interface CreativeRecorderProps
 {
     onVideoRecorded: (video: Blob) => void,
@@ -92,6 +98,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     const [recordingTime, setRecordingTime] = useState<number>(0);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
     const abortController = useRef(new AbortController());
+    const isNavbarMusicPlaying = useSelector((state: RootState) => state.audio.isPlaying);
 
     useEffect(() =>
     {
@@ -222,6 +229,10 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     function startRecording()
     {
+        // stop background music that can be playing after click button in the site navbar 
+        if (isNavbarMusicPlaying)
+            dispatch(togglePlay());
+
         creativeRecorder?.startRecording();
         audioRecorder.startRecording();
         audioPlayerRef.current?.play();
