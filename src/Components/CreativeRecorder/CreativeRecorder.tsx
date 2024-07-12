@@ -10,6 +10,7 @@ import styles from './styles.module.scss';
 import { Box } from "@mui/material";
 import { useAppDispatch } from "@/hooks/redux";
 import { setLoading } from "@/store/slice/creativeSlice";
+import { useEffectsPreloader } from "@/hooks/useEffectsPreloader";
 
 const musicPath = "/audio/AR_CONTRAST.mp3";
 
@@ -79,6 +80,7 @@ export interface CreativeRecorderProps
 export default function CreativeRecorder(props: CreativeRecorderProps)
 {
     const deepAR = useDeepAR("#deepar-screen");
+    const { startPreloading, isPreloaded } = useEffectsPreloader({ effects: [...orcEffects, ...skeletEffects] });
     const [isInited, setIsInited] = useState<boolean>(false);
     const creativeRecorder = useCreativeRecorder({ deepAR });
     const videoProcessor = useVideoProcessor();
@@ -89,7 +91,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     const dispatch = useAppDispatch();
     const [recordingTime, setRecordingTime] = useState<number>(0);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
-    const abortController = useRef(new AbortController());
 
     useEffect(() =>
     {
@@ -108,8 +109,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
         return () =>
         {
-            abortController.current.abort();
-
             if (deepAR && isInited)
             {
                 deepAR.shutdown();
@@ -119,6 +118,11 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
             {
                 clearInterval(timerRef.current);
                 timerRef.current = null;
+            }
+
+            if (audioPlayerRef.current) {
+                audioPlayerRef.current.pause();
+                audioPlayerRef.current.currentTime = 0;
             }
         };
     }, [isInited, deepAR]);
@@ -157,7 +161,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         catch (e)
         {
             console.error(e);
-            alert("Error!");
         }
     }
 
@@ -179,14 +182,22 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     useEffect(() =>
     {
-        if (recordingTime !== 6) return;
+  if (recordingTime !== 6) return;
+        creativeRecorder.switchEffect(currentEffects[0].data);
+      
+ if (recordingTime === 40)
+        {
+            finishRecording();
+            dispatch(setLoading(true));
+        }
+        if (recordingTime !== 5) return;
         deepAR?.switchEffect(currentEffects[0].url);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [recordingTime]);
 
     function handleEffectChange(effect: EffectItem)
     {
-        deepAR?.switchEffect(effect.url);
+        creativeRecorder.switchEffect(effect.data);
     }
 
     return (
@@ -252,6 +263,8 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     async function initializeCreativeRecorder()
     {
+        await startPreloading();
+
         const music = await axios.get(musicPath, { responseType: "blob" })
             .then(response => response.data);
 

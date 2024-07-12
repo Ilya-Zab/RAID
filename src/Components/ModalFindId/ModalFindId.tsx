@@ -2,7 +2,6 @@ import {Box, IconButton, Modal} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {closeModal} from "@/store/slice/modalsSlice";
 import styles from "./styles.module.scss";
-import {LoginForm} from "@/Components/Forms/LoginForm";
 import * as React from "react";
 import Image from "next/image";
 import CloseIcon from "@mui/icons-material/Close";

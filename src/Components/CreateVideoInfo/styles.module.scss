@@ -1,5 +1,15 @@
 @import '@/styles/variables.module.scss';
+.wrapper {
 
+}
+.btn {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	max-width: 210px;
+	margin-bottom: 54px;
+}
 .modal {
 	backdrop-filter: blur(55px);
 	box-shadow: 0 14px 54px 0 rgba(0, 0, 0, 0.25);

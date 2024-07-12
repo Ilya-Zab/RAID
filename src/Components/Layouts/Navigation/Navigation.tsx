@@ -21,6 +21,9 @@ const Navigation: FC<wpMenuProps> = ({correctStyle, data}) => {
     const dispatch = useDispatch();
     const handleOpenGist = () => dispatch(openModal({modalName: 'isOpenGifts'}));
     const handleOpenFindId = () => dispatch(openModal({modalName: 'isOpenFindId'}));
+    const handleOpenPrivacyNotice = () => dispatch(openModal({modalName: 'isOpenPrivacyNotice'}));
+    const handleOpenRules = () => dispatch(openModal({modalName: 'isOpenRules'}));
+
     const handlerClick = () => {
         setOpen(!open);
     }
@@ -38,10 +41,14 @@ const Navigation: FC<wpMenuProps> = ({correctStyle, data}) => {
                                 <button className={styles.btn} onClick={handleOpenFindId}>
                                     {link.title}
                                 </button>
-                            ) : link.title === 'Rules' ? (
-                                <a href="/file/Official_Rules_I_Finally_Played_it_Final.docx" download className="desc nav-link link">
+                            ) : link.title === 'Privacy Notice' ? (
+                                <button className={styles.btn} onClick={handleOpenPrivacyNotice}>
                                     {link.title}
-                                </a>
+                                </button>
+                            ) : link.title === 'Rules' ? (
+                                <button className={styles.btn} onClick={handleOpenRules}>
+                                    {link.title}
+                                </button>
                             ) : link.title === 'Materials' ? (
                                 <Box className={styles.dropDown}>
                                     <button className={styles.btn} onClick={handlerClick}>

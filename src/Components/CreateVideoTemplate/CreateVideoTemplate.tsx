@@ -160,7 +160,7 @@ const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonC
                 <Box className={styles.section__social__input}>
                     <input
                         type='url'
-                        className={styles.section__social__input__customInput}
+                        className={`${url && styles.no_background} ${styles.section__social__input__customInput}`}
                         placeholder={'Put the link'}
                         onChange={() => onInputChange(event)}
                         value={url}

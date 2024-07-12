@@ -129,7 +129,7 @@ const CreateVideo = () =>
             case 0:
                 return <CreateVideoTemplate handleButtonClick={nextStep} />;
             case 1:
-                return <CreateVideoInfo handleToggle={nextStep} />;
+                return <CreateVideoInfo handleToggle={nextStep} handleBack={previousStep}/>;
             case 2:
                 return <CreativeRecorder onVideoRecorded={handleVideoReady} />;
             case 3:
