@@ -1,5 +1,7 @@
 import smvdClient, { getLinkWithMinQuality } from "@/services/VideoUploader/RapidapiSMVDClient";
+import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
+import { Stream } from "stream";
 import { z } from "zod";
 
 // this disabling of the response size limiter is required, because videos to upload can be more then default max 4MB for the request.
@@ -29,7 +31,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
         const extractedVideo = await smvdClient.extractVideo(data.url);
         const videoLink = getLinkWithMinQuality(extractedVideo);
-        return res.status(200).json({ url: videoLink.link });
+        
+        // get target video as a stream
+        const response = await axios.get<Stream>(videoLink.link, { responseType: "stream" });
+ res.setHeader("Content-Type", response.headers["content-type"] || "application/octet-stream");
+        res.setHeader("Content-Disposition", `attachment; filename="video.mp4"`);
+       
+
+        // redirect data stream from video download request into API response. MAGIC!
+        response.data.pipe(res);
     }
     catch (e) {
         console.error("Error while getting video using RapidAPI.", e);
