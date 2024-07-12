@@ -181,6 +181,9 @@
 		font-weight: 700;
 		font-size: 19px;
 		line-height: 114%;
+		@media screen and (max-width: 768px) {
+			max-width: 100px;
+		}
 	}
 	&:disabled {
 		opacity: 0.6;
@@ -215,7 +218,6 @@
 
 .text-gradient {
 	@include text-gradient;
-	// -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.5);
 }
 
 .bg-gallery {
@@ -258,5 +260,40 @@
 	.creatives-list-grid {
 		grid-template-columns: repeat(3, 1fr);
 		gap: 10px;
+	}
+}
+.animate {
+	animation: gradientShift 5s linear infinite;
+	&_8 {
+		animation-duration: 8s;
+	}
+	&_7 {
+		animation-duration: 7s;
+	}
+	&_6 {
+		animation-duration: 6s;
+	}
+	&_5 {
+		animation-duration: 5s;
+	}
+	&_4 {
+		animation-duration: 4s;
+	}
+	&_3 {
+		animation-duration: 3s;
+	}
+	&_2 {
+		animation-duration: 2s;
+	}
+}
+@keyframes gradientShift {
+	0% {
+		background-position: 0 50vw;
+	}
+	50% {
+		background-position: 100vw 50vw;
+	}
+	100% {
+		background-position: 0 50vw;
 	}
 }
