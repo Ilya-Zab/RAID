@@ -12,6 +12,7 @@ export const CustomInputPropsSchema = z.object({
     placeholder: z.string().optional(),
     onChange: z.function().args(z.unknown() as z.ZodType<React.ChangeEvent<HTMLInputElement>>).returns(z.void()).optional(),
     value: z.string().optional(),
+    onClick: z.function().args(z.void()).returns(z.void())
 });
 
 export type CustomInputProps = z.infer<typeof CustomInputPropsSchema>;
