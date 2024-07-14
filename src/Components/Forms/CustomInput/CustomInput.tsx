@@ -11,7 +11,8 @@ export const CustomInput: FC<CustomInputProps> = ({
     isCheckbox = false,
     placeholder,
     onChange,
-    value
+    value,
+    onClick
 }) =>
 {
     let type;
@@ -41,6 +42,7 @@ export const CustomInput: FC<CustomInputProps> = ({
                         className={`${inputClass} ${isError && styles.customInput__input_error} input`}
                         onChange={onChange && onChange}
                         value={value && value}
+                        onClick={onClick && onClick}
                     />
                 </div>
             </label>
