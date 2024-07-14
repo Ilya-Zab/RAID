@@ -182,7 +182,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     useEffect(() =>
     {
-        if (recordingTime === 40)
+        if (recordingTime === 41)
         {
             finishRecording();
             dispatch(setLoading(true));
@@ -212,7 +212,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
                             orientation={'horizontal'}
                         />
                     }
-                    {recordingTime > 7 &&
+                    {recordingTime > 8 &&
                         < EffectPicker
                             effects={currentEffects}
                             onEffectChange={handleEffectChange}
