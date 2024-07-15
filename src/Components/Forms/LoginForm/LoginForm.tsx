@@ -37,7 +37,7 @@ export const LoginForm: FC = () =>
 
     const [fetchUserToken] = useFetchUserTokenMutation();
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
+    const [cookies, setCookie, removeCookie] = useCookies(['userToken', 'raidId']);
     const dispatch = useAppDispatch();
     const router = useRouter();
     const [firstCheck, setFirstCheck] = useState<Boolean>(false);
@@ -74,6 +74,9 @@ export const LoginForm: FC = () =>
             return;
         }
         const transformedId = transformRaidId(raidId);
+        const expiresDate = new Date();
+        expiresDate.setTime(expiresDate.getTime() + (7 * 24 * 60 * 60 * 1000));
+
         try
         {
             setIsSubmitting(true);
@@ -81,14 +84,14 @@ export const LoginForm: FC = () =>
 
             if (userToken)
             {
-                const expiresDate = new Date();
-                expiresDate.setTime(expiresDate.getTime() + (7 * 24 * 60 * 60 * 1000));
                 setCookie('userToken', userToken.token, { path: '/', expires: expiresDate });
             }
         } catch (error)
         {
             removeCookie('userToken', { path: '/' });
+            removeCookie('raidId', { path: '/' });
             dispatch(setRaidId(transformRaidId(raidId)));
+            setCookie('raidId', transformedId, { path: '/', expires: expiresDate });
         } finally
         {
             reset();
