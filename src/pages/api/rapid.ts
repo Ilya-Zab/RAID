@@ -7,6 +7,7 @@ import { z } from "zod";
 // this disabling of the response size limiter is required, because videos to upload can be more then default max 4MB for the request.
 // See: https://nextjs.org/docs/messages/api-routes-response-size-limit
 export const config = {
+    supportsResponseStreaming: true,
     api: {
         responseLimit: false
     }
@@ -32,6 +33,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const extractedVideo = await smvdClient.extractVideo(data.url);
         const videoLink = getLinkWithMinQuality(extractedVideo);
         
+        console.debug("VIDEO LINK:", videoLink.link);
+
         // get target video as a stream
         const response = await axios.get<Stream>(videoLink.link, { responseType: "stream" });
  res.setHeader("Content-Type", response.headers["content-type"] || "application/octet-stream");
