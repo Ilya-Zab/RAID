@@ -18,6 +18,13 @@ export const wpCustomAPI = createApi({
                 params,
             }),
         }),
+        fetchUnvoteCreative: build.mutation({
+            query: (params) => ({
+                url: '/creative/unvote',
+                method: 'POST',
+                params,
+            }),
+        })
     }),
 })
 
@@ -25,5 +32,6 @@ export const
     {
         useFetchAllCreativesByVotesQuery,
         useLazyFetchAllCreativesByVotesQuery,
-        useFetchUpdateVoteVideoMutation
+        useFetchUpdateVoteVideoMutation,
+        useFetchUnvoteCreativeMutation
     } = wpCustomAPI;
