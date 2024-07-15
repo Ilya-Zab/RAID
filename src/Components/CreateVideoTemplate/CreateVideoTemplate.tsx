@@ -10,6 +10,7 @@ import axios from "axios";
 import { setVideo } from "@/store/slice/videoSlice";
 import { useAppDispatch } from "@/hooks/redux";
 import { setLoading } from "@/store/slice/creativeSlice";
+import useRapidApi from "@/hooks/useRapidApi";
 // import SocialNetworks from "@/Components/SocialNetworks/SocialNetworks";
 // import {useState} from "react";
 
@@ -78,16 +79,17 @@ const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonC
 {
     const [url, setUrl] = React.useState('');
     const dispatch = useAppDispatch();
+    const { uploadVideo, video, error } = useRapidApi();
 
-    async function uploadVideoFromRapid(url: string)
-    {
-        const blob: Blob = await axios.get("/api/rapid", {
-            params: { url },
-            responseType: "blob"
-        }).then(response => response.data);
-        console.log(blob);
-        return blob;
-    }
+    // async function uploadVideoFromRapid(url: string)
+    // {
+    //     const blob: Blob = await axios.get("/api/rapid", {
+    //         params: { url },
+    //         responseType: "blob"
+    //     }).then(response => response.data);
+    //     console.log(blob);
+    //     return blob;
+    // }
 
     const onInputChange = (event) =>
     {
@@ -104,9 +106,11 @@ const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonC
             dispatch(setLoading(true));
             try
             {
-                const rapidVideo = await uploadVideoFromRapid(url);
-                if (rapidVideo)
-                    dispatch(setVideo(rapidVideo));
+                // const rapidVideo = await uploadVideoFromRapid(url);
+                await uploadVideo(url);
+                // if (video)
+                //     console.log(video);
+                // dispatch(setVideo(video));
             } catch (err)
             {
                 dispatch(setLoading(false));
@@ -114,8 +118,13 @@ const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonC
                 alert('There is a problem with creating creative');
             }
         }
-
     }
+
+    React.useEffect(() =>
+    {
+        dispatch(setVideo(video));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [video])
 
     return (
         <Box className={styles.section}>
