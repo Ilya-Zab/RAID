@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import Link from "next/link";
 import { Box } from '@mui/material';
 import Image from 'next/image'
-import { useEffect, useRef, useState } from "react";
+import {useEffect, useRef, useState, useTransition} from "react";
 import { useMediaQuery } from "@mui/material";
 
 const Hero = () =>
@@ -12,10 +12,10 @@ const Hero = () =>
     const [computedBottom, setComputedBottom] = useState('');
     const headerHeight = 0.00234131;
     const coefficient = 0.20934;
-
+    const [isPending, startTransition] = useTransition();
     const isMobile = useMediaQuery('(max-width: 768px)');
 
-    const defaultBottom = React.useMemo(() => isMobile ? 0 : 86, [isMobile]);
+    const defaultBottom = React.useMemo(() => isMobile ? 0 : -146, [isMobile]);
 
     let ticking = false;
 
@@ -30,9 +30,9 @@ const Hero = () =>
                 let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
                 distanceFromHeader = parseFloat((distanceFromHeader * coefficient).toFixed(8));
 
-
-                setComputedBottom(`${defaultBottom - distanceFromHeader}px`);
-
+                startTransition(() => {
+                    setComputedBottom(`${defaultBottom - distanceFromHeader}px`);
+                });
                 ticking = false;
             });
 
@@ -66,11 +66,11 @@ const Hero = () =>
                 <Box>
                     <Box className={styles.hero__title_wrapper}>
                         <h1 className={styles.hero__title}>
-                            It&apos;ll never be the <br/> same once you<br/>
-                            <span className='text-gradient'> play Raid</span>. Show how<br/> you do it and
-                            <span className='text-gradient'> win</span><br/> gaming consoles,<br/> drones, and more<br/>
-                            exicting
-                            <span className='text-gradient'> prizes</span>!
+                            IT&apos;LL NEVER BE THE<br/>
+                            SAME ONCE YOU<br/>
+                            <span className='text-gradient'>PLAY RAID</span>. SHOW HOW<br/>
+                            YOU DO IT AND<span className='text-gradient'> WIN </span><br/>
+                            EXICTING <span className='text-gradient'> PRIZES</span>!
                         </h1>
                     </Box>
                     <Box className={styles.hero__steps_wrapper}>
@@ -93,7 +93,8 @@ const Hero = () =>
                             to take part in the prize draw!
                         </p>
                         <p className={styles.hero__text}>
-                            More likes - more chances to win!<br/> Make sure to share on all your social media channels.
+                            More likes - more chances to win!<br/>
+                            Make sure to share on all your social media channels with the hashtag #WeFinallyPlayedIt.
                         </p>
                     </Box>
                     <Box className={styles.hero__btn__wrapper}>

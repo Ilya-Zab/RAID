@@ -125,7 +125,7 @@ export const LoginForm: FC = () =>
                     Where can I find my RAID ID?
                 </Link>
                 <CustomInput
-                    fieldName={'I confirm that I am a US citizen (outside New York and Florida)'}
+                    fieldName={'I confirm that I am a UK/US citizen (outside of New York and Florida)'}
                     name={'country'}
                     register={register}
                     isCheckbox={true}

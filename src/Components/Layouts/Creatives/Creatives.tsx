@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState, useTransition} from "react";
 import CreativesList from "@/Components/Creatives/CreativesList";
 import styles from "./styles.module.scss";
 import { useMediaQuery } from "@mui/material";
@@ -12,6 +12,7 @@ import { useFetchUpdateVoteVideoMutation } from "@/store/wordpress/wpRestCustomA
 
 const Creatives = ({ children }) => {
     const router = useRouter();
+    const [isPending, startTransition] = useTransition();
     const [computedTop, setComputedTop] = useState('');
     const headerHeight = 0.00234131;
     const coefficient = 0.20934;
@@ -52,7 +53,9 @@ const Creatives = ({ children }) => {
                 let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
                 distanceFromHeader = parseFloat((distanceFromHeader * coefficient).toFixed(8));
 
-                setComputedTop(`${defaultTop + distanceFromHeader}px`);
+                startTransition(()=>{
+                    setComputedTop(`${defaultTop + distanceFromHeader}px`);
+                })
 
                 ticking = false;
             });

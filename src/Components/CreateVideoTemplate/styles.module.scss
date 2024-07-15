@@ -5,7 +5,6 @@
 	margin: 0 auto;
 	padding: 45px 0 26px;
 	width: fit-content;
-
 	& .text__sub {
 		margin-bottom: 30px;
 	}
@@ -19,7 +18,7 @@
 	color: $white1;
 	margin-bottom: 0;
 	letter-spacing: 0;
-
+	
 	&__gradient {
 		text-decoration: underline;
 		text-decoration-skip-ink: none;
@@ -28,7 +27,7 @@
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
 	}
-
+	
 	&__sub {
 		font-weight: 300;
 		font-size: 16px;
@@ -45,7 +44,6 @@
 	flex-direction: column;
 	align-items: center;
 	height: 100%;
-
 	&__zone {
 		width: 100%;
 		max-width: 266px;
@@ -55,7 +53,6 @@
 		margin-top: 22px;
 		width: 100%;
 		max-width: 266px;
-
 		& p {
 			font-weight: 400;
 			font-size: 16px;
@@ -100,7 +97,6 @@
 						font-size: 0;
 					}
 				}
-
 				&.no_background {
 					background-image: none;
 				}
@@ -125,21 +121,24 @@
 			}
 
 			&>button {
-				height: 100%;
-				width: 27px;
-				display: flex;
-				align-items: center;
+				background: transparent;
 				border: none;
 				padding: 0;
 				outline: none;
 				cursor: pointer;
 				line-height: 12px;
 				position: absolute;
-				z-index: 5;
 				top: 50%;
 				right: 8px;
 				transform: translateY(-50%);
-				background: transparent;
+				@media screen and (max-width: 768px) {
+					height: 35px;
+					width: 35px;
+					& svg {
+						height: 35px;
+						width: 35px;
+					}
+				}
 			}
 		}
 	}

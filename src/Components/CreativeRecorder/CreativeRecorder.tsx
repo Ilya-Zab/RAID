@@ -14,7 +14,7 @@ import { RootState, AppDispatch } from '../../store/store';
 import { togglePlay } from '../../store/slice/audioSlice';
 import { useSelector } from "react-redux";
 
-const musicPath = "/audio/AR_CONTRAST.mp3";
+const musicPath = "/audio/AR_CONTRAST_sad_piano_Break_v04.1.mp3";
 
 const orcEffects: EffectItem[] = [
     {

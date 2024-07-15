@@ -10,6 +10,7 @@ import styles from '../Formstyles/styles.module.scss';
 import { Button } from "@mui/material";
 import { useAppSelector } from "@/hooks/redux";
 import { WpWooCustomError } from "@/types/services";
+import {Loader} from "@/Components/Layouts/Loader";
 
 const RegistrationFormSchema = z.object({
     email: z.string().email('Please, type valid email'),
@@ -81,14 +82,17 @@ export const RegistrationForm: FC<RegistrationFormProps> = ({ onSendForm, isCrea
             <span className={`${styles.info} ${styles.form__link} ${styles.form__link_regis}`}>
                 *It may take us up to 5 business days.
             </span>
-            <Button
-                type="submit"
-                variant="contained"
-                className={`btn-second ${styles.form__public}`}
-                disabled={isSubmitting || isCreating}
-            >
-                {(isSubmitting || isCreating) ? 'Publishing...' : 'Publish'}
-            </Button>
+            <div className={styles.wrapper}>
+                {isCreating && < Loader className={styles.popup__loader} color="white" />}
+                <Button
+                    type="submit"
+                    variant="contained"
+                    className={`btn-second ${styles.form__public}`}
+                    disabled={isSubmitting || isCreating}
+                >
+                    {(isSubmitting || isCreating) ? 'Publishing...' : 'Publish'}
+                </Button>
+            </div>
             <div className={styles.form__res}>
                 {isError && error && (
                     <p
