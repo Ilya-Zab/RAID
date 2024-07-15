@@ -32,6 +32,7 @@ const CheckVideo: FC<CheckVideoProps> = ({ videoUrl, onDownload, prevStep }) =>
             </button>
             <video
                 autoPlay
+                playsinline
                 loop
                 muted={isMuted}
                 className={styles.video}
