@@ -1,0 +1,42 @@
+.sharing {
+    margin-top: 30px;
+    padding-bottom: 40px;
+
+    .text-gradient {
+        font-weight: 700;
+    }
+
+    &__title {
+        font-weight: 500;
+        font-size: 0.9em;
+        margin-bottom: 0.2em;
+        text-align: center;
+    }
+
+    &__text {
+        margin-bottom: 25px;
+        font-size: 0.7em;
+        text-align: center;
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__button {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        transition: .2s ease;
+        margin-right: 15px;
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        &:hover {
+            filter: contrast(2)
+        }
+    }
+}
