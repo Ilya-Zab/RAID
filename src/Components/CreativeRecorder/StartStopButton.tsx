@@ -3,6 +3,9 @@
 import { useState } from "react"
 import styles from './styles.module.scss';
 import { IconButton } from "@mui/material";
+import {stopPlay} from "@/store/slice/audioSlice";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "@/store/store";
 interface StartStopButtonProps {
     onChange: (isStarted: boolean) => void,
     disabled: boolean
@@ -65,10 +68,11 @@ const getStopButton = (onClick: () => void, disabled: boolean) => (
 
 export default function StartStopButton(props: StartStopButtonProps) {
     const [isStarted, setIsStarted] = useState<boolean>(false);
-
+    const dispatch = useDispatch<AppDispatch>();
     function handleBtnClick() {
         setIsStarted(state => state = !state);
         props.onChange(isStarted);
+        dispatch(stopPlay());
     }
 
     const button = isStarted

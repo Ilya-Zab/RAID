@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, {useRef, useEffect, useState, useTransition} from 'react';
 import styles from './styles.module.scss';
 import { Box } from '@mui/material';
 import Image from 'next/image';
@@ -6,6 +6,7 @@ import { useMediaQuery } from "@mui/material";
 
 const Second = () => {
     const beforeRef = useRef(null);
+    const [isPending, startTransition] = useTransition();
     const [computedTop, setComputedTop] = useState('');
     const headerHeight = 0.00234131;
     const coefficient = 0.20934;
@@ -23,7 +24,10 @@ const Second = () => {
                 let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
                 distanceFromHeader = parseFloat((distanceFromHeader * coefficient).toFixed(8));
 
-                setComputedTop(`${defaultTop + distanceFromHeader}px`);
+                startTransition(()=>{
+                    setComputedTop(`${defaultTop + distanceFromHeader}px`);
+                })
+
 
                 ticking = false;
             });

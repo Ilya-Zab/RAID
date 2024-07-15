@@ -11,6 +11,7 @@ import { useCookies } from "react-cookie";
 import { useFetchUnvoteCreativeMutation, useFetchUpdateVoteVideoMutation } from "@/store/wordpress/wpRestCustomApi";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { unvoteCreative, updateVotesAvailable, updateVotesCreatives, voteCreative } from "@/store/slice/userSlice";
+import Sharing from "../Sharing";
 
 interface SingleCreativePropsType {
     creativeId: number
@@ -116,7 +117,18 @@ const SingleCreative: FC<SingleCreativePropsType> = ({ creativeId }) => {
                     </>
                 }
             </div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat facere ad quo rem necessitatibus, magnam nulla hic quod possimus officiis architecto odit cupiditate corporis reiciendis aperiam ullam obcaecati error omnis!
+            <div className={styles['single-creative__sharing']}>
+                {/* <Sharing
+                    title={
+                        <><span className="text-gradient">Share</span> on social networks </>
+                    }
+                    text={
+                        <>& invite friends to <span className="text-gradient">vote for it</span>! Or join the event yourself.</>
+                    }
+                    creativeId={creativeId}
+                /> */}
+            </div>
+
         </>
     );
 }

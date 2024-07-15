@@ -101,7 +101,8 @@ async function registerUserCreative(videoId: string, authorId: string, res: Next
         status: "pending",
         featured_media: featuredMedia,
         "meta": {
-            featured_media: videoId
+            featured_media: videoId,
+            featured_media_type: "video"
         }
     };
 

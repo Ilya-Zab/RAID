@@ -131,6 +131,14 @@
 				top: 50%;
 				right: 8px;
 				transform: translateY(-50%);
+				@media screen and (max-width: 768px) {
+					height: 35px;
+					width: 35px;
+					& svg {
+						height: 35px;
+						width: 35px;
+					}
+				}
 			}
 		}
 	}

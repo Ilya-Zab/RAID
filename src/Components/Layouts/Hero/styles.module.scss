@@ -16,8 +16,8 @@
 	&__img {
 		position: absolute;
 		bottom: -86px;
-		right: -127px;
-		width: clamp(533px,57vw, 733px);
+		right: -327px;
+		width: clamp(533px,80vw, 833px);
 		height: auto;
 		@media screen and (max-width: 768px) {
 			bottom: 0;
