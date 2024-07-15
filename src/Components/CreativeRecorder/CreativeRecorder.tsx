@@ -19,22 +19,22 @@ const musicPath = "/audio/AR_CONTRAST.mp3";
 const orcEffects: EffectItem[] = [
     {
         name: "Orc + tatoo",
-        src: 'PICKER4.png',
+        src: 'PICKER7.png',
         url: "effects/ORC_BG+TATOO.deepar"
     },
     {
         name: "Orc + EYES",
-        src: 'PICKER7.png',
+        src: 'PICKER8.png',
         url: "effects/ORC_BG+EYES.deepar"
     },
     {
         name: "Orc + orc head",
-        src: 'PICKER8.png',
+        src: 'PICKER3.png',
         url: "effects/ORC_BG+ORC_HEAD.deepar"
     },
     {
         name: "Orc + skeleton head",
-        src: 'PICKER3.png',
+        src: 'PICKER4.png',
         url: "effects/ORC_BG+SKELETON_HEAD.deepar"
     },
 ]
@@ -42,22 +42,22 @@ const orcEffects: EffectItem[] = [
 const skeletEffects: EffectItem[] = [
     {
         name: "Skeleton + tatoo",
-        src: 'PICKER4.png',
+        src: 'PICKER7.png',
         url: "/effects/SKELETON_BG_TATOO.deepar"
     },
     {
         name: "Skeleton + eyes",
-        src: 'PICKER7.png',
+        src: 'PICKER8.png',
         url: "/effects/SKELETON+EYES.deepar"
     },
     {
         name: "Skeleton + orc head",
-        src: 'PICKER8.png',
+        src: 'PICKER3.png',
         url: "/effects/SKELETON_BG+ORC_HEAD.deepar"
     },
     {
         name: "Skeleton + skeleton head",
-        src: 'PICKER3.png',
+        src: 'PICKER4.png',
         url: "/effects/SKELETON_BG+SKELETON_HEAD.deepar"
     },
 ]
@@ -145,6 +145,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
             setLocalFrames(videoProcessor.output);
             props.onVideoRecorded(videoProcessor.output);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [videoProcessor.output]);
 
     async function handleVideoStateChange(isStarted: boolean)
@@ -187,7 +188,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
             finishRecording();
             dispatch(setLoading(true));
         }
-        if (recordingTime === 8)
+        if (recordingTime === 7)
         {
             creativeRecorder.switchEffect(currentEffects[0].data);
         }
@@ -212,7 +213,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
                             orientation={'horizontal'}
                         />
                     }
-                    {recordingTime > 8 &&
+                    {recordingTime > 7 &&
                         < EffectPicker
                             effects={currentEffects}
                             onEffectChange={handleEffectChange}
