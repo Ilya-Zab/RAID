@@ -47,11 +47,11 @@ const MyCreativeCard: FC<MyCreativeCardPropsType> = ({ creative, hasVoted, onVot
                     </div>
 
                     <div className={styles['my-creative-card__title']}>
-                        It may take us up to 5 business days. Once verified, you&lsquo;ll be able to share it on the other socials to get more likes.
+                        Your post is being moderated
                     </div>
 
                     <div className={styles['my-creative-card__text']}>
-                        While you&lsquo;re waiting, resume playing RAID!
+                        Once verified, you&apos;ll be able to share  it on the other socials to get more likes
                     </div>
 
                     <Link

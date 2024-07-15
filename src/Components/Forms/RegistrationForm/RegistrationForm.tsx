@@ -10,7 +10,7 @@ import styles from '../Formstyles/styles.module.scss';
 import { Button } from "@mui/material";
 import { useAppSelector } from "@/hooks/redux";
 import { WpWooCustomError } from "@/types/services";
-import {Loader} from "@/Components/Layouts/Loader";
+import { Loader } from "@/Components/Layouts/Loader";
 
 const RegistrationFormSchema = z.object({
     email: z.string().email('Please, type valid email'),
@@ -28,7 +28,7 @@ export const RegistrationForm: FC<RegistrationFormProps> = ({ onSendForm, isCrea
 {
     const [registerForm, { data, isError, error }] = useRegisterUserMutation();
     const [fetchUserToken] = useFetchUserTokenMutation();
-    const [cookie, setCookie] = useCookies(['userToken']);
+    const [cookie, setCookie] = useCookies(['userToken', 'raidId']);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { raidId } = useAppSelector(state => state.raidId);
 
@@ -52,7 +52,7 @@ export const RegistrationForm: FC<RegistrationFormProps> = ({ onSendForm, isCrea
 
             if (response && 'data' in response)
             {
-                const userToken = await fetchUserToken({ username: raidId, password: raidId }).unwrap();
+                const userToken = await fetchUserToken({ username: cookie.raidId, password: cookie.raidId }).unwrap();
                 const expiresDate = new Date();
                 expiresDate.setTime(expiresDate.getTime() + (7 * 24 * 60 * 60 * 1000));
                 setCookie('userToken', userToken.token, { path: '/', expires: expiresDate });

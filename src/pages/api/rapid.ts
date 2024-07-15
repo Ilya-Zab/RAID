@@ -18,28 +18,30 @@ const QuerySchema = z.object({
 });
 
 // can get videos only from Facebook, Instagram, TikTok or YouTube
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse)
+{
     if (req.method != "GET")
         return res.status(400).json({ message: "Only GET method available for this path." });
-    
+
     const { success, data, error } = QuerySchema.safeParse(req.query);
-    
-    if (!success){
+
+    if (!success)
+    {
         console.error("QUERY VALIDATION ERROR:", error);
         return res.status(400).json({ message: `"url" query parameter is required.` });
     }
 
-    try {
+    try
+    {
         const extractedVideo = await smvdClient.extractVideo(data.url);
         const videoLink = getLinkWithMinQuality(extractedVideo);
-        
-        console.debug("VIDEO LINK:", videoLink.link);
+ console.debug("VIDEO LINK:", videoLink.link);
 
         // get target video as a stream
         const response = await axios.get<Stream>(videoLink.link, { responseType: "stream" });
- res.setHeader("Content-Type", response.headers["content-type"] || "application/octet-stream");
+        res.setHeader("Content-Type", response.headers["content-type"] || "application/octet-stream");
         res.setHeader("Content-Disposition", `attachment; filename="video.mp4"`);
-       
+
 
         response.data.on("error", (err) => {
 
@@ -47,7 +49,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // redirect data stream from video download request into API response. MAGIC!
         response.data.pipe(res);
     }
-    catch (e) {
+    catch (e)
+    {
         console.error("Error while getting video using RapidAPI.", e);
         return res.status(500).json({ message: e.message ?? "Error while getting video via RapidAPI." });
     }
