@@ -9,6 +9,7 @@ import { ipApi } from './ipapi/ipapi';
 import creativeSlice from './slice/creativeSlice';
 import modalsSlice from "@/store/slice/modalsSlice";
 import videoReducer from "./slice/videoSlice";
+import userSlice, { saveUserStateToLocalStorageMiddleware } from './slice/userSlice';
 
 const rootReducer = combineReducers({
 
@@ -22,10 +23,10 @@ const rootReducer = combineReducers({
     creative: creativeSlice,
     modal: modalsSlice,
     video: videoReducer,
+    user: userSlice
 });
 
-export const setupStore = () =>
-{
+export const setupStore = () => {
     return configureStore({
         reducer: rootReducer,
         middleware: (getDefaultMiddleware) =>
@@ -36,7 +37,8 @@ export const setupStore = () =>
                 .concat(wpAPI.middleware)
                 .concat(wpUser.middleware)
                 .concat(wpCustomAPI.middleware)
-                .concat(ipApi.middleware),
+                .concat(ipApi.middleware)
+                .concat(saveUserStateToLocalStorageMiddleware)
     });
 };
 

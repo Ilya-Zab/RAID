@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import CreativesList from "@/Components/Creatives/CreativesList";
 import styles from "./styles.module.scss";
@@ -8,9 +9,13 @@ import { useLazyFetchUserDataQuery } from "@/store/wordpress/wpUser";
 import { useLazyFetchAllCreativesByDataQuery } from "@/store/wordpress/wpRestApi";
 import { useRouter } from "next/router";
 import MyCreativeCard from "@/Components/Creatives/MyCreativeCard";
-import { useFetchUpdateVoteVideoMutation } from "@/store/wordpress/wpRestCustomApi";
+import { useFetchUnvoteCreativeMutation, useFetchUpdateVoteVideoMutation } from "@/store/wordpress/wpRestCustomApi";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { unvoteCreative, updateVotesAvailable, updateVotesCreatives, voteCreative } from "@/store/slice/userSlice";
 
 const Creatives = ({ children }) => {
+    const userState = useAppSelector(state => state.user);
+    const dispatch = useAppDispatch();
     const router = useRouter();
     const [computedTop, setComputedTop] = useState('');
     const headerHeight = 0.00234131;
@@ -18,15 +23,27 @@ const Creatives = ({ children }) => {
     const isMobile = useMediaQuery('(max-width: 800px)');
     const [fetchUserData, { data: userData }] = useLazyFetchUserDataQuery();
     const [updateVoteVideo] = useFetchUpdateVoteVideoMutation();
+    const [fetchUnvoteCreative] = useFetchUnvoteCreativeMutation();
     const [{ userToken }] = useCookies(['userToken']);
     const [fetchCreativesByDate, { data: creativePending = [] }] = useLazyFetchAllCreativesByDataQuery();
     const pageSlug = router.pathname.split('/').filter(slug => slug)[0] || '';
+    const { raidId } = useAppSelector(state => state.raidId);
+
 
     useEffect(() => {
         if (userToken) {
             fetchUserData(userToken);
         }
-    }, [fetchUserData, userToken]);
+    }, []);
+
+    useEffect(() => {
+        const userVotesAvailable = userData?.meta?.votes_available;
+        const userVotesCreatives = userData?.meta?.votes_creatives;
+
+        if (userVotesAvailable) dispatch(updateVotesAvailable(+userVotesAvailable));
+        if (userVotesCreatives) dispatch(updateVotesCreatives(userVotesCreatives));
+
+    }, [userData]);
 
     useEffect(() => {
         if (userData?.id) {
@@ -36,7 +53,7 @@ const Creatives = ({ children }) => {
                 status: 'pending,publish'
             })
         }
-    }, [userData]);
+    }, [userData, userState.votesCreatives]);
 
 
 
@@ -61,22 +78,26 @@ const Creatives = ({ children }) => {
         }
     };
 
-    const onVote = (creativeId: number) => {
-        if (userData === undefined) return false;
-        if (userData.meta.votes_available === "0") {
-            alert('You have no votes available.');
+    const checkUserHasVoted = (creativeId: number): boolean => {
+        return Boolean(userState.votesCreatives.includes(String(creativeId)));
+    }
+
+    const handleVote = (creativeId) => {
+        if (userState.votesAvailable <= 0) {
+            alert("You do not have an any vote available!");
             return false;
         }
-        updateVoteVideo({ user_id: userData.id, creative_id: creativeId });
 
+        if (userState.votesCreatives.includes(String(creativeId))) {
+            fetchUnvoteCreative({ user_id: userData?.id, creative_id: creativeId });
+            dispatch(unvoteCreative(String(creativeId)));
+            return -1;
+        } else {
+            updateVoteVideo({ user_id: userData?.id, creative_id: creativeId });
+            dispatch(voteCreative(String(creativeId)));
+            return 1
+        }
 
-        fetchCreativesByDate({
-            per_page: 1,
-            author: userData.id,
-            status: 'pending,publish'
-        })
-
-        return true;
     }
 
     useEffect(() => {
@@ -89,11 +110,6 @@ const Creatives = ({ children }) => {
     }, [isMobile]);
 
 
-    const checkUserHasVoted = (creativeId) => {
-        if (userData !== undefined) {
-            return userData.meta.votes_creatives.includes(String(creativeId));
-        }
-    }
 
     return (
         <div className={styles["creatives-section"]}>
@@ -117,9 +133,9 @@ const Creatives = ({ children }) => {
                         <MyCreativeCard
                             creative={creativePending[0]}
                             hasVoted={checkUserHasVoted(creativePending[0].id)}
-                            onVote={onVote}
+                            onVote={handleVote}
                         /> :
-                        <AddCreativeCard hasLogin={Boolean(userData)} />
+                        <AddCreativeCard hasLogin={Boolean(userData) || Boolean(raidId)} />
                     }
                 />
             </div>

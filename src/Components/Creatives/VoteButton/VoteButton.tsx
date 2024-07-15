@@ -2,27 +2,15 @@ import React, { FC, useEffect, useState } from "react";
 import { VoteButtonProps } from "@/types/components/Creative/VoteButtonProps";
 import styles from "./styles.module.scss";
 
-const VoteButton: FC<VoteButtonProps> = ({ votes, hasVoted, onVote }) => {
-
-    const [buttonVotes, setButtonVotes] = useState(votes);
-    const [hasClicked, setClicked] = useState(hasVoted);
-
-    useEffect(() => {
-        setClicked(hasVoted);
-        setButtonVotes(votes);
-    }, [hasVoted, votes])
-
-    const onClick = () => {
-        if (hasClicked) return;
-        if (!onVote()) return;
-        setButtonVotes((buttonVotes) => buttonVotes + 1);
-        setClicked(true);
+const VoteButton: FC<VoteButtonProps> = ({ hasVoted, votes, onVote }) => {
+    const handleClick = () => {
+        onVote();
     }
 
     return (
-        <button aria-label="Vote/Like" className={styles["vote-button"]} onClick={onClick}>
+        <button aria-label="Vote/Like" className={styles["vote-button"]} onClick={handleClick}>
             <div className={styles["vote-button__icon"]}>
-                {hasClicked ?
+                {hasVoted ?
                     <>
                         <svg aria-hidden width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M14.0298 0.384766C12.3923 0.384766 10.9391 1.01915 9.95455 2.10952C8.96996 1.01915 7.51674 0.384766 5.87932 0.384766C4.45316 0.386459 3.08591 0.943275 2.07747 1.93307C1.06903 2.92287 0.501726 4.26485 0.5 5.66463C0.5 11.4517 9.12401 16.0755 9.49078 16.27C9.63331 16.3453 9.79267 16.3848 9.95455 16.3848C10.1164 16.3848 10.2758 16.3453 10.4183 16.27C10.7851 16.0755 19.4091 11.4517 19.4091 5.66463C19.4073 4.26485 18.8401 2.92287 17.8316 1.93307C16.8232 0.943275 15.4559 0.386459 14.0298 0.384766Z" fill="red" />
@@ -42,7 +30,7 @@ const VoteButton: FC<VoteButtonProps> = ({ votes, hasVoted, onVote }) => {
                     </svg>
                 }
             </div>
-            <span aria-label="Votes/Likes" className={styles["vote-button__text"]}>{buttonVotes}</span>
+            <span aria-label="Votes/Likes" className={styles["vote-button__text"]}>{votes}</span>
         </button>
     );
 }
