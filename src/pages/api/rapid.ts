@@ -7,9 +7,9 @@ import { z } from "zod";
 // this disabling of the response size limiter is required, because videos to upload can be more then default max 4MB for the request.
 // See: https://nextjs.org/docs/messages/api-routes-response-size-limit
 export const config = {
+    supportsResponseStreaming: true,
     api: {
-        responseLimit: false,
-        supportsResponseStreaming: true
+        responseLimit: false
     }
 };
 
