@@ -15,8 +15,11 @@ const audioSlice = createSlice({
         togglePlay(state) {
             state.isPlaying = !state.isPlaying;
         },
+        stopPlay(state) {
+            state.isPlaying = false;
+        },
     },
 });
 
-export const { togglePlay } = audioSlice.actions;
+export const { togglePlay,stopPlay } = audioSlice.actions;
 export default audioSlice.reducer;

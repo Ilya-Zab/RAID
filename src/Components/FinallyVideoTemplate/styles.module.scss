@@ -113,7 +113,6 @@
 	}
 	
 	&__btn {
-		margin-top: 25px;
 		display: flex;
 		align-items: flex-end;
 		justify-content: center;
@@ -138,4 +137,7 @@
 	line-height: 120%;
 	text-align: center;
 	color: $grey1;
+}
+.wrapper {
+	margin-top: 25px;
 }

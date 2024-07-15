@@ -16,6 +16,7 @@ function DropZone()
         maxFiles: 1,
         accept: {
             'video/*': [],
+            'image/*': [],
         },
         onDrop: (acceptedFiles) =>
         {

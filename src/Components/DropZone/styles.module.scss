@@ -21,6 +21,15 @@
 	outline: none;
 	cursor: pointer;
 	background: transparent;
+height: 25px;
+	@media screen and (max-width: 768px) {
+		height: 35px;
+		width: 35px;
+		& svg {
+			height: 35px;
+			width: 35px;
+		}
+	}
 }
 
 .customInput {

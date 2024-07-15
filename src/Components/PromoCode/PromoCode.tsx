@@ -44,7 +44,7 @@ const PromoCode = () => {
                <time className={styles.promo__data}>
                    *available till AUGUST 31ST
                </time>
-               <p className={styles.promo__text}>How to redeem the promo code</p>
+               <Link href={'https://plarium.com/en/redeem/raid-shadow-legends/'} className={styles.promo__text} target={'_blank'}>How to redeem the promo code</Link>
            </Box>
         </Box>
     )
