@@ -110,10 +110,8 @@
 	&__loader {
 		position: absolute;
 		inset: 0;
-		z-index: 20;
-		background: url('/images/CreateModalGradientpng.png');
+		z-index: 100;
 		background-color: $bg4;
-
 		align-items: center;
 		min-height: auto;
 		height: 100%;
