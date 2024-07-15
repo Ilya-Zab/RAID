@@ -14,7 +14,7 @@ const AddCreativeCard: FC<AddCreativeCardPropsType> = ({ hasLogin = false }) =>
 {
     return (
         <Link
-            href={hasLogin ? `/create-video` : `/create-video`}
+            href={hasLogin ? `/create-video` : `#ready`}
             className={styles['add-creative-card']}
         >
             <div

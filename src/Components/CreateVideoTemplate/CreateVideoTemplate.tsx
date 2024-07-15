@@ -76,7 +76,7 @@ type CreateVideoTemplateProps = z.infer<typeof CreateVideoTemplateSchema>;
 
 const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonClick }) =>
 {
-    const [url, setUrl] = React.useState();
+    const [url, setUrl] = React.useState('');
     const dispatch = useAppDispatch();
 
     async function uploadVideoFromRapid(url: string)

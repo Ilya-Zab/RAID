@@ -17,12 +17,8 @@ const CheckUserIdSchema = z.object({
     raidId: z.string().refine(value => validateRaidId(value), {
         message: "Invalid raid ID",
     }),
-    country: z.boolean().refine(value => value === true, {
-        message: "You must agree to the terms",
-    }),
-    terms: z.boolean().refine(value => value === true, {
-        message: "You must agree to the terms",
-    }),
+    country: z.boolean(),
+    terms: z.boolean()
 });
 
 type CheckUserId = z.infer<typeof CheckUserIdSchema>;
@@ -44,8 +40,39 @@ export const LoginForm: FC = () =>
     const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
     const dispatch = useAppDispatch();
     const router = useRouter();
+    const [firstCheck, setFirstCheck] = useState<Boolean>(false);
+    const [secondCheck, setSecondCheck] = useState<Boolean>(false);
+
+    function onFirstClick()
+    {
+        if (firstCheck)
+        {
+            setFirstCheck(false);
+        } else
+        {
+            setFirstCheck(true);
+        }
+
+    }
+
+    function onSecondClick()
+    {
+        if (secondCheck)
+        {
+            setSecondCheck(false);
+        } else
+        {
+            setSecondCheck(true);
+        }
+    }
+
     const onSubmit = async ({ raidId }: CheckUserId) =>
     {
+        if (!secondCheck || !firstCheck)
+        {
+            alert('You must accept the Official Rules.')
+            return;
+        }
         const transformedId = transformRaidId(raidId);
         try
         {
@@ -103,6 +130,7 @@ export const LoginForm: FC = () =>
                     register={register}
                     isCheckbox={true}
                     errors={errors}
+                    onClick={onFirstClick}
                 />
                 <CustomInput
                     fieldName={"I agree to this event's Official Rules and Privacy notice"}
@@ -110,6 +138,7 @@ export const LoginForm: FC = () =>
                     register={register}
                     isCheckbox={true}
                     errors={errors}
+                    onClick={onSecondClick}
                 />
                 <button
                     type="submit"

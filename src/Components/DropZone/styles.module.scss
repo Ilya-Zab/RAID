@@ -1,13 +1,18 @@
 @import '@/styles/variables.module.scss';
 
-.dropzone {
+.dropzone {}
 
-}
 .wrapper {
 	position: relative;
 }
+
 .btn {
+	height: 100%;
+	width: 27px;
+	display: flex;
+	align-items: center;
 	position: absolute;
+	z-index: 5;
 	right: 8px;
 	top: 50%;
 	transform: translateY(-50%);
@@ -15,9 +20,8 @@
 	border: none;
 	outline: none;
 	cursor: pointer;
-	display: block;
 	background: transparent;
-	height: 25px;
+height: 25px;
 	@media screen and (max-width: 768px) {
 		height: 35px;
 		width: 35px;
@@ -27,6 +31,7 @@
 		}
 	}
 }
+
 .customInput {
 	border: 1px solid rgba(66, 113, 161, 0.58);
 	border-radius: 8px;
@@ -38,12 +43,14 @@
 	display: flex;
 	align-items: center;
 	cursor: pointer;
-	& > div {
+
+	&>div {
 		margin: 0 auto;
 		display: flex;
 		align-items: flex-start;
 		justify-content: center;
 		grid-gap: 7px;
+
 		& span {
 			font-weight: 400;
 			font-size: 16px;
