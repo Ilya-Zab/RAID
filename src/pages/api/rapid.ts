@@ -41,6 +41,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.setHeader("Content-Disposition", `attachment; filename="video.mp4"`);
        
 
+        response.data.on("error", (err) => {
+
+        })
         // redirect data stream from video download request into API response. MAGIC!
         response.data.pipe(res);
     }
