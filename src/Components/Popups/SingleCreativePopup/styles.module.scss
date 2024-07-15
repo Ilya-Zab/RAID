@@ -6,8 +6,8 @@
     backdrop-filter: blur(10px);
     display: flex;
     justify-content: center;
-    align-items: center;
     padding: 40px;
+    overflow: auto;
 
     &__bg {
         position: absolute;

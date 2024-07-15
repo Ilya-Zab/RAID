@@ -24,8 +24,8 @@ const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes 
     const dispatch = useAppDispatch();
     const [{ userToken }] = useCookies(['userToken']);
     const [fetchUserData, { data: userData }] = useLazyFetchUserDataQuery();
-    const [updateVoteVideo] = useFetchUpdateVoteVideoMutation();
-    const [fetchUnvoteCreative] = useFetchUnvoteCreativeMutation();
+    const [updateVoteVideo, { data: justVotedVideo }] = useFetchUpdateVoteVideoMutation();
+    const [fetchUnvoteCreative, { data: justUnvotedVideo }] = useFetchUnvoteCreativeMutation();
     const [fetchCreativesByVotes, { data: creativesByVotes = [] }] = useLazyFetchAllCreativesByVotesQuery();
     const [fetchCreativesByDate, { data: creativesByDate = [], isFetching }] = useLazyFetchAllCreativesByDataQuery();
     const isMobile = useMediaQuery(`(max-width: 800px)`);
@@ -51,7 +51,7 @@ const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes 
         orderByVotes ?
             fetchCreativesByVotes({ per_page: creativesPerPage, offset: 0 }) :
             fetchCreativesByDate({ per_page: creativesPerPage, offset: 0 });
-    }, [orderByVotes, creativesPerPage, userState.votesCreatives]);
+    }, [orderByVotes, creativesPerPage, userState.votesCreatives, justVotedVideo, justUnvotedVideo]);
 
     const checkUserHasVoted = (creativeId: number): boolean => {
         return Boolean(userState.votesCreatives.includes(String(creativeId)));

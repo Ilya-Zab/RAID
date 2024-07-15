@@ -23,8 +23,8 @@ const Creatives = ({ children }) => {
     const coefficient = 0.20934;
     const isMobile = useMediaQuery('(max-width: 800px)');
     const [fetchUserData, { data: userData }] = useLazyFetchUserDataQuery();
-    const [updateVoteVideo] = useFetchUpdateVoteVideoMutation();
-    const [fetchUnvoteCreative] = useFetchUnvoteCreativeMutation();
+    const [updateVoteVideo, { data: justVotedVideo }] = useFetchUpdateVoteVideoMutation();
+    const [fetchUnvoteCreative, { data: justUnvotedVideo }] = useFetchUnvoteCreativeMutation();
     const [{ userToken }] = useCookies(['userToken']);
     const [fetchCreativesByDate, { data: creativePending = [] }] = useLazyFetchAllCreativesByDataQuery();
     const pageSlug = router.pathname.split('/').filter(slug => slug)[0] || '';
@@ -54,7 +54,7 @@ const Creatives = ({ children }) => {
                 status: 'pending,publish'
             })
         }
-    }, [userData, userState.votesCreatives]);
+    }, [userData, userState.votesCreatives, justVotedVideo, justUnvotedVideo]);
 
 
 
