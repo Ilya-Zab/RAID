@@ -22,9 +22,13 @@ const SingleCreative: FC<SingleCreativePropsType> = ({ creativeId }) => {
     const dispatch = useAppDispatch();
     const [{ userToken }] = useCookies(['userToken']);
     const [fetchUserData, { data: userData }] = useLazyFetchUserDataQuery();
-    const [updateVoteVideo] = useFetchUpdateVoteVideoMutation();
-    const [fetchUnvoteCreative] = useFetchUnvoteCreativeMutation();
+    const [updateVoteVideo, { data: justVotedVideo }] = useFetchUpdateVoteVideoMutation();
+    const [fetchUnvoteCreative, { data: justUnvotedVideo }] = useFetchUnvoteCreativeMutation();
     const { data: creativeData, refetch } = useFetchCreativeQuery(creativeId);
+
+    useEffect(() => {
+        refetch();
+    }, [justVotedVideo, justUnvotedVideo]);
 
     useEffect(() => {
         if (userToken) {
@@ -118,15 +122,15 @@ const SingleCreative: FC<SingleCreativePropsType> = ({ creativeId }) => {
                 }
             </div>
             <div className={styles['single-creative__sharing']}>
-                {/* <Sharing
+                <Sharing
                     title={
-                        <><span className="text-gradient">Share</span> on social networks </>
+                        <><span className="text-gradient fw-700 ">Share</span> on social networks</>
                     }
                     text={
-                        <>& invite friends to <span className="text-gradient">vote for it</span>! Or join the event yourself.</>
+                        <>& invite friends to <span className="text-gradient fw-600 ">vote for it</span>! Or join the event yourself.</>
                     }
                     creativeId={creativeId}
-                /> */}
+                />
             </div>
 
         </>
