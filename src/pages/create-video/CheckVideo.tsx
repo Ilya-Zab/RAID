@@ -1,8 +1,10 @@
-import { Box, FabClassKey, IconButton } from "@mui/material"
+import { Box, IconButton } from "@mui/material"
 import styles from './styles.module.scss';
-import { FC } from "react";
+import { FC, useState } from "react";
 import { z } from "zod";
-import { downloadVideo } from "@/utils";
+import muteSvg from '../../../public/images/icon/mute.svg';
+import unmuteSvg from '../../../public/images/icon/unmute.svg';
+import Image from "next/image";
 
 export const CheckVideoSchema = z.object({
     videoUrl: z.string(),
@@ -14,12 +16,25 @@ export type CheckVideoProps = z.infer<typeof CheckVideoSchema>;
 
 const CheckVideo: FC<CheckVideoProps> = ({ videoUrl, onDownload, prevStep }) =>
 {
+    const [isMuted, setMuted] = useState(true);
+
+    const changeMuted = () =>
+    {
+        setMuted(prevState => prevState ? false : true);
+    };
+
     return (
         <Box className={styles.wrapper}>
+            <button
+                onClick={changeMuted}
+                className={`${styles.button} ${styles['button-mute']}`}>
+                <Image src={isMuted ? muteSvg : unmuteSvg} alt={"mute button"} width={40} height={40} />
+            </button>
             <video
                 autoPlay
+                playsInline
                 loop
-                // muted
+                muted={isMuted}
                 className={styles.video}
             >
                 <source
