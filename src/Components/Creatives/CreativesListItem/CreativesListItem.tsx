@@ -66,7 +66,7 @@ const CreativesListItem: FC<CreativesListItemProps> = ({
                         <div className={styles["creatives-list-item__title"]}>
                             <div className={styles["creatives-list-item__title-bg"]}></div>
                             <div className={styles["creatives-list-item__title-label"]}>
-                                {trimString(title.rendered, 20)}
+                                {trimString(title.rendered, 16)}
                             </div>
                         </div>
                     </div>
