@@ -54,7 +54,7 @@ const Creatives = ({ children }) => {
                 status: 'pending,publish'
             })
         }
-    }, [userData, justVotedVideo, justUnvotedVideo]);
+    }, [userData, userState.votesCreatives, justVotedVideo, justUnvotedVideo]);
 
 
 
@@ -116,7 +116,7 @@ const Creatives = ({ children }) => {
 
     return (
         <div className={styles["creatives-section"]}>
-            <div className={styles["creatives-section__imgWrapper"]} style={{ top: computedTop }}>
+            <div className={`tr-par ${styles["creatives-section__imgWrapper"]}`} style={{ top: computedTop }}>
                 {children}
             </div>
             <div className={styles["creatives-section__block"]}>

@@ -235,6 +235,10 @@
 	}
 }
 
+.tr-par {
+	transition: .3s ease;
+}
+
 @keyframes gradien-rotating {
 	0% {
 		filter: hue-rotate(-30deg);
