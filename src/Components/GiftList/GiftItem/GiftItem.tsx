@@ -1,17 +1,18 @@
-import {Box, Typography} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import styles from './styles.module.scss';
 import Image from "next/image";
 import * as React from "react";
 
-const GiftItem = ({data}) => {
-    const {img, name, text, quantity} = data;
+const GiftItem = ({ data }) =>
+{
+    const { img, name, text, quantity } = data;
     return (
         <Box className={styles.gift_wrapper}>
             <Image
                 src={img}
                 alt={name}
-                width={100}
-                height={75}
+                width={60}
+                height={50}
                 className={styles.gift_img}
             />
             <Typography variant='h4' className={styles.gift_name}>
