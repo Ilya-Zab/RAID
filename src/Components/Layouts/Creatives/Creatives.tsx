@@ -54,7 +54,7 @@ const Creatives = ({ children }) => {
                 status: 'pending,publish'
             })
         }
-    }, [userData, userState.votesCreatives, justVotedVideo, justUnvotedVideo]);
+    }, [userData, justVotedVideo, justUnvotedVideo]);
 
 
 
