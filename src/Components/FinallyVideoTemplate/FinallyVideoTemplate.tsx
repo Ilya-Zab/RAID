@@ -80,11 +80,12 @@ const FinallyVideoTemplate = ({ video, creativeImage }) => {
                     </Box>
                     <Box className={styles.section__text}>
                         <Typography variant='body1' align='center'>Well done!</Typography>
-                        <Typography variant='caption'>
-                            Enter your email to participate in a prize draw.<br />
-                            We&lsquo;ll use it to notify you once your post <br />
-                            successfully passed moderation and published*.
-                        </Typography>
+                        {!cookies.userToken && <Typography variant='caption'>
+                            Enter your email to reedeem your instant reward<br />
+                            for participation and join a prize draw.<br />
+                            We&lsquo;ll also use it to notify you once your post<br />
+                            has successfully passed moderation and been published.
+                        </Typography>}
                     </Box>
                     {!cookies.userToken && <RegistrationForm onSendForm={onCreateClick} isCreating={isCreating} />}
                     {cookies.userToken && <FinallyVideoSend onButtonClick={onCreateClick} isCreating={isCreating} />}

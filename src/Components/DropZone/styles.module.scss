@@ -12,7 +12,7 @@
 	display: flex;
 	align-items: center;
 	position: absolute;
-	z-index: 5;
+	z-index: 0;
 	right: 8px;
 	top: 50%;
 	transform: translateY(-50%);
@@ -21,10 +21,12 @@
 	outline: none;
 	cursor: pointer;
 	background: transparent;
-height: 25px;
+	height: 25px;
+
 	@media screen and (max-width: 768px) {
 		height: 35px;
 		width: 35px;
+
 		& svg {
 			height: 35px;
 			width: 35px;

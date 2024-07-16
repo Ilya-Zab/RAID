@@ -5,7 +5,8 @@ import styles from "./styles.module.scss";
 import * as React from "react";
 import CloseIcon from "@mui/icons-material/Close";
 
-const ModalPrivacyNotice = () => {
+const ModalPrivacyNotice = () =>
+{
     const dispatch = useDispatch();
     // @ts-ignore
     const open = useSelector((state) => state.modal.isOpenPrivacyNotice);
