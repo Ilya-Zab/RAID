@@ -53,7 +53,7 @@ export default function Home() {
                     alt="vlad"
                     width={829}
                     height={1274}
-                    className={`${styles['creatives-section__img']} ${styles['creatives-section__img_main']}`}
+                    className={`${styles['creatives-section__img']} ${styles['creatives-section__img_main']} tr-par`}
                 />
             </Creatives>
             <Ready />

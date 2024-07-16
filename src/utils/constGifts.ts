@@ -72,7 +72,7 @@ export const packages = [
         quantity: '250',
     },
     {
-        img: '/images/logo.png',
+        img: '/images/gifts/last-book.png',
         name: 'Skill Tome Legendary',
         subText: '',
         quantity: '50',
