@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { FC } from "react";
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
 import styles from './styles.module.scss';

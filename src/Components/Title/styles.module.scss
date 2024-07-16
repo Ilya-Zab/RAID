@@ -1,5 +1,6 @@
 @import "@/styles/variables.module";
 @import "@/styles/text-gradient";
+
 .title {
 	&__title {
 		font-weight: 700;
@@ -9,16 +10,20 @@
 		line-height: 100%;
 		margin-top: 0;
 		letter-spacing: 0;
+		text-align: center;
 	}
 }
+
 .gallery,
 .preview {
 	position: relative;
 	z-index: 10;
 }
+
 .preview {
 	margin-bottom: 138px;
 }
+
 .gallery {
 	margin-bottom: 69px;
 }
