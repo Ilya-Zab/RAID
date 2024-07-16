@@ -124,10 +124,10 @@ const SingleCreative: FC<SingleCreativePropsType> = ({ creativeId }) => {
             <div className={styles['single-creative__sharing']}>
                 <Sharing
                     title={
-                        <><span className="text-gradient fw-700 ">Share</span> on social networks</>
+                        <><span className="text-gradient text-gradient_alt fw-700 ">Share</span> on social networks</>
                     }
                     text={
-                        <>& invite friends to <span className="text-gradient fw-600 ">vote for it</span>! Or join the event yourself.</>
+                        <>& invite friends to <span className="text-gradient text-gradient_alt fw-600 ">vote for it</span>! Or join the event yourself.</>
                     }
                     creativeId={creativeId}
                 />

@@ -221,6 +221,10 @@
 
 .text-gradient {
 	@include text-gradient;
+
+	&_alt {
+		@include text-gradient-green;
+	}
 }
 
 .bg-gallery {

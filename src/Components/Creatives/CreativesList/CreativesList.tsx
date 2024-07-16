@@ -51,7 +51,7 @@ const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes 
         orderByVotes ?
             fetchCreativesByVotes({ per_page: creativesPerPage, offset: 0 }) :
             fetchCreativesByDate({ per_page: creativesPerPage, offset: 0 });
-    }, [orderByVotes, creativesPerPage, userState.votesCreatives, justVotedVideo, justUnvotedVideo]);
+    }, [creativesPerPage, justVotedVideo, justUnvotedVideo]);
 
     const checkUserHasVoted = (creativeId: number): boolean => {
         return Boolean(userState.votesCreatives.includes(String(creativeId)));
@@ -93,7 +93,7 @@ const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes 
                     {firstItem && firstItem}
                     {(Boolean(creatives.length)) ?
                         creatives.map((creative: CreativeDataType) => (
-                            <CreativesListItem key={creative.id} creative={creative} hasVoted={checkUserHasVoted(creative.id)} onVote={handleVote} />
+                            <CreativesListItem key={creative.id} creative={creative} hasVoted={checkUserHasVoted(creative.id)} onVote={handleVote} shared={true} />
                         )) :
                         renderSkeleton()
                     }
