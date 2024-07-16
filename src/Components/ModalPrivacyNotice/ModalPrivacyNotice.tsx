@@ -1,6 +1,6 @@
-import {Box, IconButton, Modal, Typography} from "@mui/material";
-import {useDispatch, useSelector} from "react-redux";
-import {closeModal} from "@/store/slice/modalsSlice";
+import { Box, IconButton, Modal, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { closeModal } from "@/store/slice/modalsSlice";
 import styles from "./styles.module.scss";
 import * as React from "react";
 import CloseIcon from "@mui/icons-material/Close";
@@ -9,7 +9,7 @@ const ModalPrivacyNotice = () => {
     const dispatch = useDispatch();
     // @ts-ignore
     const open = useSelector((state) => state.modal.isOpenPrivacyNotice);
-    const handleClose = () => dispatch(closeModal({modalName: 'isOpenPrivacyNotice'}));
+    const handleClose = () => dispatch(closeModal({ modalName: 'isOpenPrivacyNotice' }));
     console.log('fwwefewfw');
     return (
         <Modal
@@ -19,14 +19,14 @@ const ModalPrivacyNotice = () => {
         >
             <Box className={styles.wrapper}>
                 <IconButton className={styles.btn} onClick={handleClose}>
-                    <CloseIcon/>
+                    <CloseIcon />
                 </IconButton>
                 <Box className={styles.container}>
                     <Typography variant={'h2'} className={styles.h2}>
                         PROMOTION PRIVACY NOTICE
                     </Typography>
                     <Typography variant={'h3'} className={styles.h3}>
-                        Effective Date: [add date], 2024
+                        Effective Date: July 17th, 2024
                     </Typography>
                     <Typography variant={'body2'} className={styles.text}>
                         Plarium Global Ltd and its affiliates (“<strong>Plarium</strong>” or “we”) is dedicated to
@@ -36,7 +36,7 @@ const ModalPrivacyNotice = () => {
                         been provided to inform you as to the ways we collect, store, use, and manage
                         (“<strong>process</strong>”) your
                         personal information when you participate in the promotions organized by us (“<strong>the
-                        Promotion</strong>”).
+                            Promotion</strong>”).
                     </Typography>
                     <Typography variant={'body2'} className={styles.text}>
                         “<strong>Personal information</strong>” means any information relating to an identified or
@@ -56,7 +56,7 @@ const ModalPrivacyNotice = () => {
                         <a className={styles.a} href="https://plarium.com/en/legal/privacy-and-cookie-policy">
                             https://plarium.com/en/legal/privacy-and-cookie-policy</a>]; Plarium
                         Terms of Use [ <a className={styles.a} href="https://plarium.com/en/legal/terms-of-use/">
-                        https://plarium.com/en/legal/terms-of-use/</a>].
+                            https://plarium.com/en/legal/terms-of-use/</a>].
                     </Typography>
                     <Typography variant={'body2'} className={styles.text}>
                         Please note that the scope of this Notice is limited only to information collected by Plarium
@@ -282,7 +282,7 @@ const ModalPrivacyNotice = () => {
                     <Typography variant={'body2'} className={styles.text}>
                         If you or an authorized agent wants to exercise any of these rights, please contact us at:
                         <a className={styles.a_mailto} href="mailto:privacy.support@plarium.com">privacy.support@plarium.com</a> or via <a className={styles.a}
-                        href="https://dsr-support.plarium.com/hc/requests/new">https://dsr-support.plarium.com/hc/requests/new</a>.
+                            href="https://dsr-support.plarium.com/hc/requests/new">https://dsr-support.plarium.com/hc/requests/new</a>.
                         You can
                         freely exercise these rights and choices. Once we receive your request from you, we may verify
                         it through your account or by requesting information sufficient to confirm your identity.
