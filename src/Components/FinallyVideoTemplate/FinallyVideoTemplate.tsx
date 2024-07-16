@@ -18,7 +18,7 @@ const FinallyVideoTemplate = ({ video, creativeImage }) =>
     const raidId = useAppSelector(state => state.raidId.raidId);
     const creativeName = useAppSelector(state => state.creative.creativeName);
     const router = useRouter();
-    const { createCreativeAsBlob, uploadVideoByUserToken, success, data, error } = useCreateCreative();
+    const { uploadVideoByUserToken, success, data, error } = useCreateCreative();
     const [isCreating, setCreating] = React.useState(false);
     const { isLoading: isMediaLoading, data: wpMediaResponse, error: wpMediaError, createWpMedia } = useCreateWpMedia();
     const dispatch = useAppDispatch();

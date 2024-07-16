@@ -46,7 +46,7 @@ export default function useCreateCreative(): CreateCreativeResult
         {
             await fetchUserData(cookies.userToken);
             const formData = new FormData();
-            formData.append('file', video, 'video.mp4');
+            formData.append('file', video, video.type);
 
             const response = await fetch('https://raid.digiway-dev.online/wp-json/wp/v2/media', {
                 method: 'POST',
@@ -63,6 +63,7 @@ export default function useCreateCreative(): CreateCreativeResult
 
             const data = await response.json();
             await createCreativeAsBlob(data.id, data.author, featuredMedia, creativeName);
+
         } catch (err)
         {
             setSuccess(false);
