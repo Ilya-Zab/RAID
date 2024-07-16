@@ -16,7 +16,8 @@ const wpMenuPropsSchema = z.object({
 
 type wpMenuProps = z.infer<typeof wpMenuPropsSchema>;
 
-const Navigation: FC<wpMenuProps> = ({ correctStyle, data }) => {
+const Navigation: FC<wpMenuProps> = ({ correctStyle, data }) =>
+{
     const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
     const handleOpenGist = () => dispatch(openModal({ modalName: 'isOpenGifts' }));
@@ -24,7 +25,8 @@ const Navigation: FC<wpMenuProps> = ({ correctStyle, data }) => {
     const handleOpenPrivacyNotice = () => dispatch(openModal({ modalName: 'isOpenPrivacyNotice' }));
     const handleOpenRules = () => dispatch(openModal({ modalName: 'isOpenRules' }));
 
-    const handlerClick = () => {
+    const handlerClick = () =>
+    {
         setOpen(!open);
     }
     return (
@@ -42,9 +44,9 @@ const Navigation: FC<wpMenuProps> = ({ correctStyle, data }) => {
                                     {link.title}
                                 </button>
                             ) : link.title === 'Privacy Notice' ? (
-                                <button className={styles.btn} onClick={handleOpenPrivacyNotice}>
+                                <Link href={"/privacy"} className={styles.btn} >
                                     {link.title}
-                                </button>
+                                </Link>
                             ) : link.title === 'Rules' ? (
                                 <Link href={"/rules"} className={styles.btn} >
                                     {link.title}
