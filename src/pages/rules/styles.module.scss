@@ -1,0 +1,117 @@
+@import '@/styles/variables.module.scss';
+
+.rules-page {
+	background-color: $new-black;
+	padding: 50px 0;
+}
+
+.wrapper {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+	max-width: 100%;
+	background: rgba(0, 0, 0, 0.7);
+	border: none;
+	box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.7);
+	padding: 40px 20px 40px;
+	overflow-y: auto;
+	max-height: 100%;
+
+	@media screen and (max-width: 768px) {
+		padding: 40px 8px 40px;
+	}
+}
+
+.btn {
+	position: absolute;
+	top: 40px;
+	right: 40px;
+	z-index: 100;
+	color: #fff;
+	width: 40px;
+	height: 40px;
+
+	@media screen and (max-width: 768px) {
+		width: 20px;
+		height: 20px;
+		top: 20px;
+		right: 20px;
+	}
+
+	&>svg {
+		width: 40px;
+		height: 40px;
+	}
+}
+
+.container {
+	max-width: 900px;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.text {
+	font-family: inherit;
+	font-size: 16px;
+	margin-bottom: 12px;
+}
+
+.h3 {
+	font-family: inherit;
+	font-size: 20px;
+	font-weight: 700;
+	margin-bottom: 16px;
+}
+
+.h2 {
+	font-family: inherit;
+	font-size: 26px;
+	font-weight: 700;
+	margin-bottom: 22px;
+	padding-right: 40px;
+	text-align: center;
+
+	@media screen and (max-width: 768px) {
+		font-size: 18px;
+	}
+}
+
+.a_mailto {
+	color: #3e6cff;
+}
+
+.a {
+	color: #3851ff;
+}
+
+.ul {
+	padding-left: 28px;
+	margin-bottom: 10px;
+	list-style-type: none;
+
+	@media screen and (max-width: 768px) {
+		padding-left: 6px;
+	}
+}
+
+.li {
+	margin-bottom: 8px;
+}
+
+.table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.th,
+.tr,
+.td {
+	padding: 6px;
+	border: 1px solid #fff;
+
+	@media screen and (max-width: 768px) {
+		padding: 4px;
+	}
+}

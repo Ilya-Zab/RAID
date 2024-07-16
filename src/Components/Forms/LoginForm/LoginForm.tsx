@@ -12,6 +12,7 @@ import { validateRaidId } from "@/utils/validateRaidId";
 import { useAppDispatch } from "@/hooks/redux";
 import { setRaidId } from "@/store/slice/raidIdSlice";
 import { useCookies } from "react-cookie";
+import { openModal } from "@/store/slice/modalsSlice";
 
 const CheckUserIdSchema = z.object({
     raidId: z.string().refine(value => validateRaidId(value), {
@@ -23,14 +24,12 @@ const CheckUserIdSchema = z.object({
 
 type CheckUserId = z.infer<typeof CheckUserIdSchema>;
 
-export const transformRaidId = (raidId) =>
-{
+export const transformRaidId = (raidId) => {
     let newStr = raidId.replace(" | ", " ");
     return newStr;
 }
 
-export const LoginForm: FC = () =>
-{
+export const LoginForm: FC = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<CheckUserId>({
         resolver: zodResolver(CheckUserIdSchema)
     });
@@ -43,33 +42,25 @@ export const LoginForm: FC = () =>
     const [firstCheck, setFirstCheck] = useState<Boolean>(false);
     const [secondCheck, setSecondCheck] = useState<Boolean>(false);
 
-    function onFirstClick()
-    {
-        if (firstCheck)
-        {
+    function onFirstClick() {
+        if (firstCheck) {
             setFirstCheck(false);
-        } else
-        {
+        } else {
             setFirstCheck(true);
         }
 
     }
 
-    function onSecondClick()
-    {
-        if (secondCheck)
-        {
+    function onSecondClick() {
+        if (secondCheck) {
             setSecondCheck(false);
-        } else
-        {
+        } else {
             setSecondCheck(true);
         }
     }
 
-    const onSubmit = async ({ raidId }: CheckUserId) =>
-    {
-        if (!secondCheck || !firstCheck)
-        {
+    const onSubmit = async ({ raidId }: CheckUserId) => {
+        if (!secondCheck || !firstCheck) {
             alert('You must accept the Official Rules.')
             return;
         }
@@ -77,23 +68,19 @@ export const LoginForm: FC = () =>
         const expiresDate = new Date();
         expiresDate.setTime(expiresDate.getTime() + (7 * 24 * 60 * 60 * 1000));
 
-        try
-        {
+        try {
             setIsSubmitting(true);
             const userToken = await fetchUserToken({ username: transformedId, password: transformedId }).unwrap();
 
-            if (userToken)
-            {
+            if (userToken) {
                 setCookie('userToken', userToken.token, { path: '/', expires: expiresDate });
             }
-        } catch (error)
-        {
+        } catch (error) {
             removeCookie('userToken', { path: '/' });
             removeCookie('raidId', { path: '/' });
             dispatch(setRaidId(transformRaidId(raidId)));
             setCookie('raidId', transformedId, { path: '/', expires: expiresDate });
-        } finally
-        {
+        } finally {
             reset();
             router.push('/gallery');
             setIsSubmitting(false);
@@ -101,7 +88,7 @@ export const LoginForm: FC = () =>
     };
 
     return (
-        <Box className={`subtract-box subtract-box_small`}>
+        <Box className={`subtract-box subtract-box_small ${styles['form']} ${styles['form-bg']}`}>
             <h2 className={styles.form__title}>
                 <span className='text-gradient'>
                     #WeFinallyPlayedIt
@@ -122,27 +109,32 @@ export const LoginForm: FC = () =>
                     errors={errors}
                     className={`${styles.form__input}`}
                 />
-                <Link
+                <div
                     className={`info ${styles.form__link}`}
-                    href={"/"}>
+                    style={{ textDecoration: 'underline', cursor: "pointer" }}
+                    onClick={() => { dispatch(openModal({ modalName: 'isOpenFindId' })) }}
+                >
                     Where can I find my RAID ID?
-                </Link>
-                <CustomInput
-                    fieldName={'I confirm that I am a UK/US citizen (outside of New York and Florida)'}
-                    name={'country'}
-                    register={register}
-                    isCheckbox={true}
-                    errors={errors}
-                    onClick={onFirstClick}
-                />
-                <CustomInput
-                    fieldName={"I agree to this event's Official Rules and Privacy notice"}
-                    name={'terms'}
-                    register={register}
-                    isCheckbox={true}
-                    errors={errors}
-                    onClick={onSecondClick}
-                />
+                </div>
+                <div className={styles['form__checks']}>
+
+                    <CustomInput
+                        fieldName={'I confirm that I am a UK/US citizen (outside of New York and Florida)'}
+                        name={'country'}
+                        register={register}
+                        isCheckbox={true}
+                        errors={errors}
+                        onClick={onFirstClick}
+                    />
+                    <CustomInput
+                        fieldName={"I agree to this event's Official Rules and Privacy notice"}
+                        name={'terms'}
+                        register={register}
+                        isCheckbox={true}
+                        errors={errors}
+                        onClick={onSecondClick}
+                    />
+                </div>
                 <button
                     type="submit"
                     disabled={isSubmitting}

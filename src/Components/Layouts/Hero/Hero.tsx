@@ -6,8 +6,7 @@ import Image from 'next/image'
 import { useEffect, useRef, useState, useTransition } from "react";
 import { useMediaQuery } from "@mui/material";
 
-const Hero = () =>
-{
+const Hero = () => {
     const beforeRef = useRef(null);
     const [computedBottom, setComputedBottom] = useState('');
     const headerHeight = 0.00234131;
@@ -19,19 +18,15 @@ const Hero = () =>
 
     let ticking = false;
 
-    const handleScroll = () =>
-    {
-        if (!ticking)
-        {
-            window.requestAnimationFrame(() =>
-            {
+    const handleScroll = () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
                 let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
                 distanceFromHeader = parseFloat((distanceFromHeader * coefficient).toFixed(8));
 
-                startTransition(() =>
-                {
+                startTransition(() => {
                     setComputedBottom(`${defaultBottom - distanceFromHeader}px`);
                 });
                 ticking = false;
@@ -41,13 +36,11 @@ const Hero = () =>
         }
     };
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         handleScroll();
         window.addEventListener('scroll', handleScroll);
 
-        return () =>
-        {
+        return () => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, [isMobile]);
@@ -62,7 +55,7 @@ const Hero = () =>
                     alt='king'
                     width={!isMobile ? 733 : 359}
                     height={!isMobile ? 745 : 559}
-                    className={styles.hero__img}
+                    className={`${styles.hero__img} tr-par`}
                 />
                 <Box>
                     <Box className={styles.hero__title_wrapper}>
