@@ -11,7 +11,7 @@ const Sharing = ({ title, text, creativeId }) => {
 
 
     const shareLink = (creativeId) => {
-        const link = `${domain}/preview?creative=${creativeId}`;
+        const link = `${domain}?creative=${creativeId}`;
         navigator.clipboard.writeText(link);
         alert("Link copied to clipboard.")
     }
