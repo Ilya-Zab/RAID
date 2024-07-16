@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styles from './styles.module.scss';
-import {Box} from '@mui/material';
+import { Box } from '@mui/material';
 import Image from 'next/image';
 import Link from "next/link";
 import Navigation from "@/Components/Layouts/Navigation/Navigation";
@@ -10,8 +10,8 @@ const data = [
         title: 'About',
         url: 'link1111',
     }, {
-        title: 'Contact',
-        url: 'link1111',
+        title: 'Email Us',
+        url: 'mailto:support@wefinallyplayedit.com',
     }, {
         title: 'Privacy Notice',
         url: '',
@@ -44,7 +44,7 @@ const Footer = () => {
                                 />
                             </Link>
                             <Box className={styles.nav_wrapper}>
-                                <Navigation correctStyle={styles.nav_list} data={data}/>
+                                <Navigation correctStyle={styles.nav_list} data={data} />
                             </Box>
                         </Box>
                         <Box className={styles.footer_right}>
