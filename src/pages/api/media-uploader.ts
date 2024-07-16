@@ -66,10 +66,9 @@ async function handlePostingAsFile(req: NextApiRequest, res: NextApiResponse, us
             return;
         }
 
-        if (!mediaFile.mimetype || mediaFile.mimetype !== "image/png" || mediaFile.mimetype !== "image/jpeg" || mediaFile.mimetype !== "image/gif")
+        if (!mediaFile.mimetype || mediaFile.mimetype !== "image/png")
         {
-            console.log('MimeTypee', mediaFile.mimetype !== "image/gif")
-            console.error(`Error while processing uploaded file in the video uploading request. File with this type cannot be added, but was "`, mediaFile.mimetype, `"`);
+            console.error(`Error while processing uploaded file in the video uploading request. File mime type should be "video/mp4", but was "`, mediaFile.mimetype, `"`);
             res.status(500).json({ message: `Error while processing uploaded file in the video uploading request. File mime type should be "video/mp4", but was "${mediaFile.mimetype}"` });
             return;
         }
