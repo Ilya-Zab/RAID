@@ -17,8 +17,9 @@
 		position: absolute;
 		bottom: -86px;
 		right: -327px;
-		width: clamp(533px,80vw, 833px);
+		width: clamp(650px, 80vw, 900px);
 		height: auto;
+
 		@media screen and (max-width: 768px) {
 			bottom: 0;
 			right: 0;
@@ -26,6 +27,7 @@
 			width: clamp(413px, 74vw, 533px);
 		}
 	}
+
 	&__text {
 		margin-top: 12px;
 		font-family: 'Inter', sans-serif;
@@ -34,6 +36,7 @@
 		line-height: 140%;
 		color: $white1;
 	}
+
 	&__title {
 		font-weight: 700;
 		font-size: clamp(16px, 9vw, 62px);
@@ -72,7 +75,7 @@
 
 			@media screen and (max-width: 768px) {
 				padding: 14px 12px 16px;
-				 margin-bottom: 150px;
+				margin-bottom: 150px;
 			}
 
 			&:before {
@@ -143,9 +146,11 @@
 			position: relative;
 			z-index: 10;
 			margin-left: -53px;
+
 			@media screen and (max-width: 1220px) {
 				margin-left: 0;
 			}
+
 			@media screen and (max-width: 768px) {
 				margin-top: 340px;
 			}

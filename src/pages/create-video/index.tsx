@@ -94,6 +94,11 @@ const CreateVideo = () =>
 
     async function uploadVideo()
     {
+        // if (uploadedVideo.type !== "video/mp4")
+        // {
+        //     uploadPhotoCreative();
+        //     return;
+        // }
         const blob = await new Blob([uploadedVideo], { type: uploadedVideo.type });
         setVideo(blob);
         const frames = await extractAllFrames(blob);
@@ -106,10 +111,28 @@ const CreateVideo = () =>
             dispatch(setLoading(false));
         } else
         {
-            alert('There is a problem with creating creative');
             dispatch(setLoading(false));
         }
     }
+
+    // async function uploadPhotoCreative()
+    // {
+    //     if (uploadedVideo.type === 'image/png' || uploadedVideo.type === 'image/jpeg' || uploadedVideo.type === 'image/gif')
+    //     {
+    //         const blob = await new Blob([uploadedVideo], { type: uploadedVideo.type });
+    //         setVideo(blob);
+    //         setCurrentBlobFrame({
+    //             frameBlob: blob,
+    //             frameUrl: URL.createObjectURL(blob)
+    //         });
+    //         setPrevStep(0);
+    //         setStep(5);
+    //         dispatch(setLoading(false));
+    //     } else
+    //     {
+    //         alert(`You can't use this type of file.`);
+    //     }
+    // }
 
     async function handleVideoReady(video: Blob)
     {

@@ -92,6 +92,10 @@
 
 	&_gradient {
 		background-image: url('/images/hex-gradient_reg.png');
+		animation-name: gradien-rotating;
+		animation-duration: 3s;
+		animation-iteration-count: infinite;
+		animation-fill-mode: forwards;
 
 		&:active {
 			filter: brightness(0.9);
@@ -220,7 +224,29 @@
 }
 
 .text-gradient {
+	animation-name: gradien-rotating;
+	animation-duration: 5s;
+	animation-iteration-count: infinite;
+	animation-fill-mode: forwards;
 	@include text-gradient;
+
+	&_alt {
+		@include text-gradient-green;
+	}
+}
+
+@keyframes gradien-rotating {
+	0% {
+		filter: hue-rotate(-30deg);
+	}
+
+	50% {
+		filter: hue-rotate(80deg);
+	}
+
+	100% {
+		filter: hue-rotate(-30deg);
+	}
 }
 
 .bg-gallery {

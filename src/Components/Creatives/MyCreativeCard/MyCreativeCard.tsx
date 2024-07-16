@@ -17,7 +17,7 @@ interface MyCreativeCardPropsType {
 const MyCreativeCard: FC<MyCreativeCardPropsType> = ({ creative, hasVoted, onVote }) => {
     return (
         (creative.status === 'publish') ?
-            <CreativesListItem creative={creative} hasVoted={hasVoted} onVote={onVote} /> :
+            <CreativesListItem creative={creative} hasVoted={hasVoted} onVote={onVote} shared={true} /> :
             <div className={styles['my-creative-card']}>
                 <div className={styles["my-creative-card__media"]}>
                     {(creative.meta.featured_media_type === 'video' && creative.preview_url) ?

@@ -1,16 +1,17 @@
-import {Box, Typography, Modal, IconButton} from "@mui/material";
-import {useDispatch, useSelector} from "react-redux";
-import {closeModal} from "@/store/slice/modalsSlice";
-import {packages, rare, total} from "@/utils/constGifts";
+import { Box, Typography, Modal, IconButton } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { closeModal } from "@/store/slice/modalsSlice";
+import { packages, rare } from "@/utils/constGifts";
 import GiftItem from "@/Components/GiftList/GiftItem/GiftItem";
 import styles from './styles.module.scss';
 import CloseIcon from '@mui/icons-material/Close';
 
-const GiftList = () => {
+const GiftList = () =>
+{
     const dispatch = useDispatch();
     // @ts-ignore
     const open = useSelector((state) => state.modal.isOpenGifts);
-    const handleClose = () => dispatch(closeModal({modalName: 'isOpenGifts'}));
+    const handleClose = () => dispatch(closeModal({ modalName: 'isOpenGifts' }));
     return (
         <Modal
             open={open}
@@ -20,7 +21,7 @@ const GiftList = () => {
             <Box className={styles.wrapper}>
                 <Box className={styles.gifts}>
                     <IconButton className={styles.btn} onClick={handleClose}>
-                        <CloseIcon/>
+                        <CloseIcon />
                     </IconButton>
                     <Typography id="modal-modal-title" className={styles.gifts__title} variant="h2">
                         Check out prizes
@@ -39,7 +40,7 @@ const GiftList = () => {
                                 </Typography>
                             </Box>
                             {rare.map((data, index) => (
-                                <GiftItem key={index} data={data}/>
+                                <GiftItem key={index} data={data} />
                             ))}
                         </Box>
                     </Box>
@@ -57,27 +58,17 @@ const GiftList = () => {
                                 </Typography>
                             </Box>
                             {packages.map((data, index) => (
-                                <GiftItem key={index} data={data}/>
+                                <GiftItem key={index} data={data} />
                             ))}
                         </Box>
                     </Box>
-                    <Box className={styles.list__wrapper}>
+                    <Box className={`${styles.list__wrapper} ${styles.list__wrapper_total}`}>
                         <Typography className={styles.list__title} variant="h3">
                             Total
                         </Typography>
-                        <Box className={styles.list}>
-                            <Box className={styles.list__names}>
-                                <Typography className={`text-gradient ${styles.list__names__name}`} variant='body2'>
-                                    Name
-                                </Typography>
-                                <Typography className={`text-gradient ${styles.list__names__amount}`} variant='body2'>
-                                    Amount
-                                </Typography>
-                            </Box>
-                            {total.map((data, index) => (
-                                <GiftItem key={index} data={data}/>
-                            ))}
-                        </Box>
+                        <Typography className={styles.list__title} variant="h3">
+                            3862
+                        </Typography>
                     </Box>
                 </Box>
             </Box>
