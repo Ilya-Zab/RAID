@@ -17,17 +17,40 @@ type CreateVideoTemplateProps = z.infer<typeof CreateVideoTemplateSchema>;
 const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonClick }) =>
 {
     const [url, setUrl] = React.useState('');
+    const timeoutIdRef = React.useRef<NodeJS.Timeout>(null);
     const dispatch = useAppDispatch();
 
     const onInputChange = (event) =>
     {
         if (event.target)
         {
-            setUrl(event.target.value);
-        }
-    }
+            const newUrl = event.target.value;
+            setUrl(newUrl);
 
-    const onInputBtnClick = async () =>
+            if (timeoutIdRef.current)
+            {
+                clearTimeout(timeoutIdRef.current);
+            }
+
+            timeoutIdRef.current = setTimeout(() =>
+            {
+                uploadSocialVideo(newUrl);
+            }, 1000);
+        }
+    };
+
+    React.useEffect(() =>
+    {
+        return () =>
+        {
+            if (timeoutIdRef.current)
+            {
+                clearTimeout(timeoutIdRef.current);
+            }
+        };
+    }, []);
+
+    async function uploadSocialVideo(url: string): Promise<void>
     {
         if (url)
         {
@@ -83,7 +106,6 @@ const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonC
                     />
                     <button
                         type='button'
-                        onClick={onInputBtnClick}
                     >
                         <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
                             xmlns="http://www.w3.org/2000/svg">

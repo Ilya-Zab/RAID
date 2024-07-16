@@ -1,0 +1,63 @@
+@import '@/styles/variables.module.scss';
+
+.wrapper {
+    width: 100%;
+    max-width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.7);
+    padding: 40px 20px 40px;
+    overflow-y: auto;
+    max-height: 100%;
+}
+
+.btn {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    z-index: 100;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+
+    &>svg {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.text {
+    font-family: inherit;
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+.h3 {
+    font-family: inherit;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.h2 {
+    font-family: inherit;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 22px;
+    padding-right: 40px;
+    text-align: center;
+}
+
+.a_mailto {
+    color: #3e6cff;
+}
+
+.a {
+    color: #3851ff;
+}
