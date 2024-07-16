@@ -5,6 +5,13 @@
     text-align: center;
     flex-direction: column;
 
+    &-bg {
+        background-image: url('/images/right-frame.png');
+        filter: none;
+        backdrop-filter: none;
+        z-index: 1;
+    }
+
     &__title {
         margin-bottom: 5px;
         font-size: 36px;
@@ -76,7 +83,13 @@
     &__error {
         color: $error;
     }
+
+    &__checks {
+        margin-top: 15px;
+        margin-bottom: 30px;
+    }
 }
+
 .info {
     margin-top: 5px;
     font-family: inherit;
@@ -86,11 +99,34 @@
     text-align: center;
     color: $grey1;
 }
-@media(max-width: 768px) {
+
+@media(max-width: 1200px) {
+    .form {
+        &__title {
+            margin-bottom: 16px;
+            font-size: 30px;
+        }
+
+    }
+}
+
+@media(max-width: 1024px) {
     .form {
         &__title {
             margin-bottom: 16px;
             font-size: 26px;
+        }
+
+    }
+}
+
+@media(max-width: 768px) {
+    .form {
+        max-width: 400px;
+
+        &__title {
+            margin-bottom: 16px;
+            font-size: 22px;
         }
 
         &__subTitle,
@@ -148,6 +184,7 @@
     }
 
 }
+
 .wrapper {
     margin-top: 40px;
     margin-bottom: 10px;

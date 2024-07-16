@@ -6,6 +6,10 @@
 	align-items: center;
 	padding-left: 42px;
 	padding-right: 42px;
+	background-image: url('/images/left-frame.png');
+	filter: none;
+	backdrop-filter: none;
+	z-index: 1;
 
 	&__title {
 		font-family: 'Inter-Medium', sans-serif;
@@ -44,6 +48,7 @@
 		color: $white1;
 		margin-bottom: 11px;
 		text-decoration: none;
+
 		&:last-child {
 			margin-bottom: 0;
 		}
@@ -82,6 +87,7 @@
 			-webkit-background-clip: text;
 			-webkit-text-fill-color: transparent;
 		}
+
 		& svg {
 			position: absolute;
 			top: -5px;
@@ -97,5 +103,11 @@
 		text-align: center;
 		color: $grey2;
 		margin-bottom: 10px;
+	}
+}
+
+@media(max-width: 768px) {
+	.promo {
+		max-width: 400px;
 	}
 }

@@ -3,8 +3,7 @@ import styles from './styles.module.scss';
 import Image from "next/image";
 import * as React from "react";
 
-const GiftItem = ({ data }) =>
-{
+const GiftItem = ({ data }) => {
     const { img, name, text, quantity } = data;
     return (
         <Box className={styles.gift_wrapper}>
@@ -14,6 +13,9 @@ const GiftItem = ({ data }) =>
                 width={60}
                 height={50}
                 className={styles.gift_img}
+                style={{
+                    objectFit: 'contain'
+                }}
             />
             <Typography variant='h4' className={styles.gift_name}>
                 <span>

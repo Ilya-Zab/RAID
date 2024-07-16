@@ -51,7 +51,7 @@ const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes 
         orderByVotes ?
             fetchCreativesByVotes({ per_page: creativesPerPage, offset: 0 }) :
             fetchCreativesByDate({ per_page: creativesPerPage, offset: 0 });
-    }, [creativesPerPage, justVotedVideo, justUnvotedVideo]);
+    }, [creativesPerPage, userState.votesCreatives, justVotedVideo, justUnvotedVideo]);
 
     const checkUserHasVoted = (creativeId: number): boolean => {
         return Boolean(userState.votesCreatives.includes(String(creativeId)));

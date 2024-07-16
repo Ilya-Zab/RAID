@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useState, useTransition} from 'react';
+import React, { useRef, useEffect, useState, useTransition } from 'react';
 import styles from './styles.module.scss';
 import { Box } from '@mui/material';
 import Image from 'next/image';
@@ -24,7 +24,7 @@ const Second = () => {
                 let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
                 distanceFromHeader = parseFloat((distanceFromHeader * coefficient).toFixed(8));
 
-                startTransition(()=>{
+                startTransition(() => {
                     setComputedTop(`${defaultTop + distanceFromHeader}px`);
                 })
 
@@ -51,22 +51,22 @@ const Second = () => {
             <Box>
                 <Image
                     ref={beforeRef}
-                    style={{ top: computedTop}}
+                    style={{ top: computedTop }}
                     src='/images/brakus_the_Shifter.png'
                     alt='wolf'
                     width={816}
                     height={1120}
-                    className={styles.second__img}
+                    className={`tr-par ${styles.second__img}`}
                 />
             </Box>
             <Box className={'container'}>
                 <Box className={styles.second__title_wrapper}>
                     <h2 className={styles.second__title}>
-                        Many have<br/>
-                        entered the contest.<br/>
-                        Check how they played,<br/>
+                        Many have<br />
+                        entered the contest.<br />
+                        Check how they played,<br />
                         get inspired,
-                        or vote <br/>for your
+                        or vote <br />for your
                         favorites!
                     </h2>
                 </Box>

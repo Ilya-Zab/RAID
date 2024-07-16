@@ -12,6 +12,7 @@ function DropZone()
 {
     const dispatch = useDispatch<AppDispatch>();
     const [uploadedFile, setUploadedFile] = React.useState(null);
+    const timeoutIdRef = React.useRef<NodeJS.Timeout>(null);
     const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
         maxFiles: 1,
         accept: {
@@ -26,12 +27,35 @@ function DropZone()
         },
     });
 
-    const onInputBtnClick = () =>
+    React.useEffect(() =>
     {
         if (uploadedFile)
-            dispatch(setLoading(true));
-        dispatch(setVideo(uploadedFile));
-    }
+        {
+            if (timeoutIdRef.current)
+            {
+                clearTimeout(timeoutIdRef.current);
+            }
+
+            timeoutIdRef.current = setTimeout(() =>
+            {
+                dispatch(setLoading(true));
+                dispatch(setVideo(uploadedFile));
+            }, 1000);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [uploadedFile])
+
+    React.useEffect(() =>
+    {
+        return () =>
+        {
+            if (timeoutIdRef.current)
+            {
+                clearTimeout(timeoutIdRef.current);
+            }
+        };
+    }, []);
+
 
     const files = acceptedFiles[0];
     return (
@@ -54,7 +78,6 @@ function DropZone()
             </Box>
             <button
                 type='button'
-                onClick={onInputBtnClick}
                 className={styles.btn}
             >
                 <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
@@ -74,7 +97,7 @@ function DropZone()
                     </defs>
                 </svg>
             </button>
-        </Box>
+        </Box >
     );
 }
 

@@ -1,10 +1,10 @@
 import Box from '@mui/material/Box';
-import {FC, useState} from 'react';
+import { FC, useState } from 'react';
 import styles from './styles.module.scss';
 import Link from 'next/link';
-import {z} from 'zod';
-import {useDispatch} from "react-redux";
-import {openModal} from "@/store/slice/modalsSlice";
+import { z } from 'zod';
+import { useDispatch } from "react-redux";
+import { openModal } from "@/store/slice/modalsSlice";
 
 const wpMenuPropsSchema = z.object({
     correctStyle: z.string(),
@@ -16,15 +16,17 @@ const wpMenuPropsSchema = z.object({
 
 type wpMenuProps = z.infer<typeof wpMenuPropsSchema>;
 
-const Navigation: FC<wpMenuProps> = ({correctStyle, data}) => {
+const Navigation: FC<wpMenuProps> = ({ correctStyle, data }) =>
+{
     const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
-    const handleOpenGist = () => dispatch(openModal({modalName: 'isOpenGifts'}));
-    const handleOpenFindId = () => dispatch(openModal({modalName: 'isOpenFindId'}));
-    const handleOpenPrivacyNotice = () => dispatch(openModal({modalName: 'isOpenPrivacyNotice'}));
-    const handleOpenRules = () => dispatch(openModal({modalName: 'isOpenRules'}));
+    const handleOpenGist = () => dispatch(openModal({ modalName: 'isOpenGifts' }));
+    const handleOpenFindId = () => dispatch(openModal({ modalName: 'isOpenFindId' }));
+    const handleOpenPrivacyNotice = () => dispatch(openModal({ modalName: 'isOpenPrivacyNotice' }));
+    const handleOpenRules = () => dispatch(openModal({ modalName: 'isOpenRules' }));
 
-    const handlerClick = () => {
+    const handlerClick = () =>
+    {
         setOpen(!open);
     }
     return (
@@ -42,13 +44,13 @@ const Navigation: FC<wpMenuProps> = ({correctStyle, data}) => {
                                     {link.title}
                                 </button>
                             ) : link.title === 'Privacy Notice' ? (
-                                <button className={styles.btn} onClick={handleOpenPrivacyNotice}>
+                                <Link href={"/privacy"} className={styles.btn} >
                                     {link.title}
-                                </button>
+                                </Link>
                             ) : link.title === 'Rules' ? (
-                                <button className={styles.btn} onClick={handleOpenRules}>
+                                <Link href={"/rules"} className={styles.btn} >
                                     {link.title}
-                                </button>
+                                </Link>
                             ) : link.title === 'Materials' ? (
                                 <Box className={styles.dropDown}>
                                     <button className={styles.btn} onClick={handlerClick}>
@@ -56,12 +58,12 @@ const Navigation: FC<wpMenuProps> = ({correctStyle, data}) => {
                                     </button>
                                     {
                                         open &&
-										<Box className={styles.dropDown__list}>
-											<Link className={'desc nav-link link'}
-                                                  href="https://www.instagram.com/ar/8650758814950981"
-                                                  target={'_blank'}>Mask</Link>
+                                        <Box className={styles.dropDown__list}>
+                                            <Link className={'desc nav-link link'}
+                                                href="https://www.instagram.com/ar/8650758814950981"
+                                                target={'_blank'}>Mask</Link>
                                             <a href="/audio/AR_CONTRAST_sad_piano_Break_v04.1.mp3" download className="desc nav-link link">Sound</a>
-										</Box>
+                                        </Box>
                                     }
                                 </Box>
                             ) : (

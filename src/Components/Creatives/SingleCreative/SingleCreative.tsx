@@ -28,7 +28,7 @@ const SingleCreative: FC<SingleCreativePropsType> = ({ creativeId }) => {
 
     useEffect(() => {
         refetch();
-    }, [justVotedVideo, justUnvotedVideo]);
+    }, [justVotedVideo, justUnvotedVideo, userState.votesCreatives]);
 
     useEffect(() => {
         if (userToken) {
