@@ -10,7 +10,6 @@ export const Loader: FC<LoaderProps> = ({ className, thickness, size, color }) =
             sx={{
                 display: 'flex',
                 justifyContent: 'center',
-                minHeight: '100vh',
                 paddingTop: '10%',
             }}
             className={className}

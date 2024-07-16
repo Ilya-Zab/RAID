@@ -27,7 +27,8 @@ const data = [
     },
 ];
 
-const Footer = () => {
+const Footer = () =>
+{
     return (
         <footer className={styles.footer__bg_wrapper}>
             <Box className={styles.footer__bg}>

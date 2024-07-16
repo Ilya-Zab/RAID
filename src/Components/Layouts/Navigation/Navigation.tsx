@@ -22,8 +22,7 @@ const Navigation: FC<wpMenuProps> = ({ correctStyle, data }) =>
     const dispatch = useDispatch();
     const handleOpenGist = () => dispatch(openModal({ modalName: 'isOpenGifts' }));
     const handleOpenFindId = () => dispatch(openModal({ modalName: 'isOpenFindId' }));
-    const handleOpenPrivacyNotice = () => dispatch(openModal({ modalName: 'isOpenPrivacyNotice' }));
-    const handleOpenRules = () => dispatch(openModal({ modalName: 'isOpenRules' }));
+    const handleOpenAboutUs = () => dispatch(openModal({ modalName: 'ModalAboutUs' }));
 
     const handlerClick = () =>
     {
@@ -51,26 +50,35 @@ const Navigation: FC<wpMenuProps> = ({ correctStyle, data }) =>
                                 <Link href={"/rules"} className={styles.btn} >
                                     {link.title}
                                 </Link>
-                            ) : link.title === 'Materials' ? (
-                                <Box className={styles.dropDown}>
-                                    <button className={styles.btn} onClick={handlerClick}>
+                            )
+                                : link.title === 'About' ? (
+                                    <Link href={"/"} className={styles.btn} >
                                         {link.title}
-                                    </button>
-                                    {
-                                        open &&
-                                        <Box className={styles.dropDown__list}>
-                                            <Link className={'desc nav-link link'}
-                                                href="https://www.instagram.com/ar/8650758814950981"
-                                                target={'_blank'}>Mask</Link>
-                                            <a href="/audio/AR_CONTRAST_sad_piano_Break_v04.1.mp3" download className="desc nav-link link">Sound</a>
+                                    </Link>
+                                    // <button className={styles.btn} onClick={handleOpenAboutUs}>
+                                    //     {link.title}
+                                    // </button>
+                                )
+                                    : link.title === 'Materials' ? (
+                                        <Box className={styles.dropDown}>
+                                            <button className={styles.btn} onClick={handlerClick}>
+                                                {link.title}
+                                            </button>
+                                            {
+                                                open &&
+                                                <Box className={styles.dropDown__list}>
+                                                    <Link className={'desc nav-link link'}
+                                                        href="https://www.instagram.com/ar/8650758814950981"
+                                                        target={'_blank'}>Mask</Link>
+                                                    <a href="/audio/AR_CONTRAST_sad_piano_Break_v04.1.mp3" download className="desc nav-link link">Sound</a>
+                                                </Box>
+                                            }
                                         </Box>
-                                    }
-                                </Box>
-                            ) : (
-                                <Link className='desc nav-link link' href={link.url || ''}>
-                                    {link.title}
-                                </Link>
-                            )}
+                                    ) : (
+                                        <Link className='desc nav-link link' href={link.url || ''}>
+                                            {link.title}
+                                        </Link>
+                                    )}
                         </li>
                     ))}
                 </ul>

@@ -84,14 +84,14 @@ export const RegistrationForm: FC<RegistrationFormProps> = ({ onSendForm, isCrea
             </span>
             <div className={styles.wrapper}>
                 {isCreating && < Loader className={styles.popup__loader} color="white" />}
-                <Button
+                {!isCreating && <Button
                     type="submit"
                     variant="contained"
                     className={`btn-second ${styles.form__public}`}
                     disabled={isSubmitting || isCreating}
                 >
                     {(isSubmitting || isCreating) ? 'Publishing...' : 'Publish'}
-                </Button>
+                </Button>}
             </div>
             <div className={styles.form__res}>
                 {isError && error && (

@@ -6,22 +6,26 @@ interface modalSlice
     isOpenFindId: boolean;
     isOpenPrivacyNotice: boolean;
     isOpenRules: boolean;
+    ModalAboutUs: boolean;
 }
-const initialState:modalSlice = {
+const initialState: modalSlice = {
     isOpenGifts: false,
     isOpenFindId: false,
     isOpenPrivacyNotice: false,
     isOpenRules: false,
+    ModalAboutUs: false,
 }
 const modalSlice = createSlice({
     name: 'modal',
     initialState,
     reducers: {
-        openModal: (state, action) => {
+        openModal: (state, action) =>
+        {
             const { modalName } = action.payload;
             state[modalName] = true;
         },
-        closeModal: (state, action) => {
+        closeModal: (state, action) =>
+        {
             const { modalName } = action.payload;
             state[modalName] = false;
         },
