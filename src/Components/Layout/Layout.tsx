@@ -5,18 +5,21 @@ import MobileHeader from "../Layouts/MobileHeader/MobileHeader";
 import Footer from "../Layouts/Footer/Footer";
 import SingleCreativePopup from "../Popups/SingleCreativePopup";
 import GiftList from "@/Components/GiftList/GiftList";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import ModalFindId from "@/Components/ModalFindId/ModalFindId";
 import ModalPrivacyNotice from "@/Components/ModalPrivacyNotice/ModalPrivacyNotice";
 import ModalRules from "@/Components/ModalRules/ModalRules";
+import ModalAboutUs from "../ModalAboutUs/ModalAboutUs";
 
-interface LayoutProps {
+interface LayoutProps
+{
     children?: ReactNode;
 }
 
-const Layout: FC<LayoutProps> = ({ children }) => {
+const Layout: FC<LayoutProps> = ({ children }) =>
+{
     // @ts-ignore
-    const {isOpenGifts,isOpenFindId,isOpenPrivacyNotice,isOpenRules} = useSelector((state) => state.modal);
+    const { isOpenGifts, isOpenFindId, ModalAboutUs } = useSelector((state) => state.modal);
     const isMobile = useMediaQuery('(max-width: 768px)');
 
     return (
@@ -25,10 +28,9 @@ const Layout: FC<LayoutProps> = ({ children }) => {
             <SingleCreativePopup />
             {children}
             <Footer />
-            {isOpenGifts && <GiftList/>}
-            {isOpenFindId && <ModalFindId/>}
-            {isOpenPrivacyNotice && <ModalPrivacyNotice/>}
-            {isOpenRules && <ModalRules/>}
+            {isOpenGifts && <GiftList />}
+            {isOpenFindId && <ModalFindId />}
+            {ModalAboutUs && <ModalAboutUs />}
         </>
     )
 }
