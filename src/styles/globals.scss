@@ -237,6 +237,7 @@
 
 .parallax {
 	will-change: transform;
+	transition: .1s;
 }
 
 @keyframes chars-rotating {
