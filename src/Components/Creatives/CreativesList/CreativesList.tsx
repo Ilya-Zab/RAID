@@ -33,6 +33,10 @@ const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes 
     const creatives = orderByVotes ? creativesByVotes : creativesByDate;
 
     useEffect(() => {
+        setCreativesPerPage(perPage);
+    }, [perPage]);
+
+    useEffect(() => {
         if (userToken) {
             fetchUserData(userToken);
         }

@@ -12,11 +12,12 @@ const ParallaxEffect: FC = () => {
             });
         };
 
-        window.addEventListener('scroll', handleScroll);
+        window.onscroll = handleScroll;
+        // window.addEventListener('scroll', handleScroll);
 
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
+        // return () => {
+        //     window.removeEventListener('scroll', handleScroll);
+        // };
     }, []);
 
     return null;
