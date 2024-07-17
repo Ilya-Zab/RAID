@@ -48,7 +48,7 @@ export default function useCreateCreative(): CreateCreativeResult
             const formData = new FormData();
             formData.append('file', video, 'video.mp4');
 
-            const response = await fetch('https://raid.digiway-dev.online/wp-json/wp/v2/media', {
+            const response = await fetch('https://wordpress.wefinallyplayedit.com/wp-json/wp/v2/media', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${cookies.userToken}`

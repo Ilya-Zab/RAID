@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const jwtApi = createApi({
     reducerPath: 'jwtApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'https://raid.digiway-dev.online/wp-json/jwt-auth/v1/token' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'https://wordpress.wefinallyplayedit.com/wp-json/jwt-auth/v1/token' }),
     endpoints: (build) => ({
         fetchUserToken: build.mutation({
             query: (credentials) => ({
