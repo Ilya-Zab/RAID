@@ -7,14 +7,16 @@ export default function Document()
     <Html lang="en">
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="https://wefinallyplayedit.plarium.com/" />
+        <meta name="description" content="wefinallyplayedit" />
+        <meta property="og:image" content="/public/images/prev-sharing.png" />
         {/* Facebook */}
-        <meta property="og:title" content="wefinallyplayedit.plarium.com" />
-        <meta property="og:description" content="https://wefinallyplayedit.plarium.com/" />
+        <meta property="og:image" content="/public/images/prev-sharing.png" />
+        <meta property="og:title" content="wefinallyplayedit" />
+        <meta property="og:description" content="wefinallyplayedit" />
         {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="wefinallyplayedit.plarium.com" />
-        <meta name="twitter:description" content="https://wefinallyplayedit.plarium.com/" />
+        <meta name="twitter:image" content="/public/images/prev-sharing.png" />
+        <meta name="twitter:title" content="wefinallyplayedit" />
+        <meta name="twitter:description" content="wefinallyplayedit" />
         <Script id="google-tag-manager" strategy="afterInteractive">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
