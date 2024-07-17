@@ -29,7 +29,6 @@ async function uploadMediaAsBuffer(media: Buffer, userToken: string): Promise<WP
 {
     const userInfo = await getUserInfo(userToken);
     const mediaFileName = generateFileName("jpeg");
-    console.log('Before upload:', mediaFileName);
     const videoItem = await postVideo(media, mediaFileName, userInfo.id);
     return videoItem;
 }
