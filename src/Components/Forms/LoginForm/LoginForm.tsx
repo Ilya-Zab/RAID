@@ -24,12 +24,13 @@ const CheckUserIdSchema = z.object({
 
 type CheckUserId = z.infer<typeof CheckUserIdSchema>;
 
-export const transformRaidId = (raidId) => {
-    let newStr = raidId.replace(" | ", " ");
+export const transformRaidId = (raidId) =>
+{
+    let newStr = raidId.replace(" | ", " ").toLowerCase();
     return newStr;
 }
-
-export const LoginForm: FC = () => {
+export const LoginForm: FC = () =>
+{
     const { register, handleSubmit, formState: { errors }, reset } = useForm<CheckUserId>({
         resolver: zodResolver(CheckUserIdSchema)
     });
@@ -42,25 +43,33 @@ export const LoginForm: FC = () => {
     const [firstCheck, setFirstCheck] = useState<Boolean>(false);
     const [secondCheck, setSecondCheck] = useState<Boolean>(false);
 
-    function onFirstClick() {
-        if (firstCheck) {
+    function onFirstClick()
+    {
+        if (firstCheck)
+        {
             setFirstCheck(false);
-        } else {
+        } else
+        {
             setFirstCheck(true);
         }
 
     }
 
-    function onSecondClick() {
-        if (secondCheck) {
+    function onSecondClick()
+    {
+        if (secondCheck)
+        {
             setSecondCheck(false);
-        } else {
+        } else
+        {
             setSecondCheck(true);
         }
     }
 
-    const onSubmit = async ({ raidId }: CheckUserId) => {
-        if (!secondCheck || !firstCheck) {
+    const onSubmit = async ({ raidId }: CheckUserId) =>
+    {
+        if (!secondCheck || !firstCheck)
+        {
             alert('You must accept the Official Rules.')
             return;
         }
@@ -68,19 +77,23 @@ export const LoginForm: FC = () => {
         const expiresDate = new Date();
         expiresDate.setTime(expiresDate.getTime() + (7 * 24 * 60 * 60 * 1000));
 
-        try {
+        try
+        {
             setIsSubmitting(true);
             const userToken = await fetchUserToken({ username: transformedId, password: transformedId }).unwrap();
 
-            if (userToken) {
+            if (userToken)
+            {
                 setCookie('userToken', userToken.token, { path: '/', expires: expiresDate });
             }
-        } catch (error) {
+        } catch (error)
+        {
             removeCookie('userToken', { path: '/' });
             removeCookie('raidId', { path: '/' });
             dispatch(setRaidId(transformRaidId(raidId)));
             setCookie('raidId', transformedId, { path: '/', expires: expiresDate });
-        } finally {
+        } finally
+        {
             reset();
             router.push('/gallery');
             setIsSubmitting(false);
