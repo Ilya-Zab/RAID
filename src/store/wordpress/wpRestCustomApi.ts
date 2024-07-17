@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const wpCustomAPI = createApi({
     reducerPath: 'wpCustomAPI',
-    baseQuery: fetchBaseQuery({ baseUrl: 'https://raid.digiway-dev.online/wp-json' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'https://wordpress.wefinallyplayedit.com/wp-json' }),
 
     endpoints: (build) => ({
         fetchAllCreativesByVotes: build.query({
