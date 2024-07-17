@@ -5,58 +5,18 @@ import Image from 'next/image';
 import { useMediaQuery } from "@mui/material";
 
 const Second = () => {
-    const beforeRef = useRef(null);
-    const [isPending, startTransition] = useTransition();
-    const [computedTop, setComputedTop] = useState('');
-    const headerHeight = 0.00234131;
-    const coefficient = 0.20934;
     const isMobile = useMediaQuery('(max-width: 768px)');
-
-    const defaultTop = React.useMemo(() => isMobile ? -250 : -410, [isMobile]);
-
-    let ticking = false;
-
-    const handleScroll = () => {
-        if (!ticking) {
-            window.requestAnimationFrame(() => {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-                let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
-                distanceFromHeader = parseFloat((distanceFromHeader * coefficient).toFixed(8));
-
-                startTransition(() => {
-                    setComputedTop(`${defaultTop + distanceFromHeader}px`);
-                })
-
-
-                ticking = false;
-            });
-
-            ticking = true;
-        }
-    };
-
-    useEffect(() => {
-
-        window.addEventListener('scroll', handleScroll);
-        handleScroll();
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [isMobile]);
 
     return (
         <Box className={`${styles.second}`}>
             <Box>
                 <Image
-                    ref={beforeRef}
-                    style={{ top: computedTop }}
                     src='/images/brakus_the_Shifter.png'
                     alt='wolf'
                     width={816}
                     height={1120}
-                    className={`tr-par ${styles.second__img}`}
+                    className={`parallax ${styles.second__img}`}
+                    data-speed={!isMobile ? 20 : -10}
                 />
             </Box>
             <Box className={'container'}>
