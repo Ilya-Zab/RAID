@@ -9,32 +9,25 @@ import Ready from "@/Components/Layouts/Ready/Ready";
 import ScrollButton from "@/Components/ScrollButton/ScrollButton";
 import styles from "@/Components/Layouts/Creatives/styles.module.scss";
 import Image from "next/image";
-export default function Home()
-{
+export default function Home() {
     const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
 
-    const unsetCookies = () =>
-    {
+    const unsetCookies = () => {
         removeCookie('userToken');
     };
 
-    useEffect(() =>
-    {
-        if (cookies.userToken)
-        {
-        } else
-        {
+    useEffect(() => {
+        if (cookies.userToken) {
+        } else {
             console.log('No cookies!')
         }
     }, [cookies]);
 
     const [checkUserCountry, { data, error }] = useLazyFetchUserCountryQuery()
 
-    const checkUserIp = () =>
-    {
+    const checkUserIp = () => {
         checkUserCountry({});
-        if (data)
-        {
+        if (data) {
             console.log(data);
         }
     }
@@ -50,7 +43,8 @@ export default function Home()
                     alt="vlad"
                     width={829}
                     height={1274}
-                    className={`${styles['creatives-section__img']} ${styles['creatives-section__img_main']} tr-par`}
+                    className={`${styles['creatives-section__img']} ${styles['creatives-section__img_main']} parallax`}
+                    data-speed={10}
                 />
             </Creatives>
             <Ready />

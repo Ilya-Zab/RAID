@@ -81,6 +81,7 @@ const SingleCreative: FC<SingleCreativePropsType> = ({ creativeId }) => {
                             {creativeData.meta.featured_media_type === 'video' ?
                                 <video
                                     autoPlay={true}
+                                    playsInline={true}
                                     loop
                                     width="100%"
                                     height="100%"

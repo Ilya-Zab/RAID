@@ -16,7 +16,7 @@ const Ready = () => {
                 alt=''
                 width={isMobile ? 280 : 857}
                 height={isMobile ? 388 : 3114}
-                className={`tr-par ${styles["ready__img"]}`}
+                className={`${styles["ready__img"]}`}
             />
             <div className="container">
                 <h2 className={styles["ready__title"]}>
