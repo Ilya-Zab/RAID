@@ -51,12 +51,12 @@
         justify-content: center;
         border-radius: 50%;
         cursor: pointer;
-        transition: 0.1s ease;
+        transition: 0.2s ease;
 
         &:focus-visible,
         &:hover {
-            width: 70px;
-            height: 70px;
+            width: 100px;
+            height: 100px;
         }
     }
 
