@@ -10,20 +10,20 @@ import ModalFindId from "@/Components/ModalFindId/ModalFindId";
 import ModalPrivacyNotice from "@/Components/ModalPrivacyNotice/ModalPrivacyNotice";
 import ModalRules from "@/Components/ModalRules/ModalRules";
 import ModalAboutUs from "../ModalAboutUs/ModalAboutUs";
+import ParallaxEffect from "../ParallaxEffect";
 
-interface LayoutProps
-{
+interface LayoutProps {
     children?: ReactNode;
 }
 
-const Layout: FC<LayoutProps> = ({ children }) =>
-{
+const Layout: FC<LayoutProps> = ({ children }) => {
     // @ts-ignore
     const { isOpenGifts, isOpenFindId, ModalAboutUs } = useSelector((state) => state.modal);
     const isMobile = useMediaQuery('(max-width: 768px)');
 
     return (
         <>
+            <ParallaxEffect />
             {!isMobile ? <Header /> : <MobileHeader />}
             <SingleCreativePopup />
             {children}

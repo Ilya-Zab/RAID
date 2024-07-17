@@ -2,60 +2,23 @@ import * as React from 'react';
 import styles from './styles.module.scss';
 import Link from "next/link";
 import { Box } from '@mui/material';
-import Image from 'next/image'
-import { useEffect, useRef, useState, useTransition } from "react";
+import Image from 'next/image';
 import { useMediaQuery } from "@mui/material";
 
 const Hero = () => {
-    const beforeRef = useRef(null);
-    const [computedBottom, setComputedBottom] = useState('');
-    const headerHeight = 0.00234131;
-    const coefficient = 0.20934;
-    const [isPending, startTransition] = useTransition();
     const isMobile = useMediaQuery('(max-width: 768px)');
-
-    const defaultBottom = React.useMemo(() => isMobile ? 0 : -100, [isMobile]);
-
-    let ticking = false;
-
-    const handleScroll = () => {
-        if (!ticking) {
-            window.requestAnimationFrame(() => {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-                let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
-                distanceFromHeader = parseFloat((distanceFromHeader * coefficient).toFixed(8));
-
-                startTransition(() => {
-                    setComputedBottom(`${defaultBottom - distanceFromHeader}px`);
-                });
-                ticking = false;
-            });
-
-            ticking = true;
-        }
-    };
-
-    useEffect(() => {
-        handleScroll();
-        window.addEventListener('scroll', handleScroll);
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [isMobile]);
 
     return (
         <Box className={styles.hero}>
             <Box className={`container ${styles.wrapper}`}>
+
                 <Image
-                    ref={beforeRef}
-                    style={{ bottom: computedBottom }}
                     src={!isMobile ? '/images/king.png' : '/images/king_mob.png'}
                     alt='king'
                     width={!isMobile ? 733 : 359}
                     height={!isMobile ? 745 : 559}
-                    className={`${styles.hero__img} tr-par`}
+                    className={`${styles.hero__img} parallax`}
+                    data-speed={!isMobile ? -30 : -10}
                 />
                 <Box>
                     <Box className={styles.hero__title_wrapper}>
