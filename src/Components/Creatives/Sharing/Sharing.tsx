@@ -30,7 +30,7 @@ const Sharing = ({ title, text, creativeId }) => {
 
                 <div className={styles['sharing__button']}>
                     <TwitterShareButton
-                        url={`${domain}/preview?creative=${creativeId}`}
+                        url={`${domain}?creative=${creativeId}`}
                         aria-label="share via twitter"
                     >
                         <Image width={40} height={40} alt="x" src={'/images/sharing-x.svg'} />
@@ -38,7 +38,7 @@ const Sharing = ({ title, text, creativeId }) => {
                 </div>
                 <div className={styles['sharing__button']}>
                     <FacebookShareButton
-                        url={`${domain}/preview?creative=${creativeId}`}
+                        url={`${domain}?creative=${creativeId}`}
                         aria-label="share via facebook"
                     >
                         <Image width={40} height={40} alt="x" src={'/images/sharing-fb.svg'} />
