@@ -20,7 +20,7 @@ import { frameType } from "@/types/slices/creativeSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import CheckVideo from "./CheckVideo";
-import { compressVideo } from "@/utils/compressVideoBlob";
+import axios from "axios";
 
 const CreateVideo = () =>
 {
@@ -38,9 +38,9 @@ const CreateVideo = () =>
     const dispatch = useAppDispatch();
     const isCreating = useAppSelector(state => state.creative.isLoading);
     const uploadedVideo = useSelector((state: RootState) => state.video.video);
-    // BY
-    // UA
-    // RU
+
+    const [taskId, setTaskId] = useState(null);
+
     useEffect(() =>
     {
         if (!raidId && !cookies.userToken)
@@ -90,54 +90,107 @@ const CreateVideo = () =>
     {
         if (uploadedVideo)
         {
-            uploadVideo();
+            if (uploadedVideo instanceof Blob)
+            {
+                minimizeVideo(uploadedVideo);
+                return;
+            }
+            uploadVideo(uploadedVideo);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [uploadedVideo]);
 
-    // if (uploadedVideo.type === 'image/png' || uploadedVideo.type === 'image/jpeg' || uploadedVideo.type === 'image/gif')
-    async function uploadVideo()
+    async function minimizeVideo(video)
     {
-        console.log("start");
-        const oo = await compressVideo(uploadedVideo);
-        console.log(oo);
-        console.log("finish");
-        // const blob = await new Blob([uploadedVideo], { type: uploadedVideo.type });
-        // console.log(blob);
-        // await setVideoUrl(uploadedVideo.path);
-        // await setVideoUrl(URL.createObjectURL(uploadVideo));
-        // const compressedVideo = await compressVideo(uploadedVideo.path);
-        // setVideo(compressedVideo);
-        // await setVideoUrl(URL.createObjectURL(compressedVideo));
-        // const frames = await extractAllFrames(compressedVideo);
-        setPrevStep(0);
-        setStep(3);
-        dispatch(setLoading(false));
-        // if (frames.length > 0)
-        // {
-        //     setAllFrames(frames);
-        //     setPrevStep(0);
-        //     setStep(3);
-        //     dispatch(setLoading(false));
-        // } else
-        // {
-        //     dispatch(setLoading(false));
-        // }
+        const data = new FormData();
+        data.append("video", video);
+
+        try
+        {
+            const resp = await axios.post("https://wefinallyplayedit.com/api/minimizer", data);
+            setTaskId(resp.data.data.taskId);
+        } catch (err)
+        {
+            dispatch(setLoading(false));
+            alert('Creative is too big');
+            console.error(err);
+        }
     }
 
-    async function handleFramesReady()
+    async function checkIsTaskCompleted(taskId, clearIntervalFn)
     {
+        try
+        {
+            const res = await axios.get(`https://wefinallyplayedit.com/api/minimizer/${taskId}`);
+            if (res.data.data.task.status === 'completed')
+            {
+                clearIntervalFn();
+                downloadVideoById(taskId);
+            }
+        } catch (error)
+        {
+            dispatch(setLoading(false));
+            alert('Server error');
+            console.error('Ошибка:', error);
+        }
+    }
 
+    useEffect(() =>
+    {
+        if (taskId)
+        {
+            const intervalId = setInterval(() =>
+            {
+                checkIsTaskCompleted(taskId, () => clearInterval(intervalId));
+            }, 2000);
+
+            return () => clearInterval(intervalId);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [taskId]);
+
+    async function downloadVideoById(taskId)
+    {
+        try
+        {
+            const res = await axios.get(`https://wefinallyplayedit.com/api/minimizer/${taskId}/download`,
+                { responseType: 'blob' });
+            if (res)
+            {
+                uploadVideo(res.data);
+            }
+        } catch (error)
+        {
+            console.error('Ошибка:', error);
+        }
+    }
+
+    async function uploadVideo(video: Blob)
+    {
+        await setVideoUrl(URL.createObjectURL(video));
+        setVideo(video);
+        const frames = await extractAllFrames(video);
+        setPrevStep(0);
+        setStep(3);
+        if (frames.length > 0)
+        {
+            setAllFrames(frames);
+            setPrevStep(0);
+            setStep(3);
+            dispatch(setLoading(false));
+        } else
+        {
+            dispatch(setLoading(false));
+        }
     }
 
     async function handleVideoReady(video: Blob)
     {
         dispatch(setLoading(true));
-        const compressedVideo = await compressVideo(video);
-        setVideo(compressedVideo);
-        setVideoUrl(URL.createObjectURL(compressedVideo));
-        const frames = await extractAllFrames(compressedVideo);
-        if (frames.length > 0 && compressedVideo)
+        setVideo(video);
+        setVideoUrl(URL.createObjectURL(video));
+        const frames = await extractAllFrames(video);
+        if (frames.length > 0 && video)
         {
             setAllFrames(frames);
             nextStep();
@@ -224,8 +277,7 @@ const CreateVideo = () =>
                                     onClick={() => nextStep()}
                                     disabled={isCreating}
                                 >
-                                    {/* {allFrames.length > 0 ? "Next" : "Wait.."} */}
-                                    Next
+                                    {isCreating ? "Wait.." : "Next"}
                                 </Button>
                             }
                         </Box>
