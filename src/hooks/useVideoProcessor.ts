@@ -3,9 +3,9 @@ import { fetchFile, toBlobURL } from "@ffmpeg/util";
 import { useEffect, useRef, useState } from "react";
 
 export type UseVideoProcessorResult = {
-    mergeVideoAndAudio: (video: Blob, audio: Blob) => Promise<void>, 
-    isLoaded: boolean, 
-    messages: string[], 
+    mergeVideoAndAudio: (video: Blob, audio: Blob) => Promise<void>,
+    isLoaded: boolean,
+    messages: string[],
     output: Blob | null
 };
 
@@ -16,8 +16,10 @@ export default function useVideoProcessor(): UseVideoProcessorResult
     const [output, setOutput] = useState<Blob | null>(null);
     const ffmpegRef = useRef<FFmpeg | null>(null);
 
-    useEffect(() => {
-        const load = async () => {
+    useEffect(() =>
+    {
+        const load = async () =>
+        {
             ffmpegRef.current?.on("log", msg => setMessages(msgs => [...msgs, `${msg.type} - ${msg.message}`]));
             const baseUrl = "/lib/ffmpeg-core";
             await ffmpegRef.current?.load({
@@ -31,7 +33,8 @@ export default function useVideoProcessor(): UseVideoProcessorResult
         load();
     }, []);
 
-    async function mergeVideoAndAudio(video: Blob, audio: Blob): Promise<void> {
+    async function mergeVideoAndAudio(video: Blob, audio: Blob): Promise<void>
+    {
         if (!video || !audio) return;
 
         const videoName = "video.mp4";
