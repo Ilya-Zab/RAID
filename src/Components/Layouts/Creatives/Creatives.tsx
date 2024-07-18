@@ -78,7 +78,7 @@ const Creatives = ({ children }) => {
         <div className={styles["creatives-section"]}>
             <div
                 className={`parallax ${styles["creatives-section__imgWrapper"]}`}
-                data-speed={-30}
+                data-speed={!isMobile ? -30 : 5}
             >
                 {children}
             </div>
