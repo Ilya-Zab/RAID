@@ -63,7 +63,7 @@ const SingleCreative: FC<SingleCreativePropsType> = ({ creativeId }) => {
 
     const handleVote = (creativeId) => {
         if (userState.votesAvailable <= 0) {
-            alert("You do not have an any vote available!");
+            alert("You have exceeded your votes limit.");
             return false;
         }
 
