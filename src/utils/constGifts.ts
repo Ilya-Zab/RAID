@@ -99,27 +99,13 @@ export const rare = [
         quantity: '5',
     },
     {
-<<<<<<< HEAD
         img: '/images/logo.png',
-=======
-        img: '/images/gifts/VOGOTH.png',
->>>>>>> 6b4f171686482b51c59f6f51054f9ef97035d35c
         name: 'Vogoth',
         subText: '',
         quantity: '15',
     },
     {
-<<<<<<< HEAD
         img: '/images/logo.png',
-=======
-        img: '/images/gifts/HIGH-KHATUN.png',
-        name: 'High Khatun',
-        subText: '',
-        quantity: '15',
-    },
-    {
-        img: '/images/gifts/WARDEN.png',
->>>>>>> 6b4f171686482b51c59f6f51054f9ef97035d35c
         name: 'Warden',
         subText: '',
         quantity: '15',

@@ -7,21 +7,18 @@ import SingleCreativePopup from "../Popups/SingleCreativePopup";
 import GiftList from "@/Components/GiftList/GiftList";
 import { useSelector } from "react-redux";
 import ModalFindId from "@/Components/ModalFindId/ModalFindId";
-<<<<<<< HEAD
-=======
-import ModalPrivacyNotice from "@/Components/ModalPrivacyNotice/ModalPrivacyNotice";
-import ModalRules from "@/Components/ModalRules/ModalRules";
-import ModalAboutUs from "../ModalAboutUs/ModalAboutUs";
 import ParallaxEffect from "../ParallaxEffect";
->>>>>>> 6b4f171686482b51c59f6f51054f9ef97035d35c
+import ModalAbout from "../ModalAbout/ModalAbout";
 
-interface LayoutProps {
+interface LayoutProps
+{
     children?: ReactNode;
 }
 
-const Layout: FC<LayoutProps> = ({ children }) => {
+const Layout: FC<LayoutProps> = ({ children }) =>
+{
     // @ts-ignore
-    const { isOpenGifts, isOpenFindId, ModalAboutUs } = useSelector((state) => state.modal);
+    const { isOpenGifts, isOpenFindId, isModalUs } = useSelector((state) => state.modal);
     const isMobile = useMediaQuery('(max-width: 768px)');
 
     return (
@@ -33,7 +30,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
             <Footer />
             {isOpenGifts && <GiftList />}
             {isOpenFindId && <ModalFindId />}
-            {ModalAboutUs && <ModalAboutUs />}
+            {isModalUs && <ModalAbout />}
         </>
     )
 }

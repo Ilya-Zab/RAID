@@ -22,7 +22,7 @@ const Navigation: FC<wpMenuProps> = ({ correctStyle, data }) =>
     const dispatch = useDispatch();
     const handleOpenGist = () => dispatch(openModal({ modalName: 'isOpenGifts' }));
     const handleOpenFindId = () => dispatch(openModal({ modalName: 'isOpenFindId' }));
-    const handleOpenAboutUs = () => dispatch(openModal({ modalName: 'ModalAboutUs' }));
+    const handleOpenAboutUs = () => dispatch(openModal({ modalName: 'isModalUs' }));
 
     const handlerClick = () =>
     {
@@ -52,9 +52,12 @@ const Navigation: FC<wpMenuProps> = ({ correctStyle, data }) =>
                                 </Link>
                             )
                                 : link.title === 'About' ? (
-                                    <Link href={"/"} className={styles.btn} >
+                                    // <Link href={"/"} className={styles.btn} >
+                                    //     {link.title}
+                                    // </Link>
+                                    <button className={styles.btn} onClick={handleOpenAboutUs}>
                                         {link.title}
-                                    </Link>
+                                    </button>
                                     // <button className={styles.btn} onClick={handleOpenAboutUs}>
                                     //     {link.title}
                                     // </button>

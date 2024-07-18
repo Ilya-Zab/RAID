@@ -3,8 +3,7 @@ import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 import Layout from "@/Components/Layout/Layout";
 import { setupStore } from "@/store/store";
-<<<<<<< HEAD
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useCheckUserId } from "@/utils/checkUserIp";
 import { AccessDeniedPage } from "@/Components/Layouts/AccessDeniedPage";
@@ -25,11 +24,6 @@ export function App({ Component, pageProps }: AppProps)
     if (accessDenied)
         return <AccessDeniedPage />
 
-=======
-const store = setupStore();
-
-export function App({ Component, pageProps }: AppProps) {
->>>>>>> 6b4f171686482b51c59f6f51054f9ef97035d35c
     return (
         <Provider store={store}>
             <Layout>
