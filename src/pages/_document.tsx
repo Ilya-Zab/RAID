@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Html, Head, Main, NextScript } from "next/document";
 import Script from "next/script";
 
@@ -9,13 +8,13 @@ export default function Document()
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="wefinallyplayedit" />
-        <meta property="og:image" content="/public/images/sharing-preview.jpg" />
+        <meta property="og:image" content="/public/images/prev-sharing.png" />
         {/* Facebook */}
-        <meta property="og:image" content="/public/images/sharing-preview.jpg" />
+        <meta property="og:image" content="/public/images/prev-sharing.png" />
         <meta property="og:title" content="wefinallyplayedit" />
         <meta property="og:description" content="wefinallyplayedit" />
         {/* Twitter */}
-        <meta name="twitter:image" content="/public/images/sharing-preview.jpg" />
+        <meta name="twitter:image" content="/public/images/prev-sharing.png" />
         <meta name="twitter:title" content="wefinallyplayedit" />
         <meta name="twitter:description" content="wefinallyplayedit" />
         <Script id="google-tag-manager" strategy="afterInteractive">

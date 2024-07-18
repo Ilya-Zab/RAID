@@ -3,16 +3,13 @@ import styles from "./styles.module.scss";
 import { Box, Typography } from "@mui/material";
 import Head from "next/head";
 
-const Rules = () =>
-{
-    const pageTitle = 'Privacy notice';
+const Rules = () => {
     return (
         <>
             <Head>
-                <title>{pageTitle}</title>
-                <meta name="description" content={`This is ${pageTitle}`} />
+                <title>Rules</title>
             </Head>
-            <Box className={`${styles["rules-page"]} bg-gallery`}>
+            <Box className={styles["rules-page"]}>
                 <Box className={styles.container}>
                     <Typography variant="h2" className={styles.h2}>
                         Raid: Shadow Legends “I Finally Played It Promotion”
@@ -390,9 +387,6 @@ const Rules = () =>
                                             <Typography variant={'body2'} className={styles.text}>
                                                 -Any pieces of content that breach the current legislation.
                                             </Typography>
-                                            <Typography variant={'body2'} className={styles.text}>
-                                                -Any content which is not relevant to the topic of the current event.
-                                            </Typography>
                                         </li>
                                     </ul>
                                 </li>
@@ -494,7 +488,17 @@ const Rules = () =>
                             </tr>
                             <tr className={styles.tr}>
                                 <td className={styles.td}></td>
+                                <td className={styles.td}>Valkyrie</td>
+                                <td className={styles.td}>5</td>
+                            </tr>
+                            <tr className={styles.tr}>
+                                <td className={styles.td}></td>
                                 <td className={styles.td}>Vogoth</td>
+                                <td className={styles.td}>15</td>
+                            </tr>
+                            <tr className={styles.tr}>
+                                <td className={styles.td}></td>
+                                <td className={styles.td}>High Khatun</td>
                                 <td className={styles.td}>15</td>
                             </tr>
                             <tr className={styles.tr}>

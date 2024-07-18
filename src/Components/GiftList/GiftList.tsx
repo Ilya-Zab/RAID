@@ -67,7 +67,7 @@ const GiftList = () =>
                             Total
                         </Typography>
                         <Typography className={styles.list__title} variant="h3">
-                            3842
+                            3862
                         </Typography>
                     </Box>
                 </Box>
