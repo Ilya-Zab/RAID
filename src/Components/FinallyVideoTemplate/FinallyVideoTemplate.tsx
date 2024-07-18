@@ -63,7 +63,7 @@ const FinallyVideoTemplate = ({ video, creativeImage }) =>
 
         if (error)
         {
-            alert('There is a problem with adding creative');
+            alert('There is a problem with creating creative');
             alert(error);
             setCreating(false);
         }

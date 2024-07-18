@@ -22,7 +22,7 @@ const Navigation: FC<wpMenuProps> = ({ correctStyle, data }) =>
     const dispatch = useDispatch();
     const handleOpenGist = () => dispatch(openModal({ modalName: 'isOpenGifts' }));
     const handleOpenFindId = () => dispatch(openModal({ modalName: 'isOpenFindId' }));
-    const handleOpenAboutUs = () => dispatch(openModal({ modalName: 'isModalUs' }));
+    const handleOpenAboutUs = () => dispatch(openModal({ modalName: 'ModalAboutUs' }));
 
     const handlerClick = () =>
     {
@@ -52,12 +52,9 @@ const Navigation: FC<wpMenuProps> = ({ correctStyle, data }) =>
                                 </Link>
                             )
                                 : link.title === 'About' ? (
-                                    // <Link href={"/"} className={styles.btn} >
-                                    //     {link.title}
-                                    // </Link>
-                                    <button className={styles.btn} onClick={handleOpenAboutUs}>
+                                    <Link href={"/"} className={styles.btn} >
                                         {link.title}
-                                    </button>
+                                    </Link>
                                     // <button className={styles.btn} onClick={handleOpenAboutUs}>
                                     //     {link.title}
                                     // </button>
@@ -70,17 +67,10 @@ const Navigation: FC<wpMenuProps> = ({ correctStyle, data }) =>
                                             {
                                                 open &&
                                                 <Box className={styles.dropDown__list}>
-                                                    <Link
-                                                        onClick={handlerClick}
-                                                        className={'desc nav-link link'}
+                                                    <Link className={'desc nav-link link'}
                                                         href="https://www.instagram.com/ar/8650758814950981"
                                                         target={'_blank'}>Mask</Link>
-                                                    <a
-                                                        onClick={handlerClick}
-                                                        href="/audio/AR_CONTRAST_sad_piano_Break_v04.1.mp3"
-                                                        download
-                                                        className="desc nav-link link">
-                                                        Sound</a>
+                                                    <a href="/audio/AR_CONTRAST_sad_piano_Break_v04.1.mp3" download className="desc nav-link link">Sound</a>
                                                 </Box>
                                             }
                                         </Box>

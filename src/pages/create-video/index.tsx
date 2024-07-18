@@ -20,7 +20,6 @@ import { frameType } from "@/types/slices/creativeSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import CheckVideo from "./CheckVideo";
-import { compressVideo } from "@/utils/compressVideoBlob";
 
 const CreateVideo = () =>
 {
@@ -38,9 +37,7 @@ const CreateVideo = () =>
     const dispatch = useAppDispatch();
     const isCreating = useAppSelector(state => state.creative.isLoading);
     const uploadedVideo = useSelector((state: RootState) => state.video.video);
-    // BY
-    // UA
-    // RU
+
     useEffect(() =>
     {
         if (!raidId && !cookies.userToken)
@@ -98,46 +95,29 @@ const CreateVideo = () =>
     // if (uploadedVideo.type === 'image/png' || uploadedVideo.type === 'image/jpeg' || uploadedVideo.type === 'image/gif')
     async function uploadVideo()
     {
-        console.log("start");
-        const oo = await compressVideo(uploadedVideo);
-        console.log(oo);
-        console.log("finish");
-        // const blob = await new Blob([uploadedVideo], { type: uploadedVideo.type });
-        // console.log(blob);
-        // await setVideoUrl(uploadedVideo.path);
-        // await setVideoUrl(URL.createObjectURL(uploadVideo));
-        // const compressedVideo = await compressVideo(uploadedVideo.path);
-        // setVideo(compressedVideo);
-        // await setVideoUrl(URL.createObjectURL(compressedVideo));
-        // const frames = await extractAllFrames(compressedVideo);
-        setPrevStep(0);
-        setStep(3);
-        dispatch(setLoading(false));
-        // if (frames.length > 0)
-        // {
-        //     setAllFrames(frames);
-        //     setPrevStep(0);
-        //     setStep(3);
-        //     dispatch(setLoading(false));
-        // } else
-        // {
-        //     dispatch(setLoading(false));
-        // }
-    }
-
-    async function handleFramesReady()
-    {
-
+        const blob = await new Blob([uploadedVideo], { type: uploadedVideo.type });
+        setVideo(blob);
+        const frames = await extractAllFrames(blob);
+        await setVideoUrl(URL.createObjectURL(blob));
+        if (frames.length > 0)
+        {
+            setAllFrames(frames);
+            setPrevStep(0);
+            setStep(3);
+            dispatch(setLoading(false));
+        } else
+        {
+            dispatch(setLoading(false));
+        }
     }
 
     async function handleVideoReady(video: Blob)
     {
         dispatch(setLoading(true));
-        const compressedVideo = await compressVideo(video);
-        setVideo(compressedVideo);
-        setVideoUrl(URL.createObjectURL(compressedVideo));
-        const frames = await extractAllFrames(compressedVideo);
-        if (frames.length > 0 && compressedVideo)
+        setVideo(video);
+        setVideoUrl(URL.createObjectURL(video));
+        const frames = await extractAllFrames(video);
+        if (frames.length > 0 && video)
         {
             setAllFrames(frames);
             nextStep();
@@ -161,7 +141,7 @@ const CreateVideo = () =>
             case 3:
                 return <CheckVideo videoUrl={videoUrl} onDownload={onDownloadClick} prevStep={previousStep} />;
             case 4:
-                return <CreativeSwiper data={allFrames && allFrames} nextStep={nextStep} getCurrentFrame={getCurrentFrame} />;
+                return <CreativeSwiper data={allFrames} nextStep={nextStep} getCurrentFrame={getCurrentFrame} />;
             case 5:
                 return <CreativeName nextStep={nextStep} creativeImage={currentBlobFrame} />;
             case 6:
@@ -224,8 +204,7 @@ const CreateVideo = () =>
                                     onClick={() => nextStep()}
                                     disabled={isCreating}
                                 >
-                                    {/* {allFrames.length > 0 ? "Next" : "Wait.."} */}
-                                    Next
+                                    {allFrames.length > 0 ? "Next" : "Wait.."}
                                 </Button>
                             }
                         </Box>

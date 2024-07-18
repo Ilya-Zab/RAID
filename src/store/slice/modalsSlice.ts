@@ -6,14 +6,14 @@ interface modalSlice
     isOpenFindId: boolean;
     isOpenPrivacyNotice: boolean;
     isOpenRules: boolean;
-    isModalUs: boolean;
+    ModalAboutUs: boolean;
 }
 const initialState: modalSlice = {
     isOpenGifts: false,
     isOpenFindId: false,
     isOpenPrivacyNotice: false,
     isOpenRules: false,
-    isModalUs: false,
+    ModalAboutUs: false,
 }
 const modalSlice = createSlice({
     name: 'modal',
