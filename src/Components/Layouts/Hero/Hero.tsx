@@ -5,7 +5,8 @@ import { Box } from '@mui/material';
 import Image from 'next/image';
 import { useMediaQuery } from "@mui/material";
 
-const Hero = () => {
+const Hero = () =>
+{
     const isMobile = useMediaQuery('(max-width: 768px)');
 
     return (
@@ -23,11 +24,7 @@ const Hero = () => {
                 <Box>
                     <Box className={styles.hero__title_wrapper}>
                         <h1 className={styles.hero__title}>
-                            IT&apos;LL NEVER BE THE<br />
-                            SAME ONCE YOU<br />
-                            <span className='text-gradient'>PLAY RAID</span>. SHOW HOW<br />
-                            YOU DO IT AND<span className='text-gradient'> WIN </span><br />
-                            EXICTING <span className='text-gradient'> PRIZES</span>!
+                            IT&apos;LL NEVER BE THE SAME ONCE YOU <span className='text-gradient'>PLAY RAID</span>. SHOW HOW YOU DO IT AND<span className='text-gradient'> WIN </span> EXICTING <span className='text-gradient'> PRIZES</span>!
                         </h1>
                     </Box>
                     <Box className={styles.hero__steps_wrapper}>
