@@ -5,8 +5,7 @@ import { Box } from '@mui/material';
 import Image from 'next/image';
 import { useMediaQuery } from "@mui/material";
 
-const Hero = () =>
-{
+const Hero = () => {
     const isMobile = useMediaQuery('(max-width: 768px)');
 
     return (
