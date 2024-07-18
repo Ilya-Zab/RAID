@@ -92,10 +92,10 @@ const CreateVideo = () =>
         {
             if (uploadedVideo instanceof Blob)
             {
-                minimizeVideo(uploadedVideo);
+                uploadVideo(uploadedVideo);
                 return;
             }
-            uploadVideo(uploadedVideo);
+            minimizeVideo(uploadedVideo);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [uploadedVideo]);
