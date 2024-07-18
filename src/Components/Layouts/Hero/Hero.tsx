@@ -6,7 +6,8 @@ import Image from 'next/image'
 import { useEffect, useRef, useState, useTransition } from "react";
 import { useMediaQuery } from "@mui/material";
 
-const Hero = () => {
+const Hero = () =>
+{
     const beforeRef = useRef(null);
     const [computedBottom, setComputedBottom] = useState('');
     const headerHeight = 0.00234131;
@@ -18,15 +19,19 @@ const Hero = () => {
 
     let ticking = false;
 
-    const handleScroll = () => {
-        if (!ticking) {
-            window.requestAnimationFrame(() => {
+    const handleScroll = () =>
+    {
+        if (!ticking)
+        {
+            window.requestAnimationFrame(() =>
+            {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
                 let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
                 distanceFromHeader = parseFloat((distanceFromHeader * coefficient).toFixed(8));
 
-                startTransition(() => {
+                startTransition(() =>
+                {
                     setComputedBottom(`${defaultBottom - distanceFromHeader}px`);
                 });
                 ticking = false;
@@ -36,11 +41,13 @@ const Hero = () => {
         }
     };
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         handleScroll();
         window.addEventListener('scroll', handleScroll);
 
-        return () => {
+        return () =>
+        {
             window.removeEventListener('scroll', handleScroll);
         };
     }, [isMobile]);
@@ -60,11 +67,7 @@ const Hero = () => {
                 <Box>
                     <Box className={styles.hero__title_wrapper}>
                         <h1 className={styles.hero__title}>
-                            IT&apos;LL NEVER BE THE<br />
-                            SAME ONCE YOU<br />
-                            <span className='text-gradient'>PLAY RAID</span>. SHOW HOW<br />
-                            YOU DO IT AND<span className='text-gradient'> WIN </span><br />
-                            EXICTING <span className='text-gradient'> PRIZES</span>!
+                            IT&apos;LL NEVER BE THE SAME ONCE YOU <span className='text-gradient'>PLAY RAID</span>. SHOW HOW YOU DO IT AND<span className='text-gradient'> WIN </span> EXICTING <span className='text-gradient'> PRIZES</span>!
                         </h1>
                     </Box>
                     <Box className={styles.hero__steps_wrapper}>

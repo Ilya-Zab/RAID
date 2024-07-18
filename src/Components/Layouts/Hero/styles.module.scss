@@ -38,12 +38,17 @@
 	}
 
 	&__title {
+		margin: 0;
+		max-width: 62%;
 		font-weight: 700;
 		font-size: clamp(16px, 9vw, 62px);
 		line-height: 99%;
 		text-transform: uppercase;
 		color: $white;
-		margin: 0;
+
+		@media screen and (max-width: 900px) {
+			max-width: 87%;
+		}
 
 		&_wrapper {
 			margin-bottom: 20px;

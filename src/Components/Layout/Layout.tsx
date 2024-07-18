@@ -7,9 +7,6 @@ import SingleCreativePopup from "../Popups/SingleCreativePopup";
 import GiftList from "@/Components/GiftList/GiftList";
 import { useSelector } from "react-redux";
 import ModalFindId from "@/Components/ModalFindId/ModalFindId";
-import ModalPrivacyNotice from "@/Components/ModalPrivacyNotice/ModalPrivacyNotice";
-import ModalRules from "@/Components/ModalRules/ModalRules";
-import ModalAboutUs from "../ModalAboutUs/ModalAboutUs";
 
 interface LayoutProps
 {

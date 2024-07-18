@@ -100,19 +100,7 @@ export const rare = [
     },
     {
         img: '/images/logo.png',
-        name: 'Valkyrie',
-        subText: '',
-        quantity: '5',
-    },
-    {
-        img: '/images/logo.png',
         name: 'Vogoth',
-        subText: '',
-        quantity: '15',
-    },
-    {
-        img: '/images/logo.png',
-        name: 'High Khatun',
         subText: '',
         quantity: '15',
     },

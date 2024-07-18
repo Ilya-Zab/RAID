@@ -67,10 +67,17 @@ const Navigation: FC<wpMenuProps> = ({ correctStyle, data }) =>
                                             {
                                                 open &&
                                                 <Box className={styles.dropDown__list}>
-                                                    <Link className={'desc nav-link link'}
+                                                    <Link
+                                                        onClick={handlerClick}
+                                                        className={'desc nav-link link'}
                                                         href="https://www.instagram.com/ar/8650758814950981"
                                                         target={'_blank'}>Mask</Link>
-                                                    <a href="/audio/AR_CONTRAST_sad_piano_Break_v04.1.mp3" download className="desc nav-link link">Sound</a>
+                                                    <a
+                                                        onClick={handlerClick}
+                                                        href="/audio/AR_CONTRAST_sad_piano_Break_v04.1.mp3"
+                                                        download
+                                                        className="desc nav-link link">
+                                                        Sound</a>
                                                 </Box>
                                             }
                                         </Box>
