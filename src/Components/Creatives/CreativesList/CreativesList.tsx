@@ -33,6 +33,10 @@ const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes 
     const creatives = orderByVotes ? creativesByVotes : creativesByDate;
 
     useEffect(() => {
+        setCreativesPerPage(perPage);
+    }, [perPage]);
+
+    useEffect(() => {
         if (userToken) {
             fetchUserData(userToken);
         }
@@ -59,7 +63,7 @@ const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes 
 
     const handleVote = (creativeId) => {
         if (userState.votesAvailable <= 0) {
-            alert("You do not have an any vote available!");
+            alert("You have exceeded your votes limit.");
             return false;
         }
 

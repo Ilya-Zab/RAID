@@ -81,55 +81,69 @@ export const packages = [
 
 export const rare = [
     {
-        img: '/images/logo.png',
+        img: '/images/gifts/MINAYA.png',
         name: 'Minaya',
         subText: '',
         quantity: '5',
     },
     {
-        img: '/images/logo.png',
+        img: '/images/gifts/ASTRALON.png',
         name: 'Astralon',
         subText: '',
         quantity: '5',
     },
     {
-        img: '/images/logo.png',
+        img: '/images/gifts/NETHRIL.png',
         name: 'Nethril',
         subText: '',
         quantity: '5',
     },
     {
+<<<<<<< HEAD
         img: '/images/logo.png',
+=======
+        img: '/images/gifts/VOGOTH.png',
+>>>>>>> 6b4f171686482b51c59f6f51054f9ef97035d35c
         name: 'Vogoth',
         subText: '',
         quantity: '15',
     },
     {
+<<<<<<< HEAD
         img: '/images/logo.png',
+=======
+        img: '/images/gifts/HIGH-KHATUN.png',
+        name: 'High Khatun',
+        subText: '',
+        quantity: '15',
+    },
+    {
+        img: '/images/gifts/WARDEN.png',
+>>>>>>> 6b4f171686482b51c59f6f51054f9ef97035d35c
         name: 'Warden',
         subText: '',
         quantity: '15',
     },
     {
-        img: '/images/logo.png',
+        img: '/images/gifts/WUJI.png',
         name: 'Wuji',
         subText: '',
         quantity: '15',
     },
     {
-        img: '/images/logo.png',
+        img: '/images/gifts/COLWYN.png',
         name: 'Colwyn',
         subText: '',
         quantity: '20',
     },
     {
-        img: '/images/logo.png',
+        img: '/images/gifts/HUNTRESS.png',
         name: 'Huntress',
         subText: '',
         quantity: '20',
     },
     {
-        img: '/images/logo.png',
+        img: '/images/gifts/CANDLEGUARD.png',
         name: 'Candleguard',
         subText: '',
         quantity: '20',

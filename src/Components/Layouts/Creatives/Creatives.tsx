@@ -17,10 +17,6 @@ const Creatives = ({ children }) => {
     const userState = useAppSelector(state => state.user);
     const dispatch = useAppDispatch();
     const router = useRouter();
-    const [isPending, startTransition] = useTransition();
-    const [computedTop, setComputedTop] = useState('');
-    const headerHeight = 0.00234131;
-    const coefficient = 0.20934;
     const isMobile = useMediaQuery('(max-width: 800px)');
     const [fetchUserData, { data: userData }] = useLazyFetchUserDataQuery();
     const [updateVoteVideo, { data: justVotedVideo }] = useFetchUpdateVoteVideoMutation();
@@ -56,38 +52,13 @@ const Creatives = ({ children }) => {
         }
     }, [userData, userState.votesCreatives, justVotedVideo, justUnvotedVideo]);
 
-
-
-    const defaultTop = React.useMemo(() => isMobile ? -101 : -333, [isMobile]);
-
-    let ticking = false;
-
-    const handleScroll = () => {
-        if (!ticking) {
-            window.requestAnimationFrame(() => {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-                let distanceFromHeader = Math.max(scrollTop - headerHeight, 0);
-                distanceFromHeader = parseFloat((distanceFromHeader * coefficient).toFixed(8));
-
-                startTransition(() => {
-                    setComputedTop(`${defaultTop + distanceFromHeader}px`);
-                })
-
-                ticking = false;
-            });
-
-            ticking = true;
-        }
-    };
-
     const checkUserHasVoted = (creativeId: number): boolean => {
         return Boolean(userState.votesCreatives.includes(String(creativeId)));
     }
 
     const handleVote = (creativeId) => {
         if (userState.votesAvailable <= 0) {
-            alert("You do not have an any vote available!");
+            alert("You have exceeded your votes limit.");
             return false;
         }
 
@@ -103,20 +74,12 @@ const Creatives = ({ children }) => {
 
     }
 
-    useEffect(() => {
-        handleScroll();
-        window.addEventListener('scroll', handleScroll);
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [isMobile]);
-
-
-
     return (
         <div className={styles["creatives-section"]}>
-            <div className={`tr-par ${styles["creatives-section__imgWrapper"]}`} style={{ top: computedTop }}>
+            <div
+                className={`parallax ${styles["creatives-section__imgWrapper"]}`}
+                data-speed={-30}
+            >
                 {children}
             </div>
             <div className={styles["creatives-section__block"]}>

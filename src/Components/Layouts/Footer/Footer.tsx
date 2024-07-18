@@ -10,8 +10,8 @@ const data = [
         title: 'About',
         url: 'link1111',
     }, {
-        title: 'Contact',
-        url: 'link1111',
+        title: 'Email Us',
+        url: 'mailto:support@wefinallyplayedit.com',
     }, {
         title: 'Privacy Notice',
         url: '',

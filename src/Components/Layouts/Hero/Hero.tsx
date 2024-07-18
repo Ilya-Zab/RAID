@@ -2,10 +2,10 @@ import * as React from 'react';
 import styles from './styles.module.scss';
 import Link from "next/link";
 import { Box } from '@mui/material';
-import Image from 'next/image'
-import { useEffect, useRef, useState, useTransition } from "react";
+import Image from 'next/image';
 import { useMediaQuery } from "@mui/material";
 
+<<<<<<< HEAD
 const Hero = () =>
 {
     const beforeRef = useRef(null);
@@ -52,17 +52,22 @@ const Hero = () =>
         };
     }, [isMobile]);
 
+=======
+const Hero = () => {
+    const isMobile = useMediaQuery('(max-width: 768px)');
+
+>>>>>>> 6b4f171686482b51c59f6f51054f9ef97035d35c
     return (
         <Box className={styles.hero}>
             <Box className={`container ${styles.wrapper}`}>
+
                 <Image
-                    ref={beforeRef}
-                    style={{ bottom: computedBottom }}
                     src={!isMobile ? '/images/king.png' : '/images/king_mob.png'}
                     alt='king'
                     width={!isMobile ? 733 : 359}
                     height={!isMobile ? 745 : 559}
-                    className={`${styles.hero__img} tr-par`}
+                    className={`${styles.hero__img} parallax`}
+                    data-speed={!isMobile ? -30 : -10}
                 />
                 <Box>
                     <Box className={styles.hero__title_wrapper}>

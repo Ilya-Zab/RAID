@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import styles from "./styles.module.scss";
 import { useFetchCreativeQuery } from "@/store/wordpress/wpRestApi";
 import { CircularProgress } from "@mui/material";
@@ -25,6 +25,18 @@ const SingleCreative: FC<SingleCreativePropsType> = ({ creativeId }) => {
     const [updateVoteVideo, { data: justVotedVideo }] = useFetchUpdateVoteVideoMutation();
     const [fetchUnvoteCreative, { data: justUnvotedVideo }] = useFetchUnvoteCreativeMutation();
     const { data: creativeData, refetch } = useFetchCreativeQuery(creativeId);
+    const [onPause, setPause] = useState(false);
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    console.log(videoRef);
+
+    useEffect(() => {
+        if (onPause) {
+            videoRef.current.pause();
+        } else if (videoRef !== null) {
+            videoRef?.current?.play();
+        }
+    }, [onPause]);
 
     useEffect(() => {
         refetch();
@@ -51,7 +63,7 @@ const SingleCreative: FC<SingleCreativePropsType> = ({ creativeId }) => {
 
     const handleVote = (creativeId) => {
         if (userState.votesAvailable <= 0) {
-            alert("You do not have an any vote available!");
+            alert("You have exceeded your votes limit.");
             return false;
         }
 
@@ -79,18 +91,31 @@ const SingleCreative: FC<SingleCreativePropsType> = ({ creativeId }) => {
                     <>
                         <div className={styles['single-creative__media']}>
                             {creativeData.meta.featured_media_type === 'video' ?
-                                <video
-                                    autoPlay={true}
-                                    loop
-                                    width="100%"
-                                    height="100%"
-                                    className={styles["single-creative__media-video"]}
-                                >
-                                    <source
-                                        src={`${creativeData.meta.featured_media_url && creativeData.meta.featured_media_url}`}
-                                        type="video/mp4"
-                                    />
-                                </video>
+                                <>
+                                    <video
+                                        ref={videoRef}
+                                        autoPlay={true}
+                                        onClick={() => { setPause(true) }}
+                                        playsInline={true}
+                                        loop
+                                        width="100%"
+                                        height="100%"
+                                        className={styles["single-creative__media-video"]}
+                                    >
+                                        <source
+                                            src={`${creativeData.meta.featured_media_url && creativeData.meta.featured_media_url}`}
+                                            type="video/mp4"
+                                        />
+                                    </video>
+                                    {onPause &&
+                                        <button
+                                            className={styles['single-creative__play']}
+                                            onClick={() => { setPause(false) }}
+                                        >
+                                            <Image src={'/images/play.svg'} width={32} height={32} alt="play" />
+                                        </button>
+                                    }
+                                </>
                                 :
                                 <Image
                                     layout="fill"

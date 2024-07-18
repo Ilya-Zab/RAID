@@ -14,21 +14,17 @@ const CreativeNameSchema = z.object({
 
 type CreativeNameProps = z.infer<typeof CreativeNameSchema>;
 
-const CreativeName: FC<CreativeNameProps> = ({ nextStep, creativeImage }) =>
-{
+const CreativeName: FC<CreativeNameProps> = ({ nextStep, creativeImage }) => {
     const [value, setValue] = useState("");
     const dispatch = useAppDispatch();
-    const handlerChange = (e) =>
-    {
-        setValue(e.target.value);
+    const handlerChange = (e) => {
+        setValue(e.target.value.substring(0, 14));
         dispatch(setCreativeName(e.target.value));
     }
 
-    const handleSubmit = (e) =>
-    {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        if (value.trim())
-        {
+        if (value.trim()) {
             nextStep(event);
         }
     };

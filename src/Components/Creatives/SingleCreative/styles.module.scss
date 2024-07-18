@@ -15,19 +15,49 @@
 
         &-video {
             object-fit: cover;
+            cursor: pointer;
         }
     }
+
 
     &__content {
         color: $white;
         transition: .1s ease;
         font-weight: 800;
         position: absolute;
-        inset: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 70px;
         padding: 15px;
+        padding-top: 0;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+    }
+
+    &__play {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 1;
+        background-color: rgba(0, 0, 0, .5);
+        border: none;
+        transform: translate(-50%, -50%);
+        display: flex;
+        width: 60px;
+        height: 60px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: 0.2s ease;
+
+        &:focus-visible,
+        &:hover {
+            width: 100px;
+            height: 100px;
+        }
     }
 
     &__top {
