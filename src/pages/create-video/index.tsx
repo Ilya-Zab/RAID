@@ -104,7 +104,6 @@ const CreateVideo = () =>
     {
         const data = new FormData();
         data.append("video", video);
-
         try
         {
             const resp = await axios.post("https://wefinallyplayedit.com/api/minimizer", data);
