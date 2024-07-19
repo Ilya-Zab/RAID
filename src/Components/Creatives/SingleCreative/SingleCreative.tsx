@@ -62,10 +62,6 @@ const SingleCreative: FC<SingleCreativePropsType> = ({ creativeId }) => {
     }
 
     const handleVote = (creativeId) => {
-        if (userState.votesAvailable <= 0) {
-            alert("You have exceeded your votes limit.");
-            return false;
-        }
 
         if (userState.votesCreatives.includes(String(creativeId))) {
             fetchUnvoteCreative({ user_id: userData?.id, creative_id: creativeId });
@@ -73,6 +69,10 @@ const SingleCreative: FC<SingleCreativePropsType> = ({ creativeId }) => {
             refetch();
             return -1;
         } else {
+            if (userState.votesAvailable <= 0) {
+                alert("You have exceeded your votes limit.");
+                return false;
+            }
             updateVoteVideo({ user_id: userData?.id, creative_id: creativeId });
             dispatch(voteCreative(String(creativeId)));
             refetch();
