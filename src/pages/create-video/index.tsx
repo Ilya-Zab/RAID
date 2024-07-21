@@ -90,12 +90,12 @@ const CreateVideo = () =>
     {
         if (uploadedVideo)
         {
-            if (uploadedVideo instanceof Blob)
+            if ("path" in uploadedVideo)
             {
-                uploadVideo(uploadedVideo);
+                minimizeVideo(uploadedVideo);
                 return;
             }
-            minimizeVideo(uploadedVideo);
+            uploadVideo(uploadedVideo);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [uploadedVideo]);
@@ -160,6 +160,8 @@ const CreateVideo = () =>
             }
         } catch (error)
         {
+            dispatch(setLoading(false));
+            alert('Server error');
             console.error('Ошибка:', error);
         }
     }
