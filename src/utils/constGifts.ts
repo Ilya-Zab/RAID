@@ -79,6 +79,43 @@ export const packages = [
     },
 ];
 
+export const realPrizes = [
+    {
+        img: '/images/gifts/console.png',
+        name: 'Gaming console ',
+        subText: '',
+        quantity: '5',
+    },
+    {
+        img: '/images/gifts/drone.png',
+        name: 'Drone',
+        subText: '',
+        quantity: '4',
+    },
+    {
+        img: '/images/gifts/projector.png',
+        name: 'Projector',
+        subText: '',
+        quantity: '2',
+    },
+    {
+        img: '/images/gifts/headset.png',
+        name: 'Immersive headset',
+        subText: '',
+        quantity: '1',
+    }
+]
+
+export const amazon = [
+    {
+        img: '/images/gifts/amazon-card.png',
+        name: 'Amazon gift card $500',
+        subText: '',
+        quantity: '10',
+    },
+]
+
+
 export const rare = [
     {
         img: '/images/gifts/MINAYA.png',
@@ -133,5 +170,5 @@ export const rare = [
         name: 'Candleguard',
         subText: '',
         quantity: '20',
-    },
+    }
 ];

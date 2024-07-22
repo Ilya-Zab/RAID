@@ -598,7 +598,7 @@ const Rules = () =>
                             <tr className={styles.tr}>
                                 <td colSpan={2} className={styles.td}>Total</td>
                                 <td className={styles.td}></td>
-                                <td className={styles.td}>3862</td>
+                                <td className={styles.td}>3842</td>
                             </tr>
                         </tfoot>
                     </table>

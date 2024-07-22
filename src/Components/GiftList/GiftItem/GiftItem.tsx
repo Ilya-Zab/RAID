@@ -15,7 +15,7 @@ const GiftItem = ({ data }) =>
                 height={80}
                 className={styles.gift_img}
                 style={{
-                    objectFit: 'cover'
+                    objectFit: 'contain'
                 }}
             />
             <Typography variant='h4' className={styles.gift_name}>
