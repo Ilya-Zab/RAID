@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import ModalFindId from "@/Components/ModalFindId/ModalFindId";
 import ParallaxEffect from "../ParallaxEffect";
 import ModalAbout from "../ModalAbout/ModalAbout";
-
+import { Analytics } from "@vercel/analytics/react";
 interface LayoutProps
 {
     children?: ReactNode;
@@ -27,6 +27,7 @@ const Layout: FC<LayoutProps> = ({ children }) =>
             {!isMobile ? <Header /> : <MobileHeader />}
             <SingleCreativePopup />
             {children}
+            <Analytics />
             <Footer />
             {isOpenGifts && <GiftList />}
             {isOpenFindId && <ModalFindId />}
