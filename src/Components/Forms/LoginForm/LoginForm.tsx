@@ -13,6 +13,7 @@ import { useAppDispatch } from "@/hooks/redux";
 import { setRaidId } from "@/store/slice/raidIdSlice";
 import { useCookies } from "react-cookie";
 import { openModal } from "@/store/slice/modalsSlice";
+import { track } from '@vercel/analytics';
 
 const CheckUserIdSchema = z.object({
     raidId: z.string().refine(value => validateRaidId(value), {
@@ -94,6 +95,7 @@ export const LoginForm: FC = () =>
             setCookie('raidId', transformedId, { path: '/', expires: expiresDate });
         } finally
         {
+            track('Click on the "GO" button with the correct raid ID.');
             reset();
             router.push('/gallery');
             setIsSubmitting(false);
