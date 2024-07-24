@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import CheckVideo from "./CheckVideo";
 import axios from "axios";
+import { track } from '@vercel/analytics';
 
 const CreateVideo = () =>
 {
@@ -38,6 +39,7 @@ const CreateVideo = () =>
     const dispatch = useAppDispatch();
     const isCreating = useAppSelector(state => state.creative.isLoading);
     const uploadedVideo = useSelector((state: RootState) => state.video.video);
+
 
     const [taskId, setTaskId] = useState(null);
 
@@ -71,6 +73,7 @@ const CreateVideo = () =>
     {
         setPrevStep(step);
         setStep(prev => prev + 1);
+        if (step === 4) track('The creative has been uploaded successfully.');
     }
 
     function previousStep(): void
