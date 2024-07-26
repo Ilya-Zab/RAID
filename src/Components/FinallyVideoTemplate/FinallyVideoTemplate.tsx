@@ -42,6 +42,7 @@ const FinallyVideoTemplate = ({ video, creativeImage }) =>
     {
         if (wpMediaResponse && "mediaItem" in wpMediaResponse && creativeName)
         {
+            console.log(cookies.userToken);
             uploadVideoByUserToken(video, wpMediaResponse.mediaItem.id, creativeName);
         }
 
