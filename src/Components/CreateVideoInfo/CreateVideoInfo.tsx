@@ -2,6 +2,7 @@ import styles from "./styles.module.scss";
 import { Box, Button, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import * as React from "react";
+import Link from "next/link";
 
 const CreateVideoInfo = ({ handleToggle, handleBack }) =>
 {
@@ -29,6 +30,16 @@ const CreateVideoInfo = ({ handleToggle, handleBack }) =>
                     </p>
                 </Box>
             </Box>
+
+            <Box className={`${styles.modal} ${styles.modal_bottom}`}>
+                <Box className={styles.modal__scrollbar}>
+                    <Box className={styles.modal__text}>
+                        <span>If have any problem occurs, send your work to</span>
+                        <a className="text-gradient text-gradient_alt" href={"mailto:support@wefinallyplayedit.com"}> support@wefinallyplayedit.com </a>
+                        <span>- to our team will help to publish it!</span>
+                    </Box>
+                </Box>
+            </Box>
             <Box className={`btnGradient2 ${styles.btn}`}>
                 <Button
                     variant="contained"
@@ -38,7 +49,7 @@ const CreateVideoInfo = ({ handleToggle, handleBack }) =>
                     Ok
                 </Button>
             </Box>
-        </Box>
+        </Box >
     )
 }
 export default CreateVideoInfo;
