@@ -81,12 +81,27 @@ async function handlePostingAsVideoId(req: NextApiRequest, res: NextApiResponse,
             return;
         }
 
+        const isVideo = fields.video;
         const featuredMedia = fields.media[0];
         const title = fields.title[0];
-        const video = fields.video[0];
+        let video = null;
+        let image = null;
+        if (isVideo)
+        {
+            video = fields.video[0];
+        } else
+        {
+            image = fields.image[0];
+        }
         const author = fields.author[0];
 
-        await registerUserCreative(video, author, res, featuredMedia, title);
+        if (video)
+        {
+            await registerUserCreative(video, author, res, featuredMedia, title);
+        } else
+        {
+            await registerUserCreativeImage(image, author, res, featuredMedia, title);
+        }
     });
 
     return res;
@@ -103,6 +118,31 @@ async function registerUserCreative(videoId: string, authorId: string, res: Next
         "meta": {
             featured_media: videoId,
             featured_media_type: "video"
+        }
+    };
+
+    await wpRestApi.post("creative", requestBody)
+        .then(response =>
+        {
+            res.status(200).json(response.data);
+        })
+        .catch(err =>
+        {
+            console.error("Error while registration video as a user creative.", err);
+            res.status(500).json({ message: "Error while registration video as a user creative.", error: err });
+        });
+}
+
+async function registerUserCreativeImage(image: string, authorId: string, res: NextApiResponse, featuredMedia?: string, title?: string): Promise<void>
+{
+    const requestBody = {
+        title: title,
+        author: authorId,
+        status: "pending",
+        featured_media: featuredMedia,
+        "meta": {
+            featured_media: image,
+            featured_media_type: "image"
         }
     };
 

@@ -39,6 +39,12 @@ const CreateVideo = () =>
     const dispatch = useAppDispatch();
     const isCreating = useAppSelector(state => state.creative.isLoading);
     const uploadedVideo = useSelector((state: RootState) => state.video.video);
+    const allowedImageTypes = [
+        "image/png",
+        "image/jpeg",
+        "image/gif",
+        "image/webp"
+    ];
 
 
     const [taskId, setTaskId] = useState(null);
@@ -93,6 +99,11 @@ const CreateVideo = () =>
     {
         if (uploadedVideo)
         {
+            if (allowedImageTypes.includes(uploadedVideo.type))
+            {
+                getBlobImage(uploadedVideo);
+                return;
+            }
             if ("path" in uploadedVideo)
             {
                 minimizeVideo(uploadedVideo);
@@ -102,6 +113,19 @@ const CreateVideo = () =>
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [uploadedVideo]);
+
+    function getBlobImage(uploadedVideo)
+    {
+        const imageBlob = new Blob([uploadedVideo], { type: uploadedVideo.type });
+        const imageUrl = URL.createObjectURL(imageBlob);
+        setCurrentBlobFrame(
+            {
+                frameBlob: imageBlob,
+                frameUrl: imageUrl
+            });
+        dispatch(setLoading(false));
+        setStep(5);
+    }
 
     async function minimizeVideo(video)
     {

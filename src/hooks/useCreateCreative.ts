@@ -7,6 +7,7 @@ export type CreateCreativeResult = {
     createCreativeAsUrl: (url: string) => Promise<void>,
     createCreativeAsBlob: (video: number, author: number, featuredMedia: number, creativeName) => Promise<void>,
     uploadVideoByUserToken: (video: Blob, featuredMedia: number, creativeName: string) => Promise<void>,
+    uploadPictureByUserToken: (image: number, creativeName: string) => Promise<void>,
     success: boolean,
     data: any | null,
     error: Error | null
@@ -71,6 +72,21 @@ export default function useCreateCreative(): CreateCreativeResult
         }
     };
 
+    async function uploadPictureByUserToken(image: number, creativeName: string): Promise<void>
+    {
+        if (!cookies.userToken) setError(new Error('This user is not allowed to make post requests.'));
+        try
+        {
+            const user = await fetchUserData(cookies.userToken);
+            await createCreativeImageAsBlob(image, user.data.id, creativeName);
+        } catch (err)
+        {
+            setSuccess(false);
+            setData(null);
+            setError(err);
+        }
+    }
+
     async function createCreativeAsBlob(video: number, authorId: number, featuredMedia: number, creativeName: string): Promise<void>
     {
         const formData = new FormData();
@@ -97,5 +113,30 @@ export default function useCreateCreative(): CreateCreativeResult
             });
     }
 
-    return { createCreativeAsUrl, createCreativeAsBlob, uploadVideoByUserToken, success, data, error };
+    async function createCreativeImageAsBlob(image: number, authorId: number, creativeName: string): Promise<void>
+    {
+        const formData = new FormData();
+        const imageId = image.toString();
+        const author = authorId.toString();
+        formData.append("image", imageId);
+        formData.append("author", author);
+        formData.append("media", imageId);
+        formData.append("title", creativeName);
+
+        await axios.post("/api/video-uploader", formData)
+            .then(response =>
+            {
+                setSuccess(true);
+                setData(response.data);
+                setError(null);
+            })
+            .catch(err =>
+            {
+                setSuccess(false);
+                setData(null);
+                setError(err);
+            });
+    }
+
+    return { createCreativeAsUrl, createCreativeAsBlob, uploadVideoByUserToken, uploadPictureByUserToken, success, data, error };
 }

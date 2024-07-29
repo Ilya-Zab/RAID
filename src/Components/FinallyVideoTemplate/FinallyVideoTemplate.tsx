@@ -19,7 +19,7 @@ const FinallyVideoTemplate = ({ video, creativeImage }) =>
     const raidId = useAppSelector(state => state.raidId.raidId);
     const creativeName = useAppSelector(state => state.creative.creativeName);
     const router = useRouter();
-    const { uploadVideoByUserToken, success, data, error } = useCreateCreative();
+    const { uploadVideoByUserToken, uploadPictureByUserToken, success, data, error } = useCreateCreative();
     const [isCreating, setCreating] = React.useState(false);
     const { isLoading: isMediaLoading, data: wpMediaResponse, error: wpMediaError, createWpMedia } = useCreateWpMedia();
     const dispatch = useAppDispatch();
@@ -42,8 +42,13 @@ const FinallyVideoTemplate = ({ video, creativeImage }) =>
     {
         if (wpMediaResponse && "mediaItem" in wpMediaResponse && creativeName)
         {
-            console.log(cookies.userToken);
-            uploadVideoByUserToken(video, wpMediaResponse.mediaItem.id, creativeName);
+            if (video)
+            {
+                uploadVideoByUserToken(video, wpMediaResponse.mediaItem.id, creativeName);
+            } else
+            {
+                uploadPictureByUserToken(wpMediaResponse.mediaItem.id, creativeName);
+            }
         }
 
         if (wpMediaError)
