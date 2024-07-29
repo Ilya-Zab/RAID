@@ -6,6 +6,13 @@ import { existsSync, readFileSync, unlinkSync } from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
 
+const allowedImageTypes = [
+    "image/png",
+    "image/jpeg",
+    "image/gif",
+    "image/webp"
+];
+
 export const config = {
     api: {
         responseLimit: false,
@@ -66,10 +73,10 @@ async function handlePostingAsFile(req: NextApiRequest, res: NextApiResponse, us
             return;
         }
 
-        if (!mediaFile.mimetype || mediaFile.mimetype !== "image/png")
+        if (!mediaFile.mimetype || !allowedImageTypes.includes(mediaFile.mimetype))
         {
-            console.error(`Error while processing uploaded file in the video uploading request. File mime type should be "video/mp4", but was "`, mediaFile.mimetype, `"`);
-            res.status(500).json({ message: `Error while processing uploaded file in the video uploading request. File mime type should be "video/mp4", but was "${mediaFile.mimetype}"` });
+            console.error(`Error while processing uploaded file in the video uploading request. File mime type should be one of the following: ${allowedImageTypes.join(", ")}, but was "${mediaFile.mimetype}"`);
+            res.status(500).json({ message: `Error while processing uploaded file in the video uploading request. File mime type should be one of the following: ${allowedImageTypes.join(", ")}, but was "${mediaFile.mimetype}"` });
             return;
         }
 
