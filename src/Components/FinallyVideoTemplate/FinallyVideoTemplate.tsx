@@ -34,21 +34,23 @@ const FinallyVideoTemplate = ({ video, creativeImage }) =>
 
     function onCreateClick()
     {
-        setCreating(true);
-        createWpMedia(creativeImage.frameBlob);
+        if (video)
+        {
+            setCreating(true);
+            createWpMedia(creativeImage.frameBlob);
+        } else
+        {
+            setCreating(true);
+            uploadPictureByUserToken(creativeImage.frameBlob, creativeName);
+        }
     }
 
     React.useEffect(() =>
     {
-        if (wpMediaResponse && "mediaItem" in wpMediaResponse && creativeName)
+        if (creativeName && wpMediaResponse && "mediaItem" in wpMediaResponse)
         {
             if (video)
-            {
                 uploadVideoByUserToken(video, wpMediaResponse.mediaItem.id, creativeName);
-            } else
-            {
-                uploadPictureByUserToken(wpMediaResponse.mediaItem.id, creativeName);
-            }
         }
 
         if (wpMediaError)

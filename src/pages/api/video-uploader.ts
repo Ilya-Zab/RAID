@@ -135,6 +135,7 @@ async function registerUserCreative(videoId: string, authorId: string, res: Next
 
 async function registerUserCreativeImage(image: string, authorId: string, res: NextApiResponse, featuredMedia?: string, title?: string): Promise<void>
 {
+
     const requestBody = {
         title: title,
         author: authorId,

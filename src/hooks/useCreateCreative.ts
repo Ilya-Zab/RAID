@@ -7,7 +7,7 @@ export type CreateCreativeResult = {
     createCreativeAsUrl: (url: string) => Promise<void>,
     createCreativeAsBlob: (video: number, author: number, featuredMedia: number, creativeName) => Promise<void>,
     uploadVideoByUserToken: (video: Blob, featuredMedia: number, creativeName: string) => Promise<void>,
-    uploadPictureByUserToken: (image: number, creativeName: string) => Promise<void>,
+    uploadPictureByUserToken: (image: Blob, creativeName: string) => Promise<void>,
     success: boolean,
     data: any | null,
     error: Error | null
@@ -72,13 +72,33 @@ export default function useCreateCreative(): CreateCreativeResult
         }
     };
 
-    async function uploadPictureByUserToken(image: number, creativeName: string): Promise<void>
+    async function uploadPictureByUserToken(image: Blob, creativeName: string): Promise<void>
     {
-        if (!cookies.userToken) setError(new Error('This user is not allowed to make post requests.'));
+        if (!cookies.userToken)
+            setError(new Error('This user is not allowed to make post requests.'));
         try
         {
-            const user = await fetchUserData(cookies.userToken);
-            await createCreativeImageAsBlob(image, user.data.id, creativeName);
+            const parts = image.type.split('/');
+            const nameType = parts[1];
+            await fetchUserData(cookies.userToken);
+            const formData = new FormData();
+            formData.append('file', image, `iamge.${nameType}`);
+
+            const response = await fetch('https://wordpress.wefinallyplayedit.com/wp-json/wp/v2/media', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${cookies.userToken}`
+                },
+                body: formData
+            });
+
+            if (!response.ok)
+            {
+                setError(new Error(`Failed to upload video: ${response.statusText}`))
+            }
+
+            const data = await response.json();
+            await createCreativeImageAsBlob(data.id, data.author, creativeName);
         } catch (err)
         {
             setSuccess(false);
