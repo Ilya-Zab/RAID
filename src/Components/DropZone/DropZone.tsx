@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
 import { setVideo } from '@/store/slice/videoSlice';
 import { setLoading } from '@/store/slice/creativeSlice';
+import { track } from '@vercel/analytics';
 
 function DropZone()
 {
@@ -23,7 +24,11 @@ function DropZone()
         {
             const video = acceptedFiles[0];
             if (video)
+            {
+                track('Upload creative from files input.');
                 setUploadedFile(video);
+            }
+
         },
     });
 
