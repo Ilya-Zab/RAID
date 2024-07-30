@@ -7,6 +7,7 @@ import axios from "axios";
 import { setVideo } from "@/store/slice/videoSlice";
 import { useAppDispatch } from "@/hooks/redux";
 import { setLoading } from "@/store/slice/creativeSlice";
+import { track } from '@vercel/analytics';
 
 const CreateVideoTemplateSchema = z.object({
     handleButtonClick: z.function().args(z.void()).returns(z.void())
@@ -54,6 +55,7 @@ const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonC
     {
         if (url)
         {
+            track('Social creative input.');
             dispatch(setLoading(true));
             try
             {
