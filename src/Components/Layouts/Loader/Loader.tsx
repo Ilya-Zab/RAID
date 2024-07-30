@@ -8,6 +8,34 @@ import CircularProgress, {
 } from '@mui/material/CircularProgress';
 export const Loader: FC<LoaderProps> = ({ className, thickness, size, color, progress }) =>
 {
+    const [currentProgress, setCurrentProgress] = useState(0);
+    const [targetProgress, setTargetProgress] = useState(progress);
+
+    useEffect(() =>
+    {
+        setTargetProgress(progress);
+    }, [progress]);
+
+    useEffect(() =>
+    {
+        const interval = setInterval(() =>
+        {
+            setCurrentProgress((prevProgress) =>
+            {
+                if (prevProgress < targetProgress)
+                {
+                    return prevProgress + 1;
+                } else
+                {
+                    clearInterval(interval);
+                    return prevProgress;
+                }
+            });
+        }, 10000 / (targetProgress - currentProgress));
+
+        return () => clearInterval(interval);
+    }, [targetProgress, currentProgress]);
+
     return (
         <Box
             sx={{
@@ -30,7 +58,7 @@ export const Loader: FC<LoaderProps> = ({ className, thickness, size, color, pro
                     variant="determinate"
                     size={size}
                     thickness={thickness}
-                    value={progress}
+                    value={currentProgress}
                     sx={{
                         color: color ? color : variable.accent,
                     }}
@@ -51,7 +79,7 @@ export const Loader: FC<LoaderProps> = ({ className, thickness, size, color, pro
                         variant="caption"
                         component="div"
                         color="white"
-                    >{progress}%</Typography>
+                    >{currentProgress}%</Typography>
                 </Box>
             </Box>
             <Box sx={{ padding: '30px', fontSize: '12px', textAlign: 'center' }}>
