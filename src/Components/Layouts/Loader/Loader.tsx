@@ -72,7 +72,6 @@ export const Loader: FC<LoaderProps> = ({ className, thickness, size, color, pro
             }}
             className={className}
         >
-
             <Box sx={{ position: 'relative', display: 'inline-flex' }}>
                 <Box sx={{ animation: animationStyle }}>
                     <CircularProgress
