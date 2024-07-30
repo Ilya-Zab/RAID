@@ -17,7 +17,7 @@ export const FinallyVideoSend: FC<FinallyVideoSendProps> = ({ onButtonClick, isC
                 *It may take us up to 5 business days.
             </span>
             <div className={styles.wrapper}>
-                {isCreating && < Loader className={styles.popup__loader} color="white" />}
+                {/* {isCreating && < Loader className={styles.popup__loader} color="white" />} */}
                 {!isCreating &&
                     <Button
                         type="submit"

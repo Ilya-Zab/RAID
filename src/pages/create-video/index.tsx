@@ -30,6 +30,7 @@ const CreateVideo = () =>
     const [currentBlobFrame, setCurrentBlobFrame] = useState<frameType | null>(null);
     const [prevStep, setPrevStep] = useState<number>(0);
     const [step, setStep] = useState<number>(0);
+    const [progress, setProgress] = useState<number>(30);
     const { extractAllFrames } = useVideoFrames();
     const [allFrames, setAllFrames] = useState(null);
     const [videoUrl, setVideoUrl] = useState(null);
@@ -46,15 +47,19 @@ const CreateVideo = () =>
         "image/webp"
     ];
 
-
     const [taskId, setTaskId] = useState(null);
+
+    function changeProgress(progress: number): void
+    {
+        if (progress === 100)
+            setProgress(30);
+        else
+            setProgress(progress);
+    }
 
     useEffect(() =>
     {
-        if (!raidId && !cookies.userToken)
-        {
-            router.push('/');
-        }
+        if (!raidId && !cookies.userToken) router.push('/');
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [raidId, cookies]);
 
@@ -102,12 +107,23 @@ const CreateVideo = () =>
         {
             if (allowedImageTypes.includes(uploadedVideo.type))
             {
+                changeProgress(100);
                 getBlobImage(uploadedVideo);
                 return;
             }
             if ("path" in uploadedVideo)
             {
-                minimizeVideo(uploadedVideo);
+                const videoSize = uploadedVideo.size / (1024 * 1024);
+                if (videoSize > 5)
+                {
+                    minimizeVideo(uploadedVideo);
+                } else
+                {
+                    const blob = new Blob([uploadedVideo], { type: uploadedVideo.type });
+                    uploadVideo(blob);
+                }
+
+
                 return;
             }
             uploadVideo(uploadedVideo);
@@ -124,6 +140,7 @@ const CreateVideo = () =>
                 frameBlob: imageBlob,
                 frameUrl: imageUrl
             });
+        changeProgress(100);
         dispatch(setLoading(false));
         setStep(5);
     }
@@ -136,6 +153,7 @@ const CreateVideo = () =>
         {
             const resp = await axios.post("https://wefinallyplayedit.com/api/minimizer", data);
             setTaskId(resp.data.data.taskId);
+            changeProgress(60);
         } catch (err)
         {
             dispatch(setLoading(false));
@@ -151,6 +169,7 @@ const CreateVideo = () =>
             const res = await axios.get(`https://wefinallyplayedit.com/api/minimizer/${taskId}`);
             if (res.data.data.task.status === 'completed')
             {
+                changeProgress(70);
                 clearIntervalFn();
                 downloadVideoById(taskId);
             }
@@ -196,6 +215,7 @@ const CreateVideo = () =>
 
     async function uploadVideo(video: Blob)
     {
+        changeProgress(90);
         await setVideoUrl(URL.createObjectURL(video));
         setVideo(video);
         const frames = await extractAllFrames(video);
@@ -206,6 +226,7 @@ const CreateVideo = () =>
             setAllFrames(frames);
             setPrevStep(0);
             setStep(3);
+            changeProgress(100);
             dispatch(setLoading(false));
         } else
         {
@@ -216,6 +237,7 @@ const CreateVideo = () =>
     async function handleVideoReady(video: Blob)
     {
         dispatch(setLoading(true));
+        changeProgress(70);
         setVideo(video);
         setVideoUrl(URL.createObjectURL(video));
         const frames = await extractAllFrames(video);
@@ -235,7 +257,7 @@ const CreateVideo = () =>
         switch (step)
         {
             case 0:
-                return <CreateVideoTemplate handleButtonClick={nextStep} />;
+                return <CreateVideoTemplate handleButtonClick={nextStep} changeProgress={changeProgress} />;
             case 1:
                 return <CreateVideoInfo handleToggle={nextStep} handleBack={previousStep} />;
             case 2:
@@ -247,7 +269,7 @@ const CreateVideo = () =>
             case 5:
                 return <CreativeName nextStep={nextStep} creativeImage={currentBlobFrame} />;
             case 6:
-                return <FinallyVideoTemplate video={video} creativeImage={currentBlobFrame} />;
+                return <FinallyVideoTemplate video={video} creativeImage={currentBlobFrame} changeProgress={changeProgress} />;
             default:
                 return <CreateVideoTemplate handleButtonClick={nextStep} />;
         }
@@ -269,7 +291,7 @@ const CreateVideo = () =>
                         <Box className={styles.popup} id="pp">
 
                             {CurrentTemplate()}
-                            {isCreating && <Loader className={styles.popup__loader} color="white" />}
+                            {isCreating && <Loader className={styles.popup__loader} color="white" size={100} progress={progress} />}
                             {
                                 (step > 0 && step < 6) &&
                                 <button onClick={() => previousStep()}
@@ -312,7 +334,6 @@ const CreateVideo = () =>
                         </Box>
                     </Box>
                 </Box>
-
             </main>
         </>
     );

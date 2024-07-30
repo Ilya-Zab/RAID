@@ -34,7 +34,7 @@ const CreateVideoInfo = ({ handleToggle, handleBack }) =>
             <Box className={`${styles.modal} ${styles.modal_bottom}`}>
                 <Box className={styles.modal__scrollbar}>
                     <Box className={styles.modal__text}>
-                        <span>If have any problem occurs, send your work to</span>
+                        <span>If any problem occurs, send your work to</span>
                         <a className="text-gradient text-gradient_alt" href={"mailto:support@wefinallyplayedit.com"}> support@wefinallyplayedit.com </a>
                         <span>- to our team will help to publish it!</span>
                     </Box>

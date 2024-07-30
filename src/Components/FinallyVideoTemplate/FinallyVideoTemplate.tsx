@@ -10,17 +10,18 @@ import useCreateCreative from "@/hooks/useCreateCreative";
 import { FinallyVideoSend } from "./FinallyVideoSend";
 import { useCreateWpMedia } from "@/hooks/useCreateWpMedia";
 import { setVideo } from "@/store/slice/videoSlice";
-import { setCreativeName } from "@/store/slice/creativeSlice";
+import { setCreativeName, setLoading } from "@/store/slice/creativeSlice";
 import { trimString } from "@/utils/trimString";
+import { Loader } from "@/Components/Layouts/Loader";
 
-const FinallyVideoTemplate = ({ video, creativeImage }) =>
+const FinallyVideoTemplate = ({ video, creativeImage, changeProgress }) =>
 {
     const [cookies] = useCookies(['userToken']);
     const raidId = useAppSelector(state => state.raidId.raidId);
     const creativeName = useAppSelector(state => state.creative.creativeName);
     const router = useRouter();
     const { uploadVideoByUserToken, uploadPictureByUserToken, success, data, error } = useCreateCreative();
-    const [isCreating, setCreating] = React.useState(false);
+    const isCreating = useAppSelector(state => state.creative.isLoading);
     const { isLoading: isMediaLoading, data: wpMediaResponse, error: wpMediaError, createWpMedia } = useCreateWpMedia();
     const dispatch = useAppDispatch();
     React.useEffect(() =>
@@ -36,11 +37,13 @@ const FinallyVideoTemplate = ({ video, creativeImage }) =>
     {
         if (video)
         {
-            setCreating(true);
+            dispatch(setLoading(true));
+            changeProgress(50);
             createWpMedia(creativeImage.frameBlob);
         } else
         {
-            setCreating(true);
+            dispatch(setLoading(true));
+            changeProgress(70);
             uploadPictureByUserToken(creativeImage.frameBlob, creativeName);
         }
     }
@@ -49,6 +52,7 @@ const FinallyVideoTemplate = ({ video, creativeImage }) =>
     {
         if (creativeName && wpMediaResponse && "mediaItem" in wpMediaResponse)
         {
+            changeProgress(70);
             if (video)
                 uploadVideoByUserToken(video, wpMediaResponse.mediaItem.id, creativeName);
         }
@@ -66,6 +70,8 @@ const FinallyVideoTemplate = ({ video, creativeImage }) =>
         {
             router.push('/preview');
             dispatch(setVideo(null));
+            dispatch(setLoading(false));
+            changeProgress(100);
             dispatch(setCreativeName(null));
         }
 
@@ -73,7 +79,7 @@ const FinallyVideoTemplate = ({ video, creativeImage }) =>
         {
             alert('There is a problem with adding creative');
             alert(error);
-            setCreating(false);
+            changeProgress(100);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [success, error]);

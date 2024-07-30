@@ -10,12 +10,13 @@ import { setLoading } from "@/store/slice/creativeSlice";
 import { track } from '@vercel/analytics';
 
 const CreateVideoTemplateSchema = z.object({
-    handleButtonClick: z.function().args(z.void()).returns(z.void())
+    handleButtonClick: z.function().args(z.void()).returns(z.void()),
+    changeProgress: z.function().args(z.number()).returns(z.void()).optional(),
 })
 
 type CreateVideoTemplateProps = z.infer<typeof CreateVideoTemplateSchema>;
 
-const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonClick }) =>
+const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonClick, changeProgress }) =>
 {
     const [url, setUrl] = React.useState('');
     const timeoutIdRef = React.useRef<NodeJS.Timeout>(null);
@@ -57,6 +58,7 @@ const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonC
         {
             track('Social creative input.');
             dispatch(setLoading(true));
+            changeProgress(30);
             try
             {
                 const response = await axios({
