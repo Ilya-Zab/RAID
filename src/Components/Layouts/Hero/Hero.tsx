@@ -24,7 +24,7 @@ const Hero = () =>
                 <Box>
                     <Box className={styles.hero__title_wrapper}>
                         <h1 className={styles.hero__title}>
-                            IT&apos;LL NEVER BE THE SAME ONCE YOU <span className='text-gradient'>PLAY RAID</span>. SHOW HOW YOU DO IT AND<span className='text-gradient'> WIN </span> EXITING <span className='text-gradient'> PRIZES</span>!
+                            IT&apos;LL NEVER BE THE SAME ONCE YOU <span className='text-gradient'>PLAY RAID</span>. SHOW HOW YOU DO IT AND<span className='text-gradient'> WIN </span> EXCITING <span className='text-gradient'> PRIZES</span>!
                         </h1>
                     </Box>
                     <Box className={styles.hero__steps_wrapper}>
