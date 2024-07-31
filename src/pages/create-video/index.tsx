@@ -1,9 +1,8 @@
 import Head from "next/head";
-import CreateVideoTemplate from "@/Components/CreateVideoTemplate/CreateVideoTemplate";
 import { useCallback, useEffect, useState } from "react";
 import CreativeRecorder from "@/Components/CreativeRecorder/CreativeRecorder";
 import styles from './styles.module.scss';
-import { Box, Button } from "@mui/material";
+import { Box, Button, Switch } from "@mui/material";
 import { useVideoFrames } from "@/hooks/useVideoFrames";
 import FinallyVideoTemplate from "@/Components/FinallyVideoTemplate/FinallyVideoTemplate";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
@@ -22,6 +21,8 @@ import { RootState } from "@/store/store";
 import CheckVideo from "./CheckVideo";
 import axios from "axios";
 import { track } from '@vercel/analytics';
+import CreateVideoTemplate from "@/Components/CreateVideoTemplate/CreateVideoTemplate";
+import { CreativeRecorderPhoto } from "@/Components/CreativeRecorder/CreativeRecorderPhoto";
 
 const CreateVideo = () =>
 {
@@ -46,6 +47,12 @@ const CreateVideo = () =>
         "image/gif",
         "image/webp"
     ];
+    const [isPhoto, setPhoto] = useState<boolean>(false);
+
+    function videoPhotoSwitch()
+    {
+        setPhoto(prev => prev ? false : true);
+    }
 
     const [taskId, setTaskId] = useState(null);
 
@@ -261,7 +268,10 @@ const CreateVideo = () =>
             case 1:
                 return <CreateVideoInfo handleToggle={nextStep} handleBack={previousStep} />;
             case 2:
-                return <CreativeRecorder onVideoRecorded={handleVideoReady} />;
+                if (isPhoto)
+                    return <CreativeRecorderPhoto />
+                else
+                    return <CreativeRecorder onVideoRecorded={handleVideoReady} />;
             case 3:
                 return <CheckVideo videoUrl={videoUrl} onDownload={onDownloadClick} prevStep={previousStep} />;
             case 4:
@@ -289,7 +299,6 @@ const CreateVideo = () =>
                             #WeFinallyPlayedIt
                         </h1>
                         <Box className={styles.popup} id="pp">
-
                             {CurrentTemplate()}
                             {isCreating && <Loader className={styles.popup__loader} color="white" size={100} progress={progress} />}
                             {
@@ -319,18 +328,12 @@ const CreateVideo = () =>
                                     </svg>
                                 </button>
                             }
-                            {
-                                step == 3 &&
-                                <Button
-                                    type="button"
-                                    variant="contained"
-                                    className={`btn-second btn-second-next`}
-                                    onClick={() => nextStep()}
-                                    disabled={isCreating}
-                                >
-                                    {isCreating ? "Wait.." : "Next"}
-                                </Button>
-                            }
+                            {step == 2 &&
+                                <Switch
+                                    checked={isPhoto}
+                                    onChange={videoPhotoSwitch}
+                                    className={`${styles.switch}`}
+                                />}
                         </Box>
                     </Box>
                 </Box>
