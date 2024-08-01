@@ -7,11 +7,11 @@ import { EffectItem, EffectPicker } from './EffectPicker';
 import useCreativeRecorder from '@/hooks/useCreativeRecorder';
 
 const effects: EffectItem[] = [
-    {
-        name: "orc",
-        src: 'PICKER1.png',
-        url: "effects/MASK_1.deepar"
-    },
+    // {
+    //     name: "orc",
+    //     src: 'PICKER1.png',
+    //     url: "effects/MASK_1.deepar"
+    // },
     {
         name: "skelet",
         src: 'PICKER2.png',
@@ -65,12 +65,12 @@ const skeletEffects: EffectItem[] = [
     },
 ]
 
-export const CreativeRecorderPhoto = () =>
+export const CreativeRecorderPhoto = ({ onImageReady }) =>
 {
-    const deepAR = useDeepAR("#deepar-screen", "effects/ORC_BG+TATOO.deepar");
+    const deepAR = useDeepAR("#deepar-screen", "effects/MASK+TEXT.deepar");
     const creativeRecorder = useCreativeRecorder({ deepAR });
     const [isInited, setIsInited] = useState<boolean>(false);
-    const [currentEffects, setCurrentEffects] = useState<EffectItem[]>(orcEffects);
+    const [currentEffects, setCurrentEffects] = useState<EffectItem[]>(skeletEffects);
 
     useEffect(() =>
     {
@@ -87,9 +87,7 @@ export const CreativeRecorderPhoto = () =>
 
     async function initializeCreativeRecorder()
     {
-
         const videoGrants = await creativeRecorder.getPermissions();
-
         setIsInited(videoGrants);
     }
 
@@ -107,10 +105,9 @@ export const CreativeRecorderPhoto = () =>
     async function handleClick()
     {
         const dataUrl = await deepAR.takeScreenshot();
-        console.log('Before Blob', dataUrl);
         const blob = convertDataUrlToBlob(dataUrl);
-        console.log('After Blob', blob);
-        downloadFile(blob, "photo.png");
+        if (blob) onImageReady(blob);
+        // downloadFile(blob, "photo.png");
     }
 
     function firstEffectChange(effect: EffectItem)

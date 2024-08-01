@@ -23,6 +23,8 @@ import axios from "axios";
 import { track } from '@vercel/analytics';
 import CreateVideoTemplate from "@/Components/CreateVideoTemplate/CreateVideoTemplate";
 import { CreativeRecorderPhoto } from "@/Components/CreativeRecorder/CreativeRecorderPhoto";
+import { allowedImageTypes } from "@/utils/creativeConsts";
+import { PhotoVideoSwitch } from "@/Components/Layouts/PhotoVideoSwitch";
 
 const CreateVideo = () =>
 {
@@ -41,28 +43,7 @@ const CreateVideo = () =>
     const dispatch = useAppDispatch();
     const isCreating = useAppSelector(state => state.creative.isLoading);
     const uploadedVideo = useSelector((state: RootState) => state.video.video);
-    const allowedImageTypes = [
-        "image/png",
-        "image/jpeg",
-        "image/gif",
-        "image/webp"
-    ];
     const [isPhoto, setPhoto] = useState<boolean>(false);
-
-    function videoPhotoSwitch()
-    {
-        setPhoto(prev => prev ? false : true);
-    }
-
-    const [taskId, setTaskId] = useState(null);
-
-    function changeProgress(progress: number): void
-    {
-        if (progress === 100)
-            setProgress(30);
-        else
-            setProgress(progress);
-    }
 
     useEffect(() =>
     {
@@ -70,41 +51,36 @@ const CreateVideo = () =>
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [raidId, cookies]);
 
+    function videoPhotoSwitch() { setPhoto(prev => prev ? false : true); }
+
+    const [taskId, setTaskId] = useState(null);
+
+    function changeProgress(progress: number): void { setProgress(progress === 100 ? 30 : progress); }
+
     const onDownloadClick = useCallback(() =>
     {
-        if (videoUrl)
-        {
-            downloadVideo(video, "video.mp4");
-        }
+        if (videoUrl) downloadVideo(video, "video.mp4");
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [videoUrl, video]);
 
     const getCurrentFrame = (currentFrame: frameType): void =>
     {
-        if (currentFrame)
-        {
-            setCurrentBlobFrame(currentFrame);
-        }
+        if (currentFrame) setCurrentBlobFrame(currentFrame);
     }
 
-    function nextStep()
+    function nextStep(prevStep?: number, nextStep?: number)
     {
         if (step === 0) track('Create creative button click.');
-        setPrevStep(step);
-        setStep(prev => prev + 1);
+        setPrevStep(prevStep ? prevStep : step);
+        console.log('PREV', prevStep);
+        setStep(prev => nextStep ? nextStep : prev + 1);
         if (step === 4) track('The creative has been uploaded successfully.');
     }
 
     function previousStep(): void
     {
-        if (prevStep > -1)
-        {
-            setStep(prevStep);
-            setPrevStep(0);
-            setStep(0);
-        }
-        if (step === 1)
-            setStep(0);
+        setStep(prevStep > -1 ? prevStep : 0);
+        setPrevStep(prev => prev ? prev - 1 : 0)
         dispatch(setLoading(false));
     }
 
@@ -129,8 +105,6 @@ const CreateVideo = () =>
                     const blob = new Blob([uploadedVideo], { type: uploadedVideo.type });
                     uploadVideo(blob);
                 }
-
-
                 return;
             }
             uploadVideo(uploadedVideo);
@@ -140,16 +114,22 @@ const CreateVideo = () =>
 
     function getBlobImage(uploadedVideo)
     {
-        const imageBlob = new Blob([uploadedVideo], { type: uploadedVideo.type });
+        let imageBlob;
+        const prevStep = "path" in uploadedVideo ? 0 : 2;
+        if (uploadedVideo instanceof Blob)
+            imageBlob = uploadedVideo;
+        else
+            imageBlob = new Blob([uploadedVideo], { type: uploadedVideo.type });
         const imageUrl = URL.createObjectURL(imageBlob);
         setCurrentBlobFrame(
             {
                 frameBlob: imageBlob,
                 frameUrl: imageUrl
             });
+
         changeProgress(100);
         dispatch(setLoading(false));
-        setStep(5);
+        nextStep(prevStep, 5);
     }
 
     async function minimizeVideo(video)
@@ -226,13 +206,10 @@ const CreateVideo = () =>
         await setVideoUrl(URL.createObjectURL(video));
         setVideo(video);
         const frames = await extractAllFrames(video);
-        setPrevStep(0);
-        setStep(3);
         if (frames.length > 0)
         {
             setAllFrames(frames);
-            setPrevStep(0);
-            setStep(3);
+            nextStep(0, 3);
             changeProgress(100);
             dispatch(setLoading(false));
         } else
@@ -269,7 +246,7 @@ const CreateVideo = () =>
                 return <CreateVideoInfo handleToggle={nextStep} handleBack={previousStep} />;
             case 2:
                 if (isPhoto)
-                    return <CreativeRecorderPhoto />
+                    return <CreativeRecorderPhoto onImageReady={getBlobImage} />
                 else
                     return <CreativeRecorder onVideoRecorded={handleVideoReady} />;
             case 3:
@@ -303,7 +280,7 @@ const CreateVideo = () =>
                             {isCreating && <Loader className={styles.popup__loader} color="white" size={100} progress={progress} />}
                             {
                                 (step > 0 && step < 6) &&
-                                <button onClick={() => previousStep()}
+                                <button onClick={previousStep}
                                     className={`${styles.button} ${styles['button-prev']}`}>
                                     <svg width="40" height="40" viewBox="0 0 40 40" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -328,12 +305,26 @@ const CreateVideo = () =>
                                     </svg>
                                 </button>
                             }
-                            {step == 2 &&
-                                <Switch
-                                    checked={isPhoto}
-                                    onChange={videoPhotoSwitch}
+                            {step === 2 &&
+                                <PhotoVideoSwitch
                                     className={`${styles.switch}`}
-                                />}
+                                    isPhoto={isPhoto}
+                                    onChange={videoPhotoSwitch}
+                                />
+                            }
+                            {
+                                step == 3 &&
+                                <Button
+                                    type="button"
+                                    variant="contained"
+                                    className={`btn-second btn-second-next`}
+                                    onClick={() => nextStep()}
+                                    disabled={isCreating}
+                                >
+                                    {isCreating ? "Wait.." : "Next"}
+                                </Button>
+                            }
+
                         </Box>
                     </Box>
                 </Box>

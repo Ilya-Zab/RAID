@@ -1,17 +1,11 @@
 import { uploadMediaAsBuffer } from "@/services/VideoUploader/VideoUploaderService";
 import wpRestApi from "@/services/wordpress/wpService";
+import { allowedImageTypes } from "@/utils/creativeConsts";
 import axios from "axios";
 import * as formidable from "formidable";
 import { existsSync, readFileSync, unlinkSync } from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
-
-const allowedImageTypes = [
-    "image/png",
-    "image/jpeg",
-    "image/gif",
-    "image/webp"
-];
 
 export const config = {
     api: {

@@ -2,7 +2,6 @@ import styles from "./styles.module.scss";
 import { Box, Button, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import * as React from "react";
-import Link from "next/link";
 
 const CreateVideoInfo = ({ handleToggle, handleBack }) =>
 {
@@ -44,7 +43,7 @@ const CreateVideoInfo = ({ handleToggle, handleBack }) =>
                 <Button
                     variant="contained"
                     className='btn-second'
-                    onClick={handleToggle}
+                    onClick={() => handleToggle()}
                 >
                     Ok
                 </Button>
