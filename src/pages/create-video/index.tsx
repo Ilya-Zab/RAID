@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import CreativeRecorder from "@/Components/CreativeRecorder/CreativeRecorder";
 import styles from './styles.module.scss';
 import { Box, Button, Switch } from "@mui/material";
@@ -25,6 +25,7 @@ import CreateVideoTemplate from "@/Components/CreateVideoTemplate/CreateVideoTem
 import { CreativeRecorderPhoto } from "@/Components/CreativeRecorder/CreativeRecorderPhoto";
 import { allowedImageTypes } from "@/utils/creativeConsts";
 import { PhotoVideoSwitch } from "@/Components/Layouts/PhotoVideoSwitch";
+import { clear } from "console";
 
 const CreateVideo = () =>
 {
@@ -44,14 +45,32 @@ const CreateVideo = () =>
     const isCreating = useAppSelector(state => state.creative.isLoading);
     const uploadedVideo = useSelector((state: RootState) => state.video.video);
     const [isPhoto, setPhoto] = useState<boolean>(false);
+    const creativeSwitchTime = useRef<NodeJS.Timeout | null>(null);
+
+    useEffect(() =>
+    {
+        return () =>
+        {
+            if (creativeSwitchTime.current)
+            {
+                clearTimeout(creativeSwitchTime.current)
+            }
+        }
+    }, [])
+
+    function videoPhotoSwitch()
+    {
+        creativeSwitchTime.current = setTimeout(() =>
+        {
+            setPhoto(prev => !prev);
+        }, 1000)
+    }
 
     useEffect(() =>
     {
         if (!raidId && !cookies.userToken) router.push('/');
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [raidId, cookies]);
-
-    function videoPhotoSwitch() { setPhoto(prev => prev ? false : true); }
 
     const [taskId, setTaskId] = useState(null);
 
