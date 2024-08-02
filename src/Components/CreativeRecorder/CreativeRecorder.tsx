@@ -95,7 +95,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     const dispatch = useAppDispatch();
     const [recordingTime, setRecordingTime] = useState<number>(0);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
-    const abortController = useRef(new AbortController());
     const isNavbarMusicPlaying = useSelector((state: RootState) => state.audio.isPlaying);
 
     useEffect(() =>
@@ -104,8 +103,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
         return () =>
         {
-            abortController.current.abort();
-
             if (deepAR && isInited)
             {
                 deepAR.shutdown();

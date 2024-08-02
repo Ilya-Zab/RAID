@@ -1,20 +1,18 @@
 import * as React from "react";
 import styles from './styles.module.scss';
-import { Box, Button, Typography, IconButton } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import DropZone from "@/Components/DropZone/DropZone";
-import { z } from "zod";
 import axios from "axios";
 import { setVideo } from "@/store/slice/videoSlice";
 import { useAppDispatch } from "@/hooks/redux";
 import { setLoading } from "@/store/slice/creativeSlice";
 import { track } from '@vercel/analytics';
 
-const CreateVideoTemplateSchema = z.object({
-    handleButtonClick: z.function().args(z.void()).returns(z.void()),
-    changeProgress: z.function().args(z.number()).returns(z.void()).optional(),
-})
-
-type CreateVideoTemplateProps = z.infer<typeof CreateVideoTemplateSchema>;
+interface CreateVideoTemplateProps
+{
+    handleButtonClick: (arg1?: number, arg2?: number) => void;
+    changeProgress?: (arg1: number,) => void;
+}
 
 const CreateVideoTemplate: React.FC<CreateVideoTemplateProps> = ({ handleButtonClick, changeProgress }) =>
 {

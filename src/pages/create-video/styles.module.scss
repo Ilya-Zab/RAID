@@ -116,6 +116,13 @@
 	}
 }
 
+.switch {
+	position: absolute;
+	top: 20px;
+	right: 50%;
+	transform: translateX(50%);
+}
+
 .button {
 	padding: 0;
 	background: transparent;

@@ -1,0 +1,23 @@
+@import '@/styles/variables.module.scss';
+
+.switch {
+    display: flex;
+    gap: 10px;
+    width: fit-content;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 80px;
+    background-color: rgba(140, 140, 140, 0.3);
+    outline: 1px solid white;
+
+    &__button {
+        padding: 5px;
+        color: #fff;
+        border-radius: 30px;
+        cursor: pointer;
+
+        &_checked {
+            background: $linearGradient3;
+        }
+    }
+}
