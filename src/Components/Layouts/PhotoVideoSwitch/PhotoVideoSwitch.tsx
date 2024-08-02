@@ -12,34 +12,17 @@ interface PhotoVideoSwitchProps
 export const PhotoVideoSwitch: FC<PhotoVideoSwitchProps> = ({ className, isPhoto, onChange }) =>
 {
 
-    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-
-    const handleClick = () =>
-    {
-        if (!isButtonDisabled)
-        {
-            onChange();
-            setIsButtonDisabled(true);
-            setTimeout(() =>
-            {
-                setIsButtonDisabled(false);
-            }, 2000);
-        }
-    };
-
     return (
         <Box className={`${styles.switch} ${className && className}`}>
             <button
                 className={`btn-reset ${styles.switch__button} ${!isPhoto && styles.switch__button_checked}`}
-                disabled={isButtonDisabled}
-                onClick={handleClick}
+                onClick={onChange}
             >
                 VIDEO
             </button>
             <button
                 className={`btn-reset ${styles.switch__button} ${isPhoto && styles.switch__button_checked}`}
-                disabled={isButtonDisabled}
-                onClick={handleClick}
+                onClick={onChange}
             >
                 PHOTO
             </button>
