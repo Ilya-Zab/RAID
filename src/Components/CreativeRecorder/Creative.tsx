@@ -108,7 +108,7 @@ export interface CreativeRecorderProps
 export default function Creative<CreativeRecorderProps>({ onVideoRecorded, onImageReady, isPhoto })
 {
     const dispatch = useAppDispatch();
-    const deepAR = useDeepAR("#deepar-screen");
+    const deepAR = useDeepAR("#deepar-screen", isPhoto ? "/effects/MASK+TEXT.deepar" : "effects/MASK_1.deepar");
     const creativeRecorder = useCreativeRecorder({ deepAR });
     const videoProcessor = useVideoProcessor();
     const [isInited, setIsInited] = useState<boolean>(false);
@@ -128,7 +128,15 @@ export default function Creative<CreativeRecorderProps>({ onVideoRecorded, onIma
         {
             if (deepAR) deepAR.shutdown();
             setCurrentEffects(isPhoto ? skeletPhotoEffects : orcEffects);
+
+            if (effectsTimer.current)
+            {
+                clearInterval(effectsTimer.current);
+                effectsTimer.current = null;
+            }
         };
+
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -151,7 +159,6 @@ export default function Creative<CreativeRecorderProps>({ onVideoRecorded, onIma
                 clearInterval(timerRef.current);
                 timerRef.current = null;
             }
-
             if (audioPlayerRef.current)
             {
                 audioPlayerRef.current.pause();
@@ -238,7 +245,7 @@ export default function Creative<CreativeRecorderProps>({ onVideoRecorded, onIma
             {
                 deepAR.switchEffect(effect.url);
                 setSwitchingEffect(false);
-            }, 300);
+            }, 100);
         }
     }
 
