@@ -75,7 +75,6 @@ export const CreativeRecorderPhoto = ({ onImageReady }) =>
     useEffect(() =>
     {
         initializeCreativeRecorder();
-
         return () =>
         {
             if (deepAR && isInited) deepAR.shutdown();
