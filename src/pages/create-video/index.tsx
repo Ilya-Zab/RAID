@@ -324,7 +324,6 @@ const CreateVideo = () =>
                                     {isCreating ? "Wait.." : "Next"}
                                 </Button>
                             }
-
                         </Box>
                     </Box>
                 </Box>
