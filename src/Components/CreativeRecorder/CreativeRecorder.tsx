@@ -103,10 +103,12 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
         return () =>
         {
-            if (deepAR && isInited)
-            {
-                deepAR.shutdown();
-            }
+            // if (deepAR && isInited)
+            // {
+            //     deepAR.shutdown();
+            // }
+
+            if (deepAR) deepAR.shutdown();
 
             if (timerRef.current)
             {
