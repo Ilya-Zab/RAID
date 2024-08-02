@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useCallback, useEffect, useRef, useState } from "react";
-import CreativeRecorder from "@/Components/CreativeRecorder/CreativeRecorder";
+// import CreativeRecorder from "@/Components/CreativeRecorder/CreativeRecorder";
 import styles from './styles.module.scss';
 import { Box, Button, Switch } from "@mui/material";
 import { useVideoFrames } from "@/hooks/useVideoFrames";
@@ -22,10 +22,10 @@ import CheckVideo from "./CheckVideo";
 import axios from "axios";
 import { track } from '@vercel/analytics';
 import CreateVideoTemplate from "@/Components/CreateVideoTemplate/CreateVideoTemplate";
-import { CreativeRecorderPhoto } from "@/Components/CreativeRecorder/CreativeRecorderPhoto";
+// import { CreativeRecorderPhoto } from "@/Components/CreativeRecorder/CreativeRecorderPhoto";
 import { allowedImageTypes } from "@/utils/creativeConsts";
 import { PhotoVideoSwitch } from "@/Components/Layouts/PhotoVideoSwitch";
-import { clear } from "console";
+import Creative from "@/Components/CreativeRecorder/Creative";
 
 const CreateVideo = () =>
 {
@@ -45,37 +45,8 @@ const CreateVideo = () =>
     const isCreating = useAppSelector(state => state.creative.isLoading);
     const uploadedVideo = useSelector((state: RootState) => state.video.video);
     const [isPhoto, setPhoto] = useState<boolean>(false);
-    const creativeSwitchTime = useRef<NodeJS.Timeout | null>(null);
-    const [delayedIsPhoto, setDelayedIsPhoto] = useState<boolean>(false);
-    const [isBlur, setBlur] = useState<boolean>(false);
 
-    useEffect(() =>
-    {
-        return () =>
-        {
-            if (creativeSwitchTime.current)
-            {
-                clearTimeout(creativeSwitchTime.current)
-            }
-        }
-    }, [])
-
-    function videoPhotoSwitch()
-    {
-        setPhoto(prev => !prev);
-        setBlur(true);
-        creativeSwitchTime.current = setTimeout(() =>
-        {
-            setDelayedIsPhoto(prev => !prev);
-            setBlur(false);
-        }, 2000);
-    }
-
-
-
-    // return <CreativeRecorderPhoto onImageReady={getBlobImage} />
-    // else
-    //     return <CreativeRecorder onVideoRecorded={handleVideoReady} />;
+    function videoPhotoSwitch() { setPhoto(prev => !prev); }
 
     useEffect(() =>
     {
@@ -274,10 +245,7 @@ const CreateVideo = () =>
             case 1:
                 return <CreateVideoInfo handleToggle={nextStep} handleBack={previousStep} />;
             case 2:
-                if (delayedIsPhoto)
-                    return <CreativeRecorderPhoto onImageReady={getBlobImage} />
-                else
-                    return <CreativeRecorder onVideoRecorded={handleVideoReady} />;
+                return <Creative onVideoRecorded={handleVideoReady} onImageReady={getBlobImage} isPhoto={isPhoto} />
             case 3:
                 return <CheckVideo videoUrl={videoUrl} onDownload={onDownloadClick} prevStep={previousStep} />;
             case 4:
@@ -304,7 +272,7 @@ const CreateVideo = () =>
                         <h1 className={`text-gradient ${styles.title}`}>
                             #WeFinallyPlayedIt
                         </h1>
-                        <Box className={styles.popup} id="pp" sx={{ filter: isBlur ? 'blur(10px)' : 'blur(0)' }}>
+                        <Box className={styles.popup} id="pp">
                             {CurrentTemplate()}
                             {isCreating && <Loader className={styles.popup__loader} color="white" size={100} progress={progress} />}
                             {

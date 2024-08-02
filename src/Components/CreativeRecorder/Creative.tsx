@@ -62,6 +62,29 @@ const skeletEffects: EffectItem[] = [
     },
 ]
 
+const skeletPhotoEffects: EffectItem[] = [
+    {
+        name: "Skeleton + tatoo",
+        src: 'PICKER7.png',
+        url: "/effects/MASK+TEXT.deepar"
+    },
+    {
+        name: "Skeleton + eyes",
+        src: 'PICKER8.png',
+        url: "/effects/EYES+TEXT.deepar"
+    },
+    {
+        name: "Skeleton + orc head",
+        src: 'PICKER3.png',
+        url: "/effects/ORC_HEAD+TEXT.deepar"
+    },
+    {
+        name: "Skeleton + skeleton head",
+        src: 'PICKER4.png',
+        url: "/effects/SKELETON_HEAD+TEXT.deepar"
+    },
+]
+
 const effects: EffectItem[] = [
     {
         name: "orc",
@@ -75,27 +98,45 @@ const effects: EffectItem[] = [
     },
 ];
 
-const creativeRecordingStartedEvent = new Event("creative-recording-started", { bubbles: true });
-
 export interface CreativeRecorderProps
 {
-    onVideoRecorded: (video: Blob) => void,
+    onVideoRecorded: (video: Blob) => void;
+    onImageReady: (video: Blob) => void;
+    isPhoto: boolean;
 }
 
-export default function CreativeRecorder(props: CreativeRecorderProps)
+export default function Creative<CreativeRecorderProps>({ onVideoRecorded, onImageReady, isPhoto })
 {
+    const dispatch = useAppDispatch();
     const deepAR = useDeepAR("#deepar-screen");
-    const [isInited, setIsInited] = useState<boolean>(false);
     const creativeRecorder = useCreativeRecorder({ deepAR });
     const videoProcessor = useVideoProcessor();
+    const [isInited, setIsInited] = useState<boolean>(false);
     const [music, setMusic] = useState<Blob | null>(null);
-    const [currentEffects, setCurrentEffects] = useState(null);
     const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
+    const isNavbarMusicPlaying = useSelector((state: RootState) => state.audio.isPlaying);
+    const [currentEffects, setCurrentEffects] = useState(null);
     const [frames, setLocalFrames] = useState(null);
-    const dispatch = useAppDispatch();
     const [recordingTime, setRecordingTime] = useState<number>(0);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
-    const isNavbarMusicPlaying = useSelector((state: RootState) => state.audio.isPlaying);
+    const effectsTimer = useRef<NodeJS.Timeout | null>(null);
+    const [isSwitchingEffect, setSwitchingEffect] = useState<boolean>(false);
+
+    useEffect(() =>
+    {
+        return () =>
+        {
+            if (deepAR) deepAR.shutdown();
+            setCurrentEffects(isPhoto ? skeletPhotoEffects : orcEffects);
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() =>
+    {
+        setCurrentEffects(isPhoto ? skeletPhotoEffects : orcEffects);
+        handleEffectChange(isPhoto ? skeletPhotoEffects[0] : effects[0]);
+    }, [isPhoto])
 
     useEffect(() =>
     {
@@ -103,11 +144,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
         return () =>
         {
-            // if (deepAR && isInited)
-            // {
-            //     deepAR.shutdown();
-            // }
-
             if (deepAR) deepAR.shutdown();
 
             if (timerRef.current)
@@ -142,7 +178,7 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
         if (!frames)
         {
             setLocalFrames(videoProcessor.output);
-            props.onVideoRecorded(videoProcessor.output);
+            onVideoRecorded(videoProcessor.output);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [videoProcessor.output]);
@@ -151,11 +187,8 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
     {
         try
         {
-            if (isStarted)
-            {
-                finishRecording();
-            } else
-                startRecording();
+            if (isStarted) finishRecording();
+            else startRecording();
         }
         catch (e)
         {
@@ -163,11 +196,6 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
             alert("Error!");
         }
     }
-
-    useEffect(() =>
-    {
-        setCurrentEffects(orcEffects);
-    }, []);
 
     function firstEffectChange(effect: EffectItem)
     {
@@ -197,36 +225,67 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     function handleEffectChange(effect: EffectItem)
     {
-        deepAR?.switchEffect(effect.url);
+        if (deepAR)
+        {
+            setSwitchingEffect(true);
+
+            if (effectsTimer.current)
+            {
+                clearTimeout(effectsTimer.current);
+            }
+
+            effectsTimer.current = setTimeout(() =>
+            {
+                deepAR.switchEffect(effect.url);
+                setSwitchingEffect(false);
+            }, 300);
+        }
     }
+
 
     return (
         <Box className={styles.CreativeRecorder}>
             <Box className={styles.CreativeRecorder__recorder} id="deepar-screen" />
             {isInited &&
                 <Box className={styles.CreativeRecorder__buttons}>
-                    {recordingTime < 1 &&
+                    {(isPhoto || recordingTime > 5) &&
+                        < EffectPicker
+                            effects={currentEffects}
+                            onEffectChange={handleEffectChange}
+                            orientation={'vertical'}
+                            radioName={'effects'}
+                        />
+                    }
+                    {(!isPhoto && recordingTime < 1) &&
                         <EffectPicker
                             effects={effects}
                             onEffectChange={firstEffectChange}
                             orientation={'horizontal'}
                         />
                     }
-                    {recordingTime > 5 &&
-                        < EffectPicker
-                            effects={currentEffects}
-                            onEffectChange={handleEffectChange}
-                            orientation={'vertical'}
+                    {!isPhoto ?
+                        <StartStopButton
+                            onChange={handleVideoStateChange}
+                            disabled={!deepAR || !isInited}
                         />
-                    }
-                    <StartStopButton
-                        onChange={handleVideoStateChange}
-                        disabled={!deepAR || !isInited}
-                    />
+                        :
+                        <button
+                            onClick={handlePhotoClick}
+                            className={`${styles.button} ${styles['button-stop']} ${styles['button-photo']}`}
+                        >
+                            <span />
+                        </button>}
                 </Box>
             }
         </Box>
     );
+
+    async function handlePhotoClick()
+    {
+        const dataUrl = await deepAR.takeScreenshot();
+        const blob = convertDataUrlToBlob(dataUrl);
+        if (blob) onImageReady(blob);
+    }
 
     function startRecording()
     {
@@ -266,14 +325,32 @@ export default function CreativeRecorder(props: CreativeRecorderProps)
 
     async function initializeCreativeRecorder()
     {
-        const music = await axios.get(musicPath, { responseType: "blob" })
-            .then(response => response.data);
+        if (!isPhoto)
+        {
+            const music = await axios.get(musicPath, { responseType: "blob" })
+                .then(response => response.data);
 
-        audioPlayerRef.current = new Audio(musicPath);
-        setMusic(music);
+            audioPlayerRef.current = new Audio(musicPath);
+            setMusic(music);
+        }
 
         const videoGrants = await creativeRecorder.getPermissions();
-
         setIsInited(videoGrants);
     }
+}
+
+function convertDataUrlToBlob(dataUrl: string): Blob
+{
+    const arr = dataUrl.split(",");
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n--)
+    {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new Blob([u8arr], { type: mime });
 }
