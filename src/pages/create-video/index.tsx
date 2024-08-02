@@ -72,7 +72,6 @@ const CreateVideo = () =>
     {
         if (step === 0) track('Create creative button click.');
         setPrevStep(prevStep ? prevStep : step);
-        console.log('PREV', prevStep);
         setStep(prev => nextStep ? nextStep : prev + 1);
         if (step === 4) track('The creative has been uploaded successfully.');
     }
