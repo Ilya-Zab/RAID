@@ -46,6 +46,8 @@ const CreateVideo = () =>
     const uploadedVideo = useSelector((state: RootState) => state.video.video);
     const [isPhoto, setPhoto] = useState<boolean>(false);
     const creativeSwitchTime = useRef<NodeJS.Timeout | null>(null);
+    const [delayedIsPhoto, setDelayedIsPhoto] = useState<boolean>(false);
+    const [isBlur, setBlur] = useState<boolean>(false);
 
     useEffect(() =>
     {
@@ -60,11 +62,20 @@ const CreateVideo = () =>
 
     function videoPhotoSwitch()
     {
+        setPhoto(prev => !prev);
+        setBlur(true);
         creativeSwitchTime.current = setTimeout(() =>
         {
-            setPhoto(prev => !prev);
-        }, 1000)
+            setDelayedIsPhoto(prev => !prev);
+            setBlur(false);
+        }, 2000);
     }
+
+
+
+    // return <CreativeRecorderPhoto onImageReady={getBlobImage} />
+    // else
+    //     return <CreativeRecorder onVideoRecorded={handleVideoReady} />;
 
     useEffect(() =>
     {
@@ -263,7 +274,7 @@ const CreateVideo = () =>
             case 1:
                 return <CreateVideoInfo handleToggle={nextStep} handleBack={previousStep} />;
             case 2:
-                if (isPhoto)
+                if (delayedIsPhoto)
                     return <CreativeRecorderPhoto onImageReady={getBlobImage} />
                 else
                     return <CreativeRecorder onVideoRecorded={handleVideoReady} />;
@@ -293,7 +304,7 @@ const CreateVideo = () =>
                         <h1 className={`text-gradient ${styles.title}`}>
                             #WeFinallyPlayedIt
                         </h1>
-                        <Box className={styles.popup} id="pp">
+                        <Box className={styles.popup} id="pp" sx={{ filter: isBlur ? 'blur(10px)' : 'blur(0)' }}>
                             {CurrentTemplate()}
                             {isCreating && <Loader className={styles.popup__loader} color="white" size={100} progress={progress} />}
                             {
