@@ -95,7 +95,8 @@ export const CreativeRecorderPhoto = ({ onImageReady }) =>
     {
         return () =>
         {
-            if (deepAR && isInited) deepAR.shutdown();
+            if (deepAR) deepAR.shutdown();
+            // if (deepAR && isInited) deepAR.shutdown();
 
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
