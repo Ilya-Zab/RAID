@@ -241,7 +241,8 @@ const CreateVideo = () =>
         switch (step)
         {
             case 0:
-                return <CreateVideoTemplate handleButtonClick={nextStep} changeProgress={changeProgress} />;
+                // return <CreateVideoTemplate handleButtonClick={nextStep} changeProgress={changeProgress} />;
+                return <CreateVideoInfo handleToggle={nextStep} handleBack={previousStep} />;
             case 1:
                 return <CreateVideoInfo handleToggle={nextStep} handleBack={previousStep} />;
             case 2:
