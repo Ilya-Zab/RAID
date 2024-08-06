@@ -13,13 +13,15 @@ const CreativesListItem: FC<CreativesListItemProps> = ({
     hasVoted,
     onVote,
     shared = false
-}) => {
+}) =>
+{
     const [sharingWindow, setSharingWindow] = useState(false);
     const isMobile = useMediaQuery(`(max-width: 800px)`);
 
     const router = useRouter();
 
-    const openCreative = (id: number) => {
+    const openCreative = (id: number) =>
+    {
         router.push({
             query: {
                 creative: id
@@ -46,6 +48,7 @@ const CreativesListItem: FC<CreativesListItemProps> = ({
                             objectFit="cover"
                             objectPosition="center"
                             src={`${preview_url}`} alt={title.rendered}
+                            unoptimized
                         />
                         :
                         <Image
@@ -53,6 +56,7 @@ const CreativesListItem: FC<CreativesListItemProps> = ({
                             objectFit="cover"
                             objectPosition="center"
                             src={`${meta.featured_media_url && meta.featured_media_url}`} alt={title.rendered}
+                            unoptimized
                         />
                     }
                 </div>
@@ -74,7 +78,7 @@ const CreativesListItem: FC<CreativesListItemProps> = ({
             </button>
             {(shared && !isMobile) &&
                 <button onClick={() => setSharingWindow(true)} className={styles["creatives-list-item__share-button"]} aria-label="Share">
-                    <Image src={`/images/sharing-button.svg`} width={34} height={34} alt="Sharing" />
+                    <Image src={`/images/sharing-button.svg`} width={34} height={34} alt="Sharing" unoptimized />
                 </button>
             }
             <div className={styles["creatives-list-item__votes"]}>
@@ -83,7 +87,7 @@ const CreativesListItem: FC<CreativesListItemProps> = ({
             {sharingWindow &&
                 <div className={styles["creatives-list-item__share-window"]}>
                     <button aria-label="Close" onClick={() => setSharingWindow(false)} className={styles["creatives-list-item__share-window-close"]}>
-                        <Image src={'/images/close-mini.svg'} width={16} height={16} alt="times" />
+                        <Image src={'/images/close-mini.svg'} width={16} height={16} alt="times" unoptimized />
                     </button>
                     <Sharing
                         title={

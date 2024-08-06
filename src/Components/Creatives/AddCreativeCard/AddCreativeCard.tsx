@@ -5,11 +5,13 @@ import addIcon from "/public/images/icon/add_icon.svg";
 import Image from "next/image";
 import Link from "next/link";
 
-interface AddCreativeCardPropsType {
+interface AddCreativeCardPropsType
+{
     hasLogin?: boolean;
 }
 
-const AddCreativeCard: FC<AddCreativeCardPropsType> = ({ hasLogin = false }) => {
+const AddCreativeCard: FC<AddCreativeCardPropsType> = ({ hasLogin = false }) =>
+{
     return (
         <Link
             href={hasLogin ? `/create-video` : `#ready`}
@@ -27,6 +29,7 @@ const AddCreativeCard: FC<AddCreativeCardPropsType> = ({ hasLogin = false }) => 
                     width={30}
                     height={30}
                     alt={"Add"}
+                    unoptimized
                 />
                 {hasLogin ?
                     <span>Upload/Create<br />Your Content</span> :

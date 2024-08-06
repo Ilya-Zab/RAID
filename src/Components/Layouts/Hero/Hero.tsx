@@ -20,6 +20,7 @@ const Hero = () =>
                     height={!isMobile ? 745 : 559}
                     className={`${styles.hero__img} parallax`}
                     data-speed={!isMobile ? -30 : -10}
+                    unoptimized
                 />
                 <Box>
                     <Box className={styles.hero__title_wrapper}>

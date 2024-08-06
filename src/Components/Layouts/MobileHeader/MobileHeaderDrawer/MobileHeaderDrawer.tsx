@@ -48,6 +48,7 @@ const MobileHeaderDrawer: React.FC<MobileHeaderDrawerProps> = ({ toggleDrawer })
                         width={49}
                         height={25}
                         className={styles.logo_img}
+                        unoptimized
                     />
                 </Link>
             </Box>

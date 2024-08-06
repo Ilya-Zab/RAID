@@ -10,13 +10,16 @@ import { useAppSelector } from "@/hooks/redux";
 import { useCookies } from "react-cookie";
 
 
-const CreateVideo = () => {
+const CreateVideo = () =>
+{
     const [{ userToken }] = useCookies(['userToken']);
     const { raidId } = useAppSelector(state => state.raidId);
     const router = useRouter();
 
-    useEffect(() => {
-        if (!userToken && !raidId) {
+    useEffect(() =>
+    {
+        if (!userToken && !raidId)
+        {
             router.push('/');
         }
     }, []);
@@ -43,6 +46,7 @@ const CreateVideo = () => {
                         width={531}
                         height={788}
                         className={`${styles['creatives-section__img']} ${styles['creatives-section__img_gallery']}`}
+                        unoptimized
                     />
                 </Creatives>
             </main>

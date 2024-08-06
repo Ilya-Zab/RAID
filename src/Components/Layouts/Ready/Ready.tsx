@@ -6,7 +6,8 @@ import PromoCode from "@/Components/PromoCode/PromoCode";
 import { LoginForm } from '@/Components/Forms/LoginForm';
 import { useMediaQuery } from "@mui/material";
 
-const Ready = () => {
+const Ready = () =>
+{
     const isMobile = useMediaQuery('(max-width: 768px)');
 
     return (
@@ -17,6 +18,7 @@ const Ready = () => {
                 width={isMobile ? 280 : 857}
                 height={isMobile ? 388 : 3114}
                 className={`${styles["ready__img"]}`}
+                unoptimized
             />
             <div className="container">
                 <h2 className={styles["ready__title"]}>

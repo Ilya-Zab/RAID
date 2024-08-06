@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styles from './styles.module.scss';
-import {Box, AppBar, Toolbar, Button } from '@mui/material';
+import { Box, AppBar, Toolbar, Button } from '@mui/material';
 import Image from 'next/image';
 import Link from "next/link";
 import Navigation from '../Navigation/Navigation';
@@ -28,7 +28,8 @@ const data = [
     }
 ];
 
-const Header: React.FC = () => {
+const Header: React.FC = () =>
+{
     return (
         <AppBar position="static" className={styles.header}>
             <Box className={'container'}>
@@ -40,9 +41,10 @@ const Header: React.FC = () => {
                             width={75}
                             height={41}
                             className={styles.logo_img}
+                            unoptimized
                         />
                     </Link>
-                    <Navigation data={data}/>
+                    <Navigation data={data} />
                     <Box className={styles.buttons}>
                         <Link
                             href={'https://pl.go-ga.me/chnosnyx'}

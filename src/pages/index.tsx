@@ -21,6 +21,7 @@ export default function Home()
                     height={1274}
                     className={`${styles['creatives-section__img']} ${styles['creatives-section__img_main']} parallax`}
                     data-speed={10}
+                    unoptimized
                 />
             </Creatives>
             <Ready />

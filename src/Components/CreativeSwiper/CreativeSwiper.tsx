@@ -21,13 +21,16 @@ const CreativeSwiper = ({ data, nextStep, getCurrentFrame }) =>
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const [activeIndex, setActiveIndex] = useState(0);
 
-    useEffect(() => {
-        if (data && data.length > 0) {
+    useEffect(() =>
+    {
+        if (data && data.length > 0)
+        {
             getCurrentFrame(data[activeIndex]);
         }
     }, [activeIndex]);
 
-    const handleSlideChange = (swiper) => {
+    const handleSlideChange = (swiper) =>
+    {
         setActiveIndex(swiper.activeIndex);
     };
 
@@ -52,6 +55,7 @@ const CreativeSwiper = ({ data, nextStep, getCurrentFrame }) =>
                                         alt={""}
                                         width={340}
                                         height={605}
+                                        unoptimized
                                     />
                                 </SwiperSlide>
                             )
@@ -77,6 +81,7 @@ const CreativeSwiper = ({ data, nextStep, getCurrentFrame }) =>
                                         alt={""}
                                         width={60}
                                         height={60}
+                                        unoptimized
                                     />
                                 </SwiperSlide>
                             )

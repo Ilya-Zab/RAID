@@ -11,13 +11,16 @@ import { useCookies } from "react-cookie";
 import { useRouter } from "next/router";
 
 
-const CreateVideo = () => {
+const CreateVideo = () =>
+{
     const [{ userToken }] = useCookies(['userToken']);
     const { raidId } = useAppSelector(state => state.raidId);
     const router = useRouter();
 
-    useEffect(() => {
-        if (!userToken && !raidId) {
+    useEffect(() =>
+    {
+        if (!userToken && !raidId)
+        {
             router.push('/');
         }
     }, []);
@@ -43,6 +46,7 @@ const CreateVideo = () => {
                         width={635}
                         height={804}
                         className={`${styles['creatives-section__img']} ${styles['creatives-section__img_preview']}`}
+                        unoptimized
                     />
                 </Creatives>
             </main>

@@ -4,7 +4,8 @@ import { Box } from '@mui/material';
 import Image from 'next/image';
 import { useMediaQuery } from "@mui/material";
 
-const Second = () => {
+const Second = () =>
+{
     const isMobile = useMediaQuery('(max-width: 768px)');
 
     return (
@@ -17,6 +18,7 @@ const Second = () => {
                     height={1120}
                     className={`parallax ${styles.second__img}`}
                     data-speed={!isMobile ? 20 : -5}
+                    unoptimized
                 />
             </Box>
             <Box className={'container'}>

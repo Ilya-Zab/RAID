@@ -42,6 +42,7 @@ const Footer = () =>
                                     width={203}
                                     height={125}
                                     className={styles.logo}
+                                    unoptimized
                                 />
                             </Link>
                             <Box className={styles.nav_wrapper}>

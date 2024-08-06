@@ -32,6 +32,7 @@ const ModalFindId = () =>
                     width={768}
                     height={354}
                     className={styles.img}
+                    unoptimized
                 />
             </Box>
         </Modal>

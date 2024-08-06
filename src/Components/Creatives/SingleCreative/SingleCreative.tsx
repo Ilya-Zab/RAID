@@ -13,11 +13,13 @@ import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { unvoteCreative, updateVotesAvailable, updateVotesCreatives, voteCreative } from "@/store/slice/userSlice";
 import Sharing from "../Sharing";
 
-interface SingleCreativePropsType {
+interface SingleCreativePropsType
+{
     creativeId: number
 };
 
-const SingleCreative: FC<SingleCreativePropsType> = ({ creativeId }) => {
+const SingleCreative: FC<SingleCreativePropsType> = ({ creativeId }) =>
+{
     const userState = useAppSelector(state => state.user);
     const dispatch = useAppDispatch();
     const [{ userToken }] = useCookies(['userToken']);
@@ -30,25 +32,32 @@ const SingleCreative: FC<SingleCreativePropsType> = ({ creativeId }) => {
 
     console.log(videoRef);
 
-    useEffect(() => {
-        if (onPause) {
+    useEffect(() =>
+    {
+        if (onPause)
+        {
             videoRef.current.pause();
-        } else if (videoRef !== null) {
+        } else if (videoRef !== null)
+        {
             videoRef?.current?.play();
         }
     }, [onPause]);
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         refetch();
     }, [justVotedVideo, justUnvotedVideo, userState.votesCreatives]);
 
-    useEffect(() => {
-        if (userToken) {
+    useEffect(() =>
+    {
+        if (userToken)
+        {
             fetchUserData(userToken);
         }
     }, []);
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         const userVotesAvailable = userData?.meta?.votes_available;
         const userVotesCreatives = userData?.meta?.votes_creatives;
 
@@ -57,19 +66,24 @@ const SingleCreative: FC<SingleCreativePropsType> = ({ creativeId }) => {
 
     }, [userData]);
 
-    const checkUserHasVoted = (creativeId: number): boolean => {
+    const checkUserHasVoted = (creativeId: number): boolean =>
+    {
         return Boolean(userState.votesCreatives.includes(String(creativeId)));
     }
 
-    const handleVote = (creativeId) => {
+    const handleVote = (creativeId) =>
+    {
 
-        if (userState.votesCreatives.includes(String(creativeId))) {
+        if (userState.votesCreatives.includes(String(creativeId)))
+        {
             fetchUnvoteCreative({ user_id: userData?.id, creative_id: creativeId });
             dispatch(unvoteCreative(String(creativeId)));
             refetch();
             return -1;
-        } else {
-            if (userState.votesAvailable <= 0) {
+        } else
+        {
+            if (userState.votesAvailable <= 0)
+            {
                 alert("You have exceeded your votes limit.");
                 return false;
             }
@@ -112,7 +126,7 @@ const SingleCreative: FC<SingleCreativePropsType> = ({ creativeId }) => {
                                             className={styles['single-creative__play']}
                                             onClick={() => { setPause(false) }}
                                         >
-                                            <Image src={'/images/play.svg'} width={32} height={32} alt="play" />
+                                            <Image src={'/images/play.svg'} width={32} height={32} alt="play" unoptimized />
                                         </button>
                                     }
                                 </>

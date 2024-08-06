@@ -95,6 +95,7 @@ const FinallyVideoTemplate = ({ video, creativeImage, changeProgress }) =>
                             width={136}
                             height={243}
                             className={styles.photo}
+                            unoptimized
                         />
                         <div className={`text-gradient ${styles['section__photo-name']}`}>
                             {creativeName && trimString(creativeName, 12)}

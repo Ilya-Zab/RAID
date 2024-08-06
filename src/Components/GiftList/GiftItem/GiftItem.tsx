@@ -17,6 +17,7 @@ const GiftItem = ({ data }) =>
                 style={{
                     objectFit: 'contain'
                 }}
+                unoptimized
             />
             <Typography variant='h4' className={styles.gift_name}>
                 <span>

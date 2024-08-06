@@ -38,7 +38,7 @@ const Sharing = ({ title, text, creativeId }) =>
                         hashtags={['#WeFinallyPlayedIt']}
                         aria-label="share via twitter"
                     >
-                        <Image width={40} height={40} alt="x" src={'/images/sharing-x.svg'} />
+                        <Image width={40} height={40} alt="x" src={'/images/sharing-x.svg'} unoptimized />
                     </TwitterShareButton>
                 </div>
                 <div className={styles['sharing__button']}>
@@ -48,7 +48,7 @@ const Sharing = ({ title, text, creativeId }) =>
                         hashtag="#WeFinallyPlayedIt"
                         aria-label="share via facebook"
                     >
-                        <Image width={40} height={40} alt="x" src={'/images/sharing-fb.svg'} />
+                        <Image width={40} height={40} alt="x" src={'/images/sharing-fb.svg'} unoptimized />
                     </FacebookShareButton>
                 </div>
                 {/* <button className={styles['sharing__button']} onClick={() => shareTt(creativeId)}>
@@ -58,7 +58,7 @@ const Sharing = ({ title, text, creativeId }) =>
                 </button> */}
 
                 <button className={styles['sharing__button']} onClick={() => shareLink(creativeId)}>
-                    <Image width={40} height={40} alt="x" src={'/images/sharing-share.svg'} />
+                    <Image width={40} height={40} alt="x" src={'/images/sharing-share.svg'} unoptimized />
                 </button>
             </div>
         </div>

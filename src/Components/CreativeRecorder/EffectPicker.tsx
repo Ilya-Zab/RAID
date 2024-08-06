@@ -56,6 +56,7 @@ export function EffectPicker(options: EffectPickerOptions)
                             alt={e.name}
                             width={40}
                             height={40}
+                            unoptimized
                         />
                     </span>
                 </label>

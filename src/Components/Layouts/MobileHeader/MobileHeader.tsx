@@ -13,11 +13,14 @@ const CustomSwipeableDrawer = styled(SwipeableDrawer)`
     }
 `;
 
-const MobileHeader = () => {
+const MobileHeader = () =>
+{
     const [openMenu, setOpenMenu] = useState(false);
 
-    const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-        if (event.type === 'keydown' && ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')) {
+    const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) =>
+    {
+        if (event.type === 'keydown' && ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift'))
+        {
             return;
         }
         setOpenMenu(open);
@@ -34,6 +37,7 @@ const MobileHeader = () => {
                             width={49}
                             height={25}
                             className={styles.logo_img}
+                            unoptimized
                         />
                     </Link>
                     <IconButton className='iconBtn' onClick={toggleDrawer(true)}>
@@ -43,6 +47,7 @@ const MobileHeader = () => {
                             width={24}
                             height={24}
                             className={styles.burger}
+                            unoptimized
                         />
                     </IconButton>
                     <CustomSwipeableDrawer

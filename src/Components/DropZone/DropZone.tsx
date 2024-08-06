@@ -74,6 +74,7 @@ function DropZone()
                             alt=''
                             width={16}
                             height={15}
+                            unoptimized
                         />
                         <span style={files ? { width: '160px' } : { width: '79px' }}>
                             {files ? files.name : 'Browse'}

@@ -8,13 +8,15 @@ import CreativesListItem from "../CreativesListItem";
 import Link from "next/link";
 
 
-interface MyCreativeCardPropsType {
+interface MyCreativeCardPropsType
+{
     creative: CreativeDataType,
     hasVoted: boolean,
     onVote: (creativeId: number) => void
 }
 
-const MyCreativeCard: FC<MyCreativeCardPropsType> = ({ creative, hasVoted, onVote }) => {
+const MyCreativeCard: FC<MyCreativeCardPropsType> = ({ creative, hasVoted, onVote }) =>
+{
     return (
         (creative.status === 'publish') ?
             <CreativesListItem creative={creative} hasVoted={hasVoted} onVote={onVote} shared={true} /> :
@@ -26,6 +28,7 @@ const MyCreativeCard: FC<MyCreativeCardPropsType> = ({ creative, hasVoted, onVot
                             objectFit="cover"
                             objectPosition="center"
                             src={`${creative.preview_url}`} alt={creative.title.rendered}
+                            unoptimized
                         />
                         :
                         <Image
@@ -33,6 +36,7 @@ const MyCreativeCard: FC<MyCreativeCardPropsType> = ({ creative, hasVoted, onVot
                             objectFit="cover"
                             objectPosition="center"
                             src={`${creative.meta.featured_media_url && creative.meta.featured_media_url}`} alt={creative.title.rendered}
+                            unoptimized
                         />
                     }
                 </div>
@@ -43,7 +47,7 @@ const MyCreativeCard: FC<MyCreativeCardPropsType> = ({ creative, hasVoted, onVot
                     }}
                 >
                     <div className={styles['my-creative-card__icon']}>
-                        <Image src={waitIcon.src} width={42} height={42} alt="wait" />
+                        <Image src={waitIcon.src} width={42} height={42} alt="wait" unoptimized />
                     </div>
 
                     <div className={styles['my-creative-card__title']}>
