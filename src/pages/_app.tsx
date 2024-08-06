@@ -28,7 +28,7 @@ export function App({ Component, pageProps }: AppProps)
 
     return (
         <Provider store={store}>
-            <CreateVideoInfo handleToggle={() => { }} handleBack={() => { }} />;
+            <CreateVideoInfo handleToggle={() => { }} handleBack={() => { }} />
             {/* <Layout>
                 <Component {...pageProps} />
             </Layout> */}
