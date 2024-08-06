@@ -13,7 +13,8 @@ import { useFetchUnvoteCreativeMutation, useFetchUpdateVoteVideoMutation } from 
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { unvoteCreative, updateVotesAvailable, updateVotesCreatives, voteCreative } from "@/store/slice/userSlice";
 
-const Creatives = ({ children }) => {
+const Creatives = ({ children }) =>
+{
     const userState = useAppSelector(state => state.user);
     const dispatch = useAppDispatch();
     const router = useRouter();
@@ -27,13 +28,16 @@ const Creatives = ({ children }) => {
     const { raidId } = useAppSelector(state => state.raidId);
 
 
-    useEffect(() => {
-        if (userToken) {
+    useEffect(() =>
+    {
+        if (userToken)
+        {
             fetchUserData(userToken);
         }
     }, []);
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         const userVotesAvailable = userData?.meta?.votes_available;
         const userVotesCreatives = userData?.meta?.votes_creatives;
 
@@ -42,8 +46,10 @@ const Creatives = ({ children }) => {
 
     }, [userData]);
 
-    useEffect(() => {
-        if (userData?.id) {
+    useEffect(() =>
+    {
+        if (userData?.id)
+        {
             fetchCreativesByDate({
                 per_page: 1,
                 author: userData.id,
@@ -52,18 +58,23 @@ const Creatives = ({ children }) => {
         }
     }, [userData, userState.votesCreatives, justVotedVideo, justUnvotedVideo]);
 
-    const checkUserHasVoted = (creativeId: number): boolean => {
+    const checkUserHasVoted = (creativeId: number): boolean =>
+    {
         return Boolean(userState.votesCreatives.includes(String(creativeId)));
     }
 
-    const handleVote = (creativeId) => {
+    const handleVote = (creativeId) =>
+    {
 
-        if (userState.votesCreatives.includes(String(creativeId))) {
+        if (userState.votesCreatives.includes(String(creativeId)))
+        {
             fetchUnvoteCreative({ user_id: userData?.id, creative_id: creativeId });
             dispatch(unvoteCreative(String(creativeId)));
             return -1;
-        } else {
-            if (userState.votesAvailable <= 0) {
+        } else
+        {
+            if (userState.votesAvailable <= 0)
+            {
                 alert("You have exceeded your votes limit.");
                 return false;
             }
@@ -71,7 +82,6 @@ const Creatives = ({ children }) => {
             dispatch(voteCreative(String(creativeId)));
             return 1
         }
-
     }
 
     return (
@@ -95,14 +105,15 @@ const Creatives = ({ children }) => {
                     perPage={isMobile ? 2 : 4}
                     orderByVotes={true}
                     limited={true}
-                    firstItem={(pageSlug === 'preview' && creativePending.length) ?
-                        <MyCreativeCard
-                            creative={creativePending[0]}
-                            hasVoted={checkUserHasVoted(creativePending[0].id)}
-                            onVote={handleVote}
-                        /> :
-                        <AddCreativeCard hasLogin={Boolean(userData) || Boolean(raidId)} />
-                    }
+                    // firstItem={(pageSlug === 'preview' && creativePending.length) ?
+                    //     <MyCreativeCard
+                    //         creative={creativePending[0]}
+                    //         hasVoted={checkUserHasVoted(creativePending[0].id)}
+                    //         onVote={handleVote}
+                    //     /> :
+                    //     <AddCreativeCard hasLogin={Boolean(userData) || Boolean(raidId)} />
+                    // }
+                    firstItem={<AddCreativeCard hasLogin={true} />}
                 />
             </div>
             <div className={styles["creatives-section__block"]}>
