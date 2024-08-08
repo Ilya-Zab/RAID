@@ -22,7 +22,6 @@ import CheckVideo from "./CheckVideo";
 import axios from "axios";
 import { track } from '@vercel/analytics';
 import CreateVideoTemplate from "@/Components/CreateVideoTemplate/CreateVideoTemplate";
-// import { CreativeRecorderPhoto } from "@/Components/CreativeRecorder/CreativeRecorderPhoto";
 import { allowedImageTypes } from "@/utils/creativeConsts";
 import { PhotoVideoSwitch } from "@/Components/Layouts/PhotoVideoSwitch";
 import Creative from "@/Components/CreativeRecorder/Creative";
@@ -241,8 +240,7 @@ const CreateVideo = () =>
         switch (step)
         {
             case 0:
-                // return <CreateVideoTemplate handleButtonClick={nextStep} changeProgress={changeProgress} />;
-                return <CreateVideoInfo handleToggle={nextStep} handleBack={previousStep} />;
+                return <CreateVideoTemplate handleButtonClick={nextStep} changeProgress={changeProgress} />;
             case 1:
                 return <CreateVideoInfo handleToggle={nextStep} handleBack={previousStep} />;
             case 2:

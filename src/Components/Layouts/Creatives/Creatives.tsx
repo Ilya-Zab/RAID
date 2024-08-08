@@ -105,15 +105,14 @@ const Creatives = ({ children }) =>
                     perPage={isMobile ? 2 : 4}
                     orderByVotes={true}
                     limited={true}
-                    // firstItem={(pageSlug === 'preview' && creativePending.length) ?
-                    //     <MyCreativeCard
-                    //         creative={creativePending[0]}
-                    //         hasVoted={checkUserHasVoted(creativePending[0].id)}
-                    //         onVote={handleVote}
-                    //     /> :
-                    //     <AddCreativeCard hasLogin={Boolean(userData) || Boolean(raidId)} />
-                    // }
-                    firstItem={<AddCreativeCard hasLogin={true} />}
+                    firstItem={(pageSlug === 'preview' && creativePending.length) ?
+                        <MyCreativeCard
+                            creative={creativePending[0]}
+                            hasVoted={checkUserHasVoted(creativePending[0].id)}
+                            onVote={handleVote}
+                        /> :
+                        <AddCreativeCard hasLogin={Boolean(userData) || Boolean(raidId)} />
+                    }
                 />
             </div>
             <div className={styles["creatives-section__block"]}>
