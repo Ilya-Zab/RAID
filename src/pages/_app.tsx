@@ -1,7 +1,7 @@
 import "@/styles/style.scss";
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
-import Layout from "@/Components/Layout/Layout";
+// import Layout from "@/Components/Layout/Layout";
 import { setupStore } from "@/store/store";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
@@ -28,9 +28,10 @@ export function App({ Component, pageProps }: AppProps)
 
     return (
         <Provider store={store}>
-            <Layout>
+            <CreateVideoInfo handleToggle={() => { }} handleBack={() => { }} />
+            {/* <Layout>
                 <Component {...pageProps} />
-            </Layout>
+            </Layout> */}
         </Provider>
     )
 }
