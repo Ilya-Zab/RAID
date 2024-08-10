@@ -76,7 +76,6 @@ export default function useCreateCreative(): CreateCreativeResult
     {
         if (!cookies.userToken)
             setError(new Error('This user is not allowed to make post requests.'));
-        console.log(cookies.userToken);
 
         try
         {

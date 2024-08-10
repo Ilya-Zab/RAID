@@ -61,10 +61,14 @@ async function handlePostingAsUrl(req: NextApiRequest, res: NextApiResponse, use
         await registerUserCreative(videoId, authorId, res);
         return res;
     }
-    catch (e: any)
+    catch (err: any)
     {
-        console.error("APIERROR: Error occured while uploading video into WordPress.", e);
-        return res.status(500).json({ message: e?.message });
+        console.error("APIERROR: Error occured while uploading video into WordPress.", err);
+        if (err.response && err.response.config && err.response.config.headers)
+        {
+            delete err.response.config.headers['Authorization'];
+        }
+        return res.status(500).json({ message: err?.message });
     }
 }
 
@@ -77,6 +81,10 @@ async function handlePostingAsVideoId(req: NextApiRequest, res: NextApiResponse,
         if (err)
         {
             console.error("Error while parsing form data in the video uploading request.", err);
+            if (err.response && err.response.config && err.response.config.headers)
+            {
+                delete err.response.config.headers['Authorization'];
+            }
             res.status(500).json({ message: "Error while parsing form data in the video uploading request.", error: err });
             return;
         }
@@ -129,6 +137,10 @@ async function registerUserCreative(videoId: string, authorId: string, res: Next
         .catch(err =>
         {
             console.error("Error while registration video as a user creative.", err);
+            if (err.response && err.response.config && err.response.config.headers)
+            {
+                delete err.response.config.headers['Authorization'];
+            }
             res.status(500).json({ message: "Error while registration video as a user creative.", error: err });
         });
 }
@@ -155,6 +167,10 @@ async function registerUserCreativeImage(image: string, authorId: string, res: N
         .catch(err =>
         {
             console.error("Error while registration video as a user creative.", err);
+            if (err.response && err.response.config && err.response.config.headers)
+            {
+                delete err.response.config.headers['Authorization'];
+            }
             res.status(500).json({ message: "Error while registration video as a user creative.", error: err });
         });
 }   

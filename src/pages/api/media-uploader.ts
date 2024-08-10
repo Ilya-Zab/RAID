@@ -54,6 +54,10 @@ async function handlePostingAsFile(req: NextApiRequest, res: NextApiResponse, us
     {
         if (err)
         {
+            if (err.response && err.response.config && err.response.config.headers)
+            {
+                delete err.response.config.headers['Authorization'];
+            };
             console.error("Error while parsing form data in the video uploading request.", err);
             res.status(500).json({ message: "Error while parsing form data in the video uploading request.", error: err });
             return;
@@ -62,6 +66,10 @@ async function handlePostingAsFile(req: NextApiRequest, res: NextApiResponse, us
 
         if (!mediaFile || !mediaFile.filepath || !existsSync(mediaFile.filepath))
         {
+            if (err.response && err.response.config && err.response.config.headers)
+            {
+                delete err.response.config.headers['Authorization'];
+            };
             console.error("Error while reading uploaded file in the video uploading request. File:", mediaFile);
             res.status(500).json({ message: "Error while reading uploaded file in the video uploading request." });
             return;
@@ -69,6 +77,10 @@ async function handlePostingAsFile(req: NextApiRequest, res: NextApiResponse, us
 
         if (!mediaFile.mimetype || !allowedImageTypes.includes(mediaFile.mimetype))
         {
+            if (err.response && err.response.config && err.response.config.headers)
+            {
+                delete err.response.config.headers['Authorization'];
+            };
             console.error(`Error while processing uploaded file in the video uploading request. File mime type should be one of the following: ${allowedImageTypes.join(", ")}, but was "${mediaFile.mimetype}"`);
             res.status(500).json({ message: `Error while processing uploaded file in the video uploading request. File mime type should be one of the following: ${allowedImageTypes.join(", ")}, but was "${mediaFile.mimetype}"` });
             return;
@@ -82,6 +94,10 @@ async function handlePostingAsFile(req: NextApiRequest, res: NextApiResponse, us
             return res.status(200).json({ message: "File uploaded successfully", mediaItem });
         } catch (uploadError)
         {
+            if (err.response && err.response.config && err.response.config.headers)
+            {
+                delete err.response.config.headers['Authorization'];
+            };
             console.error("Error uploading media buffer", uploadError);
             return res.status(500).json({ message: "Error uploading media buffer", error: uploadError });
         }
