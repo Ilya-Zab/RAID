@@ -1,14 +1,12 @@
 import "@/styles/style.scss";
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
-// import Layout from "@/Components/Layout/Layout";
+import Layout from "@/Components/Layout/Layout";
 import { setupStore } from "@/store/store";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useCheckUserId } from "@/utils/checkUserIp";
 import { AccessDeniedPage } from "@/Components/Layouts/AccessDeniedPage";
-import CreateVideoInfo from "@/Components/CreateVideoInfo/CreateVideoInfo";
-
 
 const store = setupStore();
 
@@ -28,10 +26,9 @@ export function App({ Component, pageProps }: AppProps)
 
     return (
         <Provider store={store}>
-            <CreateVideoInfo handleToggle={() => { }} handleBack={() => { }} />
-            {/* <Layout>
+            <Layout>
                 <Component {...pageProps} />
-            </Layout> */}
+            </Layout>
         </Provider>
     )
 }

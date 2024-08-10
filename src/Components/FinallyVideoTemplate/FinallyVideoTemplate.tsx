@@ -23,6 +23,7 @@ const FinallyVideoTemplate = ({ video, creativeImage, changeProgress }) =>
     const { uploadVideoByUserToken, uploadPictureByUserToken, success, data, error } = useCreateCreative();
     const isCreating = useAppSelector(state => state.creative.isLoading);
     const { isLoading: isMediaLoading, data: wpMediaResponse, error: wpMediaError, createWpMedia } = useCreateWpMedia();
+    const [refetchTimes, setRefetchTimes] = React.useState<number>(0);
     const dispatch = useAppDispatch();
     React.useEffect(() =>
     {
@@ -56,13 +57,8 @@ const FinallyVideoTemplate = ({ video, creativeImage, changeProgress }) =>
             if (video)
                 uploadVideoByUserToken(video, wpMediaResponse.mediaItem.id, creativeName);
         }
-
-        if (wpMediaError)
-        {
-            console.error(wpMediaError);
-        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [wpMediaResponse, wpMediaError]);
+    }, [wpMediaResponse]);
 
     React.useEffect(() =>
     {
@@ -74,15 +70,23 @@ const FinallyVideoTemplate = ({ video, creativeImage, changeProgress }) =>
             changeProgress(100);
             dispatch(setCreativeName(null));
         }
-
-        if (error)
-        {
-            alert('There is a problem with adding creative');
-            alert(error);
-            changeProgress(100);
-        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [success, error]);
+    }, [success]);
+    // changeProgress(100);
+    React.useEffect(() =>
+    {
+        if (refetchTimes > 3)
+        {
+            alert('Try again later.')
+            return;
+        };
+
+        if (error || wpMediaError)
+        {
+            onCreateClick();
+        }
+
+    }, [wpMediaError, error])
 
     return (
         <Box className={styles.bg}>
