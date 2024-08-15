@@ -18,6 +18,7 @@ export function useCheckUserId()
         try
         {
             const response = await axios.get('https://ipapi.co/json');
+            console.log(response);
             const countryCode = response.data.continent_code;
 
             if (restrictedCountries.includes(countryCode))
