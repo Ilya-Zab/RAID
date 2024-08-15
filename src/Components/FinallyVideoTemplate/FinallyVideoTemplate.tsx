@@ -12,7 +12,6 @@ import { useCreateWpMedia } from "@/hooks/useCreateWpMedia";
 import { setVideo } from "@/store/slice/videoSlice";
 import { setCreativeName, setLoading } from "@/store/slice/creativeSlice";
 import { trimString } from "@/utils/trimString";
-import { Loader } from "@/Components/Layouts/Loader";
 
 const FinallyVideoTemplate = ({ video, creativeImage, changeProgress }) =>
 {
@@ -72,18 +71,19 @@ const FinallyVideoTemplate = ({ video, creativeImage, changeProgress }) =>
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [success]);
-    // changeProgress(100);
     React.useEffect(() =>
     {
         if (refetchTimes > 3)
         {
             alert('Try again later.')
+            dispatch(setLoading(false));
             return;
         };
 
         if (error || wpMediaError)
         {
             onCreateClick();
+            setRefetchTimes(prev => prev + 1);
         }
 
     }, [wpMediaError, error])
