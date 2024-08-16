@@ -4,8 +4,11 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse)
 {
-    const { ...params } = req.query;
+    const { path, ...params } = req.query;
     let slug = req.query.path;
+
+    let isCustom = false;
+    if ("apiPath" in params) isCustom = true;
 
     if (!slug || slug.length === 0)
     {
@@ -19,7 +22,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (req.method !== 'GET')
     {
-        wpRestApi.post(slug, req.body)
+        wpRestApi.post(slug, isCustom, req.body, params)
             .then((response) => res.status(response.status).json(response.data))
             .catch((error) =>
             {
@@ -27,7 +30,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse)
             })
     } else
     {
-        wpRestApi.get(slug, params)
+        wpRestApi.get(slug, isCustom, params)
             .then((response) => res.status(response.status).json(response.data))
             .catch((error) =>
             {

@@ -56,7 +56,7 @@ function generateFileName(extension: string): string
 // gets info about user which related with specified user token
 async function getUserInfo(userToken: string): Promise<WPUserInfo>
 {
-    const data = await wpRestApi.get("users/me", undefined, {
+    const data = await wpRestApi.get("users/me", false, undefined, {
         // specified "Authorization" header overloads default admin credentials
         "Authorization": `Bearer ${userToken}`
     })
@@ -94,7 +94,7 @@ async function postVideo(videoBuffer: Buffer, videoFileName: string, authorId: n
         "Content-Type": "video/mp4",
         "Content-Disposition": `    attachment; filename="${videoFileName}"`
     };
-    const data = await wpRestApi.post("media", videoBuffer, params, headers)
+    const data = await wpRestApi.post("media", false, videoBuffer, params, headers)
         .then(response => response.data)
         .catch(err =>
         {

@@ -17,6 +17,8 @@ export class WPRestAPI
 {
     private readonly _apiBase: string;
     private readonly _authConfig: AuthConfig;
+    private readonly _wpApiPath = '/wp-json/wp/v2/';
+    private readonly _wpCustomApiPath = '/wp-json/';
 
     constructor(apiBase: string, authConfig: AuthConfig)
     {
@@ -35,10 +37,10 @@ export class WPRestAPI
         return `Basic ${encodedAuth}`;
     }
 
-    private async sendRequest(url: string, method: Method, params?: Record<string, string[] | string | number | undefined>, body?: any, headers?: Record<string, string>): Promise<AxiosResponse<unknown>>
+    private async sendRequest(url: string, isCustom: boolean, method: Method, params?: { [key: string]: string | string[] | number }, body?: any, headers?: Record<string, string>): Promise<AxiosResponse<unknown>>
     {
         const response = await axios({
-            url: `${this._apiBase}/wp-json/wp/v2/${url}`,
+            url: `${this._apiBase}${isCustom ? this._wpCustomApiPath : this._wpApiPath}${url}`,
             method: method,
             params: params,
             data: body,
@@ -55,14 +57,14 @@ export class WPRestAPI
         return response;
     }
 
-    async get(url: string, params?: Record<string, string[] | string | number | undefined>, headers?: Record<string, string>)
+    async get(url: string, isCustom: boolean, params?: { [key: string]: string | string[] | number }, headers?: Record<string, string>)
     {
-        return this.sendRequest(url, 'GET', params, null, headers);
+        return this.sendRequest(url, isCustom, 'GET', params, null, headers);
     }
 
-    async post(url: string, body?: any, params?: Record<string, string[] | string | number | undefined>, headers?: Record<string, string>)
+    async post(url: string, isCustom: boolean, body?: any, params?: { [key: string]: string | string[] | number }, headers?: Record<string, string>)
     {
-        return this.sendRequest(url, 'POST', params, body, headers);
+        return this.sendRequest(url, isCustom, 'POST', params, body, headers);
     }
 }
 

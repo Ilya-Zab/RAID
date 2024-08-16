@@ -12,14 +12,16 @@ import { useMediaQuery } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { unvoteCreative, updateVotesAvailable, updateVotesCreatives, voteCreative } from "@/store/slice/userSlice";
 
-interface CreativesListPropsType {
+interface CreativesListPropsType
+{
     perPage?: number,
     orderByVotes?: boolean,
     limited?: boolean
     firstItem?: ReactNode
 }
 
-const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes = false, limited = false, firstItem }) => {
+const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes = false, limited = false, firstItem }) =>
+{
     const userState = useAppSelector(state => state.user);
     const dispatch = useAppDispatch();
     const [{ userToken }] = useCookies(['userToken']);
@@ -32,17 +34,21 @@ const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes 
     const [creativesPerPage, setCreativesPerPage] = useState(perPage);
     const creatives = orderByVotes ? creativesByVotes : creativesByDate;
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         setCreativesPerPage(perPage);
     }, [perPage]);
 
-    useEffect(() => {
-        if (userToken) {
+    useEffect(() =>
+    {
+        if (userToken)
+        {
             fetchUserData(userToken);
         }
     }, []);
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         const userVotesAvailable = userData?.meta?.votes_available;
         const userVotesCreatives = userData?.meta?.votes_creatives;
 
@@ -51,24 +57,30 @@ const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes 
 
     }, [userData]);
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         orderByVotes ?
             fetchCreativesByVotes({ per_page: creativesPerPage, offset: 0 }) :
             fetchCreativesByDate({ per_page: creativesPerPage, offset: 0 });
     }, [creativesPerPage, userState.votesCreatives, justVotedVideo, justUnvotedVideo]);
 
-    const checkUserHasVoted = (creativeId: number): boolean => {
+    const checkUserHasVoted = (creativeId: number): boolean =>
+    {
         return Boolean(userState.votesCreatives.includes(String(creativeId)));
     }
 
-    const handleVote = (creativeId) => {
+    const handleVote = (creativeId) =>
+    {
 
-        if (userState.votesCreatives.includes(String(creativeId))) {
+        if (userState.votesCreatives.includes(String(creativeId)))
+        {
             fetchUnvoteCreative({ user_id: userData?.id, creative_id: creativeId });
             dispatch(unvoteCreative(String(creativeId)));
             return -1;
-        } else {
-            if (userState.votesAvailable <= 0) {
+        } else
+        {
+            if (userState.votesAvailable <= 0)
+            {
                 alert("You have exceeded your votes limit.");
                 return false;
             }
@@ -78,11 +90,13 @@ const CreativesList: FC<CreativesListPropsType> = ({ perPage = 10, orderByVotes 
         }
     }
 
-    const loadMore = () => {
+    const loadMore = () =>
+    {
         setCreativesPerPage(100)
     }
 
-    const renderSkeleton = () => {
+    const renderSkeleton = () =>
+    {
         const skeletonItems = [];
         for (let i = 0; i < creativesPerPage; i++) skeletonItems.push(
             <CreativesListItemSkeleton key={i} />

@@ -12,6 +12,7 @@ import { useFetchUnvoteCreativeMutation, useFetchUpdateVoteVideoMutation } from 
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { unvoteCreative, updateVotesAvailable, updateVotesCreatives, voteCreative } from "@/store/slice/userSlice";
 import Sharing from "../Sharing";
+import axios from "axios";
 
 interface SingleCreativePropsType
 {
@@ -29,8 +30,6 @@ const SingleCreative: FC<SingleCreativePropsType> = ({ creativeId }) =>
     const { data: creativeData, refetch } = useFetchCreativeQuery(creativeId);
     const [onPause, setPause] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
-
-    console.log(videoRef);
 
     useEffect(() =>
     {
@@ -73,10 +72,16 @@ const SingleCreative: FC<SingleCreativePropsType> = ({ creativeId }) =>
 
     const handleVote = (creativeId) =>
     {
-
         if (userState.votesCreatives.includes(String(creativeId)))
         {
             fetchUnvoteCreative({ user_id: userData?.id, creative_id: creativeId });
+            // axios.post('/api/wp/creative/unvote', {
+            //     params: {
+            //         user_id: userData?.id,
+            //         creative_id: creativeId,
+            //         apiPath: 'custom'
+            //     }
+            // })
             dispatch(unvoteCreative(String(creativeId)));
             refetch();
             return -1;
@@ -88,6 +93,13 @@ const SingleCreative: FC<SingleCreativePropsType> = ({ creativeId }) =>
                 return false;
             }
             updateVoteVideo({ user_id: userData?.id, creative_id: creativeId });
+            // axios.post('/api/wp/creative/vote', {
+            //     params: {
+            //         user_id: userData?.id,
+            //         creative_id: creativeId,
+            //         apiPath: 'custom'
+            //     }
+            // })
             dispatch(voteCreative(String(creativeId)));
             refetch();
             return 1

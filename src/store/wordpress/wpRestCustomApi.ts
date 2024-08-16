@@ -2,27 +2,36 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const wpCustomAPI = createApi({
     reducerPath: 'wpCustomAPI',
-    baseQuery: fetchBaseQuery({ baseUrl: 'https://wordpress.wefinallyplayedit.com/wp-json' }),
+    baseQuery: fetchBaseQuery({ baseUrl: '/api/wp/' }),
 
     endpoints: (build) => ({
         fetchAllCreativesByVotes: build.query({
             query: (params) => ({
                 url: '/creative/votes',
-                params,
+                params: {
+                    ...params,
+                    apiPath: 'custom'
+                }
             }),
         }),
         fetchUpdateVoteVideo: build.mutation({
             query: (params) => ({
                 url: '/creative/vote',
                 method: 'POST',
-                params,
+                params: {
+                    ...params,
+                    apiPath: 'custom'
+                }
             }),
         }),
         fetchUnvoteCreative: build.mutation({
             query: (params) => ({
                 url: '/creative/unvote',
                 method: 'POST',
-                params,
+                params: {
+                    ...params,
+                    apiPath: 'custom'
+                }
             }),
         })
     }),

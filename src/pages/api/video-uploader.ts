@@ -129,7 +129,7 @@ async function registerUserCreative(videoId: string, authorId: string, res: Next
         }
     };
 
-    await wpRestApi.post("creative", requestBody)
+    await wpRestApi.post("creative", false, requestBody)
         .then(response =>
         {
             res.status(200).json(response.data);
@@ -159,7 +159,7 @@ async function registerUserCreativeImage(image: string, authorId: string, res: N
         }
     };
 
-    await wpRestApi.post("creative", requestBody)
+    await wpRestApi.post("creative", false, requestBody)
         .then(response =>
         {
             res.status(200).json(response.data);
