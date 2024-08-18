@@ -8,6 +8,7 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAppSelector } from "@/hooks/redux";
 import { useCookies } from "react-cookie";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
 
 const CreateVideo = () =>
@@ -52,6 +53,12 @@ const CreateVideo = () =>
             </main>
         </>
     );
+}
+
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) =>
+{
+    context.res.setHeader('Set-Cookie', `userToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`);
+    return { redirect: { destination: "/", permanent: false, } };
 }
 
 export default CreateVideo;

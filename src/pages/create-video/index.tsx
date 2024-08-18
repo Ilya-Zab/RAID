@@ -25,6 +25,8 @@ import CreateVideoTemplate from "@/Components/CreateVideoTemplate/CreateVideoTem
 import { allowedImageTypes } from "@/utils/creativeConsts";
 import { PhotoVideoSwitch } from "@/Components/Layouts/PhotoVideoSwitch";
 import Creative from "@/Components/CreativeRecorder/Creative";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import parseCookies from "@/utils/parseCookie";
 
 const CreateVideo = () =>
 {
@@ -326,6 +328,12 @@ const CreateVideo = () =>
             </main>
         </>
     );
+}
+
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) =>
+{
+    context.res.setHeader('Set-Cookie', `userToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`);
+    return { redirect: { destination: "/", permanent: false, } };
 }
 
 export default CreateVideo;
