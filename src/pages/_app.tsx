@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useCheckUserId } from "@/utils/checkUserIp";
 import { AccessDeniedPage } from "@/Components/Layouts/AccessDeniedPage";
+import CreateVideoInfo from "@/Components/CreateVideoInfo/CreateVideoInfo";
 
 const store = setupStore();
 
@@ -26,9 +27,10 @@ export function App({ Component, pageProps }: AppProps)
 
     return (
         <Provider store={store}>
-            <Layout>
+            <CreateVideoInfo handleToggle={() => { }} handleBack={() => { }} />;
+            {/* <Layout>
                 <Component {...pageProps} />
-            </Layout>
+            </Layout> */}
         </Provider>
     )
 }

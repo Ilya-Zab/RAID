@@ -8,29 +8,30 @@ const CreateVideoInfo = ({ handleToggle, handleBack }) =>
     return (
         <Box className={styles.wrapper}>
             <Box className={styles.modal}>
-                <IconButton className={styles.modal__btn} onClick={handleBack}>
+                {/* <IconButton className={styles.modal__btn} onClick={handleBack}>
                     <CloseIcon />
-                </IconButton>
-                <h3 className={styles.modal__title}>Video Instruction</h3>
+                </IconButton> */}
+                {/* <h3 className={styles.modal__title}>Video Instruction</h3> */}
                 <Box className={styles.modal__scrollbar}>
                     <ul className={styles.modal__list}>
                         <li className={styles.modal__item}>
-                            - Grant access to the camera
+                            The acceptance of applications has been completed. The winners of the contest will be notified by e-mail by August 31. For questions related to the contest,
+                            please contact us by e-mail: <a className="text-gradient text-gradient_alt" href={"mailto:support@wefinallyplayedit.com"}> support@wefinallyplayedit.com </a>
                         </li>
-                        <li className={styles.modal__item}>
+                        {/* <li className={styles.modal__item}>
                             - Make sure you have the sound on your device turned on
                         </li>
                         <li className={styles.modal__item}>
                             - Record a video using our filter or take a photo
-                        </li>
+                        </li> */}
                     </ul>
-                    <p className={styles.modal__text}>
+                    {/* <p className={styles.modal__text}>
                         Good luck, champion!
-                    </p>
+                    </p> */}
                 </Box>
             </Box>
 
-            <Box className={`${styles.modal} ${styles.modal_bottom}`}>
+            {/* <Box className={`${styles.modal} ${styles.modal_bottom}`}>
                 <Box className={styles.modal__scrollbar}>
                     <Box className={styles.modal__text}>
                         <span>If any problem occurs, send your work to</span>
@@ -38,8 +39,8 @@ const CreateVideoInfo = ({ handleToggle, handleBack }) =>
                         <span>- to our team will help to publish it!</span>
                     </Box>
                 </Box>
-            </Box>
-            <Box className={`btnGradient2 ${styles.btn}`}>
+            </Box> */}
+            {/* <Box className={`btnGradient2 ${styles.btn}`}>
                 <Button
                     variant="contained"
                     className='btn-second'
@@ -47,7 +48,7 @@ const CreateVideoInfo = ({ handleToggle, handleBack }) =>
                 >
                     Ok
                 </Button>
-            </Box>
+            </Box> */}
         </Box >
     )
 }
