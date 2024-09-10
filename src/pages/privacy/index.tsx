@@ -355,4 +355,4 @@ const Privacy = () =>
     );
 }
 
-export default CreateVideo;
+export default Privacy;
