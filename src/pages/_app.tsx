@@ -35,10 +35,10 @@ export function App({ Component, pageProps }: AppProps)
     return (
         <Provider store={store}>
             {/* <CreateVideoInfo handleToggle={() => { }} handleBack={() => { }} />; */}
-            <Layout>
-                {/* <Component {...pageProps} /> */}
-                <Privacy />
-            </Layout>
+            {/* <Layout> */}
+            {/* <Component {...pageProps} /> */}
+            <Privacy />
+            {/* </Layout> */}
         </Provider>
     )
 }

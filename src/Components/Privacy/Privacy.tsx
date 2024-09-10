@@ -17,8 +17,8 @@ export const Privacy = () =>
                 <meta name="description" content={`This is ${pageTitle}`} />
             </Head>
             <main className='bg-gallery'>
-                <Title title={title} correctClass={'PrivacyNotice'} />
                 <Box className={styles.wrapper}>
+                    <Title title={title} correctClass={'PrivacyNotice'} />
                     <Box className={styles.container}>
                         <Typography variant={'h2'} className={styles.h2}>
                             PROMOTION PRIVACY NOTICE
