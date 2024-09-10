@@ -43,11 +43,11 @@ const Navigation: FC<wpMenuProps> = ({ correctStyle, data }) =>
                                     {link.title}
                                 </button>
                             ) : link.title === 'Privacy Notice' ? (
-                                <Link href={"/privacy"} className={styles.btn} >
+                                <Link href={"/"} className={styles.btn} >
                                     {link.title}
                                 </Link>
                             ) : link.title === 'Rules' ? (
-                                <Link href={"/rules"} className={styles.btn} >
+                                <Link href={"/"} className={styles.btn} >
                                     {link.title}
                                 </Link>
                             )

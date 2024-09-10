@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { useCheckUserId } from "@/utils/checkUserIp";
 import { AccessDeniedPage } from "@/Components/Layouts/AccessDeniedPage";
 import CreateVideoInfo from "@/Components/CreateVideoInfo/CreateVideoInfo";
+import { Privacy } from "@/Components/Privacy/Privacy";
 
 const store = setupStore();
 
@@ -25,12 +26,19 @@ export function App({ Component, pageProps }: AppProps)
     if (accessDenied)
         return <AccessDeniedPage />
 
+    // if (router.pathname !== '/privacy')
+    // {
+    //     router.push('/privacy');
+    //     return null;
+    // }
+
     return (
         <Provider store={store}>
-            <CreateVideoInfo handleToggle={() => { }} handleBack={() => { }} />;
-            {/* <Layout>
-                <Component {...pageProps} />
-            </Layout> */}
+            {/* <CreateVideoInfo handleToggle={() => { }} handleBack={() => { }} />; */}
+            <Layout>
+                {/* <Component {...pageProps} /> */}
+                <Privacy />
+            </Layout>
         </Provider>
     )
 }

@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Head from "next/head";
 import Title from "@/Components/Title/Title";
-import styles from "./styles.module.scss";
+import styles from "@/pages/privacy/styles.module.scss";
 import React from "react";
 import { Box, Typography } from "@mui/material";
 
 
-const Privacy = () =>
+export const Privacy = () =>
 {
     const pageTitle = 'Privacy notice';
     const title = `Privacy Notice`;
@@ -354,5 +354,3 @@ const Privacy = () =>
         </>
     );
 }
-
-export default CreateVideo;
