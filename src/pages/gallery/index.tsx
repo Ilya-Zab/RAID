@@ -54,11 +54,4 @@ const CreateVideo = () =>
         </>
     );
 }
-
-export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) =>
-{
-    context.res.setHeader('Set-Cookie', `userToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`);
-    return { redirect: { destination: "/", permanent: false, } };
-}
-
 export default CreateVideo;

@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 import styles from '../Formstyles/styles.module.scss';
 import { Box } from "@mui/material";
 import { CustomInput } from "../CustomInput";
-import Link from "next/link";
 import { validateRaidId } from "@/utils/validateRaidId";
 import { useAppDispatch } from "@/hooks/redux";
 import { setRaidId } from "@/store/slice/raidIdSlice";
@@ -38,7 +37,7 @@ export const LoginForm: FC = () =>
 
     const [fetchUserToken] = useFetchUserTokenMutation();
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [cookies, setCookie, removeCookie] = useCookies(['userToken', 'raidId']);
+    const [_, setCookie, removeCookie] = useCookies(['userToken', 'raidId']);
     const dispatch = useAppDispatch();
     const router = useRouter();
     const [firstCheck, setFirstCheck] = useState<Boolean>(false);
@@ -69,38 +68,32 @@ export const LoginForm: FC = () =>
 
     const onSubmit = async ({ raidId }: CheckUserId) =>
     {
-        alert('The acceptance of the entries has been completed and the contest results are being tallied. You can still cast your vote for the finalists.')
-        // if (!secondCheck || !firstCheck)
-        // {
-        //     alert('You must accept the Official Rules.')
-        //     return;
-        // }
-        // const transformedId = transformRaidId(raidId);
-        // const expiresDate = new Date();
-        // expiresDate.setTime(expiresDate.getTime() + (7 * 24 * 60 * 60 * 1000));
+        const transformedId = transformRaidId(raidId);
+        const expiresDate = new Date();
+        expiresDate.setTime(expiresDate.getTime() + (7 * 24 * 60 * 60 * 1000));
 
-        // try
-        // {
-        //     setIsSubmitting(true);
-        //     const userToken = await fetchUserToken({ username: transformedId, password: transformedId }).unwrap();
+        try
+        {
+            setIsSubmitting(true);
+            const userToken = await fetchUserToken({ username: transformedId, password: transformedId }).unwrap();
 
-        //     if (userToken)
-        //     {
-        //         setCookie('userToken', userToken.token, { path: '/', expires: expiresDate });
-        //     }
-        // } catch (error)
-        // {
-        //     removeCookie('userToken', { path: '/' });
-        //     removeCookie('raidId', { path: '/' });
-        //     dispatch(setRaidId(transformRaidId(raidId)));
-        //     setCookie('raidId', transformedId, { path: '/', expires: expiresDate });
-        // } finally
-        // {
-        //     track('Click on the "GO" button with the correct raid ID.');
-        //     reset();
-        //     router.push('/gallery');
-        //     setIsSubmitting(false);
-        // }
+            if (userToken)
+            {
+                setCookie('userToken', userToken.token, { path: '/', expires: expiresDate });
+            }
+        } catch (error)
+        {
+            removeCookie('userToken', { path: '/' });
+            removeCookie('raidId', { path: '/' });
+            dispatch(setRaidId(transformRaidId(raidId)));
+            setCookie('raidId', transformedId, { path: '/', expires: expiresDate });
+        } finally
+        {
+            track('Click on the "GO" button with the correct raid ID.');
+            reset();
+            router.push('/gallery');
+            setIsSubmitting(false);
+        }
     };
 
     return (

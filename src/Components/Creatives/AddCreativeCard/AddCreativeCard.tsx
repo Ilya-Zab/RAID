@@ -13,9 +13,9 @@ interface AddCreativeCardPropsType
 const AddCreativeCard: FC<AddCreativeCardPropsType> = ({ hasLogin = false }) =>
 {
     return (
-        <button
+        <Link
+            href={hasLogin ? `/create-video` : `#ready`}
             className={styles['add-creative-card']}
-            onClick={() => alert('The acceptance of the entries has been completed and the contest results are being tallied. You can still cast your vote for the finalists.')}
         >
             <div
                 className={styles['add-creative-card__content']}
@@ -36,7 +36,7 @@ const AddCreativeCard: FC<AddCreativeCardPropsType> = ({ hasLogin = false }) =>
                     <span>Join Event</span>
                 }
             </div>
-        </button>
+        </Link>
     );
 }
 

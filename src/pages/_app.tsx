@@ -22,21 +22,13 @@ export function App({ Component, pageProps }: AppProps)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [router.pathname])
 
-    useEffect(() =>
-    {
-        if (router.pathname === '/')
-            router.push('/privacy');
-    }, []);
-
     if (accessDenied)
         return <AccessDeniedPage />
 
     return (
         <Provider store={store}>
-            {/* <CreateVideoInfo handleToggle={() => { }} handleBack={() => { }} />; */}
             <Layout>
                 <Component {...pageProps} />
-                {/* <Privacy /> */}
             </Layout>
         </Provider>
     )

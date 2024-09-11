@@ -73,11 +73,6 @@ const Creatives = ({ children }) =>
             return -1;
         } else
         {
-            if (userState.votesAvailable <= 0)
-            {
-                alert("You have exceeded your votes limit.");
-                return false;
-            }
             updateVoteVideo({ user_id: userData?.id, creative_id: creativeId });
             dispatch(voteCreative(String(creativeId)));
             return 1
