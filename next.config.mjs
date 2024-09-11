@@ -10,6 +10,16 @@ const nextConfig = {
   images: {
     domains: ['wordpress.wefinallyplayedit.com'],
   },
+  async redirects()
+  {
+    return [
+      {
+        source: '/',
+        destination: '/privacy',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

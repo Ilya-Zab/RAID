@@ -24,11 +24,11 @@ const Layout: FC<LayoutProps> = ({ children }) =>
     return (
         <>
             <ParallaxEffect />
-            {!isMobile ? <Header /> : <MobileHeader />}
+            {/* {!isMobile ? <Header /> : <MobileHeader />} */}
             <SingleCreativePopup />
             {children}
             <Analytics />
-            <Footer />
+            {/* <Footer /> */}
             {isOpenGifts && <GiftList />}
             {isOpenFindId && <ModalFindId />}
             {isModalUs && <ModalAbout />}

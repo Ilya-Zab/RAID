@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 import { useCheckUserId } from "@/utils/checkUserIp";
 import { AccessDeniedPage } from "@/Components/Layouts/AccessDeniedPage";
 import CreateVideoInfo from "@/Components/CreateVideoInfo/CreateVideoInfo";
-import { Privacy } from "@/Components/Privacy/Privacy";
 
 const store = setupStore();
 
@@ -23,22 +22,22 @@ export function App({ Component, pageProps }: AppProps)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [router.pathname])
 
+    useEffect(() =>
+    {
+        if (router.pathname === '/')
+            router.push('/privacy');
+    }, []);
+
     if (accessDenied)
         return <AccessDeniedPage />
-
-    // if (router.pathname !== '/privacy')
-    // {
-    //     router.push('/privacy');
-    //     return null;
-    // }
 
     return (
         <Provider store={store}>
             {/* <CreateVideoInfo handleToggle={() => { }} handleBack={() => { }} />; */}
-            {/* <Layout> */}
-            {/* <Component {...pageProps} /> */}
-            <Privacy />
-            {/* </Layout> */}
+            <Layout>
+                <Component {...pageProps} />
+                {/* <Privacy /> */}
+            </Layout>
         </Provider>
     )
 }
