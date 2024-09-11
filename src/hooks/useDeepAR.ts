@@ -2,7 +2,7 @@
 import * as deepar from 'deepar';
 import { useEffect, useRef, useState } from 'react';
 const deepARParams: deepar.DeepARParams = {
-    licenseKey: `9206880ca84bd4cf4736245d56559b891bc6f915c66e941a2538df76482bcf05e686ecd001a43c78`,
+    licenseKey: `96d1c0dbcb1844e574c4bdef2efef6367e40b17e8b89f28f3c87ada68cc6409bb5163c53aa57bf76`,
     additionalOptions: {
         cameraConfig: {
             disableDefaultCamera: false
